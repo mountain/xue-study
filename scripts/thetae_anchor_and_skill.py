@@ -283,7 +283,11 @@ def discover_runs(days: int = 5) -> list[str]:
 
 def cmd_skill_runs(args, cache) -> dict:
     runs = args.runs.split(",") if args.runs else discover_runs(args.days)
+    only = getattr(args, "tier", None)
     print(f"GFS runs still served: {len(runs)}  ({', '.join(runs)})")
+    if only:
+        print(f"  restricted to the {only} tier, so no lead is compared at a different "
+              f"resolution from another")
 
     pointer = fetch_json(urljoin(BASE, AIRPORT_INDEX))
     index_url = urljoin(BASE, pointer["path"])
@@ -309,11 +313,18 @@ def cmd_skill_runs(args, cache) -> dict:
     print(f"  stations {len(ic)}  observations {sum(len(v) for v in obs.values())}")
 
     samples: list[tuple[int, float, str, int]] = []   # lead, error, icao, valid epoch
+    tiers: dict[str, str] = {}
     for run in runs:
-        try:
-            field, times, mlat, mlon = open_field("tmp2m", run)
-        except Exception as error:  # noqa: BLE001
-            print(f"  {run}: unreadable ({type(error).__name__})")
+        field = times = mlat = mlon = None
+        for want in ((only,) if only else ("full", "half")):
+            try:
+                field, times, mlat, mlon = open_field("tmp2m", run, tier=want)
+                tiers[run] = want
+                break
+            except Exception:  # noqa: BLE001
+                continue
+        if field is None:
+            print(f"  {run}: unreadable (neither tier served)")
             continue
         seconds = times.astype("datetime64[s]").astype(np.int64)
         run_time = int(seconds[0])
@@ -333,7 +344,7 @@ def cmd_skill_runs(args, cache) -> dict:
                 samples.append((round((valid - run_time) / 3600), float(m - obs[icao][valid]),
                                 icao, valid))
                 got += 1
-        print(f"  {run}: {len(wanted)} frames, {got} matched pairs")
+        print(f"  {run}: {len(wanted)} frames, {got} matched pairs   [tier {tiers[run]}]")
         del field
 
     if not samples:
@@ -379,6 +390,11 @@ def cmd_skill_runs(args, cache) -> dict:
         print(f"    mean MAE at the longest  available lead ({max(p[2] for p in paired)} h): {b.mean():.3f} K")
         print(f"    growth {b.mean() - a.mean():+.3f} K  ({(b.mean() - a.mean()) / a.mean() * 100:+.1f}%)")
         print(f"    hours where the longer lead was worse: {int((b > a).sum())}/{len(paired)}")
+    if len(set(tiers.values())) > 1:
+        print(f"\n  WARNING: the runs above do not all carry the same tier ({tiers}).")
+        print(f"  Leads from different tiers are measured at different resolutions, so a")
+        print(f"  growth in error across them mixes skill decay with a resolution change.")
+        print(f"  `tier-control` measures that change on a run that has both tiers.")
     print(f"\n  A run directory is not a run: two of the manifests served here "
           f"(gfs.2026091600, gfs.2026091418)")
     print(f"  name stores that now return 404, so the readable runs are three and the")
@@ -389,12 +405,92 @@ def cmd_skill_runs(args, cache) -> dict:
             "paired_growth_k": float(b.mean() - a.mean()) if paired else None}
 
 
+def cmd_tier_control(args, cache) -> dict:
+    """How much of the apparent skill decay is actually a resolution change?
+
+    The runs are not uniform: one carries only the half store (0.5 degrees) and
+    the next only the full one (0.25 degrees).  Leads drawn from different tiers
+    are then compared at different resolutions.  This measures the penalty on a
+    single run that serves both, so the two effects can be separated.
+    """
+    run = args.runs or "2026091700"
+    print(f"tier control on gfs.{run}: the same run, both tiers, same valid hours")
+
+    pointer = fetch_json(urljoin(BASE, AIRPORT_INDEX))
+    index_url = urljoin(BASE, pointer["path"])
+    index = fetch_json(index_url)
+    blob = fetch(urljoin(index_url, index["history"]["path"])).decode("utf-8", "replace")
+    obs: dict[str, dict[int, float]] = defaultdict(dict)
+    where: dict[str, tuple] = {}
+    for line in blob.splitlines():
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        if rec.get("lat") is None or rec.get("lon") is None:
+            continue
+        where[rec["icao"]] = (rec["lat"], rec["lon"])
+        for metar in rec.get("metars") or []:
+            if metar.get("t") is None:
+                continue
+            moment = dt.datetime.fromisoformat(metar["time"].replace("Z", "+00:00"))
+            obs[rec["icao"]][int(moment.timestamp())] = metar["t"]
+    ic = list(where); lats = [where[k][0] for k in ic]; lons = [where[k][1] for k in ic]
+
+    per_tier: dict[str, dict[int, list[float]]] = {}
+    for tier in ("full", "half"):
+        try:
+            field, times, mlat, mlon = open_field("tmp2m", run, tier=tier)
+        except Exception as error:  # noqa: BLE001
+            print(f"  {tier}: unavailable ({type(error).__name__})")
+            continue
+        seconds = times.astype("datetime64[s]").astype(np.int64)
+        run_time = int(seconds[0])
+        wanted = set()
+        for icao in ic:
+            for stamp in obs[icao]:
+                k = int(np.argmin(np.abs(seconds - stamp)))
+                if abs(int(seconds[k]) - stamp) <= args.window_seconds:
+                    wanted.add(k)
+        acc: dict[int, list[float]] = defaultdict(list)
+        for k in sorted(wanted):
+            model = nearest(field[k], mlat, mlon, lats, lons)
+            valid = int(seconds[k])
+            for icao, m in zip(ic, model):
+                if np.isfinite(m) and valid in obs[icao]:
+                    acc[round((valid - run_time) / 3600)].append(float(m - obs[icao][valid]))
+        per_tier[tier] = acc
+        grid = field.shape[1:]
+        print(f"  {tier:<5} grid {grid[1]}x{grid[0]}  leads {min(acc)}..{max(acc)}  "
+              f"n={sum(len(v) for v in acc.values())}")
+        del field
+
+    if len(per_tier) < 2:
+        print("\n  only one tier available here -- the penalty cannot be measured")
+        return {}
+    shared = sorted(set(per_tier["full"]) & set(per_tier["half"]))
+    print(f"\n{'lead h':>7}{'full MAE':>11}{'half MAE':>11}{'penalty':>10}")
+    penalties = []
+    for lead in shared:
+        a = np.abs(np.array(per_tier["full"][lead])).mean()
+        b = np.abs(np.array(per_tier["half"][lead])).mean()
+        penalties.append(b - a)
+        print(f"{lead:>7}{a:>11.3f}{b:>11.3f}{b - a:>+10.3f}")
+    print(f"\n  mean resolution penalty (half minus full): {np.mean(penalties):+.3f} K")
+    print(f"  for comparison, the paired lead growth reported by `skill-runs` was +0.191 K")
+    print(f"  NOT ESTABLISHED: that this penalty is constant across leads or regions;")
+    print(f"  it is measured on one run over the leads that run covers.")
+    return {"mean_penalty_k": float(np.mean(penalties)), "leads": len(shared)}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["thetae", "skill", "skill-runs", "all"])
+    ap.add_argument("command", choices=["thetae", "skill", "skill-runs", "tier-control", "all"])
     ap.add_argument("--runs", help="comma-separated GFS runs; default: discover")
     ap.add_argument("--days", type=int, default=5, help="days back to discover runs")
+    ap.add_argument("--tier", choices=["full", "half"],
+                    help="restrict every run to one tier, so a growth in error cannot "
+                         "be a resolution change (the tiers are NOT uniform across runs)")
     ap.add_argument("--leads", type=int, nargs="+", default=[0, 1, 2, 3, 4, 5])
     ap.add_argument("--window-seconds", type=int, default=1800)
     ap.add_argument("--json", metavar="PATH")
@@ -414,6 +510,8 @@ def main() -> int:
         results["skill"] = cmd_skill(args, cache)
     if args.command in ("skill-runs", "all"):
         results["skill_runs"] = cmd_skill_runs(args, cache)
+    if args.command in ("tier-control", "all"):
+        results["tier_control"] = cmd_tier_control(args, cache)
     if args.json:
         with open(args.json, "w", encoding="utf-8") as handle:
             json.dump(results, handle, indent=2, ensure_ascii=False, default=str)

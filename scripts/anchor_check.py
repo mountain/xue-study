@@ -94,7 +94,7 @@ def load_airports() -> list[dict]:
     return [dict(zip(AIRPORT_ROW, row)) for row in index["stations"]]
 
 
-def open_field(variable: str, run: str | None = None
+def open_field(variable: str, run: str | None = None, tier: str | None = None
                ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Open one field of a run.
 
@@ -111,10 +111,19 @@ def open_field(variable: str, run: str | None = None
     else:
         # Runs older than the STAC item have no `item.json` at all; the run
         # directory and its stores are still served, so address the store
-        # directly and fall back to the half tier only if the full one is gone.
+        # directly.  Which tier survives is NOT uniform across runs -- one run
+        # here has only the half store and the next only the full one -- so a
+        # caller that cares must say which tier it wants rather than let a
+        # fallback silently mix resolutions into one series.
+        if tier == "full":
+            suffixes = (f"{variable}.zarr",)
+        elif tier == "half":
+            suffixes = (f"{variable}.half.zarr",)
+        else:
+            suffixes = (f"{variable}.zarr", f"{variable}.half.zarr")
         last: Exception | None = None
         dataset = None
-        for suffix in (f"{variable}.zarr", f"{variable}.half.zarr"):
+        for suffix in suffixes:
             try:
                 dataset = xr.open_zarr(urljoin(BASE, f"gfs.{run}/{suffix}"))
                 break
