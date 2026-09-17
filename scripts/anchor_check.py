@@ -464,6 +464,106 @@ def cmd_fields(args, cache) -> dict:
     return out
 
 
+def cmd_separation(args, _cache) -> dict:
+    """Split the within-cell spread into a spatial part and a temporal part.
+
+    `cellspread` measured the spread of temperature among stations sharing one
+    0.25 degree cell and reported it as the ceiling on any point claim.  Those
+    stations do not observe simultaneously -- the index carries one observation
+    time per station and they differ by up to an hour -- so part of that spread
+    is the weather moving rather than the terrain varying, and the earlier
+    reading attributed all of it to terrain.
+
+    The separation: form every pair of stations inside a cell, and regress the
+    absolute temperature difference on the absolute observation-time difference,
+    with the absolute elevation difference as a second regressor.  The intercept
+    is what survives at zero time difference; the slope times a typical
+    separation is the part that was time.  Elevation rides along as a control
+    because it is the obvious competing explanation.
+    """
+    import numpy as np
+    rows = load_airports()
+    _tmp2m, times, lat, lon = _cache("tmp2m")
+    frame = frame_at(times, args.moment)
+    print(f"airport index: {len(rows)} stations; model frame {frame}")
+
+    cells: dict[tuple[int, int], list[dict]] = defaultdict(list)
+    for r in rows:
+        value = as_float(r["t"])
+        la, lo = as_float(r["lat"]), as_float(r["lon"])
+        stamp = r.get("obsTime")
+        if value is None or la is None or lo is None or not stamp:
+            continue
+        try:
+            moment = dt.datetime.fromisoformat(str(stamp).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        row = int(round((lat[0] - la) / abs(lat[1] - lat[0])))
+        col = int(round(((lo - lon[0]) / abs(lon[1] - lon[0])) % lon.size))
+        cells[(row, col)].append({"t": value, "elev": as_float(r["elev"]),
+                                  "seconds": int(moment.timestamp())})
+
+    gaps, spreads, elevations, same_minute = [], [], [], []
+    for members in cells.values():
+        if len(members) < 2:
+            continue
+        for i in range(len(members)):
+            for j in range(i + 1, len(members)):
+                a, b = members[i], members[j]
+                gap = abs(a["seconds"] - b["seconds"]) / 60.0
+                difference = abs(a["t"] - b["t"])
+                gaps.append(gap)
+                spreads.append(difference)
+                if a["elev"] is not None and b["elev"] is not None:
+                    elevations.append(abs(a["elev"] - b["elev"]))
+                else:
+                    elevations.append(float("nan"))
+                if gap == 0.0:
+                    same_minute.append(difference)
+
+    if len(spreads) < 30:
+        print("  too few station pairs to separate anything")
+        return {}
+
+    gap = np.array(gaps)
+    spread = np.array(spreads)
+    elevation = np.array(elevations)
+    print(f"\nstation pairs inside one 0.25 degree cell: {gap.size}")
+    print(f"  observation-time gap, minutes: median {np.median(gap):.1f}, "
+          f"90th pct {np.percentile(gap, 90):.1f}, max {gap.max():.1f}")
+    print(f"  observed in the same minute: {int((gap == 0).sum())} "
+          f"({np.mean(gap == 0) * 100:.0f}%)")
+    print(f"  |temperature difference| median {np.median(spread):.2f} K")
+    if same_minute:
+        print(f"  same-minute pairs only: median {np.median(same_minute):.2f} K "
+              f"over {len(same_minute)} pairs")
+
+    usable = np.isfinite(elevation)
+    design = np.column_stack([np.ones(int(usable.sum())), gap[usable], elevation[usable]])
+    coefficients, *_ = np.linalg.lstsq(design, spread[usable], rcond=None)
+    intercept, slope_time, slope_elev = (float(c) for c in coefficients)
+    print(f"\n|dT| = {intercept:.3f} + {slope_time:.5f} * gap_min "
+          f"+ {slope_elev:.5f} * elev_m   (n = {int(usable.sum())})")
+    typical = float(np.median(gap))
+    time_part = slope_time * typical
+    share = time_part / float(np.median(spread)) * 100 if np.median(spread) > 0 else 0.0
+    print(f"  at the median gap of {typical:.0f} min the time term is {time_part:+.3f} K")
+    print(f"  intercept {intercept:.3f} K against an observed median of "
+          f"{np.median(spread):.3f} K")
+    print(f"  the time term is {share:.0f}% of the observed median spread")
+
+    print("\n  DECLARED BEFORE RUNNING: a purely spatial spread would give a zero")
+    print("  slope on the time gap.  NOT ESTABLISHED: that the intercept is purely")
+    print("  terrain -- same-minute pairs are also same-weather pairs for slow")
+    print("  weather, so the intercept is what is left after removing the measurable")
+    print("  part of the time dependence, not a terrain-only spread.")
+    return {"pairs": int(gap.size), "intercept_k": intercept,
+            "slope_k_per_min": slope_time, "slope_k_per_m": slope_elev,
+            "observed_median_k": float(np.median(spread)),
+            "time_share_pct": share,
+            "same_minute_median_k": float(np.median(same_minute)) if same_minute else None}
+
+
 def _airport_observations(args):
     """Station rows from the index, plus each station's parsed METAR history."""
     rows = load_airports()
@@ -492,7 +592,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["underground850", "cellspread", "surfacebias",
-                                       "soundingbias", "fields", "all"])
+                                       "soundingbias", "fields", "separation", "all"])
     ap.add_argument("--moment", default="2026-09-17T00:00",
                     help="UTC moment to compare at (default 2026-09-17T00:00)")
     ap.add_argument("--airport-moment", default="2026-09-17T05:00",
@@ -520,6 +620,9 @@ def main() -> int:
     if args.command in ("surfacebias", "all"):
         args.moment = dt.datetime.fromisoformat(args.airport_moment).replace(tzinfo=dt.timezone.utc)
         results["surfacebias"] = cmd_surfacebias(args, cache)
+    if args.command in ("separation", "all"):
+        args.moment = dt.datetime.fromisoformat(args.airport_moment).replace(tzinfo=dt.timezone.utc)
+        results["separation"] = cmd_separation(args, cache)
     if args.command in ("fields", "all"):
         args.moment = dt.datetime.fromisoformat(args.airport_moment).replace(tzinfo=dt.timezone.utc)
         results["fields"] = cmd_fields(args, cache)
