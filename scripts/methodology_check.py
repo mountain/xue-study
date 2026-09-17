@@ -222,8 +222,14 @@ def check_helpers(report: Report) -> None:
     offset_source = (ROOT / "scripts/sar_offset_check.py").read_text(encoding="utf-8")
     start = offset_source.index("def normalized_correlation")
     end = offset_source.index("def main() -> int:")
+    # The fragment needs the module's own constants; they are read out of the
+    # source rather than repeated here, so a change in the script cannot leave a
+    # stale copy behind in this check.
+    constants = "\n".join(line for line in offset_source.splitlines()
+                          if re.match(r"^(PATCH|STEP|SEARCH|TARGET_RES)\s*=", line))
     namespace = {"np": np}
-    exec("import numpy as np\n" + offset_source[start:end], namespace)  # noqa: S102
+    exec("import numpy as np\n" + constants + "\n" + offset_source[start:end],
+         namespace)  # noqa: S102
     failures += namespace["synthesize_shift_test"]()
 
     # the TOML escaper, which exists because a raw newline broke the corpus twice
