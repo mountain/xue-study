@@ -216,6 +216,16 @@ def check_helpers(report: Report) -> None:
     if sorted(components(linked)[1].values()) != [8]:
         failures.append("components does not join blobs that touch")
 
+    # the offset correlator, which reported a flat 664 m on every pair until a
+    # synthetic test with known shifts showed the sign and the origin were both
+    # wrong.  Run it here so that cannot recur silently.
+    offset_source = (ROOT / "scripts/sar_offset_check.py").read_text(encoding="utf-8")
+    start = offset_source.index("def normalized_correlation")
+    end = offset_source.index("def main() -> int:")
+    namespace = {"np": np}
+    exec("import numpy as np\n" + offset_source[start:end], namespace)  # noqa: S102
+    failures += namespace["synthesize_shift_test"]()
+
     # the TOML escaper, which exists because a raw newline broke the corpus twice
     edit_source = (ROOT / "scripts/claim_edit.py").read_text(encoding="utf-8")
     start = edit_source.index("def escape")
@@ -227,8 +237,8 @@ def check_helpers(report: Report) -> None:
         failures.append("escape lets a newline or a bare quote through")
 
     report.add("helpers", not failures,
-               "the hand-written box filter, run-length labeller and TOML escaper "
-               "pass their unit tests",
+               "the hand-written box filter, run-length labeller, offset correlator "
+               "and TOML escaper pass their unit tests",
                "that they are correct in general -- these are the specific cases "
                "that each one got wrong before",
                details=failures)
