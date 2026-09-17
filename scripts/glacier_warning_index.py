@@ -136,8 +136,22 @@ def main() -> int:
     print(f"{len(cycles)} cycles across {len(args.years)} years "
           f"({args.days} days x {len(args.hours)} a day)", flush=True)
 
-    first_stamp = dt.datetime.strptime(f"{args.years[0]}{args.start}", "%Y%m%d") \
-        .strftime("%Y%m%d")
+    # The archive does not start at a year boundary -- 2021 begins in April -- so
+    # the reference window is taken from the first year that actually serves it
+    # rather than from the first year asked for.  Assuming otherwise killed the
+    # whole run on a 404 before any cycle was attempted.
+    first_stamp = None
+    for year in args.years:
+        candidate = dt.datetime.strptime(f"{year}{args.start}", "%Y%m%d").strftime("%Y%m%d")
+        try:
+            cycle_index(candidate, args.hours[0])
+            first_stamp = candidate
+            break
+        except Exception:  # noqa: BLE001 - a missing window is expected at the boundary
+            print(f"  {candidate} not served; trying the next year", flush=True)
+    if first_stamp is None:
+        print("REFUSED no requested year serves this window")
+        return 1
     terrain, grid = read(first_stamp, args.hours[0], "apcp", cycle_index(first_stamp, args.hours[0]))
     import rasterio
     with rasterio.open(f"/tmp/_gw_{first_stamp}_{args.hours[0]}_apcp.grib2") as source:
