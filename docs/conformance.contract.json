@@ -13,7 +13,7 @@
   ],
   "corpus": {
     "path": "docs/claims.toml",
-    "sha256": "5a53b472d48dea786950b170d751e7506c96998b483853ded1386905cf50aa0d",
+    "sha256": "e9f5b36d4ca147a7eb42161a252129e8b776337eed1686070751aef5c47ad80b",
     "cases": 12
   },
   "protected": [
@@ -59,8 +59,8 @@
     "scripts/check_contract.py's corpus pin advanced three times on 2026-09-17 without ever being edited to match by hand: the digest is recomputed from the registry, so a stale pin shows up as REFUSED rather than as a silent pass",
     "scripts/radar_vs_model_check.py and the point-product probes both treat a 404 as 'absent' only inside a candidate set generated from the object's own declared cadence; the one time that assumption was wrong (a 6-minute grid against irregular build ids) it produced a wrong claim, which is kept in the registry rather than edited away",
     "scripts/receive_question.py is exercised in both directions, not only the accepting one: eight controls (unchanged, reworded question, widened question, narrowed scope, dropped candidate, missing field, wrong round id, whitespace-only reflow) receive seven discriminating verdicts and one deliberate pass. A receiver that only ever says yes is not a receiver.",
-    "docs/claims.toml is validated by tomllib as a whole corpus before the contract is re-pinned, so a structural break is caught at the point of edit rather than at the next reader",
-    "scripts/thetae_anchor_and_skill.py's `tier-control` measures the resolution penalty on the one run that serves both tiers, which is what turned a +0.191 K 'skill decay' into +0.137 K of resolution change and a +0.011 K residue; a cross-run series is now built with `--tier` pinned"
+    "scripts/thetae_anchor_and_skill.py's `tier-control` measures the resolution penalty on the one run that serves both tiers, which is what turned a +0.191 K 'skill decay' into +0.137 K of resolution change and a +0.011 K residue; a cross-run series is now built with `--tier` pinned",
+    "scripts/repin_contract.py refuses on a corpus that does not parse or whose claims do not carry exactly the eleven fields, so the pin cannot be advanced over bytes no reader can load - the failure that actually occurred, where the digest was recomputed over a broken file and matched"
   ],
   "residuals": [
     "No source other than GFS is measured.",
@@ -82,7 +82,8 @@
     "The claim registry is the contract's pinned corpus and was, until 2026-09-17, under no version control and with no backup. A scripted edit corrupted it: the theta-e claim was duplicated, one radar claim lost its header, another was destroyed entirely, and four lines broke the TOML. The file was repaired and the two radar claims reconstructed from the session record, not recovered; the reconstruction is marked in their assumptions. The corpus is now a git repository.",
     "The skill curve holds only for leads 0-24 h with a gap at 13-17 h, and its paired comparison rests on 7 valid hours all inside a single 7-hour block; whether error growth is linear, and what happens beyond 24 hours, is not established.",
     "The point-retention claim's raster row was wrong in a specific way: it described the pointer, not the directories. Five run manifests are served but only three runs still have readable stores, so a run directory is not a run, and cleaning happens in two steps.",
-    "The tier-clean skill result covers leads 0-12 h only, because only two runs serve the full tier and the 12Z cycle was never retained; the half-tier curve over 24 h is recorded but is not used as skill evidence."
+    "The tier-clean skill result covers leads 0-12 h only, because only two runs serve the full tier and the 12Z cycle was never retained; the half-tier curve over 24 h is recorded but is not used as skill evidence.",
+    "The 2 m dewpoint's dry bias (-1.4 K median, flat across elevation and stable across three hours) is measured but not attributed: station instrument convention, the AWC decode and the +/-30 minute time matching all remain possible contributors, and none was tested."
   ],
   "adva_drift_2026_09_17": {
     "adva": {

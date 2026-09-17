@@ -396,15 +396,109 @@ def cmd_soundingbias(args, cache) -> dict:
     return out
 
 
+def cmd_fields(args, cache) -> dict:
+    """Anchor several delivered fields at once against the station observations.
+
+    `surfacebias` anchors one field.  This anchors the set, and it is worth doing
+    together because the station side already carries the matching quantities in
+    one record: temperature, dew point, and two different pressure reductions.
+
+    The pressure pair needs a word of care.  `prmsl` is the model's pressure
+    reduced to mean sea level; the station side offers `slp`, the sea-level
+    pressure the report itself gives, and `qnh`, the altimeter setting.  `qnh` is
+    a reduction under the standard atmosphere, so at a high station it is not the
+    same quantity as a sea-level pressure, and the two are reported separately
+    here rather than averaged into one "pressure check".
+    """
+    moment = args.moment
+    rows, observations = _airport_observations(args)
+    print(f"airport stations in the index: {len(rows)}")
+    picked = []
+    for r in rows:
+        icao = r["icao"]
+        obs = observations.get(icao)
+        if not obs:
+            continue
+        nearest_t = min(obs, key=lambda k: abs(k - int(moment.timestamp())))
+        if abs(nearest_t - int(moment.timestamp())) > args.window_seconds:
+            continue
+        m = obs[nearest_t]
+        lat, lon = as_float(r["lat"]), as_float(r["lon"])
+        if lat is None or lon is None:
+            continue
+        picked.append({"icao": icao, "lat": lat, "lon": lon,
+                       "elev": as_float(r["elev"]), **m})
+    print(f"  stations with an observation within {args.window_seconds}s of "
+          f"{moment:%Y-%m-%dT%H:%M}Z: {len(picked)}")
+
+    pairs = [("tmp2m", "t", "degC"), ("dpt2m", "td", "degC"),
+             ("prmsl", "slp", "hPa"), ("prmsl", "qnh", "hPa")]
+    out = {}
+    print(f"\n{'model field':<10}{'station field':<15}{'n':>6}{'median bias':>13}"
+          f"{'MAE':>9}{'1 s.d.':>9}")
+    for variable, station_key, unit in pairs:
+        values = [p[station_key] for p in picked if p.get(station_key) is not None]
+        if not values:
+            print(f"{variable:<10}{station_key:<15}{'--':>6}   (station field absent here)")
+            continue
+        usable = [p for p in picked if p.get(station_key) is not None]
+        field, times, lat, lon = cache(variable)
+        frame = frame_at(times, moment)
+        model = nearest(field[frame], lat, lon,
+                        [p["lat"] for p in usable], [p["lon"] for p in usable])
+        d = np.array([m - p[station_key] for m, p in zip(model, usable) if np.isfinite(m)])
+        if not d.size:
+            continue
+        print(f"{variable:<10}{station_key:<15}{len(d):>6}{np.median(d):>13.2f}"
+              f"{np.abs(d).mean():>9.2f}{d.std():>9.2f}")
+        out[f"{variable}_vs_{station_key}"] = {"n": int(d.size), "unit": unit,
+                                               "median": float(np.median(d)),
+                                               "mae": float(np.abs(d).mean()),
+                                               "sd": float(d.std())}
+    print("\n  NOT ESTABLISHED: that any of these is model error.  A 0.25 degree cell")
+    print("  is a mean over terrain and a station is a point on it; the `cellspread`")
+    print("  check measured that floor at a median of 1.0 K for temperature.")
+    print("  `prmsl` against `qnh` is the least like-for-like pair here: qnh is a")
+    print("  standard-atmosphere reduction, so the two differ by construction at")
+    print("  high-elevation stations and the difference is not an error.")
+    return out
+
+
+def _airport_observations(args):
+    """Station rows from the index, plus each station's parsed METAR history."""
+    rows = load_airports()
+    pointer = fetch_json(urljoin(BASE, AIRPORT_INDEX))
+    index_url = urljoin(BASE, pointer["path"])
+    index = fetch_json(index_url)
+    blob = fetch(urljoin(index_url, index["history"]["path"])).decode("utf-8", "replace")
+    observations: dict[str, dict[int, dict]] = {}
+    for line in blob.splitlines():
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        keep = {}
+        for metar in rec.get("metars") or []:
+            m = {k: metar.get(k) for k in ("t", "td", "qnh", "slp")}
+            if all(v is None for v in m.values()):
+                continue
+            stamp = dt.datetime.fromisoformat(metar["time"].replace("Z", "+00:00"))
+            keep[int(stamp.timestamp())] = m
+        if keep:
+            observations[rec["icao"]] = keep
+    return rows, observations
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["underground850", "cellspread", "surfacebias",
-                                       "soundingbias", "all"])
+                                       "soundingbias", "fields", "all"])
     ap.add_argument("--moment", default="2026-09-17T00:00",
                     help="UTC moment to compare at (default 2026-09-17T00:00)")
     ap.add_argument("--airport-moment", default="2026-09-17T05:00",
                     help="UTC moment for the airport anchors (default 2026-09-17T05:00)")
+    ap.add_argument("--window-seconds", type=int, default=1800,
+                    help="how close a station observation must be to the model frame")
     ap.add_argument("--json", metavar="PATH")
     args = ap.parse_args()
 
@@ -426,6 +520,9 @@ def main() -> int:
     if args.command in ("surfacebias", "all"):
         args.moment = dt.datetime.fromisoformat(args.airport_moment).replace(tzinfo=dt.timezone.utc)
         results["surfacebias"] = cmd_surfacebias(args, cache)
+    if args.command in ("fields", "all"):
+        args.moment = dt.datetime.fromisoformat(args.airport_moment).replace(tzinfo=dt.timezone.utc)
+        results["fields"] = cmd_fields(args, cache)
 
     if args.command in ("soundingbias", "all"):
         args.moment = dt.datetime.fromisoformat(original).replace(tzinfo=dt.timezone.utc)
