@@ -9,7 +9,8 @@
     "zarr 3.3.0 + xarray 2026.7.0 + fsspec + aiohttp for the ecosystem-reader checks",
     "The system Chrome driven by Playwright headless for the rendering outcome",
     "Adva scripts/navigate.py for claim navigation (read-only)",
-    "WMO WIS2 TEMP bulletins as aggregated by the sounding product, and the NOAA Aviation Weather Center caches behind the airport product (both read from the published bucket, no credentials)"
+    "WMO WIS2 TEMP bulletins as aggregated by the sounding product, and the NOAA Aviation Weather Center caches behind the airport product (both read from the published bucket, no credentials)",
+    "ECMWF ERA5, read in place from the portable drive at /Volumes/Newsmy (12 variables, 372 files, 304.3 GB, January 2024, 0.25 degree hourly). Copernicus product: free to use, NOT public domain, so no bytes enter the tree; docs/era5-catalogue.json carries the paths, sizes, partial digests and the licence position."
   ],
   "corpus": {
     "path": "docs/claims.toml",
@@ -60,7 +61,8 @@
     "scripts/radar_vs_model_check.py and the point-product probes both treat a 404 as 'absent' only inside a candidate set generated from the object's own declared cadence; the one time that assumption was wrong (a 6-minute grid against irregular build ids) it produced a wrong claim, which is kept in the registry rather than edited away",
     "scripts/receive_question.py is exercised in both directions, not only the accepting one: eight controls (unchanged, reworded question, widened question, narrowed scope, dropped candidate, missing field, wrong round id, whitespace-only reflow) receive seven discriminating verdicts and one deliberate pass. A receiver that only ever says yes is not a receiver.",
     "scripts/thetae_anchor_and_skill.py's `tier-control` measures the resolution penalty on the one run that serves both tiers, which is what turned a +0.191 K 'skill decay' into +0.137 K of resolution change and a +0.011 K residue; a cross-run series is now built with `--tier` pinned",
-    "scripts/repin_contract.py refuses on a corpus that does not parse or whose claims do not carry exactly the eleven fields, so the pin cannot be advanced over bytes no reader can load - the failure that actually occurred, where the digest was recomputed over a broken file and matched"
+    "scripts/repin_contract.py refuses on a corpus that does not parse or whose claims do not carry exactly the eleven fields, so the pin cannot be advanced over bytes no reader can load - the failure that actually occurred, where the digest was recomputed over a broken file and matched",
+    "scripts/era5_vs_gfs_check.py builds each source's mask from that source's own coordinate arrays and wraps 0..360 longitudes, so a box like the Andes cannot silently select zero cells in one source and be read as 'no data'"
   ],
   "residuals": [
     "No source other than GFS is measured.",
@@ -83,7 +85,10 @@
     "The skill curve holds only for leads 0-24 h with a gap at 13-17 h, and its paired comparison rests on 7 valid hours all inside a single 7-hour block; whether error growth is linear, and what happens beyond 24 hours, is not established.",
     "The point-retention claim's raster row was wrong in a specific way: it described the pointer, not the directories. Five run manifests are served but only three runs still have readable stores, so a run directory is not a run, and cleaning happens in two steps.",
     "The tier-clean skill result covers leads 0-12 h only, because only two runs serve the full tier and the 12Z cycle was never retained; the half-tier curve over 24 h is recorded but is not used as skill evidence.",
-    "The 2 m dewpoint's dry bias (-1.4 K median, flat across elevation and stable across three hours) is measured but not attributed: station instrument convention, the AWC decode and the +/-30 minute time matching all remain possible contributors, and none was tested."
+    "The 2 m dewpoint's dry bias (-1.4 K median, flat across elevation and stable across three hours) is measured but not attributed: station instrument convention, the AWC decode and the +/-30 minute time matching all remain possible contributors, and none was tested.",
+    "The ERA5 cross-check is a January comparison and the theta-e clamp it bears on is a summer phenomenon seen in September. A winter agreement does not test a summer claim, and the drive holds January only.",
+    "The ERA5 catalogue fingerprints files by size, mtime and the SHA-256 of their first and last mebibyte. That detects a changed, truncated or replaced file and does not certify a bit-exact copy; no download record was supplied.",
+    "ERA5 and GFS differ by 0.8 to 2.7 K in median 2 m temperature over the global (-60..60) box while agreeing to under 1 K over the plateau, the warm pool and the Andes. The global difference is not explained here."
   ],
   "adva_drift_2026_09_17": {
     "adva": {

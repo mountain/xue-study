@@ -1,0 +1,2556 @@
+{
+ "source": {
+  "holder": "ECMWF",
+  "product": "ERA5",
+  "path": "/Volumes/Newsmy",
+  "grid": "0.25 degree regular lat/lon, 721 x 1440",
+  "period": "2024-01-01 .. 2024-01-31",
+  "format": "NetCDF-4, one file per day per variable"
+ },
+ "licence": {
+  "name": "Copernicus Licence / ERA5 terms of use",
+  "public_domain": false,
+  "consequence": "raw bytes are NOT vendored into this repository; they are read in place from the drive. Derived numbers may be recorded with this provenance attached.",
+  "admission_rule": "Adva PUBLICATION_BOUNDARY.md admits public domain only; CC BY and Apache are not a public-domain basis."
+ },
+ "integrity": {
+  "method": "size + mtime + SHA-256 of the first and last MiB",
+  "is_full_digest": false,
+  "note": "enough to notice a changed, truncated or replaced file; not enough to certify a bit-exact copy."
+ },
+ "totals": {
+  "variables": 12,
+  "files": 372,
+  "bytes": 304349271020
+ },
+ "entries": [
+  {
+   "category": "单层变量",
+   "variable": "boundary_layer_height",
+   "files": 31,
+   "bytes": 1545203308,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.boundary_layer_height.20240101.nc",
+     "bytes": 49845268,
+     "mtime": 1740316020,
+     "digest": "partial-1MiB-ends:f32f14124884930fb4ce2abc7ec6f85e",
+     "structure": {
+      "bands": 24,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "0.07669480761984282",
+       "add_offset": "2520.837474186614",
+       "_FillValue": "-32767",
+       "units": "m",
+       "long_name": "Boundary layer height",
+       "NETCDF_DIM_time": "1086960"
+      }
+     }
+    },
+    {
+     "file": "era5.boundary_layer_height.20240102.nc",
+     "bytes": 49845268,
+     "mtime": 1740316024,
+     "digest": "partial-1MiB-ends:316c6c94658da60c0551d555d443d4fd"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240103.nc",
+     "bytes": 49845268,
+     "mtime": 1740316028,
+     "digest": "partial-1MiB-ends:1fe1c9fec379043da744b032767b3560"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240104.nc",
+     "bytes": 49845268,
+     "mtime": 1740316032,
+     "digest": "partial-1MiB-ends:087be8d8663c813ab5ab60a3d246fed7"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240105.nc",
+     "bytes": 49845268,
+     "mtime": 1740316036,
+     "digest": "partial-1MiB-ends:613aa62d01b97457c7d6aeededebfbc1"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240106.nc",
+     "bytes": 49845268,
+     "mtime": 1740316042,
+     "digest": "partial-1MiB-ends:e3c0fb05b89872e9c08accdcfee81b4f"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240107.nc",
+     "bytes": 49845268,
+     "mtime": 1740316046,
+     "digest": "partial-1MiB-ends:c28eab218e49fcd9109ee35337429635"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240108.nc",
+     "bytes": 49845268,
+     "mtime": 1740316050,
+     "digest": "partial-1MiB-ends:618ac9e94b20b1ad5e6400f10b403260"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240109.nc",
+     "bytes": 49845268,
+     "mtime": 1740316054,
+     "digest": "partial-1MiB-ends:f98fb882f9e9099d545afd4e963480dd"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240110.nc",
+     "bytes": 49845268,
+     "mtime": 1740316058,
+     "digest": "partial-1MiB-ends:2361b380fbd2376a5ecff8df29a0bb2a"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240111.nc",
+     "bytes": 49845268,
+     "mtime": 1740316062,
+     "digest": "partial-1MiB-ends:b5350f80c5fb0114d0f321c80c054370"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240112.nc",
+     "bytes": 49845268,
+     "mtime": 1740316066,
+     "digest": "partial-1MiB-ends:219f3ce2831c7da2fc4233964a8443ab"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240113.nc",
+     "bytes": 49845268,
+     "mtime": 1740316072,
+     "digest": "partial-1MiB-ends:2b981dfa5e8c38ab5f9515414e706903"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240114.nc",
+     "bytes": 49845268,
+     "mtime": 1740316076,
+     "digest": "partial-1MiB-ends:771dc43a45b0766c3b34c6bce7a23389"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240115.nc",
+     "bytes": 49845268,
+     "mtime": 1740316080,
+     "digest": "partial-1MiB-ends:bbc9bfd133ce4cf38b3231415ca8dfc9"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240116.nc",
+     "bytes": 49845268,
+     "mtime": 1740316084,
+     "digest": "partial-1MiB-ends:52ea3fa04e0269d8259add3acbe2e3fe"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240117.nc",
+     "bytes": 49845268,
+     "mtime": 1740316088,
+     "digest": "partial-1MiB-ends:a49c6cf2dc4ff4e7162403bc517fd054"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240118.nc",
+     "bytes": 49845268,
+     "mtime": 1740316092,
+     "digest": "partial-1MiB-ends:fa61b469ddb2861aebaeb41c3e3aec88"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240119.nc",
+     "bytes": 49845268,
+     "mtime": 1740316098,
+     "digest": "partial-1MiB-ends:6cf78d659513b5916964441339eeb358"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240120.nc",
+     "bytes": 49845268,
+     "mtime": 1740316102,
+     "digest": "partial-1MiB-ends:5b3cc08faf487b3d1760baf1000d6701"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240121.nc",
+     "bytes": 49845268,
+     "mtime": 1740316106,
+     "digest": "partial-1MiB-ends:ee168b9fda54ae8b9e48de680b6b6447"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240122.nc",
+     "bytes": 49845268,
+     "mtime": 1740316110,
+     "digest": "partial-1MiB-ends:9891b9f0c3cc906b362f5f9c068f34b3"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240123.nc",
+     "bytes": 49845268,
+     "mtime": 1740316114,
+     "digest": "partial-1MiB-ends:b39bee35ae4668e3bda6dc5eba24b0ce"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240124.nc",
+     "bytes": 49845268,
+     "mtime": 1740316120,
+     "digest": "partial-1MiB-ends:7d51c1bc987eb7306fae995c3ff02af1"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240125.nc",
+     "bytes": 49845268,
+     "mtime": 1740316124,
+     "digest": "partial-1MiB-ends:16a45366258586003ed398b21c022ad0"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240126.nc",
+     "bytes": 49845268,
+     "mtime": 1740316128,
+     "digest": "partial-1MiB-ends:73d3bf3e9e9af96e3a7f6854689689d9"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240127.nc",
+     "bytes": 49845268,
+     "mtime": 1740316132,
+     "digest": "partial-1MiB-ends:97642b170858216ba954d8cf3142ff79"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240128.nc",
+     "bytes": 49845268,
+     "mtime": 1740316136,
+     "digest": "partial-1MiB-ends:06a644540cb608e8b293a1be4f6bfd21"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240129.nc",
+     "bytes": 49845268,
+     "mtime": 1740316140,
+     "digest": "partial-1MiB-ends:bd0ea21963de93533cd6c32ce6f70a4a"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240130.nc",
+     "bytes": 49845268,
+     "mtime": 1740316146,
+     "digest": "partial-1MiB-ends:895936fa46b8b70211971a0f03837917"
+    },
+    {
+     "file": "era5.boundary_layer_height.20240131.nc",
+     "bytes": 49845268,
+     "mtime": 1740316150,
+     "digest": "partial-1MiB-ends:a54cfbef05c2a575a9a88ced80f2ab7a"
+    }
+   ]
+  },
+  {
+   "category": "单层变量",
+   "variable": "single_lvl",
+   "files": 31,
+   "bytes": 15449384192,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.20240101.nc",
+     "bytes": 498367232,
+     "mtime": 1740336346,
+     "digest": "partial-1MiB-ends:63ed1849dff873d079e69c2f26d61c3a",
+     "structure": {
+      "subdatasets": [
+       "u10",
+       "v100",
+       "v10",
+       "d2m",
+       "t2m",
+       "sst",
+       "sd",
+       "sp",
+       "tisr",
+       "u100"
+      ],
+      "bands": 24,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "0.0007618190207784151",
+       "add_offset": "0.3791967272083608",
+       "_FillValue": "-32767",
+       "units": "m s**-1",
+       "long_name": "10 metre U wind component",
+       "NETCDF_DIM_time": "1086960"
+      }
+     }
+    },
+    {
+     "file": "era5.20240102.nc",
+     "bytes": 498367232,
+     "mtime": 1740336380,
+     "digest": "partial-1MiB-ends:151ca1624944ee4f51ead6cf855024a1"
+    },
+    {
+     "file": "era5.20240103.nc",
+     "bytes": 498367232,
+     "mtime": 1740336414,
+     "digest": "partial-1MiB-ends:647ccb2ccb150a46feae934a8cbc28d0"
+    },
+    {
+     "file": "era5.20240104.nc",
+     "bytes": 498367232,
+     "mtime": 1740336448,
+     "digest": "partial-1MiB-ends:ff2050219b643feb56aeaeed4992f09a"
+    },
+    {
+     "file": "era5.20240105.nc",
+     "bytes": 498367232,
+     "mtime": 1740336482,
+     "digest": "partial-1MiB-ends:896b67f4721194c78402fe7cf9654ca8"
+    },
+    {
+     "file": "era5.20240106.nc",
+     "bytes": 498367232,
+     "mtime": 1740336518,
+     "digest": "partial-1MiB-ends:53c97d811e90d4d5ddde5a6dcbcf157f"
+    },
+    {
+     "file": "era5.20240107.nc",
+     "bytes": 498367232,
+     "mtime": 1740336552,
+     "digest": "partial-1MiB-ends:9932726f5f9053319680448f15abc44a"
+    },
+    {
+     "file": "era5.20240108.nc",
+     "bytes": 498367232,
+     "mtime": 1740336588,
+     "digest": "partial-1MiB-ends:fe231b4884589883a81b0e0f3f97d70b"
+    },
+    {
+     "file": "era5.20240109.nc",
+     "bytes": 498367232,
+     "mtime": 1740336622,
+     "digest": "partial-1MiB-ends:a8594ef85b2fa556a2bcdeb179faec72"
+    },
+    {
+     "file": "era5.20240110.nc",
+     "bytes": 498367232,
+     "mtime": 1740336656,
+     "digest": "partial-1MiB-ends:bf9a0287b25a9c560493b50ea474c129"
+    },
+    {
+     "file": "era5.20240111.nc",
+     "bytes": 498367232,
+     "mtime": 1740336690,
+     "digest": "partial-1MiB-ends:54e2ce42fc71508a27023c3b37a363f5"
+    },
+    {
+     "file": "era5.20240112.nc",
+     "bytes": 498367232,
+     "mtime": 1740336724,
+     "digest": "partial-1MiB-ends:773618356ae7c50b8fe784c48159b3d6"
+    },
+    {
+     "file": "era5.20240113.nc",
+     "bytes": 498367232,
+     "mtime": 1740336760,
+     "digest": "partial-1MiB-ends:84804ab486eeb3fed4c2340486d3fe5b"
+    },
+    {
+     "file": "era5.20240114.nc",
+     "bytes": 498367232,
+     "mtime": 1740336794,
+     "digest": "partial-1MiB-ends:8b2fff7a46bcc30b4d33094f9e3c2905"
+    },
+    {
+     "file": "era5.20240115.nc",
+     "bytes": 498367232,
+     "mtime": 1740336828,
+     "digest": "partial-1MiB-ends:ecb91a7383f9920458a774406220d1de"
+    },
+    {
+     "file": "era5.20240116.nc",
+     "bytes": 498367232,
+     "mtime": 1740336862,
+     "digest": "partial-1MiB-ends:2befd83b4e74949497d046b3a1d89122"
+    },
+    {
+     "file": "era5.20240117.nc",
+     "bytes": 498367232,
+     "mtime": 1740336896,
+     "digest": "partial-1MiB-ends:e515b6688a2b60ab3c88f8c74309b1bc"
+    },
+    {
+     "file": "era5.20240118.nc",
+     "bytes": 498367232,
+     "mtime": 1740336930,
+     "digest": "partial-1MiB-ends:d6ea7798565b8aeab487689fcb6c0ca6"
+    },
+    {
+     "file": "era5.20240119.nc",
+     "bytes": 498367232,
+     "mtime": 1740336964,
+     "digest": "partial-1MiB-ends:abf5a02359bf56fa38ff70328399b9c1"
+    },
+    {
+     "file": "era5.20240120.nc",
+     "bytes": 498367232,
+     "mtime": 1740337000,
+     "digest": "partial-1MiB-ends:d6459c416dfbd040073cd3122d49db23"
+    },
+    {
+     "file": "era5.20240121.nc",
+     "bytes": 498367232,
+     "mtime": 1740337034,
+     "digest": "partial-1MiB-ends:30cc558b8f6adcd85cc0f1bfb24bf6ed"
+    },
+    {
+     "file": "era5.20240122.nc",
+     "bytes": 498367232,
+     "mtime": 1740337068,
+     "digest": "partial-1MiB-ends:ebcb942d53b12a552c01264e7e6eb6a6"
+    },
+    {
+     "file": "era5.20240123.nc",
+     "bytes": 498367232,
+     "mtime": 1740337106,
+     "digest": "partial-1MiB-ends:5e7931b1b6a8857c7979fb4012656849"
+    },
+    {
+     "file": "era5.20240124.nc",
+     "bytes": 498367232,
+     "mtime": 1740337140,
+     "digest": "partial-1MiB-ends:5878cbcaddfcf889c01c6e4389d17eec"
+    },
+    {
+     "file": "era5.20240125.nc",
+     "bytes": 498367232,
+     "mtime": 1740337174,
+     "digest": "partial-1MiB-ends:3710a57fca13c97d0d01bb978d6bd328"
+    },
+    {
+     "file": "era5.20240126.nc",
+     "bytes": 498367232,
+     "mtime": 1740337210,
+     "digest": "partial-1MiB-ends:cc796f9ce937507cf6bae8bc9ad0410b"
+    },
+    {
+     "file": "era5.20240127.nc",
+     "bytes": 498367232,
+     "mtime": 1740337244,
+     "digest": "partial-1MiB-ends:1f45fc4e14236fd0abfaf51fcd4f0538"
+    },
+    {
+     "file": "era5.20240128.nc",
+     "bytes": 498367232,
+     "mtime": 1740337276,
+     "digest": "partial-1MiB-ends:eb179738a10f710d6159173906ced343"
+    },
+    {
+     "file": "era5.20240129.nc",
+     "bytes": 498367232,
+     "mtime": 1740337310,
+     "digest": "partial-1MiB-ends:9b3133ba1a564e043cb3ed15f815c446"
+    },
+    {
+     "file": "era5.20240130.nc",
+     "bytes": 498367232,
+     "mtime": 1740337344,
+     "digest": "partial-1MiB-ends:eda14186cab6472002c5c0feed11d794"
+    },
+    {
+     "file": "era5.20240131.nc",
+     "bytes": 498367232,
+     "mtime": 1740337378,
+     "digest": "partial-1MiB-ends:844f008230889d4d1fb0b7cddcc91ee1"
+    }
+   ]
+  },
+  {
+   "category": "单层变量",
+   "variable": "surface_net_thermal_radiation",
+   "files": 31,
+   "bytes": 1545206532,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.surface_net_thermal_radiation.20240101.nc",
+     "bytes": 49845372,
+     "mtime": 1740313148,
+     "digest": "partial-1MiB-ends:4b29bfe64d06249f3ae833973bd056f8",
+     "structure": {
+      "bands": 24,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "24.76724703584454",
+       "add_offset": "-649185.3836235179",
+       "_FillValue": "-32767",
+       "units": "J m**-2",
+       "long_name": "Surface net thermal radiation",
+       "NETCDF_DIM_time": "1086960"
+      }
+     }
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240102.nc",
+     "bytes": 49845372,
+     "mtime": 1740313152,
+     "digest": "partial-1MiB-ends:3bdeb4133f13f1fea0aef994cc25fce3"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240103.nc",
+     "bytes": 49845372,
+     "mtime": 1740313154,
+     "digest": "partial-1MiB-ends:45b6c19497d393087836c6ec734120fd"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240104.nc",
+     "bytes": 49845372,
+     "mtime": 1740313158,
+     "digest": "partial-1MiB-ends:cc11e8aff499a1aff7f76440cd7059f7"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240105.nc",
+     "bytes": 49845372,
+     "mtime": 1740313162,
+     "digest": "partial-1MiB-ends:3084d2ced759ee602ec81d8ae7484987"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240106.nc",
+     "bytes": 49845372,
+     "mtime": 1740313164,
+     "digest": "partial-1MiB-ends:50834060a809d29e8bdea90faec01907"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240107.nc",
+     "bytes": 49845372,
+     "mtime": 1740313168,
+     "digest": "partial-1MiB-ends:f01816e4758c5a44761a359cb0213ba9"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240108.nc",
+     "bytes": 49845372,
+     "mtime": 1740313172,
+     "digest": "partial-1MiB-ends:866e90e0e2eb5177b8f94a9d9b8329a6"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240109.nc",
+     "bytes": 49845372,
+     "mtime": 1740313174,
+     "digest": "partial-1MiB-ends:2a1e245accf305175d0a5f528f0815c7"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240110.nc",
+     "bytes": 49845372,
+     "mtime": 1740313178,
+     "digest": "partial-1MiB-ends:705f53f1ef545c86e20e95e76f14a30a"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240111.nc",
+     "bytes": 49845372,
+     "mtime": 1740313182,
+     "digest": "partial-1MiB-ends:215ddd25b5f867e4462d9c3ecbfa4f23"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240112.nc",
+     "bytes": 49845372,
+     "mtime": 1740313186,
+     "digest": "partial-1MiB-ends:b24b1d7c442ad1eca74ba5b0cd80aa78"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240113.nc",
+     "bytes": 49845372,
+     "mtime": 1740313190,
+     "digest": "partial-1MiB-ends:37b6d1d137f411ec109acdac8a241ce2"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240114.nc",
+     "bytes": 49845372,
+     "mtime": 1740313194,
+     "digest": "partial-1MiB-ends:67deb20cfa1e141303b26cdce7410f5a"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240115.nc",
+     "bytes": 49845372,
+     "mtime": 1740313198,
+     "digest": "partial-1MiB-ends:b4e4f8ca267f5617d93221ad772015f4"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240116.nc",
+     "bytes": 49845372,
+     "mtime": 1740313202,
+     "digest": "partial-1MiB-ends:9486c123da962afe1f31a52f7b9d8122"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240117.nc",
+     "bytes": 49845372,
+     "mtime": 1740313206,
+     "digest": "partial-1MiB-ends:f08ab664e32ca4cbf824f76d3f77a9d1"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240118.nc",
+     "bytes": 49845372,
+     "mtime": 1740313210,
+     "digest": "partial-1MiB-ends:71abc0bfacd24707e867dc75b633b4d5"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240119.nc",
+     "bytes": 49845372,
+     "mtime": 1740313212,
+     "digest": "partial-1MiB-ends:e95bf7dc8172bf7ed3a572f767db140b"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240120.nc",
+     "bytes": 49845372,
+     "mtime": 1740313216,
+     "digest": "partial-1MiB-ends:40881ecb6115d67b6a401cf22d835ac9"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240121.nc",
+     "bytes": 49845372,
+     "mtime": 1740313220,
+     "digest": "partial-1MiB-ends:e3c13dd1092cb8d326b0c0230bac513a"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240122.nc",
+     "bytes": 49845372,
+     "mtime": 1740313224,
+     "digest": "partial-1MiB-ends:76542d6baf1c8bc2f5cacea8cf09137c"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240123.nc",
+     "bytes": 49845372,
+     "mtime": 1740313228,
+     "digest": "partial-1MiB-ends:9859ad8b33c2b81a99d7ea99be6bf5df"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240124.nc",
+     "bytes": 49845372,
+     "mtime": 1740313232,
+     "digest": "partial-1MiB-ends:22e4e33f4baecb010aab7426002132f1"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240125.nc",
+     "bytes": 49845372,
+     "mtime": 1740313236,
+     "digest": "partial-1MiB-ends:da7119c80080ca5b1e0329535eaac4da"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240126.nc",
+     "bytes": 49845372,
+     "mtime": 1740313240,
+     "digest": "partial-1MiB-ends:dac22999496baffd08cae2881cfcbf54"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240127.nc",
+     "bytes": 49845372,
+     "mtime": 1740313244,
+     "digest": "partial-1MiB-ends:097de21170f6ff2f1fc52a821096fcb4"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240128.nc",
+     "bytes": 49845372,
+     "mtime": 1740313248,
+     "digest": "partial-1MiB-ends:49dddaf72f9e5412b20c1115cc7e2eb2"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240129.nc",
+     "bytes": 49845372,
+     "mtime": 1740313252,
+     "digest": "partial-1MiB-ends:27a388c73710ad054c3a1c4c0d1315d5"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240130.nc",
+     "bytes": 49845372,
+     "mtime": 1740313254,
+     "digest": "partial-1MiB-ends:a652b907f35e07273c2c145664cb850f"
+    },
+    {
+     "file": "era5.surface_net_thermal_radiation.20240131.nc",
+     "bytes": 49845372,
+     "mtime": 1740313258,
+     "digest": "partial-1MiB-ends:ca86304a6967b1dc9d643fc5cbd4abc0"
+    }
+   ]
+  },
+  {
+   "category": "单层变量",
+   "variable": "total_precipitation",
+   "files": 31,
+   "bytes": 1545202936,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.total_precipitation.20240101.nc",
+     "bytes": 49845256,
+     "mtime": 1740314546,
+     "digest": "partial-1MiB-ends:3a49b76c7e195575aadbba4cd5783882",
+     "structure": {
+      "bands": 24,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "8.384760821018252e-07",
+       "add_offset": "0.0274735073061484",
+       "_FillValue": "-32767",
+       "units": "m",
+       "long_name": "Total precipitation",
+       "NETCDF_DIM_time": "1086960"
+      }
+     }
+    },
+    {
+     "file": "era5.total_precipitation.20240102.nc",
+     "bytes": 49845256,
+     "mtime": 1740314550,
+     "digest": "partial-1MiB-ends:1511edcf55c1ef211485b1164b19f288"
+    },
+    {
+     "file": "era5.total_precipitation.20240103.nc",
+     "bytes": 49845256,
+     "mtime": 1740314554,
+     "digest": "partial-1MiB-ends:f2643aa6e25e18d10f6849a2498ed6b3"
+    },
+    {
+     "file": "era5.total_precipitation.20240104.nc",
+     "bytes": 49845256,
+     "mtime": 1740314558,
+     "digest": "partial-1MiB-ends:50937334c55fd292f601ab9b6d9c37e1"
+    },
+    {
+     "file": "era5.total_precipitation.20240105.nc",
+     "bytes": 49845256,
+     "mtime": 1740314562,
+     "digest": "partial-1MiB-ends:969c8de39c9c8a3cb9ca326096bf699c"
+    },
+    {
+     "file": "era5.total_precipitation.20240106.nc",
+     "bytes": 49845256,
+     "mtime": 1740314566,
+     "digest": "partial-1MiB-ends:7eb345247661e73dcc86223a2d913044"
+    },
+    {
+     "file": "era5.total_precipitation.20240107.nc",
+     "bytes": 49845256,
+     "mtime": 1740314568,
+     "digest": "partial-1MiB-ends:35c0c34c7449e9662e259330b4072000"
+    },
+    {
+     "file": "era5.total_precipitation.20240108.nc",
+     "bytes": 49845256,
+     "mtime": 1740314572,
+     "digest": "partial-1MiB-ends:f5c99c6d9c680a0d6a7a61483f8192b7"
+    },
+    {
+     "file": "era5.total_precipitation.20240109.nc",
+     "bytes": 49845256,
+     "mtime": 1740314576,
+     "digest": "partial-1MiB-ends:7cfdddbcf59e2611674a4f823e8a8056"
+    },
+    {
+     "file": "era5.total_precipitation.20240110.nc",
+     "bytes": 49845256,
+     "mtime": 1740314580,
+     "digest": "partial-1MiB-ends:af5f8f969c2cc2a5a0a9d4c3accc868b"
+    },
+    {
+     "file": "era5.total_precipitation.20240111.nc",
+     "bytes": 49845256,
+     "mtime": 1740314584,
+     "digest": "partial-1MiB-ends:138523f9379af8957d8a3b5ef8cf2d5a"
+    },
+    {
+     "file": "era5.total_precipitation.20240112.nc",
+     "bytes": 49845256,
+     "mtime": 1740314588,
+     "digest": "partial-1MiB-ends:306b242448a49c9a7b541c88775a36ec"
+    },
+    {
+     "file": "era5.total_precipitation.20240113.nc",
+     "bytes": 49845256,
+     "mtime": 1740314592,
+     "digest": "partial-1MiB-ends:524c8d6b3e2dade15aa26e61b160f407"
+    },
+    {
+     "file": "era5.total_precipitation.20240114.nc",
+     "bytes": 49845256,
+     "mtime": 1740314596,
+     "digest": "partial-1MiB-ends:8aa0f9ed85559c023e92af9bc813f20b"
+    },
+    {
+     "file": "era5.total_precipitation.20240115.nc",
+     "bytes": 49845256,
+     "mtime": 1740314600,
+     "digest": "partial-1MiB-ends:c0e5d8159c9298fc1884f5d87bf1a678"
+    },
+    {
+     "file": "era5.total_precipitation.20240116.nc",
+     "bytes": 49845256,
+     "mtime": 1740314602,
+     "digest": "partial-1MiB-ends:7d3cbb1fa9fb98bab4b29dcb332d48c0"
+    },
+    {
+     "file": "era5.total_precipitation.20240117.nc",
+     "bytes": 49845256,
+     "mtime": 1740314606,
+     "digest": "partial-1MiB-ends:49bb6838b214658eb765bc3f658d75e4"
+    },
+    {
+     "file": "era5.total_precipitation.20240118.nc",
+     "bytes": 49845256,
+     "mtime": 1740314610,
+     "digest": "partial-1MiB-ends:d9a5aa58c083468dde68b92e5ef9c20d"
+    },
+    {
+     "file": "era5.total_precipitation.20240119.nc",
+     "bytes": 49845256,
+     "mtime": 1740314614,
+     "digest": "partial-1MiB-ends:a9906aa4105f431f212f622de43ecded"
+    },
+    {
+     "file": "era5.total_precipitation.20240120.nc",
+     "bytes": 49845256,
+     "mtime": 1740314618,
+     "digest": "partial-1MiB-ends:602f3192898fbd7bdaf532307ed4eb04"
+    },
+    {
+     "file": "era5.total_precipitation.20240121.nc",
+     "bytes": 49845256,
+     "mtime": 1740314622,
+     "digest": "partial-1MiB-ends:c6eebbe833f419d811ac7d8ca8f4b309"
+    },
+    {
+     "file": "era5.total_precipitation.20240122.nc",
+     "bytes": 49845256,
+     "mtime": 1740314626,
+     "digest": "partial-1MiB-ends:f80f19984df642e9f248599ed5606b08"
+    },
+    {
+     "file": "era5.total_precipitation.20240123.nc",
+     "bytes": 49845256,
+     "mtime": 1740314628,
+     "digest": "partial-1MiB-ends:c03d9cf063074f34ea940b7f9c43e705"
+    },
+    {
+     "file": "era5.total_precipitation.20240124.nc",
+     "bytes": 49845256,
+     "mtime": 1740314632,
+     "digest": "partial-1MiB-ends:7aa3ffe488dd10515109eab66b62114b"
+    },
+    {
+     "file": "era5.total_precipitation.20240125.nc",
+     "bytes": 49845256,
+     "mtime": 1740314636,
+     "digest": "partial-1MiB-ends:1923acca801a38bab378313977969283"
+    },
+    {
+     "file": "era5.total_precipitation.20240126.nc",
+     "bytes": 49845256,
+     "mtime": 1740314640,
+     "digest": "partial-1MiB-ends:a662d0dbb17eefaefac7bd2d956f7335"
+    },
+    {
+     "file": "era5.total_precipitation.20240127.nc",
+     "bytes": 49845256,
+     "mtime": 1740314644,
+     "digest": "partial-1MiB-ends:f5fcdea4ae838fbf22caa722b3b4acb4"
+    },
+    {
+     "file": "era5.total_precipitation.20240128.nc",
+     "bytes": 49845256,
+     "mtime": 1740314648,
+     "digest": "partial-1MiB-ends:9dd7b34f3d7db7b7ab915caf74bb8527"
+    },
+    {
+     "file": "era5.total_precipitation.20240129.nc",
+     "bytes": 49845256,
+     "mtime": 1740314652,
+     "digest": "partial-1MiB-ends:b2472d18742cd70fe9acb2045a866053"
+    },
+    {
+     "file": "era5.total_precipitation.20240130.nc",
+     "bytes": 49845256,
+     "mtime": 1740314654,
+     "digest": "partial-1MiB-ends:4ece763e2ea2f130003a4c6d918961b0"
+    },
+    {
+     "file": "era5.total_precipitation.20240131.nc",
+     "bytes": 49845256,
+     "mtime": 1740314658,
+     "digest": "partial-1MiB-ends:cc7446659ae7ba0d06f4543869cc3120"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "divergence",
+   "files": 31,
+   "bytes": 35533033776,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.divergence.20240101.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986458,
+     "digest": "partial-1MiB-ends:cf35c9451edade48577da4e55241e28e",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "2.864425524655625e-08",
+       "add_offset": "0.0002002689258498719",
+       "_FillValue": "-32767",
+       "units": "s**-1",
+       "long_name": "Divergence",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.divergence.20240102.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986533,
+     "digest": "partial-1MiB-ends:f986935daeab84c705dc1b33e0480e4e"
+    },
+    {
+     "file": "era5.divergence.20240103.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986607,
+     "digest": "partial-1MiB-ends:ff647a1ee5c71b7ea13a19bd31a830de"
+    },
+    {
+     "file": "era5.divergence.20240104.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986681,
+     "digest": "partial-1MiB-ends:9474a3281ee6c7540b27f4c57e06f0ea"
+    },
+    {
+     "file": "era5.divergence.20240105.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986756,
+     "digest": "partial-1MiB-ends:d7550dd8ee1b9b355549fd44c3c6f62b"
+    },
+    {
+     "file": "era5.divergence.20240106.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986831,
+     "digest": "partial-1MiB-ends:b254a42b4338e32f856430a378141515"
+    },
+    {
+     "file": "era5.divergence.20240107.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986906,
+     "digest": "partial-1MiB-ends:582d213d0daef7276cabb1ef061dcd52"
+    },
+    {
+     "file": "era5.divergence.20240108.nc",
+     "bytes": 1146226896,
+     "mtime": 1739986980,
+     "digest": "partial-1MiB-ends:42438c9a335e76c0b6014e05ef99a31d"
+    },
+    {
+     "file": "era5.divergence.20240109.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987055,
+     "digest": "partial-1MiB-ends:7a86d3af6feaa506ad2cb0ec7ceb656a"
+    },
+    {
+     "file": "era5.divergence.20240110.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987128,
+     "digest": "partial-1MiB-ends:88c18e050ebcd33584bfdd4cda1a5dd1"
+    },
+    {
+     "file": "era5.divergence.20240111.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987203,
+     "digest": "partial-1MiB-ends:51c1f8c407eeb69ef49829872f745afe"
+    },
+    {
+     "file": "era5.divergence.20240112.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987277,
+     "digest": "partial-1MiB-ends:c0dcb892748e7ddac27fe451029d4d55"
+    },
+    {
+     "file": "era5.divergence.20240113.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987350,
+     "digest": "partial-1MiB-ends:e6416749de946951ea4ecb6832f3293b"
+    },
+    {
+     "file": "era5.divergence.20240114.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987425,
+     "digest": "partial-1MiB-ends:72fc31ac19a7d89ddbcece9bb3d1621a"
+    },
+    {
+     "file": "era5.divergence.20240115.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987499,
+     "digest": "partial-1MiB-ends:38c6c7c3723b9646ca8c685e4afad94a"
+    },
+    {
+     "file": "era5.divergence.20240116.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987577,
+     "digest": "partial-1MiB-ends:e13b8847f12aec7f772abc290d06027d"
+    },
+    {
+     "file": "era5.divergence.20240117.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987653,
+     "digest": "partial-1MiB-ends:7e7d58d5b16ec444b92a8a9547a2b6a9"
+    },
+    {
+     "file": "era5.divergence.20240118.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987730,
+     "digest": "partial-1MiB-ends:cc5ab318e5318fc4d4de66eab9986b34"
+    },
+    {
+     "file": "era5.divergence.20240119.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987803,
+     "digest": "partial-1MiB-ends:6d658a6ac6ceb28bd612f57e75f1b91b"
+    },
+    {
+     "file": "era5.divergence.20240120.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987877,
+     "digest": "partial-1MiB-ends:615fa0bae6a4d5d3022ed2f64c885fdb"
+    },
+    {
+     "file": "era5.divergence.20240121.nc",
+     "bytes": 1146226896,
+     "mtime": 1739987951,
+     "digest": "partial-1MiB-ends:39a54d32f589caa7ecf155caf09fba21"
+    },
+    {
+     "file": "era5.divergence.20240122.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988025,
+     "digest": "partial-1MiB-ends:7a72fb2aced9ffa5b1693b89a5c76d53"
+    },
+    {
+     "file": "era5.divergence.20240123.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988101,
+     "digest": "partial-1MiB-ends:adc052fd2c78fdb4d30f0a2d9f58834f"
+    },
+    {
+     "file": "era5.divergence.20240124.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988173,
+     "digest": "partial-1MiB-ends:21ba09f42900ca5c7f012422eec58888"
+    },
+    {
+     "file": "era5.divergence.20240125.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988248,
+     "digest": "partial-1MiB-ends:1b7e04a6474452ae341da0a994e918c3"
+    },
+    {
+     "file": "era5.divergence.20240126.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988323,
+     "digest": "partial-1MiB-ends:fd79f138a86c4795445bb68d1ea39f58"
+    },
+    {
+     "file": "era5.divergence.20240127.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988397,
+     "digest": "partial-1MiB-ends:98182f9b32098efdb544a4e0c6262fd3"
+    },
+    {
+     "file": "era5.divergence.20240128.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988472,
+     "digest": "partial-1MiB-ends:a3349fd4ba584df51d41b1ae6b054b4d"
+    },
+    {
+     "file": "era5.divergence.20240129.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988544,
+     "digest": "partial-1MiB-ends:19205d21c6fd4c23c389e31df49288c7"
+    },
+    {
+     "file": "era5.divergence.20240130.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988619,
+     "digest": "partial-1MiB-ends:c575db1e73a2186c6ba46e982efa6b8e"
+    },
+    {
+     "file": "era5.divergence.20240131.nc",
+     "bytes": 1146226896,
+     "mtime": 1739988695,
+     "digest": "partial-1MiB-ends:4f0adae45d90b000a85938e500caa85e"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "geopotential",
+   "files": 31,
+   "bytes": 35533033776,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.geopotential.20240101.nc",
+     "bytes": 1146226896,
+     "mtime": 1740040906,
+     "digest": "partial-1MiB-ends:7872e1a21054293dcc5a64f422478618",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "5.60023949944589",
+       "add_offset": "179974.8898216565",
+       "_FillValue": "-32767",
+       "units": "m**2 s**-2",
+       "long_name": "Geopotential",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.geopotential.20240102.nc",
+     "bytes": 1146226896,
+     "mtime": 1740040981,
+     "digest": "partial-1MiB-ends:2edfa8cf7d17f1bb973643967df6edd9"
+    },
+    {
+     "file": "era5.geopotential.20240103.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041056,
+     "digest": "partial-1MiB-ends:7074c485a3b8d5717feaac8474eb1d13"
+    },
+    {
+     "file": "era5.geopotential.20240104.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041133,
+     "digest": "partial-1MiB-ends:8261ef6c73627d20d614f6f86ef5f001"
+    },
+    {
+     "file": "era5.geopotential.20240105.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041210,
+     "digest": "partial-1MiB-ends:4608c4994d845eb48fbd9301821a9808"
+    },
+    {
+     "file": "era5.geopotential.20240106.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041290,
+     "digest": "partial-1MiB-ends:fa0c16ef0f36285d23bc284bd5096c5b"
+    },
+    {
+     "file": "era5.geopotential.20240107.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041368,
+     "digest": "partial-1MiB-ends:35b5b57ea95328d7b1444c046929a284"
+    },
+    {
+     "file": "era5.geopotential.20240108.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041446,
+     "digest": "partial-1MiB-ends:607a6c72867df5759819e6c19999e65c"
+    },
+    {
+     "file": "era5.geopotential.20240109.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041522,
+     "digest": "partial-1MiB-ends:c388a46792846d16d32f4e4716154e55"
+    },
+    {
+     "file": "era5.geopotential.20240110.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041598,
+     "digest": "partial-1MiB-ends:25ca215a201881adbe108fccd5dd1a7d"
+    },
+    {
+     "file": "era5.geopotential.20240111.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041674,
+     "digest": "partial-1MiB-ends:02ead95ded7003d9c66bd4c7adb35956"
+    },
+    {
+     "file": "era5.geopotential.20240112.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041749,
+     "digest": "partial-1MiB-ends:afc2bfba4ef30c3865235033e3da5bc7"
+    },
+    {
+     "file": "era5.geopotential.20240113.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041823,
+     "digest": "partial-1MiB-ends:98d17abc035e529b1352a65549997903"
+    },
+    {
+     "file": "era5.geopotential.20240114.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041899,
+     "digest": "partial-1MiB-ends:a9615c99bafa7df2bec0b3116b117150"
+    },
+    {
+     "file": "era5.geopotential.20240115.nc",
+     "bytes": 1146226896,
+     "mtime": 1740041975,
+     "digest": "partial-1MiB-ends:2ff5dd8ba5540494536f3331c172e07e"
+    },
+    {
+     "file": "era5.geopotential.20240116.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042049,
+     "digest": "partial-1MiB-ends:f25e6afded991aee8ede9114ad4d36dd"
+    },
+    {
+     "file": "era5.geopotential.20240117.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042125,
+     "digest": "partial-1MiB-ends:a3064e5595f7e492df058ab34ef2d34b"
+    },
+    {
+     "file": "era5.geopotential.20240118.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042201,
+     "digest": "partial-1MiB-ends:5a7a6dbf23b0db8d2d16fd61797e6cdd"
+    },
+    {
+     "file": "era5.geopotential.20240119.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042276,
+     "digest": "partial-1MiB-ends:5f69cef92b5f34f6f0899e214c976e17"
+    },
+    {
+     "file": "era5.geopotential.20240120.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042353,
+     "digest": "partial-1MiB-ends:f73d12b1ce5bf654fc88e873d9c76556"
+    },
+    {
+     "file": "era5.geopotential.20240121.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042430,
+     "digest": "partial-1MiB-ends:43b43505ff82c7c624a422ea0198ff51"
+    },
+    {
+     "file": "era5.geopotential.20240122.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042506,
+     "digest": "partial-1MiB-ends:f7f849df9374da21ff8be25d98acd355"
+    },
+    {
+     "file": "era5.geopotential.20240123.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042582,
+     "digest": "partial-1MiB-ends:f542a90f56926d470aa4c57c3c2dadee"
+    },
+    {
+     "file": "era5.geopotential.20240124.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042656,
+     "digest": "partial-1MiB-ends:f4bf672fde37e4c8a0b59853e0a56a5b"
+    },
+    {
+     "file": "era5.geopotential.20240125.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042733,
+     "digest": "partial-1MiB-ends:842ce2de223095fe65856f25e434b1fe"
+    },
+    {
+     "file": "era5.geopotential.20240126.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042811,
+     "digest": "partial-1MiB-ends:db1bd9451fae5355c8129bedad44ee6b"
+    },
+    {
+     "file": "era5.geopotential.20240127.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042892,
+     "digest": "partial-1MiB-ends:5f8721a7903b6ac86a3fede29151c330"
+    },
+    {
+     "file": "era5.geopotential.20240128.nc",
+     "bytes": 1146226896,
+     "mtime": 1740042969,
+     "digest": "partial-1MiB-ends:dd9ff893ddd1e0b43815ba88c5f5bf83"
+    },
+    {
+     "file": "era5.geopotential.20240129.nc",
+     "bytes": 1146226896,
+     "mtime": 1740043047,
+     "digest": "partial-1MiB-ends:0e67056b8229d1d3e2c4b3b8bad6a420"
+    },
+    {
+     "file": "era5.geopotential.20240130.nc",
+     "bytes": 1146226896,
+     "mtime": 1740043124,
+     "digest": "partial-1MiB-ends:688267ec7952dd006a2cde30278a9922"
+    },
+    {
+     "file": "era5.geopotential.20240131.nc",
+     "bytes": 1146226896,
+     "mtime": 1740043201,
+     "digest": "partial-1MiB-ends:b2965a70f313568353e0dee6bddc6408"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "relative_humidity",
+   "files": 31,
+   "bytes": 35533034396,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.relative_humidity.20240101.nc",
+     "bytes": 1146226916,
+     "mtime": 1740068618,
+     "digest": "partial-1MiB-ends:c0587d50ae4034e6255448d79c19583c",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "0.002738006713471008",
+       "add_offset": "73.74082594722387",
+       "_FillValue": "-32767",
+       "units": "%",
+       "long_name": "Relative humidity",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.relative_humidity.20240102.nc",
+     "bytes": 1146226916,
+     "mtime": 1740068697,
+     "digest": "partial-1MiB-ends:260c0b40fd50760aeb5b6e38ee92d451"
+    },
+    {
+     "file": "era5.relative_humidity.20240103.nc",
+     "bytes": 1146226916,
+     "mtime": 1740068773,
+     "digest": "partial-1MiB-ends:677a9463348e93655211ba757eb23847"
+    },
+    {
+     "file": "era5.relative_humidity.20240104.nc",
+     "bytes": 1146226916,
+     "mtime": 1740068850,
+     "digest": "partial-1MiB-ends:c1369809972ec8740ac567e744533f6d"
+    },
+    {
+     "file": "era5.relative_humidity.20240105.nc",
+     "bytes": 1146226916,
+     "mtime": 1740068927,
+     "digest": "partial-1MiB-ends:3bd1c3af954a5da286462ef12e550ed6"
+    },
+    {
+     "file": "era5.relative_humidity.20240106.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069003,
+     "digest": "partial-1MiB-ends:3f0a714bdc8d29da8a22656ca646f452"
+    },
+    {
+     "file": "era5.relative_humidity.20240107.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069080,
+     "digest": "partial-1MiB-ends:55f4f9584da0e98e27689b205b98ab91"
+    },
+    {
+     "file": "era5.relative_humidity.20240108.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069158,
+     "digest": "partial-1MiB-ends:a0166f3e37a5e2dcae7aaafb5690f549"
+    },
+    {
+     "file": "era5.relative_humidity.20240109.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069234,
+     "digest": "partial-1MiB-ends:0124962ea9e17c1b411d4af9d5e0d484"
+    },
+    {
+     "file": "era5.relative_humidity.20240110.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069311,
+     "digest": "partial-1MiB-ends:22c985d93d493e18988031f0cc120351"
+    },
+    {
+     "file": "era5.relative_humidity.20240111.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069387,
+     "digest": "partial-1MiB-ends:eeb8f06cd6a5f15199e5356883d080eb"
+    },
+    {
+     "file": "era5.relative_humidity.20240112.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069464,
+     "digest": "partial-1MiB-ends:4d8a0dd943b548b27afcdf3f640b8777"
+    },
+    {
+     "file": "era5.relative_humidity.20240113.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069541,
+     "digest": "partial-1MiB-ends:91c1c7f3d1652a3d1d3cd210fae2cea7"
+    },
+    {
+     "file": "era5.relative_humidity.20240114.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069618,
+     "digest": "partial-1MiB-ends:2bdbd9e284231e86921064d000cdd3d5"
+    },
+    {
+     "file": "era5.relative_humidity.20240115.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069696,
+     "digest": "partial-1MiB-ends:b1f73a00525129d7b07a843e119cdf48"
+    },
+    {
+     "file": "era5.relative_humidity.20240116.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069773,
+     "digest": "partial-1MiB-ends:245c40301e9b6bc69917094ce24e95b9"
+    },
+    {
+     "file": "era5.relative_humidity.20240117.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069851,
+     "digest": "partial-1MiB-ends:386f2d3d522cc5dc05b75f460465ff78"
+    },
+    {
+     "file": "era5.relative_humidity.20240118.nc",
+     "bytes": 1146226916,
+     "mtime": 1740069926,
+     "digest": "partial-1MiB-ends:1430844d97bdcc506602f48895a2b503"
+    },
+    {
+     "file": "era5.relative_humidity.20240119.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070003,
+     "digest": "partial-1MiB-ends:7f39c30f02be541fa285ae34785564b4"
+    },
+    {
+     "file": "era5.relative_humidity.20240120.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070079,
+     "digest": "partial-1MiB-ends:fb82966f78d0c424da5a9964c7789dfa"
+    },
+    {
+     "file": "era5.relative_humidity.20240121.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070155,
+     "digest": "partial-1MiB-ends:c09328d802839f7886f5d6c024e14b6e"
+    },
+    {
+     "file": "era5.relative_humidity.20240122.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070231,
+     "digest": "partial-1MiB-ends:5b26fbabe193035c19fbdea21c2a1ab1"
+    },
+    {
+     "file": "era5.relative_humidity.20240123.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070307,
+     "digest": "partial-1MiB-ends:07cd1a46183f7cfc68d2b616398216fa"
+    },
+    {
+     "file": "era5.relative_humidity.20240124.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070381,
+     "digest": "partial-1MiB-ends:efd90971c4136d4eba31846e4712645f"
+    },
+    {
+     "file": "era5.relative_humidity.20240125.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070457,
+     "digest": "partial-1MiB-ends:b3dab49e450b6b08c96d9b650ba36266"
+    },
+    {
+     "file": "era5.relative_humidity.20240126.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070534,
+     "digest": "partial-1MiB-ends:cf01f6c5d06dd76a93e74d425b6ccc37"
+    },
+    {
+     "file": "era5.relative_humidity.20240127.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070611,
+     "digest": "partial-1MiB-ends:b61ccfa724234a0497d54c273a2a15fc"
+    },
+    {
+     "file": "era5.relative_humidity.20240128.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070688,
+     "digest": "partial-1MiB-ends:d5bf8369260e02769a3fc20a0cc3e101"
+    },
+    {
+     "file": "era5.relative_humidity.20240129.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070765,
+     "digest": "partial-1MiB-ends:8e1cc54abb4590f9b3ec2bd9ac731b0d"
+    },
+    {
+     "file": "era5.relative_humidity.20240130.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070844,
+     "digest": "partial-1MiB-ends:bb0dbcebcf26c5aa657d3dd17c6e1c49"
+    },
+    {
+     "file": "era5.relative_humidity.20240131.nc",
+     "bytes": 1146226916,
+     "mtime": 1740070924,
+     "digest": "partial-1MiB-ends:1a93b55b65d4310dfecb7977875ff04b"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "temperature",
+   "files": 31,
+   "bytes": 35533033652,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.temperature.20240101.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125384,
+     "digest": "partial-1MiB-ends:c94e835ac37d9a04bf240ceeec7a028b",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "0.002041058216331014",
+       "add_offset": "251.4562014557551",
+       "_FillValue": "-32767",
+       "units": "K",
+       "long_name": "Temperature",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.temperature.20240102.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125462,
+     "digest": "partial-1MiB-ends:1fb7a3086adca7852acdaaead18606c4"
+    },
+    {
+     "file": "era5.temperature.20240103.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125538,
+     "digest": "partial-1MiB-ends:274f234744a2c53d76a7096483a0687d"
+    },
+    {
+     "file": "era5.temperature.20240104.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125616,
+     "digest": "partial-1MiB-ends:fca97c4538fe293ee05310bdf13aefbf"
+    },
+    {
+     "file": "era5.temperature.20240105.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125694,
+     "digest": "partial-1MiB-ends:2d8fa1f1982a142d61dddd402dcdd6ed"
+    },
+    {
+     "file": "era5.temperature.20240106.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125770,
+     "digest": "partial-1MiB-ends:92f1f918514096539336653cac3b5f9e"
+    },
+    {
+     "file": "era5.temperature.20240107.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125849,
+     "digest": "partial-1MiB-ends:4ead2758f478a5051d35382886e60d13"
+    },
+    {
+     "file": "era5.temperature.20240108.nc",
+     "bytes": 1146226892,
+     "mtime": 1740125926,
+     "digest": "partial-1MiB-ends:bc1f7b4d54a50c2cffbe09851f228a28"
+    },
+    {
+     "file": "era5.temperature.20240109.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126004,
+     "digest": "partial-1MiB-ends:34011b4953eb5170b8cf925872612763"
+    },
+    {
+     "file": "era5.temperature.20240110.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126082,
+     "digest": "partial-1MiB-ends:190fe40dcc458a3d9e344a243e29ff0f"
+    },
+    {
+     "file": "era5.temperature.20240111.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126160,
+     "digest": "partial-1MiB-ends:cf909303407e230522f4903f28b9c28a"
+    },
+    {
+     "file": "era5.temperature.20240112.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126237,
+     "digest": "partial-1MiB-ends:bda78a27b6b70422583a896ea8e51527"
+    },
+    {
+     "file": "era5.temperature.20240113.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126313,
+     "digest": "partial-1MiB-ends:972fea1b87123dd6ff6067f195eda5b7"
+    },
+    {
+     "file": "era5.temperature.20240114.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126390,
+     "digest": "partial-1MiB-ends:311ae098076566eecb459c413aee14c3"
+    },
+    {
+     "file": "era5.temperature.20240115.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126470,
+     "digest": "partial-1MiB-ends:f1a882c24488e7f745453870904da3fd"
+    },
+    {
+     "file": "era5.temperature.20240116.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126546,
+     "digest": "partial-1MiB-ends:8b39fad4d062c9611795d1f8271a935f"
+    },
+    {
+     "file": "era5.temperature.20240117.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126624,
+     "digest": "partial-1MiB-ends:f8fa12c970c79a4ea64950128fe4c6fd"
+    },
+    {
+     "file": "era5.temperature.20240118.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126702,
+     "digest": "partial-1MiB-ends:91fe8a749e4772549a3489af8148f209"
+    },
+    {
+     "file": "era5.temperature.20240119.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126778,
+     "digest": "partial-1MiB-ends:81dade6ae23c4a81ea8501920a83fffb"
+    },
+    {
+     "file": "era5.temperature.20240120.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126853,
+     "digest": "partial-1MiB-ends:037b95781873156daed36d27fade8375"
+    },
+    {
+     "file": "era5.temperature.20240121.nc",
+     "bytes": 1146226892,
+     "mtime": 1740126928,
+     "digest": "partial-1MiB-ends:1777a6f2cf645178b72b7aeae9a0f7b7"
+    },
+    {
+     "file": "era5.temperature.20240122.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127005,
+     "digest": "partial-1MiB-ends:526337d506214c48932e3051acb6e57b"
+    },
+    {
+     "file": "era5.temperature.20240123.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127082,
+     "digest": "partial-1MiB-ends:fcc35c3f31833b762de4baf17c5a5bc7"
+    },
+    {
+     "file": "era5.temperature.20240124.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127163,
+     "digest": "partial-1MiB-ends:28f628eeddd5cb2b1488ed38ac38ab2b"
+    },
+    {
+     "file": "era5.temperature.20240125.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127241,
+     "digest": "partial-1MiB-ends:f7e32ed922d056b616b01c6c1f1c3b96"
+    },
+    {
+     "file": "era5.temperature.20240126.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127319,
+     "digest": "partial-1MiB-ends:b24f394b0dbc75c0766a15f538e4e1d0"
+    },
+    {
+     "file": "era5.temperature.20240127.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127395,
+     "digest": "partial-1MiB-ends:3dcba9149230798c8fe02b0169ba6817"
+    },
+    {
+     "file": "era5.temperature.20240128.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127469,
+     "digest": "partial-1MiB-ends:13f78154722726c43389f9158c2062cd"
+    },
+    {
+     "file": "era5.temperature.20240129.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127545,
+     "digest": "partial-1MiB-ends:e9f80fa954e52ce8c8900060c35c5aff"
+    },
+    {
+     "file": "era5.temperature.20240130.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127622,
+     "digest": "partial-1MiB-ends:cfc4bf04e438ea45b6fba10c8b884023"
+    },
+    {
+     "file": "era5.temperature.20240131.nc",
+     "bytes": 1146226892,
+     "mtime": 1740127699,
+     "digest": "partial-1MiB-ends:8f6895da1fe0a45df70e68526d473585"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "u_component_of_wind",
+   "files": 31,
+   "bytes": 35533034520,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.u_component_of_wind.20240101.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153201,
+     "digest": "partial-1MiB-ends:1448f265582b472ca819e7352872a580",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "0.002869223037781895",
+       "add_offset": "22.13155336455533",
+       "_FillValue": "-32767",
+       "units": "m s**-1",
+       "long_name": "U component of wind",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.u_component_of_wind.20240102.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153278,
+     "digest": "partial-1MiB-ends:7942eb7d80f3eb00f639ca867b9486dc"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240103.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153355,
+     "digest": "partial-1MiB-ends:79ebae98ae6b760126fd978e5770a505"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240104.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153431,
+     "digest": "partial-1MiB-ends:229d633bef86bccb11bf3e6eddfe9608"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240105.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153506,
+     "digest": "partial-1MiB-ends:38b04a8890d3cd95c99716b9302fdfd0"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240106.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153584,
+     "digest": "partial-1MiB-ends:87645213061f47e3138a7176c73608ab"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240107.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153660,
+     "digest": "partial-1MiB-ends:63eea993afd9baa457d09439016dcdd2"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240108.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153736,
+     "digest": "partial-1MiB-ends:f420006d8c8a19d9cb28f4a922f07661"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240109.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153811,
+     "digest": "partial-1MiB-ends:a4e2cf32a97918b402cce4a53a009cef"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240110.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153887,
+     "digest": "partial-1MiB-ends:a12861b4b8d3b9547bc9063d1ffb9a70"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240111.nc",
+     "bytes": 1146226920,
+     "mtime": 1740153964,
+     "digest": "partial-1MiB-ends:69748e22e1be09e205b3fa3ab8948294"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240112.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154040,
+     "digest": "partial-1MiB-ends:e81a193faa0cc607fb514d63e7b02f63"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240113.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154117,
+     "digest": "partial-1MiB-ends:1b9591fe5f4d007dee36327488a98ed9"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240114.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154193,
+     "digest": "partial-1MiB-ends:ebd0bdf36b58d5a1fa432cdc9a60bebd"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240115.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154270,
+     "digest": "partial-1MiB-ends:1b389ff58faf18467dee7f676b75052d"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240116.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154348,
+     "digest": "partial-1MiB-ends:a48c54827811fd1493d94e658c8176eb"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240117.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154424,
+     "digest": "partial-1MiB-ends:93aff373cf78f3f4a75894dda25f2164"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240118.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154501,
+     "digest": "partial-1MiB-ends:18ab04c43909843baa18e8d86d5fb025"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240119.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154578,
+     "digest": "partial-1MiB-ends:533fc754fd0790dedbf5e0ae656561c9"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240120.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154656,
+     "digest": "partial-1MiB-ends:77495589c5a9bd8129678588fb7ad74e"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240121.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154733,
+     "digest": "partial-1MiB-ends:7bbbf2b11b1c467f93cb6e9679ea9af9"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240122.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154809,
+     "digest": "partial-1MiB-ends:660fc6cc72fcf785c45b185d01ce91ee"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240123.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154885,
+     "digest": "partial-1MiB-ends:a1198a2225c829a4dbdc5b026062506b"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240124.nc",
+     "bytes": 1146226920,
+     "mtime": 1740154962,
+     "digest": "partial-1MiB-ends:3eec4082dfe7ea5cfa7868c5798fb254"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240125.nc",
+     "bytes": 1146226920,
+     "mtime": 1740155039,
+     "digest": "partial-1MiB-ends:773fe3d0862ca909cdb0d3297b4dedc1"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240126.nc",
+     "bytes": 1146226920,
+     "mtime": 1740155115,
+     "digest": "partial-1MiB-ends:770cd0c40de8d87a20994f96deeebba7"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240127.nc",
+     "bytes": 1146226920,
+     "mtime": 1740155193,
+     "digest": "partial-1MiB-ends:3e0c6cc77734a666fe79077c5abcddd3"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240128.nc",
+     "bytes": 1146226920,
+     "mtime": 1740155274,
+     "digest": "partial-1MiB-ends:5706a699a81fae983165bdfb169c50bb"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240129.nc",
+     "bytes": 1146226920,
+     "mtime": 1740155351,
+     "digest": "partial-1MiB-ends:5eee55bb02777821eb5ae1e99cc80669"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240130.nc",
+     "bytes": 1146226920,
+     "mtime": 1740155427,
+     "digest": "partial-1MiB-ends:399e17947418b8ac0bf26f390ce5000f"
+    },
+    {
+     "file": "era5.u_component_of_wind.20240131.nc",
+     "bytes": 1146226920,
+     "mtime": 1740155503,
+     "digest": "partial-1MiB-ends:382f8597c7e844e1ee9fa3e36888a9d8"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "v_component_of_wind",
+   "files": 31,
+   "bytes": 35533034520,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.v_component_of_wind.20240101.nc",
+     "bytes": 1146226920,
+     "mtime": 1740181605,
+     "digest": "partial-1MiB-ends:33d8a1505210c2b85515c370eb5b8675",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "0.00253578940324555",
+       "add_offset": "5.92019511799369",
+       "_FillValue": "-32767",
+       "units": "m s**-1",
+       "long_name": "V component of wind",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.v_component_of_wind.20240102.nc",
+     "bytes": 1146226920,
+     "mtime": 1740181681,
+     "digest": "partial-1MiB-ends:7b45531f78cd95f53c4893ab00007236"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240103.nc",
+     "bytes": 1146226920,
+     "mtime": 1740181756,
+     "digest": "partial-1MiB-ends:c05856a4eb2c8102f1215b1de4d00fc9"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240104.nc",
+     "bytes": 1146226920,
+     "mtime": 1740181836,
+     "digest": "partial-1MiB-ends:3877fa02a2b723b2d7cec2cc86027a16"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240105.nc",
+     "bytes": 1146226920,
+     "mtime": 1740181913,
+     "digest": "partial-1MiB-ends:0b9c44dc8dd59a816796e0a4403a9dd7"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240106.nc",
+     "bytes": 1146226920,
+     "mtime": 1740181991,
+     "digest": "partial-1MiB-ends:343410bbc34c167dc7d4bde20828cd5c"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240107.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182069,
+     "digest": "partial-1MiB-ends:96dd12946db9b79b01e257e4e8c9f805"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240108.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182148,
+     "digest": "partial-1MiB-ends:8132a0bd0315cea6d644a74391e7b755"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240109.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182226,
+     "digest": "partial-1MiB-ends:82e3fbcc9285c019ce20e090cd7f266a"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240110.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182305,
+     "digest": "partial-1MiB-ends:de4611c74dfe3c840533f98ee3eb9c35"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240111.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182382,
+     "digest": "partial-1MiB-ends:f212f67cb9ae694a10ba1d5d3b7ebde4"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240112.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182462,
+     "digest": "partial-1MiB-ends:58e2016094e87e9b94035cad89e0651b"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240113.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182537,
+     "digest": "partial-1MiB-ends:9d4b6135d3c06f47388109e65e12d190"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240114.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182615,
+     "digest": "partial-1MiB-ends:4bded3468b09ab46a1828ae8cb191026"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240115.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182695,
+     "digest": "partial-1MiB-ends:cf3b12a58ae2a6084a28479b2afa7680"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240116.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182777,
+     "digest": "partial-1MiB-ends:09014b9f36fbeccde9bbc540016bbd68"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240117.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182856,
+     "digest": "partial-1MiB-ends:469a4c394233ab54a4752cca11a71fce"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240118.nc",
+     "bytes": 1146226920,
+     "mtime": 1740182933,
+     "digest": "partial-1MiB-ends:88b3789a16e4e915991fa7f93a6a7b92"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240119.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183010,
+     "digest": "partial-1MiB-ends:ef28e0434b890be86bb9180487869e96"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240120.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183089,
+     "digest": "partial-1MiB-ends:042a17f35eb570f721eab246be074455"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240121.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183171,
+     "digest": "partial-1MiB-ends:618421694ba2f81032627fffa2fc3f6d"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240122.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183250,
+     "digest": "partial-1MiB-ends:93b52a66336a514e838289fbda515360"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240123.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183332,
+     "digest": "partial-1MiB-ends:98c081c1970d9af4c855db859bcc0df4"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240124.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183406,
+     "digest": "partial-1MiB-ends:a9106912d87a74ab37b74aba00bfab99"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240125.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183481,
+     "digest": "partial-1MiB-ends:048fa7c34766999eea7a07934441336f"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240126.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183559,
+     "digest": "partial-1MiB-ends:563b2845e40647b9a71b571e70bfca60"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240127.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183640,
+     "digest": "partial-1MiB-ends:32968d8608f56eb375d5d653575928df"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240128.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183721,
+     "digest": "partial-1MiB-ends:763413dbb677bb13f7a4f96d39abc3c0"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240129.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183799,
+     "digest": "partial-1MiB-ends:c8ca421fb2c9bc65ded56229c233253a"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240130.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183880,
+     "digest": "partial-1MiB-ends:4958de250c0806c44131a4a2e4ba75f7"
+    },
+    {
+     "file": "era5.v_component_of_wind.20240131.nc",
+     "bytes": 1146226920,
+     "mtime": 1740183957,
+     "digest": "partial-1MiB-ends:e3af248d343079519217b11af71859ea"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "vertical_velocity",
+   "files": 31,
+   "bytes": 35533035016,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.vertical_velocity.20240101.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210149,
+     "digest": "partial-1MiB-ends:795d0e6df60cbad77aadb9487d4e44cd",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "0.0003869617398068635",
+       "add_offset": "-7.374232653996124",
+       "_FillValue": "-32767",
+       "units": "Pa s**-1",
+       "long_name": "Vertical velocity",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.vertical_velocity.20240102.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210227,
+     "digest": "partial-1MiB-ends:3ee9601a524ec81cd86844e5d8b43398"
+    },
+    {
+     "file": "era5.vertical_velocity.20240103.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210305,
+     "digest": "partial-1MiB-ends:35f1261133ea79234c9ad41953a5fdbf"
+    },
+    {
+     "file": "era5.vertical_velocity.20240104.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210383,
+     "digest": "partial-1MiB-ends:80d30baa717f9f13519a10cdaac1b3bf"
+    },
+    {
+     "file": "era5.vertical_velocity.20240105.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210462,
+     "digest": "partial-1MiB-ends:8078a013f451f87a586ed2dfdfde9f30"
+    },
+    {
+     "file": "era5.vertical_velocity.20240106.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210538,
+     "digest": "partial-1MiB-ends:f585082b1df96ed7787d59ca8f837382"
+    },
+    {
+     "file": "era5.vertical_velocity.20240107.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210617,
+     "digest": "partial-1MiB-ends:e3838a383150c2f4dd53372461120d55"
+    },
+    {
+     "file": "era5.vertical_velocity.20240108.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210696,
+     "digest": "partial-1MiB-ends:c746127c0e43cd5c61583bd6f8723b12"
+    },
+    {
+     "file": "era5.vertical_velocity.20240109.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210774,
+     "digest": "partial-1MiB-ends:069202e617c786d3293d72bf03a92b2c"
+    },
+    {
+     "file": "era5.vertical_velocity.20240110.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210853,
+     "digest": "partial-1MiB-ends:b1edbb25b1552ae5d833de2c9d7a8d5b"
+    },
+    {
+     "file": "era5.vertical_velocity.20240111.nc",
+     "bytes": 1146226936,
+     "mtime": 1740210931,
+     "digest": "partial-1MiB-ends:cf696f049dccf43c6349ee91d6ea3ab1"
+    },
+    {
+     "file": "era5.vertical_velocity.20240112.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211008,
+     "digest": "partial-1MiB-ends:198ac42ce3164acda36952f9e07622e3"
+    },
+    {
+     "file": "era5.vertical_velocity.20240113.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211085,
+     "digest": "partial-1MiB-ends:ed711ef9a31a9eed238d5a05ab1553e9"
+    },
+    {
+     "file": "era5.vertical_velocity.20240114.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211163,
+     "digest": "partial-1MiB-ends:f7a1e58d0121605b34225df04972dace"
+    },
+    {
+     "file": "era5.vertical_velocity.20240115.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211244,
+     "digest": "partial-1MiB-ends:15f3df0e7bf703b22bc8d2992a3ad499"
+    },
+    {
+     "file": "era5.vertical_velocity.20240116.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211324,
+     "digest": "partial-1MiB-ends:a95c1d5b6315c1345da99cf0f4dc3004"
+    },
+    {
+     "file": "era5.vertical_velocity.20240117.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211403,
+     "digest": "partial-1MiB-ends:b1f1937e2e8065935b9c7cadb9b655c6"
+    },
+    {
+     "file": "era5.vertical_velocity.20240118.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211479,
+     "digest": "partial-1MiB-ends:51268d73212f7240c9de615bdb387417"
+    },
+    {
+     "file": "era5.vertical_velocity.20240119.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211558,
+     "digest": "partial-1MiB-ends:17b6a7b78e272462144e55f2b598e3e2"
+    },
+    {
+     "file": "era5.vertical_velocity.20240120.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211636,
+     "digest": "partial-1MiB-ends:d913cab1cf6b77e9a17ce6cb21b49779"
+    },
+    {
+     "file": "era5.vertical_velocity.20240121.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211713,
+     "digest": "partial-1MiB-ends:9b0499bca5bdc5593c209a35f7177a34"
+    },
+    {
+     "file": "era5.vertical_velocity.20240122.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211790,
+     "digest": "partial-1MiB-ends:393b5e98701f2c27dcbb2521884c316b"
+    },
+    {
+     "file": "era5.vertical_velocity.20240123.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211868,
+     "digest": "partial-1MiB-ends:1dd5471a5d32a07d11eddd76ac2d93e1"
+    },
+    {
+     "file": "era5.vertical_velocity.20240124.nc",
+     "bytes": 1146226936,
+     "mtime": 1740211943,
+     "digest": "partial-1MiB-ends:56c34efcc032621341cd38ccc688ad72"
+    },
+    {
+     "file": "era5.vertical_velocity.20240125.nc",
+     "bytes": 1146226936,
+     "mtime": 1740212019,
+     "digest": "partial-1MiB-ends:b521199c2df41af5b6858e363f0e8666"
+    },
+    {
+     "file": "era5.vertical_velocity.20240126.nc",
+     "bytes": 1146226936,
+     "mtime": 1740212098,
+     "digest": "partial-1MiB-ends:86e2977bf6f3c6154bf8514f6e4ac0ca"
+    },
+    {
+     "file": "era5.vertical_velocity.20240127.nc",
+     "bytes": 1146226936,
+     "mtime": 1740212177,
+     "digest": "partial-1MiB-ends:76b1fad8b87333e0d6fea292f3234000"
+    },
+    {
+     "file": "era5.vertical_velocity.20240128.nc",
+     "bytes": 1146226936,
+     "mtime": 1740212255,
+     "digest": "partial-1MiB-ends:d24c6509e8760e705796d1d0a6bf0119"
+    },
+    {
+     "file": "era5.vertical_velocity.20240129.nc",
+     "bytes": 1146226936,
+     "mtime": 1740212332,
+     "digest": "partial-1MiB-ends:fca8bff9c1f7bb61a99a3499a4f6cf75"
+    },
+    {
+     "file": "era5.vertical_velocity.20240130.nc",
+     "bytes": 1146226936,
+     "mtime": 1740212411,
+     "digest": "partial-1MiB-ends:052deaee3f8a7711a10991f34a3692ad"
+    },
+    {
+     "file": "era5.vertical_velocity.20240131.nc",
+     "bytes": 1146226936,
+     "mtime": 1740212488,
+     "digest": "partial-1MiB-ends:d22fda084cb0a144ed74803b7a8ce442"
+    }
+   ]
+  },
+  {
+   "category": "多层变量",
+   "variable": "vorticity",
+   "files": 31,
+   "bytes": 35533034396,
+   "first_date": "20240101",
+   "last_date": "20240131",
+   "per_file": [
+    {
+     "file": "era5.vorticity.20240101.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238340,
+     "digest": "partial-1MiB-ends:9913d4646bf96aedbb1d3380255b80ce",
+     "structure": {
+      "bands": 552,
+      "height": 721,
+      "width": 1440,
+      "band_metadata": {
+       "scale_factor": "3.905254853100466e-08",
+       "add_offset": "7.622296346598699e-05",
+       "_FillValue": "-32767",
+       "units": "s**-1",
+       "long_name": "Vorticity (relative)",
+       "NETCDF_DIM_time": "1086960",
+       "NETCDF_DIM_level": "5"
+      }
+     }
+    },
+    {
+     "file": "era5.vorticity.20240102.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238416,
+     "digest": "partial-1MiB-ends:423bb05711aea38a451cb85963540203"
+    },
+    {
+     "file": "era5.vorticity.20240103.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238493,
+     "digest": "partial-1MiB-ends:c5e89a3833568bc2cdda37d75e988256"
+    },
+    {
+     "file": "era5.vorticity.20240104.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238569,
+     "digest": "partial-1MiB-ends:e21f0274f167d750ae7fbe70a99cee85"
+    },
+    {
+     "file": "era5.vorticity.20240105.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238647,
+     "digest": "partial-1MiB-ends:eb91fcc3223f529edaf6ec3fe128d42e"
+    },
+    {
+     "file": "era5.vorticity.20240106.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238724,
+     "digest": "partial-1MiB-ends:794cff90d22aff9dc87b539be6f2ce05"
+    },
+    {
+     "file": "era5.vorticity.20240107.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238801,
+     "digest": "partial-1MiB-ends:09d22de3ff3c197fbd96d0a9956cae1b"
+    },
+    {
+     "file": "era5.vorticity.20240108.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238878,
+     "digest": "partial-1MiB-ends:4ca007deb75fb4617803205a90c65727"
+    },
+    {
+     "file": "era5.vorticity.20240109.nc",
+     "bytes": 1146226916,
+     "mtime": 1740238953,
+     "digest": "partial-1MiB-ends:851a808656ce4134331d3a6c883fbd89"
+    },
+    {
+     "file": "era5.vorticity.20240110.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239028,
+     "digest": "partial-1MiB-ends:4a8aa44051ce9d80999d3574e890ac6b"
+    },
+    {
+     "file": "era5.vorticity.20240111.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239105,
+     "digest": "partial-1MiB-ends:32b435698f0e60b3b43db78bcbafd225"
+    },
+    {
+     "file": "era5.vorticity.20240112.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239180,
+     "digest": "partial-1MiB-ends:1923c57c3fa0129d8f3cd4ffa5acf989"
+    },
+    {
+     "file": "era5.vorticity.20240113.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239256,
+     "digest": "partial-1MiB-ends:a1f05207b3000d8274b146588a2a355e"
+    },
+    {
+     "file": "era5.vorticity.20240114.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239332,
+     "digest": "partial-1MiB-ends:f822045da2fe1ef122e88ee75190d732"
+    },
+    {
+     "file": "era5.vorticity.20240115.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239407,
+     "digest": "partial-1MiB-ends:92e71e8c502cf8b4e9b7d2d6864a021d"
+    },
+    {
+     "file": "era5.vorticity.20240116.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239481,
+     "digest": "partial-1MiB-ends:17cf51fce083ab32f268e863ae164726"
+    },
+    {
+     "file": "era5.vorticity.20240117.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239556,
+     "digest": "partial-1MiB-ends:28a48d97d5eeb9c8d143cf37cbdfe152"
+    },
+    {
+     "file": "era5.vorticity.20240118.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239632,
+     "digest": "partial-1MiB-ends:2fe850c9333ec08bf9a46b117008c275"
+    },
+    {
+     "file": "era5.vorticity.20240119.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239707,
+     "digest": "partial-1MiB-ends:13ab036c5b198b5dff69793a8eec155e"
+    },
+    {
+     "file": "era5.vorticity.20240120.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239786,
+     "digest": "partial-1MiB-ends:b03f9db3ae581b4047fbff4a1d03bbd7"
+    },
+    {
+     "file": "era5.vorticity.20240121.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239863,
+     "digest": "partial-1MiB-ends:a2d381b1e6d957bfdf5ffa87b53c19b8"
+    },
+    {
+     "file": "era5.vorticity.20240122.nc",
+     "bytes": 1146226916,
+     "mtime": 1740239937,
+     "digest": "partial-1MiB-ends:29a447a6662cf12be5b4409c155e6b5e"
+    },
+    {
+     "file": "era5.vorticity.20240123.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240012,
+     "digest": "partial-1MiB-ends:114e2fa014cb0f508f97da22cbf3678a"
+    },
+    {
+     "file": "era5.vorticity.20240124.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240088,
+     "digest": "partial-1MiB-ends:cc78f702ab5bc7acaaec6e78211dd7ae"
+    },
+    {
+     "file": "era5.vorticity.20240125.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240166,
+     "digest": "partial-1MiB-ends:74de984306f7c7ece2f042dec822dbe4"
+    },
+    {
+     "file": "era5.vorticity.20240126.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240243,
+     "digest": "partial-1MiB-ends:9f6a00f51a9f6600d9ec405ca950cea4"
+    },
+    {
+     "file": "era5.vorticity.20240127.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240322,
+     "digest": "partial-1MiB-ends:8c5ef5ef09038ba8ce53dfa340f4b857"
+    },
+    {
+     "file": "era5.vorticity.20240128.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240399,
+     "digest": "partial-1MiB-ends:602175fc66a58af387aacc27cdbf5261"
+    },
+    {
+     "file": "era5.vorticity.20240129.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240476,
+     "digest": "partial-1MiB-ends:283d22b2e489378621dc572e5ecbc47c"
+    },
+    {
+     "file": "era5.vorticity.20240130.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240552,
+     "digest": "partial-1MiB-ends:36cfbf85f77c487dfe17caf5f943cc06"
+    },
+    {
+     "file": "era5.vorticity.20240131.nc",
+     "bytes": 1146226916,
+     "mtime": 1740240628,
+     "digest": "partial-1MiB-ends:1478d5e3fb1a75551ab7a64e5bbca9f1"
+    }
+   ]
+  }
+ ]
+}
