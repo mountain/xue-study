@@ -229,9 +229,7 @@ def main() -> int:
         p = f["properties"]
         key = (p["datetime"][:10], p.get("sat:relative_orbit"), p.get("sat:orbit_state"))
         by_key.setdefault(key, f)
-    print(f"  {len(features)} scenes, {len(by_key)} distinct (day, path, orbit):")
-    for key in sorted(by_key):
-        print(f"    {key[0]}  path {key[1]:>3} {key[2]}")
+    print(f"  {len(features)} scenes, {len(by_key)} distinct (day, path, orbit)")
 
     def pick(day, path):
         for (d, p, o), f in by_key.items():
@@ -239,66 +237,116 @@ def main() -> int:
                 return f
         raise KeyError(f"{day} path {path}")
 
-    results: dict = {"scenes": sorted(f"{k[0]} path {k[1]} {k[2]}" for k in by_key)}
+    # Three independent geometries over the same ground.  Each orbit contributes
+    # a pre-event pair -- where by construction nothing happened, so its change
+    # areas ARE that orbit's noise floor -- and a pair straddling 08-26.  The
+    # scatter between the three orbits is the empirical repeatability of the
+    # whole pipeline, which no single orbit can supply: one orbit gives a number,
+    # three give a number and the spread of that number.
+    ORBITS = [
+        {"path": 85, "orbit": "ascending", "floor": ("2026-08-04", "2026-08-16"),
+         "event": ("2026-08-16", "2026-08-28")},
+        {"path": 121, "orbit": "descending", "floor": ("2026-08-07", "2026-08-19"),
+         "event": ("2026-08-19", "2026-08-31")},
+        {"path": 19, "orbit": "descending", "floor": ("2026-08-12", "2026-08-24"),
+         "event": ("2026-08-24", "2026-09-05")},
+    ]
 
-    # --- noise floor: same orbit, same 12-day gap, before the event ---------
-    print("\nnoise floor, path 85 ascending, 08-04 -> 08-16 (nothing happened)")
-    pre_a = read_scene(pick("2026-08-04", 85), "vv", box=CORRIDOR)
-    pre_b = read_scene(pick("2026-08-16", 85), "vv", box=CORRIDOR)
-    pre_ah = read_scene(pick("2026-08-04", 85), "vh", box=CORRIDOR)
-    pre_bh = read_scene(pick("2026-08-16", 85), "vh", box=CORRIDOR)
-    cell = pre_a[4]
-    print(f"  output cell {abs(pre_a[1].a):.1f} x {abs(pre_a[1].e):.1f} m "
-          f"= {cell:.0f} m2", flush=True)
-    height, width = pre_a[0].shape
-    rows = np.arange(height)[:, None]
-    cols = np.arange(width)[None, :]
-    transform = pre_a[1]
-    east = transform.c + transform.a * (cols + 0.5)
-    north = transform.f + transform.e * (rows + 0.5)
-    east = np.broadcast_to(east, (height, width))
-    north = np.broadcast_to(north, (height, width))
-    region = np.ones((height, width), dtype=bool)     # the window is the AOI
-    floor_vv = change_area(pre_a[0], pre_b[0], cell, region)
-    floor_vh = change_area(pre_ah[0], pre_bh[0], cell, region)
-    finite = np.isfinite(floor_vv["difference"])
-    print(f"  window {pre_a[0].shape}, usable cells {finite.mean() * 100:.1f}%")
-    print(f"  VV brighten {floor_vv['brighten']:6.1f} km2   darken {floor_vv['darken']:6.1f} km2")
-    print(f"  VH brighten {floor_vh['brighten']:6.1f} km2   darken {floor_vh['darken']:6.1f} km2")
-    results["noise_floor"] = {"vv": {k: v for k, v in floor_vv.items() if k != "difference"},
-                              "vh": {k: v for k, v in floor_vh.items() if k != "difference"}}
-
-    # --- cross-event: same orbit, across 08-26 ------------------------------
-    print("\ncross-event, path 85 ascending, 08-16 -> 08-28 (the event is inside)")
-    post_vv = read_scene(pick("2026-08-28", 85), "vv", box=CORRIDOR)
-    post_vh = read_scene(pick("2026-08-28", 85), "vh", box=CORRIDOR)
-    change_vv = change_area(pre_b[0], post_vv[0], cell, region)
-    change_vh = change_area(pre_bh[0], post_vh[0], cell, region)
-    print(f"  VV brighten {change_vv['brighten']:6.1f} km2   darken {change_vv['darken']:6.1f} km2")
-    print(f"  VH brighten {change_vh['brighten']:6.1f} km2   darken {change_vh['darken']:6.1f} km2")
-    print(f"  signal over noise floor (VV brighten): "
-          f"{change_vv['brighten'] / max(floor_vv['brighten'], 1e-9):.1f}x")
-    results["cross_event"] = {"vv": {k: v for k, v in change_vv.items() if k != "difference"},
-                              "vh": {k: v for k, v in change_vh.items() if k != "difference"}}
-
-    # --- where the change is ------------------------------------------------
-    difference = change_vv["difference"]
-    inside = region & np.isfinite(difference)
-    density_all = float(np.nanmean(np.abs(difference[inside]) >= DB_THRESHOLD) * 100)
-    source_x, source_y = pre_a[3]
-    radial = np.hypot(east - source_x, north - source_y) / 1000.0   # km
-    print(f"\nchange density over the whole AOI: {density_all:.2f}% of cells at |diff| >= 3 dB")
-    bands = [(0, 2, "0-2 km of the detachment"), (2, 6, "2-6 km of it"),
-             (6, 15, "6-15 km"), (15, 40, "15-40 km")]
-    results["density"] = {"aoi_pct": density_all}
-    for low, high, label in bands:
-        band = inside & (radial >= low) & (radial < high)
-        if band.sum() == 0:
+    results: dict = {"orbits": {}}
+    summary = []
+    for spec in ORBITS:
+        path = spec["path"]
+        print(f"\n=== path {path} {spec['orbit']} ===")
+        days = [spec["floor"][0], spec["floor"][1], spec["event"][1]]
+        scenes = {}
+        try:
+            for day in days:
+                scenes[day] = {pol: read_scene(pick(day, path), pol, box=CORRIDOR)
+                               for pol in ("vv", "vh")}
+        except Exception as error:  # noqa: BLE001
+            print(f"  unavailable: {type(error).__name__} {str(error)[:80]}")
             continue
-        density = float(np.mean(np.abs(difference[band]) >= DB_THRESHOLD) * 100)
-        print(f"  {label:<26} {density:5.2f}%   ({int(band.sum())} cells)")
-        results["density"][label] = {"pct": density, "cells": int(band.sum())}
 
+        before_floor, before_event, after_event = days
+        reference = scenes[before_event]["vv"]
+        cell = reference[4]
+        height, width = reference[0].shape
+        rows = np.arange(height)[:, None]
+        cols = np.arange(width)[None, :]
+        transform = reference[1]
+        east = np.broadcast_to(transform.c + transform.a * (cols + 0.5), (height, width))
+        north = np.broadcast_to(transform.f + transform.e * (rows + 0.5), (height, width))
+        region = np.ones((height, width), dtype=bool)
+        source_x, source_y = reference[3]
+        radial = np.hypot(east - source_x, north - source_y) / 1000.0
+
+        entry: dict = {"orbit": spec["orbit"], "path": path, "cell_m2": cell,
+                       "scenes": days}
+        print(f"  window {height}x{width} cells of {cell:.0f} m2")
+        difference = None
+        for label, before, after in (("floor", before_floor, before_event),
+                                     ("event", before_event, after_event)):
+            for pol in ("vv", "vh"):
+                area = change_area(scenes[before][pol][0], scenes[after][pol][0],
+                                   cell, region)
+                entry[f"{label}_{pol}_brighten_km2"] = area["brighten"]
+                entry[f"{label}_{pol}_darken_km2"] = area["darken"]
+                if label == "event" and pol == "vv":
+                    difference = area["difference"]
+            print(f"  {label:<6} VV brighten {entry[f'{label}_vv_brighten_km2']:6.2f} "
+                  f"darken {entry[f'{label}_vv_darken_km2']:6.2f} km2")
+        ratio = (entry["event_vv_brighten_km2"] / entry["floor_vv_brighten_km2"]
+                 if entry["floor_vv_brighten_km2"] > 0 else float("inf"))
+        entry["vv_brighten_ratio"] = ratio
+        print(f"  VV brighten over its own floor: {ratio:.1f}x")
+
+        inside = region & np.isfinite(difference)
+        entry["density"] = {}
+        for low, high, label in ((0, 2, "0-2 km"), (2, 6, "2-6 km"),
+                                 (6, 15, "6-15 km"), (15, 40, "15-40 km")):
+            band = inside & (radial >= low) & (radial < high)
+            if band.sum() == 0:
+                continue
+            entry["density"][label] = float(
+                np.mean(np.abs(difference[band]) >= DB_THRESHOLD) * 100)
+        entry["density"]["whole window"] = float(
+            np.mean(np.abs(difference[inside]) >= DB_THRESHOLD) * 100)
+        print("  density: " + "  ".join(f"{k} {v:.2f}%" for k, v in entry["density"].items()))
+        results["orbits"][f"path {path} {spec['orbit']}"] = entry
+        summary.append(entry)
+
+    if len(summary) >= 2:
+        print("\n=== the test: do independent geometries agree? ===")
+        print(f"{'orbit':<26}{'floor VV br':>12}{'event VV br':>12}{'ratio':>7}"
+              f"{'0-2 km':>9}{'2-6 km':>9}{'15-40 km':>10}")
+        for e in summary:
+            print(f"path {e['path']} {e['orbit']:<16}"
+                  f"{e['floor_vv_brighten_km2']:>12.2f}{e['event_vv_brighten_km2']:>12.2f}"
+                  f"{e['vv_brighten_ratio']:>6.1f}x"
+                  f"{e['density'].get('0-2 km', float('nan')):>8.2f}%"
+                  f"{e['density'].get('2-6 km', float('nan')):>8.2f}%"
+                  f"{e['density'].get('15-40 km', float('nan')):>9.2f}%")
+        near = [e["density"].get("0-2 km") for e in summary if e["density"].get("0-2 km") is not None]
+        far = [e["density"].get("15-40 km") for e in summary if e["density"].get("15-40 km") is not None]
+        if len(near) >= 2 and len(near) == len(far):
+            all_above = all(n > f for n, f in zip(near, far))
+            print(f"\n  source-region density across {len(near)} geometries: "
+                  f"{[round(v, 2) for v in near]}   spread {max(near) - min(near):.2f} points")
+            print(f"  far-field density: {[round(v, 2) for v in far]}   "
+                  f"spread {max(far) - min(far):.2f} points")
+            print(f"  every geometry shows the source region above the far field: {all_above}")
+            results["convergence"] = {
+                "source_density": near, "far_density": far,
+                "source_spread": max(near) - min(near),
+                "far_spread": max(far) - min(far),
+                "source_above_far_in_all": all_above,
+            }
+            print("\n  DECLARED BEFORE RUNNING: the three orbits observe the same ground")
+            print("  change, so their density profiles should agree to within the spread")
+            print("  of their own measured floors.  A larger spread would mean either")
+            print("  that the geometries see different things -- layover and shadow fall")
+            print("  on opposite slopes in ascending and descending passes -- or that the")
+            print("  pipeline is not stable.  This run does not separate the two.")
     print("\nWHAT THIS IS: an independent reproduction of a published change")
     print("detection, on public data, with the same setup, so that any difference")
     print("is the data or the code rather than the choices.")
