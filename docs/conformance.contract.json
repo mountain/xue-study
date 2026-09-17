@@ -10,11 +10,12 @@
     "The system Chrome driven by Playwright headless for the rendering outcome",
     "Adva scripts/navigate.py for claim navigation (read-only)",
     "WMO WIS2 TEMP bulletins as aggregated by the sounding product, and the NOAA Aviation Weather Center caches behind the airport product (both read from the published bucket, no credentials)",
-    "ECMWF ERA5, read in place from the portable drive at /Volumes/Newsmy (12 variables, 372 files, 304.3 GB, January 2024, 0.25 degree hourly). Copernicus product: free to use, NOT public domain, so no bytes enter the tree; docs/era5-catalogue.json carries the paths, sizes, partial digests and the licence position."
+    "ECMWF ERA5, read in place from the portable drive at /Volumes/Newsmy (12 variables, 372 files, 304.3 GB, January 2024, 0.25 degree hourly). Copernicus product: free to use, NOT public domain, so no bytes enter the tree; docs/era5-catalogue.json carries the paths, sizes, partial digests and the licence position.",
+    "ARCO-ERA5 on the public Google Cloud bucket (Zarr, anonymous, 1940 to 2026-09-11 with the ERA5T extension, 37 pressure levels, chunked hourly) as the second reanalysis; no credentials required."
   ],
   "corpus": {
     "path": "docs/claims.toml",
-    "sha256": "c22faaa773452885232222d4b2b744ad9228072980f248c288aece805e93721c",
+    "sha256": "b78786da3bbd397ccbbe97d02f42361f1422bfd2d22eac4b967aea0637a7c5a4",
     "cases": 12
   },
   "protected": [
@@ -86,11 +87,11 @@
     "The point-retention claim's raster row was wrong in a specific way: it described the pointer, not the directories. Five run manifests are served but only three runs still have readable stores, so a run directory is not a run, and cleaning happens in two steps.",
     "The tier-clean skill result covers leads 0-12 h only, because only two runs serve the full tier and the 12Z cycle was never retained; the half-tier curve over 24 h is recorded but is not used as skill evidence.",
     "The 2 m dewpoint's dry bias (-1.4 K median, flat across elevation and stable across three hours) is measured but not attributed: station instrument convention, the AWC decode and the +/-30 minute time matching all remain possible contributors, and none was tested.",
-    "The ERA5 cross-check is a January comparison and the theta-e clamp it bears on is a summer phenomenon seen in September. A winter agreement does not test a summer claim, and the drive holds January only.",
     "The ERA5 catalogue fingerprints files by size, mtime and the SHA-256 of their first and last mebibyte. That detects a changed, truncated or replaced file and does not certify a bit-exact copy; no download record was supplied.",
     "ERA5 and GFS differ by 0.8 to 2.7 K in median 2 m temperature over the global (-60..60) box while agreeing to under 1 K over the plateau, the warm pool and the Andes. The global difference is not explained here.",
     "Sounding anchors used the nominal `time`; the product also carries `launched` (median 41 minutes earlier, 55% of ascents beyond 30 minutes) and `arrived` (median +103 minutes). The tendency bound puts the induced error at 0.3-1.0 K, which leaves the theta-e excess (16.67 K) unaffected and makes the dewpoint dry bias (-1.40 K) a lower bound rather than an estimate, because the timing offset pushes the comparison the other way.",
-    "The within-cell spread's temporal component was separated and is about 1 percent: co-located stations observe within a median of 3 minutes of each other, so the 1.00 K ceiling stands as essentially spatial. What is still not established is that the intercept is terrain alone, since same-minute pairs are also same-weather pairs."
+    "The within-cell spread's temporal component was separated and is about 1 percent: co-located stations observe within a median of 3 minutes of each other, so the 1.00 K ceiling stands as essentially spatial. What is still not established is that the intercept is terrain alone, since same-minute pairs are also same-weather pairs.",
+    "The theta-e comparison is now warm-season on both sides, but it is one day (2026-09-10) at two hours. Whether the 36-40 K plateau divergence between ERA5 and GFS holds across the season is not established, and the archive reaches 2026-09-11 so a full September cannot yet be assembled."
   ],
   "adva_drift_2026_09_17": {
     "adva": {
