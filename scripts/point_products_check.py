@@ -76,6 +76,9 @@ def fetch_json(url: str):
     return json.loads(fetch(url)[1])
 
 
+AIRPORT_INDEX = "latest-airport.json"
+
+
 def sounding_index() -> tuple[dict, str]:
     pointer = fetch_json(urljoin(BASE, "latest-sounding.json"))
     index_url = urljoin(BASE, pointer["path"])
@@ -304,10 +307,74 @@ def cmd_thinning(_args) -> int:
     return 0
 
 
+def cmd_coverage(_args) -> int:
+    """How much of the station history is actually there.
+
+    The spec says each station carries "the last 24 hours of METARs".  A skill
+    curve built on that history needs to know its real shape, and the shape is
+    not a rectangle: the hours are neither contiguous nor uniform, and the holes
+    land inside lead ranges that someone will try to use.
+    """
+    pointer = fetch_json(urljoin(BASE, AIRPORT_INDEX))
+    index_url = urljoin(BASE, pointer["path"])
+    index = fetch_json(index_url)
+    blob = fetch(urljoin(index_url, index["history"]["path"]))[1]
+    declared = index["history"]["byteLength"]
+    print(f"history.jsonl declared {declared:,} B, received {len(blob):,} B")
+    text = blob.decode("utf-8", "replace")
+
+    metars: dict[str, int] = {}
+    periods: dict[str, int] = {}
+    stations = taf_stations = 0
+    for line in text.splitlines():
+        if not line.strip():
+            continue
+        record = json.loads(line)
+        stations += 1
+        for m in record.get("metars") or []:
+            hour = dt.datetime.fromisoformat(m["time"].replace("Z", "+00:00")).strftime("%m-%d %HZ")
+            metars[hour] = metars.get(hour, 0) + 1
+        if isinstance(record.get("taf"), dict):
+            taf_stations += 1
+            for period in record["taf"].get("periods") or []:
+                for key in ("from", "to"):
+                    value = period.get(key)
+                    if isinstance(value, str) and value.startswith("2026"):
+                        hour = dt.datetime.fromisoformat(
+                            value.replace("Z", "+00:00")).strftime("%m-%d %HZ")
+                        periods[hour] = periods.get(hour, 0) + 1
+
+    hours = sorted(set(metars) | set(periods), key=lambda k: (k[:5], int(k[6:8])))
+    print(f"stations {stations}, of which carrying a TAF {taf_stations}")
+    print(f"\n{'hour':<12}{'METAR observations':>20}{'TAF period edges':>19}")
+    for hour in hours:
+        print(f"{hour:<12}{metars.get(hour, 0):>20}{periods.get(hour, 0):>19}")
+    observed = [h for h in hours if metars.get(h, 0) > 0]
+    print(f"\n  hours carrying at least one observation: {len(observed)}")
+    if observed:
+        first = dt.datetime.strptime(observed[0], "%m-%d %HZ")
+        last = dt.datetime.strptime(observed[-1], "%m-%d %HZ")
+        print(f"  span {observed[0]} .. {observed[-1]} "
+              f"({(last - first).total_seconds() / 3600 + 1:.0f} hours)")
+    empty = [h for h in hours if metars.get(h, 0) == 0]
+    if empty:
+        print(f"  hours inside the span carrying none: {empty}")
+    counts = [metars.get(h, 0) for h in observed]
+    if counts:
+        print(f"  observations per present hour: min {min(counts)}, max {max(counts)}")
+    print("\n  NOT ESTABLISHED: why the holes are there.  The product is rebuilt every")
+    print("  ten minutes from a source cache, so a hole may be the source, the")
+    print("  aggregation, or a source outage; nothing here distinguishes them.")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="command", required=True)
+
+    p = sub.add_parser("coverage", help="how much of the station history is there")
+    p.set_defaults(func=cmd_coverage)
 
     p = sub.add_parser("cost", help="hops and bytes for one reading")
     p.set_defaults(func=cmd_cost)
