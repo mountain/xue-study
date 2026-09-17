@@ -15,7 +15,7 @@
   ],
   "corpus": {
     "path": "docs/claims.toml",
-    "sha256": "b78786da3bbd397ccbbe97d02f42361f1422bfd2d22eac4b967aea0637a7c5a4",
+    "sha256": "79dd96043b3ad75bf4ac4589c6d78c95a9363a803e331f9d94d9c3593fdf31d6",
     "cases": 12
   },
   "protected": [
@@ -92,7 +92,7 @@
     "Sounding anchors used the nominal `time`; the product also carries `launched` (median 41 minutes earlier, 55% of ascents beyond 30 minutes) and `arrived` (median +103 minutes). The tendency bound puts the induced error at 0.3-1.0 K, which leaves the theta-e excess (16.67 K) unaffected and makes the dewpoint dry bias (-1.40 K) a lower bound rather than an estimate, because the timing offset pushes the comparison the other way.",
     "The within-cell spread's temporal component was separated and is about 1 percent: co-located stations observe within a median of 3 minutes of each other, so the 1.00 K ceiling stands as essentially spatial. What is still not established is that the intercept is terrain alone, since same-minute pairs are also same-weather pairs.",
     "The theta-e comparison is now warm-season on both sides, but it is one day (2026-09-10) at two hours. Whether the 36-40 K plateau divergence between ERA5 and GFS holds across the season is not established, and the archive reaches 2026-09-11 so a full September cannot yet be assembled.",
-    "The September climatology is partial: four years sampled from a run still in progress. The three claims it supports (plateau mean 330-333 K, plateau below warm pool by 6-7 K, extreme-frequency 0.15-0.53 percent against GFS's 59-82 percent) hold in every sampled year, but 'sixty-three years' cannot be cited until the run finishes."
+    "The 63-year September climatology is complete for 1959-2021 on the coarse 1.5-degree store: the plateau mean is 331.6 K (median), never above the warm pool in 63 years, and 0.40 percent of cells (median, range 0.00-4.71) sit within 1 K of the 357 K GFS ceiling against GFS's 59-82 percent. ERA5's own single-cell extreme reaches 366.41 K, so the difference is in the bulk distribution and not in the achievable extreme; an earlier figure of 150-500x, taken from four sampled years, was superseded."
   ],
   "adva_drift_2026_09_17": {
     "adva": {

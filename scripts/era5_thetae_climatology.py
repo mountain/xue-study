@@ -53,6 +53,7 @@ def main() -> int:
     ap.add_argument("--first-year", type=int, default=1959)
     ap.add_argument("--last-year", type=int, default=2021)
     ap.add_argument("--month", type=int, default=9)
+    ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--json", metavar="PATH")
     args = ap.parse_args()
 
@@ -82,21 +83,23 @@ def main() -> int:
                        & (longitude[None, :] >= west) & (longitude[None, :] <= east))
         print(f"  {name}: {int(masks[name].sum())} cells on the 1.5 degree grid")
 
-    rows = []
-    for year in range(args.first_year, args.last_year + 1):
+    # Years are read concurrently: the cost is round-trip latency per small chunk,
+    # not bandwidth, so a serial loop spends almost all its time waiting.  The run
+    # that produced the first four sampled years was serial and was killed before
+    # finishing, which is why this is threaded and why it is launched as a managed
+    # background job rather than with nohup.
+    from concurrent.futures import ThreadPoolExecutor
+
+    def read_year(year: int):
         start = np.datetime64(f"{year}-{args.month:02d}-01T00")
         end = start + np.timedelta64(31, "D")
         inside = np.flatnonzero((times >= start) & (times < end))
         if inside.size == 0:
-            continue
+            return None
         window = dataset.isel(time=slice(int(inside[0]), int(inside[-1]) + 1))
         temperature = np.asarray(window["temperature"].sel(level=LEVEL).values, dtype=np.float64)
         humidity = np.asarray(window["specific_humidity"].sel(level=LEVEL).values,
                               dtype=np.float64)
-        # (time, latitude, longitude) regardless of how the store ordered them.
-        # `order` indexes the horizontal dims; in the value array time takes axis
-        # 0, so the horizontal axes sit at order[i] + 1.  Using order directly
-        # produced transpose(0, 1, 0) and "repeated axis in transpose".
         permutation = (0, order[0] + 1, order[1] + 1)
         if order != (0, 1):
             temperature = temperature.transpose(*permutation)
@@ -117,14 +120,21 @@ def main() -> int:
                 "frac_within_1K_of_gfs_ceiling": float(
                     np.nanmean(theta >= GFS_CEILING_K - 1.0) * 100),
             }
-        rows.append(entry)
-        if year % 5 == 0 or year == args.last_year:
-            plateau = entry["plateau (80-92E, 26-32N)"]
-            warm = entry["warm pool (120-180E, 15S-15N)"]
-            print(f"  {year}  plateau mean {plateau['month_mean']:7.2f} max {plateau['month_max']:7.2f}"
-                  f"   warm pool mean {warm['month_mean']:7.2f}"
-                  f"   within 1 K of 357: {plateau['frac_within_1K_of_gfs_ceiling']:5.2f}%",
-                  flush=True)
+        return entry
+
+    rows = []
+    years = list(range(args.first_year, args.last_year + 1))
+    with ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for entry in pool.map(read_year, years):
+            if entry is None:
+                continue
+            rows.append(entry)
+            if entry["year"] % 5 == 0 or entry["year"] == args.last_year:
+                plateau = entry["plateau (80-92E, 26-32N)"]
+                print(f"  {entry['year']}  plateau mean {plateau['month_mean']:7.2f} "
+                      f"max {plateau['month_max']:7.2f}   within 1 K of 357: "
+                      f"{plateau['frac_within_1K_of_gfs_ceiling']:5.2f}%", flush=True)
+
     dataset.close()
 
     if not rows:
