@@ -1,0 +1,48 @@
+{
+  "source": "ITS_LIVE datacube v2-updated-october2024, tile N20E080, EPSG32645_G0120_X350000_Y3150000",
+  "access": "s3://its-live-data (public, anonymous); no Earthdata credential required",
+  "site": "Langtang detachment 28.2853N 85.5252E -> UTM45N X=355369 Y=3129689 -> col 461 row 585",
+  "window": "1987-12-29 .. 2025-05-20 (127000 image pairs)",
+  "glacier_pixels_in_41x41": "564 of 1681 (33.6%)",
+  "baseline_m_per_yr": {
+    "median": 9.0,
+    "p25": 7.0,
+    "p75": 15.0
+  },
+  "per_year_median_relative_to_pixel_baseline_all_months": {
+    "2014": 1.0,
+    "2015": 1.14,
+    "2016": 1.0,
+    "2017": 1.17,
+    "2018": 1.14,
+    "2019": 1.17,
+    "2020": 1.0,
+    "2021": 0.73,
+    "2022": 0.69,
+    "2023": 0.67,
+    "2024": 0.89
+  },
+  "landsat_only_median_m_per_yr": {
+    "2014": 9.0,
+    "2015": 10.0,
+    "2016": 9.0,
+    "2017": 10.0,
+    "2018": 11.0,
+    "2019": 8.0,
+    "2020": 8.0,
+    "2021": 7.0,
+    "2022": 7.0,
+    "2023": 8.0,
+    "2024": 8.0
+  },
+  "sensor_ratio_S_over_L": {
+    "2014": 8.0,
+    "2017": 3.5,
+    "2021": 1.0,
+    "2023": 0.75,
+    "2024": 1.12
+  },
+  "conclusion": "No acceleration. A mild deceleration of roughly 25-30 percent from 2015-2018 to 2021-2024, visible within Landsat-only pairs as well as pooled.",
+  "blind_window": "data ends 2025-05-20; the verified detachment is 2026-08-26, so 15 months are unobserved",
+  "structural_limit": "ITS_LIVE measures ICE SURFACE velocity by optical feature tracking. A rock-ice detachment precursor may reside in the rock mass, which this instrument does not measure."
+}
