@@ -91,7 +91,8 @@
     "ERA5 and GFS differ by 0.8 to 2.7 K in median 2 m temperature over the global (-60..60) box while agreeing to under 1 K over the plateau, the warm pool and the Andes. The global difference is not explained here.",
     "Sounding anchors used the nominal `time`; the product also carries `launched` (median 41 minutes earlier, 55% of ascents beyond 30 minutes) and `arrived` (median +103 minutes). The tendency bound puts the induced error at 0.3-1.0 K, which leaves the theta-e excess (16.67 K) unaffected and makes the dewpoint dry bias (-1.40 K) a lower bound rather than an estimate, because the timing offset pushes the comparison the other way.",
     "The within-cell spread's temporal component was separated and is about 1 percent: co-located stations observe within a median of 3 minutes of each other, so the 1.00 K ceiling stands as essentially spatial. What is still not established is that the intercept is terrain alone, since same-minute pairs are also same-weather pairs.",
-    "The theta-e comparison is now warm-season on both sides, but it is one day (2026-09-10) at two hours. Whether the 36-40 K plateau divergence between ERA5 and GFS holds across the season is not established, and the archive reaches 2026-09-11 so a full September cannot yet be assembled."
+    "The theta-e comparison is now warm-season on both sides, but it is one day (2026-09-10) at two hours. Whether the 36-40 K plateau divergence between ERA5 and GFS holds across the season is not established, and the archive reaches 2026-09-11 so a full September cannot yet be assembled.",
+    "The September climatology is partial: four years sampled from a run still in progress. The three claims it supports (plateau mean 330-333 K, plateau below warm pool by 6-7 K, extreme-frequency 0.15-0.53 percent against GFS's 59-82 percent) hold in every sampled year, but 'sixty-three years' cannot be cited until the run finishes."
   ],
   "adva_drift_2026_09_17": {
     "adva": {
