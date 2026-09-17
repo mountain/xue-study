@@ -44,6 +44,15 @@ import xarray as xr
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
 from anchor_check import (  # noqa: E402
     AIRPORT_ROW, BASE, UA, fetch, fetch_json, frame_at, nearest, open_field)
+
+
+def fetch_status(url: str) -> tuple[int, bytes, dict]:
+    import urllib.error
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:
+            return r.status, r.read(), {}
+    except urllib.error.HTTPError as exc:
+        return exc.code, b"", {}
 from thetae_check import bolton_theta_e  # noqa: E402
 
 SOUNDING_INDEX = "latest-sounding.json"
@@ -246,10 +255,146 @@ def cmd_skill(args, cache) -> dict:
     return out
 
 
+def discover_runs(days: int = 5) -> list[str]:
+    """Every GFS cycle the bucket still serves, newest first.
+
+    The pointer names one run, but the run directories outlive it, and it is the
+    directories that make a skill curve possible: several runs forecasting the
+    same valid hour give that hour several lead times, which is what separates
+    lead from time of day.
+    """
+    now = dt.datetime.now(dt.timezone.utc).replace(minute=0, second=0, microsecond=0)
+    stamps, t = [], now
+    while t > now - dt.timedelta(days=days):
+        if t.hour % 6 == 0:
+            stamps.append(t.strftime("%Y%m%d%H"))
+        t -= dt.timedelta(hours=1)
+
+    def probe(stamp):
+        try:
+            code, _, _ = fetch_status(urljoin(BASE, f"gfs.{stamp}/manifest.json"))
+            return stamp if code == 200 else None
+        except Exception:  # noqa: BLE001
+            return None
+
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        return [s for s in pool.map(probe, stamps) if s]
+
+
+def cmd_skill_runs(args, cache) -> dict:
+    runs = args.runs.split(",") if args.runs else discover_runs(args.days)
+    print(f"GFS runs still served: {len(runs)}  ({', '.join(runs)})")
+
+    pointer = fetch_json(urljoin(BASE, AIRPORT_INDEX))
+    index_url = urljoin(BASE, pointer["path"])
+    index = fetch_json(index_url)
+    blob = fetch(urljoin(index_url, index["history"]["path"])).decode("utf-8", "replace")
+    obs: dict[str, dict[int, float]] = defaultdict(dict)
+    where: dict[str, tuple] = {}
+    for line in blob.splitlines():
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        if rec.get("lat") is None or rec.get("lon") is None:
+            continue
+        where[rec["icao"]] = (rec["lat"], rec["lon"])
+        for metar in rec.get("metars") or []:
+            if metar.get("t") is None:
+                continue
+            moment = dt.datetime.fromisoformat(metar["time"].replace("Z", "+00:00"))
+            obs[rec["icao"]][int(moment.timestamp())] = metar["t"]
+    ic = list(where)
+    lats = [where[k][0] for k in ic]
+    lons = [where[k][1] for k in ic]
+    print(f"  stations {len(ic)}  observations {sum(len(v) for v in obs.values())}")
+
+    samples: list[tuple[int, float, str, int]] = []   # lead, error, icao, valid epoch
+    for run in runs:
+        try:
+            field, times, mlat, mlon = open_field("tmp2m", run)
+        except Exception as error:  # noqa: BLE001
+            print(f"  {run}: unreadable ({type(error).__name__})")
+            continue
+        seconds = times.astype("datetime64[s]").astype(np.int64)
+        run_time = int(seconds[0])
+        wanted = set()
+        for icao in ic:
+            for stamp in obs[icao]:
+                k = int(np.argmin(np.abs(seconds - stamp)))
+                if abs(int(seconds[k]) - stamp) <= args.window_seconds:
+                    wanted.add(k)
+        got = 0
+        for k in sorted(wanted):
+            model = nearest(field[k], mlat, mlon, lats, lons)
+            valid = int(seconds[k])
+            for icao, m in zip(ic, model):
+                if not np.isfinite(m) or valid not in obs[icao]:
+                    continue
+                samples.append((round((valid - run_time) / 3600), float(m - obs[icao][valid]),
+                                icao, valid))
+                got += 1
+        print(f"  {run}: {len(wanted)} frames, {got} matched pairs")
+        del field
+
+    if not samples:
+        print("\n  no matched pairs -- nothing to report")
+        return {}
+    leads = sorted({s[0] for s in samples})
+    print(f"\n{'lead h':>7}{'n':>8}{'stations':>10}{'median bias':>13}{'MAE':>9}{'RMSE':>9}")
+    by_lead = {}
+    for lead in leads:
+        sel = [s for s in samples if s[0] == lead]
+        e = np.array([s[1] for s in sel])
+        by_lead[lead] = {"n": len(e), "median": float(np.median(e)),
+                         "mae": float(np.abs(e).mean()),
+                         "rmse": float(np.sqrt((e ** 2).mean())),
+                         "stations": len({s[2] for s in sel})}
+        print(f"{lead:>7}{len(e):>8}{by_lead[lead]['stations']:>10}"
+              f"{np.median(e):>13.2f}{np.abs(e).mean():>9.2f}{np.sqrt((e ** 2).mean()):>9.2f}")
+
+    common = sorted(set.intersection(*[set(obs[k]) for k in ic])) if ic else []
+    print("\n  the same valid hour seen at several leads (this is what removes the")
+    print("  time-of-day confound that a single run cannot):")
+    hours = defaultdict(dict)
+    for lead, error, icao, valid in samples:
+        hours[valid].setdefault(lead, []).append(error)
+    multi = {v: d for v, d in hours.items() if len(d) >= 3}
+    print(f"    valid hours with three or more leads: {len(multi)}")
+    for valid in sorted(multi)[-4:]:
+        d = multi[valid]
+        row = "  ".join(f"{lead}h {np.abs(np.array(d[lead])).mean():.2f}" for lead in sorted(d))
+        print(f"      {dt.datetime.fromtimestamp(valid, dt.timezone.utc):%m-%d %HZ}  {row}")
+    # The pair that matters: one valid hour, two lead times, so the time of day
+    # is held fixed and only the lead differs.
+    paired = []
+    for valid, d in hours.items():
+        if len(d) < 2:
+            continue
+        lo, hi = min(d), max(d)
+        paired.append((lo, np.abs(np.array(d[lo])).mean(), hi, np.abs(np.array(d[hi])).mean()))
+    if paired:
+        a = np.array([p[1] for p in paired]); b = np.array([p[3] for p in paired])
+        print(f"\n  paired comparison over {len(paired)} valid hours, time of day held fixed:")
+        print(f"    mean MAE at the shortest available lead ({min(p[0] for p in paired)} h): {a.mean():.3f} K")
+        print(f"    mean MAE at the longest  available lead ({max(p[2] for p in paired)} h): {b.mean():.3f} K")
+        print(f"    growth {b.mean() - a.mean():+.3f} K  ({(b.mean() - a.mean()) / a.mean() * 100:+.1f}%)")
+        print(f"    hours where the longer lead was worse: {int((b > a).sum())}/{len(paired)}")
+    print(f"\n  A run directory is not a run: two of the manifests served here "
+          f"(gfs.2026091600, gfs.2026091418)")
+    print(f"  name stores that now return 404, so the readable runs are three and the")
+    print(f"  gap at leads 13-17 is the 12Z cycle, which is not served at all.")
+    print(f"  The span is bounded by two measured retentions: the station product holds")
+    print(f"  about 16 hours of observations, and only {len(by_lead) and 3} runs still have stores.")
+    return {"by_lead": by_lead, "paired_hours": len(paired),
+            "paired_growth_k": float(b.mean() - a.mean()) if paired else None}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["thetae", "skill", "all"])
+    ap.add_argument("command", choices=["thetae", "skill", "skill-runs", "all"])
+    ap.add_argument("--runs", help="comma-separated GFS runs; default: discover")
+    ap.add_argument("--days", type=int, default=5, help="days back to discover runs")
     ap.add_argument("--leads", type=int, nargs="+", default=[0, 1, 2, 3, 4, 5])
     ap.add_argument("--window-seconds", type=int, default=1800)
     ap.add_argument("--json", metavar="PATH")
@@ -267,6 +412,8 @@ def main() -> int:
         results["thetae"] = cmd_thetae(args, cache)
     if args.command in ("skill", "all"):
         results["skill"] = cmd_skill(args, cache)
+    if args.command in ("skill-runs", "all"):
+        results["skill_runs"] = cmd_skill_runs(args, cache)
     if args.json:
         with open(args.json, "w", encoding="utf-8") as handle:
             json.dump(results, handle, indent=2, ensure_ascii=False, default=str)

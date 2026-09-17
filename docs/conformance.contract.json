@@ -13,7 +13,7 @@
   ],
   "corpus": {
     "path": "docs/claims.toml",
-    "sha256": "815725b42730e53589d3be77a406dc02fe0a3b4a14cd5a69eed96ede1f336413",
+    "sha256": "147245e8065f76cf9120f4c81138d35ebdf96c0b20c4216b632da152937cd974",
     "cases": 12
   },
   "protected": [
@@ -78,7 +78,9 @@
     "The airport retention count (19 rounds) does not match the documented AIRPORT_KEEP=18, and the HH:10 round is absent in every hour probed; whether that is a publish gap or a pruning artifact is not established.",
     "One claim measures a delivered field against station and sounding observations, so the earlier blanket residual no longer holds as stated. It holds narrowly: one moment, one run, three variables. The plateau temperature figure it now reports (sd 4.38 K over 23 points) is dominated by the difference between a station's elevation and its cell's mean elevation, and that mean elevation was not computed; the reading rests on the sign agreeing, not on a regression.",
     "The four problem cards remain open. The receiver that could confirm their questions now exists and discriminates, but a receive requires a candidate produced by the receiving party; a candidate generated from the card itself is a degenerate test of the instrument, not a receive.",
-    "The claim registry is the contract's pinned corpus and was, until 2026-09-17, under no version control and with no backup. A scripted edit corrupted it: the theta-e claim was duplicated, one radar claim lost its header, another was destroyed entirely, and four lines broke the TOML. The file was repaired and the two radar claims reconstructed from the session record, not recovered; the reconstruction is marked in their assumptions. The corpus is now a git repository."
+    "The claim registry is the contract's pinned corpus and was, until 2026-09-17, under no version control and with no backup. A scripted edit corrupted it: the theta-e claim was duplicated, one radar claim lost its header, another was destroyed entirely, and four lines broke the TOML. The file was repaired and the two radar claims reconstructed from the session record, not recovered; the reconstruction is marked in their assumptions. The corpus is now a git repository.",
+    "The skill curve holds only for leads 0-24 h with a gap at 13-17 h, and its paired comparison rests on 7 valid hours all inside a single 7-hour block; whether error growth is linear, and what happens beyond 24 hours, is not established.",
+    "The point-retention claim's raster row was wrong in a specific way: it described the pointer, not the directories. Five run manifests are served but only three runs still have readable stores, so a run directory is not a run, and cleaning happens in two steps."
   ],
   "adva_drift_2026_09_17": {
     "adva": {

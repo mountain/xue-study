@@ -94,11 +94,34 @@ def load_airports() -> list[dict]:
     return [dict(zip(AIRPORT_ROW, row)) for row in index["stations"]]
 
 
-def open_field(variable: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    pointer = fetch_json(urljoin(BASE, GFS_POINTER))
-    item_url = urljoin(BASE, pointer["manifestPath"].replace("manifest.json", "item.json"))
-    item = fetch_json(item_url)
-    dataset = xr.open_zarr(urljoin(item_url, item["assets"][variable]["href"]))
+def open_field(variable: str, run: str | None = None
+               ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Open one field of a run.
+
+    `run` defaults to whatever `latest.json` names, but the run directories
+    outlive the pointer, and a skill curve needs several of them forecasting the
+    same hour, so a caller may name one directly.
+    """
+    if run is None:
+        pointer = fetch_json(urljoin(BASE, GFS_POINTER))
+        item_url = urljoin(BASE, pointer["manifestPath"].replace("manifest.json", "item.json"))
+        item = fetch_json(item_url)
+        href = urljoin(item_url, item["assets"][variable]["href"])
+        dataset = xr.open_zarr(href)
+    else:
+        # Runs older than the STAC item have no `item.json` at all; the run
+        # directory and its stores are still served, so address the store
+        # directly and fall back to the half tier only if the full one is gone.
+        last: Exception | None = None
+        dataset = None
+        for suffix in (f"{variable}.zarr", f"{variable}.half.zarr"):
+            try:
+                dataset = xr.open_zarr(urljoin(BASE, f"gfs.{run}/{suffix}"))
+                break
+            except Exception as error:  # noqa: BLE001
+                last = error
+        if dataset is None:
+            raise RuntimeError(f"no store for {variable} in gfs.{run}") from last
     return (np.asarray(dataset[variable].values, dtype=np.float64),
             np.asarray(dataset["time"].values),
             np.asarray(dataset["latitude"].values),
