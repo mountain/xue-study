@@ -1,0 +1,92 @@
+{
+ "question_id": "xue.derived.theta-e-plateau-clamp",
+ "round": 1,
+ "predecessor": null,
+ "change_reason": "",
+ "raw_question": "发布出来的 850 hPa 相当位温，在青藏高原上是不是被码本上限截断了？如果是，原因是什么？——原话出自本研究在 2026-09-17 对线上 store 的观察：`thetae850` 抽查的每一帧上界都恰好是 357.00 K。",
+ "objects_and_versions": "输入分四类，必须分开写：\n(1) 原始发布产物——GFS run 2026091618 的 `thetae850.half.zarr` / `hgt850.half.zarr` / `tmp925|850|500.half.zarr` / `rh500.half.zarr`，从 dataset.ringsaturn.me 经 HTTPS 读，未保留副本；\n(2) 外部数据集——Copernicus DEM GLO-90（AWS Open Data，经 /vsicurl/ 读 COG 概视图），**不是公有领域、不是 CC0，按 PUBLICATION_BOUNDARY.md 不可准入公开仓库**；\n(3) 派生中间物——每格高程网格 `/tmp/dem-plateau.npz`（220 瓦片合成），**在工作区外，未 vendoring，不重新下载就无法复查**；\n(4) 本仓库代码——`scripts/thetae_check.py`、`dem_elevation.py`、`plateau_profile_check.py`、`thetae_profile_check.py`，以及生成它们的对话轮次。\n上游提交：xue `a20c774`（测量时），adva 工具 `scripts/navigate.py` 未变。",
+ "success_condition": "由一个检查器作出的判断：`scripts/thetae_profile_check.py` 打印按离地高度分箱的『顶在码本上限的格点占比』；若占比随离地高度上升而单调下降，则机制成立。判断的作出者是**该脚本的 stdout**，不是任何人的读图印象；上限本身从发布元数据读出（offset 230 + scale 0.5 × maximumCode 254 = 357.0 K），不由脚本假定。",
+ "interpretation_and_assumptions": "对象如何进入模型：把 GFS 的 `hgt850` 当作 850 hPa 面的位势高度，把 DEM 每格均值当作地面高程，两者之差当作『离地高度』。假设：\n- 高原地面高程可由 90 m DEM 平均到 0.5° 格点代表（未检验尺度效应）；\n- 位势高度与几何高度在该高度上近似相等（未修正重力加速度随纬度与高度的变化）；\n- 对照用**该纬度整圈**均值，而非同纬度带排除高原框——两者未做比较；\n- 帧 0 代表整条 161 帧的轴（未检验时间变化）。",
+ "candidates": "两个候选解释，且它们**尚未被区分**：\n(A) 外推伪值——850 hPa 在地下，GFS 用地面外推填充，于是偏暖并顶到码本上限；\n(B) 真实的高原热源——高原夏季确实是热源，其上空本就偏暖。\n区分它们的判据是**离地高度的符号**：候选 A 预测占比只在离地高度为负时高；候选 B 预测占比与离地高度无关。500 hPa 那一格（全部在地面之上）若是 0，则支持 A。",
+ "check_scope": "输入集合：run 2026091618 的帧 0；纬度带 27–38°N、经度 80–100°E；同时有 DEM 与场值的 943 个格点。覆盖条件：**只有 850 hPa 这一层**（thetae 线上只发布了 850 hPa，注册表里注册的另外 7 层未发布），**只有 GFS 一个源**，**只有一帧**。\n**没有充分性证明**：本检验不构成『所有层次、所有源、所有时刻都如此』的证明。",
+ "budget": {
+  "wall_seconds": 900,
+  "launches": 6,
+  "cpu_seconds": 120,
+  "output_bytes": 2000000
+ },
+ "round_result": "**保存原始数值，不只保存结论**：\n分箱占比（850 hPa 离地高度 → 顶在上限的格点占比）：\n  [−4000,−3000) m  215/348 = 61.8%\n  [−3000,−2000) m  162/514 = 31.5%\n  [−2000,−1000) m    9/67  = 13.4%\n  [−1000,0) m        0/13  =  0.0%\n  [0,500) m          0/1\n对标温度的同组分箱异常：+6.73 / +3.76 / +0.49 / +0.45 K。\n整框总占比 386/943 = 40.9%（帧 0）。",
+ "remaining_questions": "- 另外 7 个 theta-e 层次未发布，换层次无法检验；\n- 帧 0 之外的 160 帧未检验；\n- 对照参照系（整圈 vs 同纬度带）未比较；\n- 90 m DEM 平均到 0.5° 格点的尺度效应未评估；\n- 派生高程网格在 /tmp，不重新下载无法复查；\n- 已知的反例：暖池也有 0–4/7021 个格点顶到上限，本卡未解释它们。",
+ "next_step": "改变的是**观察**：把同一分箱法用到 `prmsl` 与 `hgt500`——它们是压力族、且渲染为等值线，若其码本上界也在高原被触及，就能判断这是「850 hPa 特有」还是「所有变量在高原地面之下共有的填充行为」。另一种可能是改变**前提**：用 `hgt925` 与实测高程逐格点判断 925 hPa 是否也已入地，以检验『入地』这一判据本身。",
+ "stop_conditions": [
+  "任一检查器无法取得所需的发布产物（该 run 被清理后即如此）",
+  "预算耗尽（wall 900 s 或 launch 6 次）",
+  "分箱中某一箱格点数少于 10，则该箱不作为证据"
+ ],
+ "attempts": [
+  {
+   "command": "uv run python scripts/thetae_check.py 2026091618",
+   "tool_and_version": "python 3.14 / xarray 2026.7.0 / zarr 3.3.0 / fsspec 2026.7.0",
+   "input": "线上 thetae850/tmp850/rh850 half store",
+   "output_dir": "(stdout only)",
+   "stop_condition": "5 帧各 946 点",
+   "budget": {
+    "wall_seconds": 60,
+    "launches": 1
+   },
+   "outcome": "completed",
+   "reason": "",
+   "first_failure": "**本卡的第一次失败**：同一脚本最初的直接压缩对照只取 1 个瓦片（北极附近），得出『所有变量 RAW 都更优』的错误方向。改为整个时间块 420 瓦片后方向才稳定。该失败未被保留为产物，只在报告 §5.3 以叙述形式记下——**本卡要求保留 first_failure，这正是此前缺失的那一栏**。"
+  },
+  {
+   "command": "uv run python scripts/dem_elevation.py /tmp/dem-plateau.npz 80 100 27 38 0.25 200",
+   "tool_and_version": "python 3.14 / rasterio 1.5.1 (GDAL 3.12.4)",
+   "input": "Copernicus DEM GLO-90，220 张 1° 瓦片",
+   "output_dir": "/tmp/dem-plateau.npz",
+   "stop_condition": "220/220 瓦片或超时",
+   "budget": {
+    "wall_seconds": 900,
+    "launches": 1
+   },
+   "outcome": "completed",
+   "reason": "",
+   "first_failure": "第一次运行用 (previous+value)/2 聚合，**那不是均值**，多于两个贡献值即错：测试区 2°×2° 得均值 4885 m、范围 1960–5839 m；改为累加÷计数后得 4937 m、3100–5622 m。第一次的数字没有被保留为文件。"
+  },
+  {
+   "command": "uv run python scripts/plateau_profile_check.py /tmp/dem-plateau.npz 2026091618",
+   "tool_and_version": "python 3.14 / xarray / numpy",
+   "input": "同上 + tmp850/tmp500/hgt850/hgt500",
+   "output_dir": "(stdout only)",
+   "stop_condition": "分箱表打印完毕",
+   "budget": {
+    "wall_seconds": 120,
+    "launches": 1
+   },
+   "outcome": "completed",
+   "reason": "",
+   "first_failure": "两处：`lat0 = 90.0 - (lat + step/2)` 算错（i=0 时得 52°N）；以及 `geopotential = np.asarray(heights)` 漏取单帧，导致 3 维掩码索引 2 维数组而报 IndexError。两者都在同一轮内被修掉。"
+  },
+  {
+   "command": "uv run python scripts/thetae_profile_check.py /tmp/dem-plateau.npz 2026091618",
+   "tool_and_version": "python 3.14 / xarray / numpy",
+   "input": "线上 thetae850/hgt850 half store + DEM 派生网格",
+   "output_dir": "(stdout only)",
+   "stop_condition": "分箱表打印完毕",
+   "budget": {
+    "wall_seconds": 120,
+    "launches": 1
+   },
+   "outcome": "completed",
+   "reason": "",
+   "first_failure": "第一次运行把码本上限 357.0 K **硬编码**在脚本里——脚本便是在拿自己当对照。改为从发布元数据读取后重跑。另有一次 urlopen 403，因缺 User-Agent。"
+  }
+ ],
+ "handoff": {
+  "question": "850 hPa 相当位温在高原被上限截断，是外推伪值还是真实热源？",
+  "candidates": "（A）地下外推伪值；（B）真实高原热源——由离地高度的符号区分",
+  "checks": "thetae_profile_check.py 的按离地高度分箱占比；plateau_profile_check.py 的温度同箱异常",
+  "evidence": "61.8% / 31.5% / 13.4% / 0.0%（帧 0，943 格点）；温度 +6.73 / +3.76 / +0.49 / +0.45 K",
+  "residuals": "只有 850 hPa、只有 GFS、只有一帧；参照系未比较；DEM 派生网格不可复查",
+  "receiver_confirms_same_question": false
+ }
+}

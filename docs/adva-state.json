@@ -1,0 +1,14 @@
+{
+ "adva": {
+  "remote": "f8722a5fd29b04571a2d54b54e1e6d3c17563101",
+  "local": "f8722a5fd29b04571a2d54b54e1e6d3c17563101"
+ },
+ "adva-library": {
+  "remote": "7e738217d175ea1d139274b6e1fce6dee5f318c9",
+  "local": "7e738217d175ea1d139274b6e1fce6dee5f318c9"
+ },
+ "adva-machine": {
+  "remote": "664658278423900d30f37c4f5af158c7707e2be3",
+  "local": "664658278423900d30f37c4f5af158c7707e2be3"
+ }
+}

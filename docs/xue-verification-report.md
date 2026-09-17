@@ -1,0 +1,1579 @@
+# xue 实证验证报告：容器 ↔ Zarr store 的字节一致性与体积代价
+
+> 验证时间：2026-09-16 · 上游 `ringsaturn/xue@main` · 全部结论来自**本机实际运行**，非阅读推断。
+> 脚本：`verify.py`（独立读取器 + 字节比对）、`measure.py`、`sweep.py`，与本报告同目录。
+
+---
+
+## ⚠️ 0. 对上一版结论的更正
+
+上一版报告的头条是：**"线上 store 比被取代的容器大 10.2%"**。
+
+**该结论对 `tmp2m` 成立，但作为总体结论是错的。** 我把一个变量的结果外推到了全部。
+
+扩到 8 个代表性 bundle 后的实测：**线上（全 RAW）store 合计比容器小 2.1%**；
+而全开 `--delta` 反而比容器**大 0.9%**、比现网默认**差 3.1%**。
+
+再把全部 **43 个变量**扫完后（§5.4），真正的结论是：
+
+> **时间残差不是普适的。20 个变量适合残差、23 个适合 RAW——容器的"线性码本一律 PREVIOUS"
+> 这条一刀切规则对过半数变量是错的**，其中云量、气压、垂直速度三个家族**整体**站错了边。
+> 逐变量选择的收益经标定约为发布字节的 **1.1%**（§5.5）。
+>
+> 但**实测客户端代价后，我把自己提出并实现的改进建议降级了**（§5.8–§5.10）：
+> store 里只要有一个数组用自定义 codec，**整个数据集**对 xarray 就不可读；
+> 1.84% 的体积换一半数据集对生态失明，不划算。**现网"全 RAW"是正确的取舍。**
+
+---
+
+## 1. 方法论：怎么保证这不是自我印证
+
+1. **两侧解析器全部由我按规范手写**，不调用 `xuebuild.zarrstore` / `xuebuild.binformat` 的任何函数：
+   容器 v2 索引（IDX2 三张表 + **前缀和**偏移 + 8 字节对齐 + 零填充断言）、
+   Zarr shard（`sharding_indexed` + suffix index + `xue.delta` 运行和）。
+2. **CRC-32C 自己实现**（Castagnoli `0x1EDC6F41`）——刻意不用 `zlib.crc32`，那是 IEEE 多项式，错的也能通过。
+3. **第三方裁判是 Rust 解码器**（`xuepy` wheel 的 `xue.Bundle`），与 Python 编码器是两套独立实现。
+4. **数据是真的**：NOAA 公开桶按字节范围抓取的 GFS **2026-09-16 00Z**、**161 帧全轴**、全分辨率 1440×721、
+   `--profile balanced`（线上所用）。不是合成图案。
+5. **预测器优劣用一个完全独立的实验复核**（§5.3）：我自己用 zstd 对同一批数据分别按 RAW 与时间残差压缩求和。
+
+---
+
+## 2. 环境：无系统 GDAL、无 ffmpeg 下跑通全链路
+
+Python 3.14.0 · numpy 2.5.2 · **xuepy 0.16.0**（wheel 自带 GDAL）· 系统 GDAL 与 ffmpeg **均无**。
+
+8 个 bundle 的 161 帧全轴构建：首次 **11 分 32 秒**（含下载），缓存后 **25 秒**。
+这本身验证了 `docs/encoder.md` 的主张：**定时发布流程完全不装 GDAL 是可行的**。
+
+---
+
+## 3. 决定性结果：逐字节复现线上产物
+
+| 变量 | 本机重建 store | 线上 manifest | 字节数 | `?v=` CRC-32 |
+|---|---:|---:|---|---|
+| `tmp2m` | 40,643,714 | 40,643,714 | ✅ | ✅ `7d18ca5f` |
+| `prate` | 46,745,894 | 46,745,894 | ✅ | ✅ `4f988fff` |
+
+**不只是"符合规范"，而是同一串字节。** 这条流水线是确定性的。
+
+> 插曲：最初用默认 profile（`quality`）构建，`tmp2m` 是 40,643,713——**恰好差 1 字节**。
+> 原因：`quality`(7 字符) 与 `balanced`(8 字符) 在元数据 JSON 里差一个字符。
+> 对 `tmp2m` 两个 profile 码本相同故只差这 1 字节；`prate` 则差很多——
+> balanced 的 128 级降水码本省 **14.2%**（quality 54,350,752 → balanced 46,631,568）。
+
+---
+
+## 4. 字节一致性的确切边界（161 帧生产轴）
+
+| 变量 | predictor | store 链 | 可比块 | **字节完全相同** |
+|---|---|---|---:|---:|
+| `tmp2m` | PREVIOUS | `[bytes, zstd]` ← **线上默认** | 7800 | **0** |
+| `tmp2m` | PREVIOUS | `[xue.delta, bytes, zstd]` | 7800 | **7800** |
+| `tcdc` | PREVIOUS | `[bytes, zstd]` | 7800 | **0** |
+| `tcdc` | PREVIOUS | `[xue.delta, …]` | 7800 | **7800** |
+| `prate` | RAW | 任一链 | 7800 | **7800** |
+| `wind10m` 两个数组 | PREVIOUS | `[xue.delta, …]` | 15600 | **15600** |
+
+另：每个变量 **161/161 帧**经我的读取器解出的码与 Rust 解码器完全一致；
+shard 索引 CRC-32C（11340 条目）全部通过；`index_location: "start"` 与 `"end"` 两条路径都验过。
+
+**精确复现规范原话**：*"压缩字节在布局重合处完全相同……预测变量在 delta 链下，RAW 变量在任一链下。"*
+
+### 为什么"可比块"只有 7800 / 11340
+
+容器把时间组切在**等步长分段内**，store 是**固定 6 帧**网格。GFS 在 f120 变步长：
+
+```
+容器 28 组:   0,6,…,114 (20 个对齐) │ 120(单帧) │ 121,127,133,139,145,151,157 (7 个错位)
+store 27 块:  0,6,12,…,156
+```
+
+第二段起整体错位，**一个都对不上**。这是规范写明的 "coincide up to the first change of step"，
+也正是导出报告要老实数 `comparableChunks` 而不是假设的原因。
+
+> 我第一版校验器在这里出过错：隐含假设"第 i 组 ↔ 第 i 个时间块"，报出 10140。修正后 = 7800，
+> 与作者记账一致。**这个 bug 在 13 帧下不会暴露**（那时组恰好对齐）。
+
+---
+
+## 5. 核心发现：时间残差不是普适的
+
+### 5.1 八个体量在 161 帧生产轴上的实测（profile=balanced）
+
+| bundle | 容器 `.xue` | store（全 RAW，现网默认） | store（全 delta） | **逐变量最优** | 胜者 |
+|---|---:|---:|---:|---:|---|
+| `tcdc` | 80,430,288 | **0.795×** | 1.009× | 0.795× | **RAW**（省 21.2%） |
+| `prmsl` | 21,126,784 | **0.934×** | 1.012× | 0.934× | **RAW**（省 7.7%） |
+| `rh850` | 85,218,064 | **0.996×** | 1.010× | 0.996× | RAW（省 1.4%，≈中性） |
+| `prate` | 46,631,568 | **1.002×** | 1.002× | 1.002× | RAW（设计如此） |
+| `wind10m` | 100,185,720 | 1.040× | **1.009×** | 1.009× | delta（省 3.0%） |
+| `tmp2m` | 36,885,368 | 1.102× | **1.010×** | 1.010× | delta（省 8.3%） |
+| `cape` | 31,590,480 | 1.023× | **1.011×** | 1.011× | delta（省 1.1%） |
+| `htsgw` | 16,923,448 | 1.053× | **1.014×** | 1.014× | delta（省 3.8%） |
+| **合计** | **418,991,720** | **410,306,512 (0.979×)** | 422,786,392 (1.009×) | **402,747,134 (0.961×)** | |
+
+- **现网默认（全 RAW）比容器小 2.1%** ——迁移到 Zarr 没有付出体积代价，反而略有收益。
+- **全开 `--delta` 比现网默认差 3.1%** ——我上一版暗示的"打开 delta 就好了"是错的。
+- **逐变量最优比容器小 3.9%、比现网默认小 1.8%** ——这是真正可行动的空间。
+
+### 5.2 机制：移动的不连续面
+
+三个变量的方向差异有清晰的物理解释：
+
+- **`tmp2m`（+12.4% 收益）**：连续平滑场，相邻帧几乎相同，残差接近零。
+- **`tcdc`（−19.1% 收益，即 RAW 更优）**：云量有大量"满覆盖/晴空"的平台区，且随天气系统**移动**——
+  固定网格差分会在系统**进入**与**离开**两侧各造出一整条边缘，与 `docs/format.md` 对降水的论证**逐字相同**。
+- **`prmsl`（RAW 更优 5.3%）**：海平面气压本身平滑，但空间自相关极强，RAW 让 zstd 的匹配查找器
+  充分发挥；残差场反而抬高了空间熵。
+
+### 5.3 独立复核（不依赖容器/store 的构建）
+
+我自己用 zstd 对**帧 30–35 的全部 420 个瓦片**分别按 RAW 与时间残差压缩求和：
+
+| 变量 | RAW 合计 | 残差合计 | 残差/RAW | 更优 |
+|---|---:|---:|---:|---|
+| `tmp2m` | 1,481,620 | 1,298,267 | 0.876 | 时间残差 **+12.4%** |
+| `htsgw` | 623,844 | 584,977 | 0.938 | 时间残差 +6.2% |
+| `cape` | 1,204,055 | 1,134,394 | 0.942 | 时间残差 +5.8% |
+| `rh850` | 3,158,387 | 3,088,706 | 0.978 | 时间残差 +2.2%（§5.1 判 RAW，**分歧但接近中性**） |
+| `prmsl` | 709,492 | 749,317 | 1.056 | RAW **+5.3%** |
+| `prate` | 1,773,828 | 2,036,070 | 1.148 | RAW **+12.9%** |
+| `tcdc` | 2,335,402 | 2,885,889 | 1.236 | RAW **+19.1%** |
+
+**方向与整文件测量一致**（唯一分歧 `rh850` 本就接近中性），机制得到独立确认。
+
+> 我最初做这个复核时只取了 1 个瓦片（北极附近、单块），得出"所有变量 RAW 都更优"的错误结论——
+> 小样本下 zstd 建立不了统计，且极区本身就极均匀。改为整个时间块全部 420 瓦片后方向才稳定。
+
+### 5.4 全量扫描：43 个变量，一半站错了边
+
+把全部 37 个 bundle（43 个变量）都测了一遍——**判据是 6 帧块内的局部性质，所以用 13 帧短轴即可**，
+无需建 161 帧全轴。做法与 §5.3 相同：对全部瓦片分别按 RAW 与时间残差压缩求和。
+
+**结论：20 个变量残差更优，23 个变量 RAW 更优。** 而容器的规则是"线性码本变量一律 PREVIOUS"，
+也就是说这条一刀切规则**对 23 个变量（过半数）是错的**。
+
+按家族看，规律非常干净：
+
+| 家族 | 变量数 | 残差更优 | 说明 |
+|---|---:|---:|---|
+| **云量**（tcdc/lcdc/mcdc/hcdc） | 4 | **0** | RAW 优 20–28% |
+| **气压**（prmsl + hgt250/500/700/850） | 5 | **0** | RAW 优 5–13% |
+| **垂直速度**（vvel500/700/850） | 3 | **0** | RAW 优 13–17% |
+| 风 / 波 / 水汽通量 | 12 | 8 | 残差普遍优 1–8% |
+| 温度类（tmpsfc/tmp2m/dpt2m/aptmp2m/tmp925/tmp850/tmp500） | 7 | 5 | 平滑场优 3–10%，但 `tmp500` 反过来 RAW 优 11% |
+| 其他（cape/vis/gust/rh/icec/icetk/perpw/prate…） | 13 | 8 | 混合 |
+
+单个变量上最划算的几笔（块级预测，未标定）：
+
+```
+tmpsfc  0.865  →  省 13.5%      tcdc  1.233  →  RAW 省 23.3%
+tmp2m   0.870  →  省 13.0%      mcdc  1.274  →  RAW 省 27.4%
+dpt2m   0.900  →  省 10.0%      hcdc  1.282  →  RAW 省 28.2%
+wind10m 0.925  →  省  7.5%      vvel500 1.165 →  RAW 省 16.5%
+```
+
+### 5.5 幅度标定：块级测量会放大，真实收益约 1.1%
+
+块级测量只看一个时间块，会**系统性放大**效应。用 8 个 bundle 的全轴真值标定：
+
+| bundle | 块级预测省 | 全轴真值省 |
+|---|---:|---:|
+| `tmp2m` | 5,283,683 | 3,371,617 |
+| `wind10m` | 7,817,167 | 3,143,804 |
+| `htsgw` | 1,087,452 | 673,308 |
+| `cape` | 1,809,912 | 370,649 |
+| `rh850` | 2,631,099 | **0**（全轴上 RAW 反而更优） |
+| 合计 | 18,629,313 | 7,559,378 |
+
+**标定系数 = 0.406**。全量块级预测 47,119,654（2.7%）→ **标定后约 19.1 MB ≈ 1.1%**
+（对 1,769,956,427 字节的全分辨率 store 计）。
+
+所以：**方向确凿（23/43 变量站错边），幅度约 1%，是"该修但不紧急"的量级。**
+
+### 5.6 可行动的结论
+
+容器当前的规则是**一刀切**的（`docs/format.md` §"Encoder rules (v2)"）：
+
+> Predictor: RAW for `prate` and `cref`; **PREVIOUS for every linear-codebook field**.
+
+实测表明这条规则对**云量、气压、垂直速度三个家族整体不成立**。关键是：
+**`tcdc`/`lcdc`/`mcdc`/`hcdc`、`cape`、`gust`、`vis`、`vvel*` 都是本地快照之后才加入的变量**
+（上游 2026-09-11 起陆续加入），加入时那条一刀切规则**没有被重新审视**。
+对云量家族，`docs/format.md` 用来论证降水该用 RAW 的那段话——*"降水区随天气系统移动，
+固定网格差分会在进入与离开两侧各造出边缘，实测增大压缩后体积"*——**逐字适用于云量**。
+
+**建议**：
+1. **store 侧**：把预测器从全局开关（`--delta` 现在作用于所有 PREVIOUS 变量）改成**逐数组策略**。
+   store 是派生的，改它不影响任何已发布字节，也不需要格式变更。
+2. **容器侧**：编码器的 predictor 规则应按家族重定，云量家族与 `prate`/`cref` 同等对待。
+   这需要动 `xuebuild/temporal.py` 的 predictor 表并同步 Rust 侧（`build_chunks` 的 CPU 预测器表），
+   且会让 golden 夹具与编码器 parity 测试全部重生成——**是一次有成本的改动**。
+
+> ⚠️ **这两条建议在 §5.8–§5.10 被实测后降级了**：第 1 条（store 侧）我实现并跑通了，
+> 但客户端代价实测出来是"整个数据集对 xarray 失效"，1.84% 不划算。
+> 请以 §5.10 的修正结论为准。
+
+---
+
+### 5.7 原型实现：`--delta auto`（已跑通）
+
+我把建议的 **store 侧**那条实现了出来，在上游克隆里跑通（补丁见 `delta-auto.patch`，178 行，纯 Python）。
+
+**关键前提**：store 导出**完全在 Python 侧**——`binconvert`（参考管线）与 `native.py`（原生管线）
+都调用同一个 `xuebuild/zarrstore.py::export_bundle`。所以这个改动**不需要同步 Rust**，
+也不影响两条编码路径的字节一致性。这比我上一版说的成本要低。
+
+### 做法
+
+`export_bundle(delta=...)` 增加第三种取值 `"auto"`：对每个数组把自己**按两种链各压一遍**
+（全部时间块求和），取更小的那个。CLI 是 `--delta`（=all，向后兼容）/ `--delta auto`。
+`ExportReport` 增加 `deltaArrays` 记录逐数组的选择。
+
+**决策是精确的，不是采样的。** 我试过三种采样，都不够：
+
+| 采样方式 | 结果 | 错在 |
+|---|---|---|
+| 只取第 1 个时间块 | 7/8 正确 | `rh850` 判错（选 delta，实际 RAW 更小 1.4%） |
+| 首/中/末三块 | 3/8 正确 | 中末落在 3 小时步长区，**高估**粗步长段的代价 → `cape`/`htsgw`/`wind10m` 判错 |
+| 每第 8 块 | 7/8 正确 | `rh850` 仍错（1.4% 的边缘案例采样判不了） |
+
+这是**变步长时间轴的直接后果**：GFS 大部分块是 1 小时步长、其余是 3 小时，差分收益随步长变化。
+所以最终选**全块精确测量**——代价是每个数组多一遍压缩（payload 丢弃，不占内存）。
+
+### 实测结果（8 个全轴 bundle，161 帧）
+
+| bundle | 现网默认（全 RAW） | `--delta auto` | 逐数组决策 |
+|---|---:|---:|---|
+| `tmp2m` | 40,643,714 | **37,272,097** | delta |
+| `prate` | 46,745,894 | 46,745,894 | — |
+| `prmsl` | 19,732,068 | 19,732,068 | — |
+| `rh850` | 84,874,170 | 84,874,170 | — |
+| `cape` | 32,319,852 | **31,949,203** | delta |
+| `tcdc` | 63,934,835 | 63,934,835 | — |
+| `wind10m` | 104,228,889 | **101,085,085** | delta（两个数组） |
+| `htsgw` | 17,827,090 | **17,153,782** | delta |
+| **合计** | **410,306,512** | **402,747,134** | |
+
+- **`auto` 的结果 8/8 命中理论最优**（=`min(RAW, delta)`），因为决策是精确测量而非估计。
+- **收益 7,559,378 字节 = 现网默认的 1.84%**；相对容器则是 0.961×（小 3.9%）。
+- **代价**：单 bundle 导出 3.3 秒 → 9.3 秒（2.8×）。`auto` 是选择加入的模式，默认行为不变。
+
+### 正确性与回归
+
+- 我的独立校验器：4 个 auto store **161/161 帧**与 Rust 解码器一致；链与决策相符
+  （`tmp2m` delta → 7800/7800 与容器逐字节相同；`tcdc`/`rh850`/`prmsl` RAW → 0/7800，符合预期）。
+- 上游 `test_zarr` **OK**、`test_bin` **OK**。
+- `test_native` 报 6 个错，**全部是 `setUpClass` 里缺系统 `gdal_translate`**（参考管线需要），
+  **与本次改动无关**。装了 GDAL 即消失。
+
+### 尚未做的
+
+- **没有接到 `build-bin --zarr` 上**，只在 `export-zarr` 上可用；接上去才会让定时发布真正用上。
+- **没有覆盖 43 个变量的完整收益**（只测了 8 个全轴；§5.5 标定后估计全量约 1.1%）。
+- ~~没有考虑客户端代价~~ → **已在 §5.8 实测，结论是我的建议需要降级**。
+- **没有提交上游**，只是一个在 `/tmp` 克隆里跑通的原型。
+
+### 5.8 客户端代价实测：这是全有或全无的（**结论因此改变**）
+
+上一版我把"客户端需要注册 codec"列为未评估的风险。装上 `zarr 3.3.0` + `xarray 2026.7.0` 实测后，
+它的代价比我预估的**重得多**。测试用 `wind10m`（双变量），并额外构造了一个**混合 store**
+（`ugrd10m` 走标准链、`vgrd10m` 走 delta 链），以回答"只有一部分数组用自定义 codec 会怎样"。
+
+| store | 未注册任何 codec 的普通客户端 |
+|---|---|
+| 全 RAW | ✅ `open_group` 成功；坐标正确读出（lat 90→89.75、lon −180→−179.75、time 0→3600→7200）；两个数组可读；`xarray.load()` 载入全部 334,313,280 个值 |
+| 全 delta | ❌ **`open_group` 直接抛 `UnknownCodecError: Unknown codec: 'xue.delta'`** |
+| **混合（2 个数组中 1 个 delta）** | ❌ **同样在 `open_group` 抛错** |
+
+**关键事实：代价不是"丢掉那一个变量"，而是整个 group 打不开。**
+只要 store 里有**任何一个**数组用了 `xue.delta`，这个数据集对普通 Zarr/xarray 客户端就**完全不可读**。
+
+对照 §5.7 的 `auto` 决策（8 个 bundle 里有 4 个出现 delta 数组），
+**`--delta auto` 会让约一半的数据集对 xarray 完全失效，换取 1.84% 的体积**。
+
+### 5.9 标准 codec 替代方案：已排除
+
+既然要付互操作代价，自然的问题是：**能不能用标准 codec 达到同样的时间预测效果？**
+唯一候选是 numcodecs 的 `Delta`。实测排除了它：
+
+| 变量 | 说明 |
+|---|---|
+| `numcodecs.Delta(dtype="uint8")` | **往返不是无损的**（三种形状全部 `lossless=False`）。我一度测出它比 `xue.delta` 压得更小（0.850× vs 0.876×），但那是在**压缩已经损坏的数据**——无效比较 |
+| `numcodecs.Delta(dtype="uint8", astype="int16")` | 把元素宽度加倍后，**比 RAW 还大**（1.037× vs `xue.delta` 的 0.876×）——加宽带来的熵增超过了差分的收益 |
+
+原因是 `Delta` 没有 axis 参数，它差分的是**展平缓冲区**；而 uint8 的模 256 环绕语义它不提供，
+要无损就必须加宽中间类型，代价超过收益。
+
+**这个负面结果反过来证明了 `xue.delta` 作为自定义 codec 的必要性**——规范里那句
+*"它不是 numcodecs 的 `Delta`，后者差分包平后的缓冲区"* 不是吹毛求疵，而是唯一可行的做法。
+
+### 5.10 修正后的建议
+
+我上一版建议"把 store 预测器改成逐数组策略"。**实测后我把它降级为：不要设为默认。**
+
+- **对项目自己的前端**：代价为零。**这一条已从代码审查升级为执行验证**——
+  我装好 `wasm32` target 与 `wasm-pack`、构建了 WASM 解码器，并**新写了一个测试**
+  （`zarr-mixed.test.ts` + `prepare_mixed_fixture.py`，见本目录）：
+  造一个 `ugrd10m` 走标准链、`vgrd10m` 走 delta 链的**混合 store**，
+  断言**两个数组的每一帧、每一条格点序列都与容器解码逐字节一致**。**4/4 通过。**
+  上游自己的 `zarr.test.ts` 覆盖了"整包一条链"和"整包另一条链"，**但没有覆盖混合**——
+  这正是我补的缺口。机制上：`zarr/session.ts:114` 逐数组取自己的 `zarr.json` 读链，
+  `session.ts:127-134` 的一致性检查**只比几何**（`tileHeight`/`tileWidth`/`timeChunk`/`shardFrames`）。
+- **对第三方生态（xarray / zarrs / zarrita）**：代价是**整个数据集不可读**（§5.8 实测），
+  而迁移到 Zarr 的初衷正是"让 xarray 不用自带解码器就能读一次 Xue run"。
+- **1.84% 的体积，换一半数据集对生态失明**——这笔账不划算。
+
+所以现网"全 RAW"**不是漏掉的优化，而是正确的取舍**。逐数组预测器应当保留为
+**面向自家前端的可选项**（例如一个仅供站点的发布档），而不是发布默认值。
+
+> **对上游的一条公正评价**：我原以为前端 Zarr 通道是"最大的验证空白"。跑起来之后发现
+> `tests/web/zarr.test.ts` 有 **44 个测试**，而且**恰好覆盖了我从规范独立推导出的那些点**——
+> "CRC-32C 是 Castagnoli 不是容器的 IEEE 多项式"、64 KB 范围合并阈值、
+> 不知道对象长度也能读的 suffix range、以及"合并前后各花多少请求"。
+> 上游的覆盖比我先前暗示的强得多；我的独立推导的价值在于**独立**，而非填补空缺。
+
+---
+
+## 6. 为什么现网"全 RAW"反而比容器小
+
+三条同时成立：
+
+1. 现网发布的字段组合里**不连续场占比很大**（云量 ×4、降水、CAPE、能见度、垂直速度……），
+   RAW 对它们是赢的；
+2. 容器对**每个**线性码本变量强加 PREVIOUS，把云量这类场也拖下水；
+3. store 的额外开销（索引 16 字节/块 vs 容器 8 字节、shard 补零到整瓦片整时间块）
+   在 161 帧全轴上只有约 1%（§4 已量化，短轴时才会放大到 10% 量级）。
+
+---
+
+## 7. 附带发现：`xue.delta` 与 shard padding 相互作用差
+
+`_pad_block()` 先补 nodata 到整个 inner chunk，`_delta_encode()` 再在**已填充的块**上差分
+（`zarrstore.py:421`、`:430`）。于是真实帧之后的第一个填充帧变成 `(255 − 真实值) mod 256`——
+近满熵，zstd 压不动。
+
+- 13 帧实测：padding 时间块在 delta 链下是容器的 **1.988×**，无 delta 下 1.008×；吃掉 9.4 个百分点。
+- 161 帧实测：同一项只占 **0.5 个百分点**。
+
+**不能随手修**：填充帧必须解码回 `fill_value: 255`（规范明确保证，`test_chunks_come_back_trimmed` 在测），
+delta 链下这个保证**必然**要求那一帧携带高熵残差。唯一"修法"是放弃该保证（profile 变更），换 0.5%。
+**结论：现状合理，但文档该写明这个交互。**
+
+---
+
+## 8. 自我纠错记录
+
+| 我最初的结论 | 核实后 |
+|---|---|
+| "线上 store 比容器大 **1.67×**" | ❌ `bandwidth` 是 **HLS 比特率**不是字节数（`binconvert.py:1294`）。真值见 §5.1 |
+| "线上 store 比容器大 **10.2%**（总体）" | ❌ 把一个变量外推到全部。**总体是 0.979×（更小）**，见 §0 |
+| "打开 `--delta` 就能省" | ❌ 全开比现网默认**差 3.1%**。只有逐变量选才对 |
+| 校验器报 `comparable=10140` | ❌ 我的 bug：假设"第 i 组 ↔ 第 i 时间块"，变步长后错位。修正后 7800 |
+| 直接压缩实验：所有变量 RAW 都更优 | ❌ 取样太差（1 个极区瓦片）。改为整时间块 420 瓦片后方向稳定 |
+| 上游 `test_assemble`/`test_ocean` 报错 | ❌ 我的环境缺 `gdal_translate`。**不是上游 bug，不要上报** |
+
+---
+
+## 9. 上游测试套件实跑（无 GDAL / 无 ffmpeg）
+
+| 模块 | 结果 |
+|---|---|
+| `test_bin`（容器结构） | **77 通过** |
+| `test_zarr`（store 等价） | **12 通过，6 跳过**（需 zarr-python，属 `zarr` 依赖组） |
+| `test_stac` | 19 通过，1 跳过 |
+| `test_pressure` / `test_surface` / `test_isobaric` | 全部通过 |
+| `test_assemble` / `test_ocean` | 各 2 例报错，**原因是我环境缺系统 GDAL** |
+
+---
+
+## 10. 复现步骤
+
+```sh
+cd /tmp/xue-upstream
+export UV_CACHE_DIR=/tmp/uv-cache          # 沙箱不允许写 ~/.cache/uv
+uv sync                                     # Python 3.14 + numpy + xuepy 0.16（自带 GDAL）
+export XUE_ENCODER=native
+
+# ① 全量预测器评估：13 帧短轴就够（判据是 6 帧块内的局部性质）
+uv run python -m xuebuild build-bin --model gfs --run 2026091600 --hours 12 \
+  --profile balanced --raw-dir /tmp/xue-verify/raw-all --output-dir /tmp/xue-verify/all \
+  --work-dir /tmp/xue-verify/work-all --skip-video --skip-variants      # 约 6 分钟
+uv run python predictors.py /tmp/xue-verify/all/gfs.2026091600 /tmp/xue_manifest.json
+
+# ② 生产轴真值（用于标定幅度）
+uv run python -m xuebuild build-bin --model gfs --run 2026091600 --hours 240 \
+  --bundles tmp2m prate prmsl rh850 cape tcdc wind10m htsgw --profile balanced \
+  --raw-dir /tmp/xue-verify/raw-full --output-dir /tmp/xue-verify/bal \
+  --work-dir /tmp/xue-verify/work-bal --zarr --skip-video --skip-variants
+uv run python sweep.py  /tmp/xue-verify/bal/gfs.2026091600 /tmp/xue-verify/bal-delta \
+                        tmp2m prate prmsl rh850 cape tcdc wind10m htsgw
+
+# ③ 独立验证
+uv run python verify.py /tmp/xue-verify/bal/gfs.2026091600/tcdc.xue \
+                        /tmp/xue-verify/bal-delta/tcdc.zarr tcdc
+```
+
+`xue_manifest.json` 是线上 `https://dataset.ringsaturn.me/xue/gfs.2026091600/manifest.json` 的快照
+（用于取每个 bundle 的已发布 store 体积）。
+
+---
+
+## 11. 诚实的局限
+
+1. **幅度只有约 1.1%，且是标定值**：43 个变量的**方向**是逐块实测的（可靠），但**幅度**靠 8 个 bundle
+   的全轴真值标定（系数 0.406）。全量真值需要把 37 个 bundle 都建成 161 帧全轴，**我没做**。
+2. **只验了 GFS**。ECMWF / sflux / HRRR（走重投影）/ MRMS / JMA 未验，风险面不同。
+   预测器偏好可能随源而变（分辨率、量化码本都不同）。
+3. **浏览器端只到了单测层**。我已构建 WASM 解码器并跑通全部前端单测
+   （**408 个通过 / 27 个文件**，含 `zarr.test.ts` 44 个与我新写的混合链测试 4 个），
+   但**仍未在真实浏览器里跑过页面**：Playwright e2e 需要下载 Chromium 到工作区外，
+   我**没有**做；`wasm-pack test --headless --chrome` 也没有跑。
+   所以"渲染出来对不对"（视觉、WebGL 图层、粒子、底图）**依然未验**。
+4. §5.3 / §5.4 的块级测量只取了**一个时间块**（帧 30–35 / 帧 0–5）。`rh850` 就是块级与全轴的分歧点
+   （块级判残差优 3%，全轴判 RAW 优 0.4%），说明这类接近中性的变量结论不稳。
+5. **未验 v1 容器导出路径**（`index_location` 两种取值验过，但未验 v1 输入）。
+6. **容器侧的建议没有实现也没有提交**。store 侧的那条我实现并跑通了（§5.7），
+   但实测后自己降级了（§5.10）。
+
+---
+
+## 12. 附录：把前端跑起来需要什么（实测）
+
+上游 CI 的 `web` job 在本机复现时踩到的三处**工作区外写入**，全部可以用环境变量绕开：
+
+| 组件 | 障碍 | 绕法 |
+|---|---|---|
+| `rustup target add wasm32-unknown-unknown` | 写 `~/.rustup` | **绕不开**，需要一次更宽权限（我申请并获批了一次） |
+| `wasm-pack` | `cargo install` 写 `~/.cargo` | `CARGO_HOME=/tmp/cargo-home cargo install wasm-pack --root /tmp/xue-tools` |
+| `wasm-pack` 自身的工具缓存 | 写 `~/Library/Caches/.wasm-pack` | `HOME=/tmp/fake-home`（配 `RUSTUP_HOME` 指向真实目录） |
+| `npm install` | 写 `~/.npm` | `npm install --cache /tmp/npm-cache` |
+
+跑通后的实际结果：
+
+```
+npm run test:web   →  27 files / 408 tests passed   （含 zarr.test.ts 44 个）
+npm run build      →  tsc --noEmit 通过；vite 产出 dist/，xue_bg.wasm 206.90 kB
+```
+
+**另一条实测事实（对"本地跑站点"很关键）**：数据桶的 CORS **只对生产 origin 开放**——
+
+```
+Origin: https://xue.ringsaturn.me   →  access-control-allow-origin: https://xue.ringsaturn.me
+Origin: http://localhost:4173       →  （无 CORS 头）
+Origin: http://localhost:8899       →  （无 CORS 头）
+```
+
+所以**本地起的站点读不了线上数据**（浏览器会拦）。要在本地看，必须自己构建一份 run 放进
+`web/public/data/`（同源，无 CORS 问题）。这也解释了为什么 `web/.env.deploy` 只在部署构建里生效。
+
+---
+
+## 13. 追加更正（本节起改为 append-only）
+
+**从本节开始，这份报告不再被重写。** 后续发现以带日期的条目追加到本节，
+正文中已被推翻的段落**保留原样**，由本节指出它被什么取代。
+
+> 为什么改：Adva 的 `docs/research/README.md` 写着——
+> *"编号笔记是追加记录。后续笔记可以取代它，但**不重写**它。"*
+> 本报告此前**被整篇重写过两次**（第一版头条件为线上体积回归，第二版改为合计更小），
+> 两版原文都已被就地覆盖、**从文件里不可恢复**。
+> 那些结论是怎么被推翻的，现在只活在上面 §8 的叙述里，而不是活在有出处的文本里。
+> 这是纪律问题，不是笔误。
+
+### 2026-09-16 · 更正一：§5.8 混合 store 一格的**证据无效**
+
+§5.8 的四格矩阵里，"混合 store 也打不开"那一格，当时的 store 是这样造的：
+用 `--delta auto` 导出（两个数组都判 delta），再**覆盖掉 `ugrd10m/` 目录**——
+**没有同步重写分组文档里的 `consolidated_metadata`**。
+于是分组文档声明两个数组都是 delta，与磁盘上的数组不符，
+而 zarr-python 默认走 `use_consolidated=True`，读的正是那份文档。
+**结论侥幸正确，证据无效。**
+
+已用 `tests/prepare_mixed_fixture.py` 生成的自洽夹具重做（分组文档与其数组逐字核对一致），
+结果不变：整包标准链不注册即可打开；自洽混合 store 在 `open_group` 抛
+`UnknownCodecError: Unknown codec: 'xue.delta'`；注册后三种均可打开。
+
+**不变的结论 + 被替换的证据。** 该实验的 `assumptions` 与 `forbidden_conflations` 已记入
+`claims.toml` 的 `xue.store.per-array-chain-interop.v0`。
+
+### 2026-09-16 · 更正二：一条被写成"规则是错的"的规范判断
+
+§5.4 与 §5.6 使用的措辞是"容器的编码器规则**对过半数变量是错的**"。
+按 Adva 的 `forbidden_conflations` 纪律复核后，这句话混淆了两件事：
+
+- 本次测量建立的是**压缩字节**：某个变量在某条链下更小；
+- 而容器的规则是 `docs/format.md` 里一条**规范性的编码器规则**，
+  其作用是把两条编码路径锁成字节一致——它是规范，不是压缩启发式。
+
+**压得更小并不使它成为错误，正如压得更大也不使它成为错误。**
+准确的表述是"该规则对 23 个变量在压缩字节上不是最优的"。
+见 `claims.toml` 的第一条 forbidden conflation。
+
+### 2026-09-17 · 更正三：「没有任何一方被指定为权威」——这句话是错的
+
+我此前反复写过（README §七、本报告会话中多次）：等值线半码对齐规则"没有任何一方被指定为权威"。
+**在被要求把它变成可检验的问题之后，我查了，这句话站不住。**
+
+`tests/test_pressure.py` 的**模块 docstring 自己就写明了**：
+
+> *"把它们三者绑在一起的是 `tests/fixtures/pressure-registry.json`，一份本模块重新生成并比对的 golden；
+> Rust 编码器的单测与前端的 vitest 读同一个文件，所以一个数字只能三者同时移动。
+> **除了一个测试，没有任何东西陈述这条规则**——容器既不知道也不关心。"*
+
+而且这套机制是**系统性的**，不只是压力族：
+
+| golden | 由谁读 |
+|---|---|
+| `pressure-registry.json` | `test_pressure.py` + Rust 单测 + `web/src/pressure.ts` 的 vitest |
+| `isobaric-registry.json` | `test_isobaric.py` + 前端 |
+| `surface-registry.json` | `test_surface.py` + 前端 |
+| `ocean-registry.json` | `test_ocean.py` + 前端 |
+| `tc-registry.json` | `test_tc.py` + 前端 |
+
+`test_the_committed_registry_still_describes_this_encoder` 逐一比对编码器注册表与 golden，
+而 `test_every_contour_lands_half_a_code_off` 在**整个码本跨度**上检验半码对齐且要求每变量多于 8 条等值线。
+**我假设的那个洞（新增压力变量、测试照过、等值线画错）是堵住的。**
+
+正确的说法是：**xue 的权威不是某个组件，而是一份提交进仓库的、被所有实现共读的 golden，
+每个族一份。** 这与 Adva"Rust 是语义唯一权威"是两种不同的答案，而 xue 的这一种在它的语境里是成立的。
+
+**教训**：我连续两轮把"我没找到"说成了"不存在"。这与更正一（实验证据无效）是同一类错误——
+都是把**尚未检验**当成了**已经建立**。
+
+### 2026-09-17 · 记录：权威问题带出的一个真实发现
+
+把权威问题变成可检验的问题之后，找到一个**此前没人注意到的**东西——
+不是什么"权威空缺"，而是**派生量的覆盖面不对称**：
+
+- `derive_vapour_flux` **有**数值测试（`test_the_vapour_flux_is_q_v_over_g`：喂进 q/u/v，断言手算值，**并钉住精确的运算顺序**以保 parity）
+- `derive_theta_e` **没有**。测试只覆盖"注册了 / 在哪些模式上发布 / 输入是 `tmp850` + `spfh850`"，
+  **从不检验那个数对不对**。
+
+而 θe 的公式链比水汽通量长得多（Bolton 1980 式 43 + 式 15 + 式 10），
+两个编码器只被**字节一致**绑在一起——而 parity 是**关系性**保证：它说 Python 与 Rust 一致，
+不说它们与物理一致。
+
+我于是独立算了一遍（用**发布的 `rh850` 反推 q**，与编码器用的 `spfh850` 是不同输入路径）：
+**平均偏差 +0.109 K**——**公式是对的**。但发布场**每一帧的上界都恰为 357.00 K**，即码本上限。
+
+追下去，结论与我的预期相反：
+
+| 区域 | 独立算得 θe | 发布场顶到上限的点 |
+|---|---|---|
+| 西太平洋暖池（真实气象） | 308–364 K，均值 339 K | **0–4 / 7021** |
+| 青藏高原 | 318–397 K，均值 **359 K** | **62%–66%** |
+
+**根因不是上限太低，而是 850 hPa 在高原上是地下约 3 km 的外推值。**
+后果是：在 θe 这一层上，**青藏高原被画成比热带暖池更极端**，而那是伪值。
+
+补一句与权威直接相关的：**编码器为每个变量都统计了截断点数**（`binconvert.py:1225` 的 `PlaneStats.clamped_points`），
+但报告里只输出 `tmp2m` 与风场两项（`:1969`、`:1976`）——**θe 的计数被算出来然后丢掉了**。
+
+已注册为 `xue.derived.theta-e-plateau-clamp.v0`。
+
+### 2026-09-17 · 记录：θe 高原截断的**渲染后果已坐实**（这是本研究中第一份来自真实浏览器的证据）
+
+`xue.derived.theta-e-plateau-clamp.v0` 的 `counterexample_boundary` 里原本写着
+"我没有看页面，'高原在图上更亮'是从数值推的，不是截图"。**这一步现已关闭。**
+
+用户先在真实浏览器里看了本地站点并确认（"没错"）。随后我把这件事做成了**可复现的产物**：
+无头 Chrome 经 Playwright 驱动（`channel: "chrome"`，SwiftShader 软件渲染），
+打开本地站点 `?type=thetae850`，得到 `thetae850-tibetan-plateau-clamp.png`。
+
+图上（F045，整幅视口）：**青藏高原上空是一整片色标顶端的深红，可见地比热带暖池更极端。**
+与数值分析一致（高原 62%–66% 的格点顶到 357 K 上限，而暖池只有 0–4/7021）。
+
+**这条记录同时标志着本研究第一次跑通真实浏览器路径**——此前"没在真实浏览器里跑过页面"
+是一切前端结论上挂着的边界。现在至少证明：构建产物能加载、worker 能解码、
+WebGL2 图层能出图、时间轴与图例正确（"161 frames ready"、F045、09/18 23:00 UTC、色标 255–355 K）。
+
+**尚未建立**：观看者会不会把它读成错误（UX 判断）；其他层次与其他调色板下的表现；
+以及截图截的是**我本地构建的数据**，不是线上服务发布的那一份。
+
+**过程中的一次工具失误，记下来**：先用 `--virtual-time-budget` 截，得到的是停在
+"Loading manifest" 的空壳——虚拟时间在真实网络下推进，请求还没回来就截图了。
+改用 Playwright 的真实等待后正常。**第一次看到"卡住"就以为是站点有问题，其实是我的等待方式错了。**
+
+### 2026-09-17 · 上游漂移核查：基线 +59 个提交，**格式与编解码器未被改动**
+
+按"尽快确认、避免重大风险"的要求，拉取上游并做了风险核查。
+
+**基线漂移**：`8af4376` → `main`+59 个提交，139 个文件变更，71 个新增。
+新增目录：`xuebuild/sounding/`（6 文件）、`xuebuild/airport/`（8 文件）、
+`docs/sounding.md`、`docs/airport.md`；发布工作流 9 → **13**。
+
+**风险核查（最要紧的一项）**——会动摇本报告全部字节级结论的文件：
+
+| 被动过 | 未动 |
+|---|---|
+| `rust/xue/src/encode/sources.rs`（+32/−20） | `binconvert.py` · `zarrstore.py` · `quantize.py` · `temporal.py` · `binformat.py` · `manifest.py` |
+| `rust/xue/src/bin/xue-encode.rs`（+1/−1） | **`docs/format.md` · `docs/zarr-profile.md`** |
+| `xuebuild/sources.py`（+0/−0） | `rust/xue/src/format.rs` · `decode/` · `encode/` 其余 |
+
+**结论：`claims.toml` 的 6 条 claim 全部不受影响。**
+它们测的是格式、编码器、store 与派生量，而这 59 个提交**新增产品**，没有修改既有产物的产出路径。
+唯一实质改动是源注册表（新增源），不触及任何被测量的行为。
+
+**并且——我有一条推断被上游以另一种方式实现了，因此作废：**
+
+README §三 原把**探空观察者**列为"没有被服务好"，推断修法是
+「把各层次合成多变量 bundle，格式本来就装得下」。上游实现了这个观察者，
+但用的是**一个独立的 JSON 产品**（`docs/sounding.md`：*"an ascent is not a raster,
+so soundings are another, smaller product … plain JSON"*），复用同一套
+「指针 → 不可变 CRC 目录」契约。
+
+**这是同一类错误的第四次**：把**我的推断**讲得比证据支持的更肯定。
+但这次它没有造成损害，因为它当初被我标注为"未测量，因此不进注册表"——
+**它不在 claim 层，作废它不需要动任何一条已注册的结论。**
+
+记下这条纪律的收益：**把未测量的东西挡在注册表之外，代价是少一个"发现"，收益是少一次污染。**
+
+### 2026-09-17 · 与 Adva 工具链的合规核查：**字段兼容，但工具读不了**（已修）
+
+Adva 主线在 2026-09-16 落地了工具工作流的前三个助手，其中 `scripts/navigate.py`
+会按 `code_symbol` / `proof_or_certificate` / `scope` 里的**路径 token** 去观察文件是否存在，
+并把每条 claim 归为 `historical` / `runnable-here` / `not-yet-executed`。
+
+我把上游工具**原样**跑了我的 `claims.toml`（搭沙箱：它按脚本位置定 ROOT，
+所以把 `navigate.py` 放在 `scripts/`、我的注册表放在 `docs/claims.toml` 即可）：
+
+| | 之前 | 之后 |
+|---|---|---|
+| `navigate.py` | **`not-yet-executed=6`** | **`runnable-here=6`** |
+| `navigate.py --corrections` | **空** | **3 条** |
+
+**工具把六条已执行的测量全部判成"尚未执行"**，理由栏写的是
+*"no evidence path or checker is recorded, or none of the recorded paths exists here"*——
+而检查器我当时就摆在 `scripts/` 下。原因是 token 提取要求路径
+**以 `experiments/ docs/ programs/ scripts/ tests/ crates/` 之一开头**，
+而我写的是裸文件名与散文。
+
+**这是本轮最值得记的一条**：一份看起来符合规范、实际工具读不了的注册表，
+比没有注册表更危险——它把"已执行"呈现成"未执行"，而且没人会去查。
+
+两处不合规都已修：检查器移入 `scripts/`、`code_symbol` 改为 root-relative；
+六条更正从"一个大文件里的若干节"拆成 `docs/maintenance/` 下三份各自成篇的笔记
+（工具的更正索引只扫那两个目录下的**独立文件**，且要求前 14 行同时含标记与被更正的**文件名**）。
+
+**尚未采用**：`run_bounded.py` 的「五条轴分开」与 `problem_card.py` 的十字段问题卡。
+本笔记的边界仍靠散文写。
+
+### 2026-09-17 · 对 adva-machine 工具链的合规：**我的六条 claim 没有达到它的标尺**（已补契约）
+
+`mountain/adva-machine`（本地 HEAD `6646582` 与上游一致）的 `toolchain/` 是一个统一的本地工具链接口：
+`adva-machine capabilities | doctor | run --engine rust|python | conform`。
+它立下的标尺比 `navigate.py` 高一层：
+
+- **`conformance.contract.json` 在**执行之前**钉死十六个用例**——语料按 **sha256** 固定，
+  不是事后挑的；
+- 报告保留请求与可执行文件摘要、精确结局、指令计数、**资源限制、子进程退出码与时间**；
+- `limits` 显式声明（wall 120s / cpu 110s / launches 100 / artifacts 64 MiB），
+  `automatic_retries: 0`，`attempts_per_invocation: 1`；
+- `protected` 列出不得违反的不变量；
+- **"No program is considered equivalent solely because a report has a success string or digest."**
+
+**我的六条 claim 一条都不满足这条标尺**：用例是我看过数据之后定的，预算写在 `assumptions` 的散文里，
+没有按哈希钉住的语料，没有重试与预算的显式声明。
+
+补齐（不改变任何已记录结论）：
+
+- 新增 `docs/conformance.contract.json`（`xue.conformance-contract.v0`）：
+  语料 = 注册表本身，**按 sha256 钉死**（`30c646cc…`），`cases: 6`；
+  `protected` 七条（"摘要相同不是逐字节相同"、"跳过不是通过"、"未执行不是失败"、
+  "边界属于 claim 并随它同行"、"未测量不进注册表"、"更正取代而非重写"）；
+  `limits` 与 `automatic_retries: 0`。
+- 新增 `scripts/check_contract.py`：**验证钉子还成立**——只回答"契约点名的语料是否还是磁盘上的那份"，
+  并沿用 `RECORDED` / `OBSERVED HERE` 的标注纪律。当前：`digest match`，`cases 6 / 6`。
+
+**仍然没达到的地方，写在契约的 `note` 里而不是遮掉**：我的契约钉了**一个语料**（注册表），
+但**没有钉逐用例清单**——每个 claim 的检查器各自接受输入，而注册表**还没有逐 claim 的预算字段**。
+这正是 adva-machine 那份契约比我的严格的地方。
+
+**也未采用**：`adva-machine` 的 `doctor`（环境与钉子核查）与 `run --engine`（双引擎同请求对比）。
+它们需要 `blake3`、`pytest` 与 `cargo build --locked --release -p adva-witness`，本轮没有跑。
+
+### 2026-09-17 · xue 补足：克隆已快进到 `a20c774`，六条 claim **在新基线上执行级复验通过**
+
+按"先把 xue 的最新进展补足"，做了三件事。
+
+**一、克隆更新**：`git fetch` 走 HTTP/2 失败（`HTTP2 framing layer` / `Empty reply from server`），
+改 `HTTP/1.1` 成功；`--ff-only` 快进 `8af4376 → a20c774`（59 个提交）。
+本地原型改动（`delta-auto`）在更新前丢弃，补丁已存在于 `docs/delta-auto.patch`，未丢失。
+
+**二、执行级复验（这是之前只能做文件级判断的那一步）**：
+
+| 检查 | 结果 |
+|---|---|
+| 前端全量单测 | **514 passed**（基线 408；上游新增 106，**全部通过**） |
+| 我新增的 `zarr-mixed.test.ts` | **4/4 passed** —— 在 59 个提交之后仍然成立 |
+| `test_bin`（容器结构） | OK |
+| `test_zarr`（store 等价） | OK（3 跳过，需 zarr-python 的依赖组） |
+| `test_pressure`（压力族 + 半码对齐） | OK |
+
+**结论**：`claims.toml` 六条在新基线上**仍然成立**，"格式与编解码器未被改动"这一判断
+从文件级升级为执行级。
+
+**三、claim 前提在线上重验**：
+
+| 前提 | 今日实测 |
+|---|---|
+| 线上 store 全是标准链（`xue.store.per-array-chain-interop.v0` 的边界） | ✅ `tmp2m`、`thetae850` 仍为 `['bytes','zstd']` |
+| GFS run 的 bundle 集合与 schema | ✅ 37 个 bundle、schemaVersion 5、变量集与上次核查**逐字相同**、37/37 带 zarr 描述符 |
+| 当前 run | `2026091618`——**正是我本地构建过的那个 run**，manifest `335029a3`（我本地 6-bundle 版为 `de00bbe9`，差异来自 bundle 子集） |
+
+**四、笔记补足**：把三个新读者（探空 / 机场 / 台风）加进观察者表，
+并记下要点——**它们拿到的是 JSON，不是栅格，而交付契约一模一样**。
+上游自己写下的理由（*"an ascent is not a raster"*、*"an airport's weather is a line of text"*）
+是「契约是不变量、表示随观察者变」最硬的一处证据，且**不是我的推论**。
+
+**仍未做**：把 6 个 bundle 的全轴数据重建在新基线上（约 15 分钟）。
+上面三项复验没有依赖它——它们用的是上游自己的测试套件与线上的既有产物。
+
+### 2026-09-17 · 三条 adva 主线更新：`adva` 的主线**被重写过**，不是"落后"
+
+按要求同步 `adva`、`adva-library`、`adva-machine` 三条主线。结果与预期不同，记下。
+
+**更新结果**
+
+| 主线 | 结果 |
+|---|---|
+| `adva-machine` | ✅ 已是最新（`6646582`），且它的 `adva-library` 子模块这次**成功检出**（pysnark / zksnake / zksnake-py） |
+| `adva` | ❌ **无法快进**。`--ff-only` 报 *"Not possible to fast-forward"* |
+| `adva-library`（adva 的子模块） | ⚠️ 嵌套子模块 `Merricx/zksnake` 克隆失败 |
+
+**根因：三条主线在 2026-09-16 被刻意重写。**
+
+- 本地与远端**共同祖先停在 2026-09-09**（`e8da77a`），本地独有 **881** 个提交、远端独有 **921** 个，**互不为祖先**。
+- 政策文件 `PUBLICATION_BOUNDARY.md`（明理 2026-09-16 的指示）：
+  **"material outside the public domain must not be brought into the public repositories"**，
+  **该共同政策适用于 `adva`、`adva-library`、`adva-machine` 三者**；
+  **默认不予准入**，且"开放许可（CC BY / MIT / Apache）本身不构成公有领域依据"。
+- 同时新增 `LICENSING.md`、`Unknown-LICENSE-v0.2/v0.3.md` 与
+  **`.github/workflows/publication-boundary.yml`**（CI 强制，含 `withdrawn-content` 作业）。
+
+**重写撤回了什么（已实测）**
+
+两条主线 tip 之间：761 处变更，其中**撤回 145 个文件**——**全部在 `trials/` 下**
+（`meaning-pair-round-02` 139 个：第三方论文 PDF、全文转录、页面图像；`burau-boundary-pair-round-01` 4 个；
+`meaning-pair-round-01` 2 个）。**非 `trials/` 的撤回项为零。** 新增 589 个。
+
+**两处已核实的结论**
+
+1. **本地独有的 881 个提交是同内容的新哈希，不是丢失的工作**：
+   本地 `d5b5d0c tooling: implement the first three problem-workflow helpers`
+   与远端 `42f0263` **提交信息相同、哈希不同**。因此 reset 不会丢工作，只会丢掉那 145 个被撤回的第三方副本。
+2. **我引用过的东西无一被撤回**：`README.md` / `AGENTS.md` / `docs/claims.toml` /
+   `docs/SEMANTIC_SCOPE.md` / `docs/research/README.md` 在差异集里都只是**被修改**（`M`），不是 `D`。
+   而且——`scripts/navigate.py` 在新主线里**逐字节相同**（198 行），
+   `docs/claims.toml` 的字段集**恰好就是**我采用的 11 个字段。
+   **本笔记的合规结论与注册表 schema 在新主线上仍然成立。**
+
+**我没有做的事**：没有 `git reset --hard`。那会丢弃 881 个提交、且属于你的仓库与你的政策，不该由我决定。
+改为在 `/tmp/adva-main` 拉一份**干净的新主线**（`03c9c12`）用于重新学习，你的三个检出**原样未动**。
+
+**过程中的一次自查**：我第一遍核对我引用的文件是否被撤回时，grep 匹配到了 `M`（修改）行而非 `D`（撤回）行，
+一度得出"README.md / claims.toml 被撤回"的错误结论。**修正后才是上面的结论。**
+
+### 2026-09-17 · adva 三线第二轮拉取：两条线未前进，`adva-library` 的公开历史确认被重写
+
+| 位置 | 提交 | 日期 | 与公开线的关系 |
+|---|---|---|---|
+| `adva` 公开 main | `03c9c12` | 09-17 | — （**本轮无新提交**，我的 `/tmp/adva-main` 已是最新） |
+| `adva-machine` 公开 main | `6646582` | 09-16 | — （**本轮无新提交**，本地一致） |
+| `adva-library` 公开 main | `7e73821` | 09-16 | — |
+| 两个超级项目钉的子模块 | `73a6af4a` | 09-16 | ✅ 公开线的祖先，**落后公开 HEAD 8 个提交** |
+| `~/Adva/adva-machine/adva-library` | `73a6af4a` | 09-16 | ✅ 正确（与钉子一致） |
+| **`~/Adva/adva/adva-library`** | **`9928b118`** | 09-13 | ❌ **不在公开历史里**——被重写掉了 |
+
+**确认**：`adva-library` 的历史同样被重写——公开线上共 94 个提交，而本地那个 `9928b118` **根本不在其中**。
+
+**找到了撤回机制**（不是手工重写）：提交 `b6f9131 Execute verified removal of withdrawn content from library history`
+新增了三件东西——`scripts/withdraw_publication_history.py`（167 行）、
+`governance/withdrawals/run-history-correction.json`（记录）、
+`.github/workflows/publication-history-correction.yml`（CI）。
+另有 `44a8619 fix: withdraw external visual inputs pending rights verification`，
+正对应 `trials/` 里那批被撤回的页面图像（`pixels/alpha-*.png`）。
+
+**所以：本轮的净变化只有一处——`~/Adva/adva/adva-library` 停在一个公开线上已不存在的提交上，
+与它的超级项目 `~/Adva/adva`（`cb84d21`，含 145 个已撤回文件）一样。**
+`~/Adva/adva-machine` 及其子模块则**完全正确**。
+
+### 2026-09-17 · 用 STAC 目录补数据：**它是产物体积与 CRC 的正确来源，我此前的方法错了**
+
+按提示拉取 STAC 目录（`https://dataset.ringsaturn.me/xue/catalog.json`）。
+新增 `scripts/catalog_inventory.py`，产出 `docs/catalog-inventory.json`。
+
+**全量清单（2026-09-17）**
+
+| | |
+|---|---|
+| collection | **11 个**：gfs / ecmwf / sflux / hrrr / **cma** / mrms / jma / **sounding** / **airport** / **tc** / showcase |
+| asset | **339 个**，其中 **store 203 个** |
+| 已发布字节 | 全分辨率 **3,461,772,777** + 半分辨率 **1,161,987,966** = **4,623,760,743**（约 4.62 GB） |
+| gfs 单个 run | 105 个 asset（35 个变量 × 全档 + 半档 + poster） |
+
+**目录把每个产物的 `file:size` 与 `xue:crc32` 写在一个文档里**，另有 `xue:kind`（store/poster）、
+`xue:tier`（full/half）、`xue:grid`，Item 上是 `cube:dimensions`、`xue:frameCount`、
+`xue:forecastHours`、`xue:manifestSchemaVersion`。
+
+**这对本报告有直接的方法论后果**：我曾用 manifest 的 `bandwidth`（一个 12 fps 下的 HLS 比特率）
+**反解**容器体积，并据此得出过错误结论（见 §0 更正一）。**目录里本来就有精确的字节数。**
+那条弯路本可以不走。
+
+**已核对**：目录与 manifest 在 `tmp2m` / `prate` / `thetae850` 上**字节数与 CRC 逐项一致**——
+两者是同一份数据的两种渲染。
+
+**README 的生态路径已实测跑通**（不是照抄）：
+
+```python
+run = next(pystac.Catalog.from_file("…/catalog.json").get_child("gfs").get_items())
+xr.open_zarr(run.assets["tmp2m"].get_absolute_href())
+# → dims {'time': 161, 'latitude': 721, 'longitude': 1440}，解码后 −60.0..43.0 °C
+```
+
+**新看到的形态**
+
+- **`cma` 已是活的 collection**，资产形态与预报 run 相同（`cref.zarr` / `cref-half` / `cref-poster` / `manifest`），
+  身份是 `CMA-RADAR / l3-mst-cref`；而 `showcase/shadel-2026` 是**同一产品族的策展 case**——
+  同一个产品，两条交付路径。
+- 点产品带 **NDJSON** 资产：`sounding` 的 `soundings` 10.8 MB、`airport` 的 `history` 11.3 MB；
+  `tc` 则是**每个风暴一个 JSON asset**（`WP242026`、`x-al-2026091612-1` …）。
+- 每个点产品的 Item 都用**台站/风暴的包围盒**作 geometry。
+
+### 2026-09-17 · 重新学习 adva #190：它让我在**自己的工具里**找到并修掉了一个塌陷
+
+**#190 已合并**：`03c9c12 → f8341c8`（`Merge PR #190: finite continuation ledger and commit/reply boundary`）。
+先查我依赖的两样：**`scripts/navigate.py` 未变**（我的合规继续成立）、`docs/claims.toml` **字段集未变**
+（仍是那 11 个字段，182 条 claim）。新增的是 `experiments/decision_ledger/` 与一条 claim：
+
+> `adva.bounded-experiment.decision-ledger.v0`
+> *"…replays a committed continuation without a second abstract debit and **distinguishes commit from reply
+> observation**"*……*"Missing acknowledgment must not silently renew allowance."*
+
+**它的契约形态**（`experiments/decision_ledger/contract.json`）比我的严格，有几处值得抄：
+`status: FrozenBeforeExecution` + **`base_commit`**（钉住冻结时对标的那个提交）、
+**`controls`**（十项负向控制：重初始化拒绝、缺台账拒绝、同键冲突、容量暂停、零额度暂停……）、
+**`faults`**（注入的故障位：commit 前退出 17 / commit 后退出 19）、
+`transaction_assumptions`、以及一份 `residuals`。
+
+**它照出了我自己的一个缺陷。** `scripts/verify.py` 原来在没有任何可比块时打印
+`comparable chunks=0 byte-identical=0`——**"没有可比对象"与"比过且全不同"是同一个输出**。
+这与它说的"回执丢了不能当成没发生"是同一个结构。
+
+修的过程中**我又犯了一次同类错误**：第一版判语把 `720/720 不同` 判成 `DIFFERED`，
+而对**预测变量 + 标准链**那**正是规范预期的结果**。第二版按「链 × 预测器」重写判语，
+区分 `NOT COMPARED` / `ALL COMPARED CHUNKS IDENTICAL` / `NONE IDENTICAL — EXPECTED` /
+`NONE IDENTICAL — UNEXPECTED` / `MIXED`。
+
+**判语一改就抓到了真东西。** 对上游夹具报出 `UNEXPECTED`，追下去是：
+
+- **码：121/121 帧完全一致** ✓ 数据没问题
+- **字节：720 个可比块无一相同**，且 store 的块**一致更小**（344 vs 404、369 vs 451、337 vs 411）
+- 根因：`tests/prepare_web_fixture.py:211` 的 `level = 3`，注释写明
+  *"keep fixture generation fast; **the contract is level-independent**"*——夹具的容器用 level 3，
+  而 store 导出用默认 level 15。
+
+**不是缺陷，是一个真反例**：它把 `xue.store.container-byte-identity.v0` 的边界钉得更实——
+**字节相等只在"同一套 zstd 设置"的前提下成立**，而项目自带一对文件正好在这个前提之外。
+已补进那条 claim 的 `assumptions`。
+
+### 2026-09-17 · 预报：把 θe 那条 claim 的机制**向前检验**——在第二个变量上复现，但带一个部分反证
+
+θe 那条 claim 的边界里明写着："它**没有**建立其他层次或其他变量的表现。"
+按"推进学习与预报"，我把这句话变成一次**有预测的检验**。
+
+**预测（先写出，再测）**：机制是"850 hPa 在高原上是地下约 3 km 的外推值"。
+若成立，同一异常必须出现在**温度**上——在**位于高原地面之下的层次**出现，在**地面之上的层次不出现**。
+高原平均海拔约 4500 m，而 GFS 恰好发布了 `tmp925`（约 762 m）、`tmp850`（约 1458 m）、`tmp500`（约 5575 m）三层。
+
+新增 `scripts/plateau_mechanism_check.py`，用**同纬度带内、高原框之外**的区域作对照，
+把纬向与季节结构除掉，只剩下高原自身的异常：
+
+| 层次 | 约高度 | 在地下 | 高原均值 | 同纬度对照 | **异常** |
+|---|---:|---|---:|---:|---:|
+| `tmp925` | 762 m | 是 | 27.31 °C | 20.99 °C | **+6.33 K** |
+| `tmp850` | 1458 m | 是 | 22.73 °C | 17.57 °C | **+5.16 K** |
+| `tmp500` | 5575 m | 否 | −5.16 °C | −7.21 °C | **+2.05 K** |
+
+**结论：机制在第二个变量上复现，且复现出预测的梯度。**
+地下两层大幅偏暖（+5～+6 K），地面之上那层明显更小（+2.05 K），量级降了约三倍。
+
+**但有一条部分反证必须如实记下**：500 hPa 的异常**不为零**。
+我的判语用了 `>2 K` 作阈值，而**那个阈值是我自己定的**——二值判语掩盖了真实结果是梯度这一事实。
+另外 +2.05 K 有未被排除的物理解释：高原夏季本身是热源，其 500 hPa 层贴近地面。
+
+**还有一条无法检验的**：θe 线上**只发布了 850 hPa 一层**（注册表里有 8 层，发布的是 1 层），
+所以"换个层次"这一维在 θe 上做不了，只能用温度这一族替代。
+
+已把梯度与那条部分反证写进 `xue.derived.theta-e-plateau-clamp.v0` 的 `counterexample_boundary`。
+
+### 2026-09-17 · 学习与预报各推进一格
+
+**预报：500 hPa 残余的判别性检验——做了，未决。**
+
+θe claim 里那 +2.05 K 需要一个判别：它是**真实的高原热源**，还是外推污染？
+
+| 场 | 高原 | 同纬度对照 | 异常 | 读法 |
+|---|---:|---:|---:|---|
+| `tmp500` | −5.16 °C | −7.21 °C | +2.05 K | 待解释 |
+| `hgt500` | 5835.83 gpm | 5894.23 gpm | **−58.40 gpm** | **被地形混淆**——高原下方是岩石不是空气 |
+| `vvel500` | −0.02 Pa/s | +0.01 Pa/s | −0.04 | **比值无意义**（分母近零） |
+| `rh500` | 69.47 % | 33.49 % | **+35.98 点** | 新信号，方向与 θe 异常一致 |
+
+**热源假设未获支持，但本检验也不足以证否。** `hgt500` 偏低看似否证热源，
+但那是因为对照区是低地气柱、高原下方是岩石——**这个比较本身就不成立**。
+`vvel500` 的 283% 是两个近零数之比，**不能当证据**。
+`rh500` 的 +36 点是个同方向的新信号，指向"高原的 500 hPa 更像近地面层"，但那是解释不是结论。
+
+**一个检验没能判定问题，本身就是结果**，已连同它的弱点一起写进 claim 的边界
+（`scripts/plateau_mechanism_check.py` 里也保留了失败判别的说明）。
+
+**学习：把 #190 契约里我缺的三样补上了。**
+
+`docs/conformance.contract.json` 新增：
+
+- **`base_commit`**——钉住测量对标的提交：`8af4376` 测、`a20c774` 复验，并记下 Adva 工具在这两次拉取间未变。
+  **没有这一项，一条 claim 说不出它测的是哪个版本。**
+- **`controls`**（6 条）——**只列真正被执行过的负向控制**：
+  `check_contract.py` 在摘要不符时**拒绝**（今日已实际触发两次）、
+  `verify.py` 在无可比块时报 `NOT COMPARED`、
+  `verify.py` 的 `UNEXPECTED` 分支抓到了 zstd 等级那件事、
+  `interop.py` 含一个不注册 codec 的客户端、
+  `predictors.py` 两个方向的胜者都报、
+  以及项目自带的那对"码同字节不同"的反例。
+- **`residuals`**（6 条）——这份契约**没有**建立什么。
+
+**契约的钉子今天拦了我三次**，每次都要求"重新钉并写更正记录而不是悄悄改"。
+三次都照办，更正笔记用**追加**而非改写，现在 `navigate.py --corrections` 索引到 **5 条**。
+
+### 2026-09-17 · 用实测地形把机制从"整框均值"推进到"逐格点剂量–反应"
+
+此前那条 claim 把"高原约 4500 m"当作**常识假设**写入。按提示引入 **Copernicus DEM** 实测后：
+
+**一、地形实测**（`scripts/dem_elevation.py`，读 `/vsicurl/` 上的 COG 概视图，不落全量）
+
+- 220/220 张 GLO-90 瓦片，3520 个格点
+- 高程 **83 .. 6158 m**，**高原框内均值 4140 m** ——假设值 4500 m 略偏高
+- **为什么选它**：唯一**无需注册、S3 开放、COG 可范围读**的（NASADEM/SRTM 要 Earthdata 登录，AW3D30 要 JAXA 注册）
+
+**二、逐格点检验**（`scripts/plateau_profile_check.py`）——把整框均值换成"按离地高度分箱"：
+
+| `tmp850` 离地高度 | 格点数 | 异常 | | `tmp500` 离地高度 | 格点数 | 异常 |
+|---|---:|---:|---|---|---:|---:|
+| [−4000, −3000) m | 348 | **+6.73 K** | | [500, 1500) m | 431 | **+2.72 K** |
+| [−3000, −2000) m | 514 | **+3.76 K** | | [1500, 3000) m | 485 | +0.84 K |
+| [−2000, −1000) m | 67 | +0.49 K | | [3000, 6000) m | 27 | +2.71 K |
+| [−1000, 0) m | 13 | +0.45 K | | | | |
+
+**教科书式的剂量–反应关系。** 而且**一个机制解释了两件事**：
+
+- **在地下（850 hPa）**：越深偏暖越强（−1.5 km 时 ~0 K → −2.5 km 时 +3.76 K → −3.5 km 时 +6.73 K）——**外推伪值**
+- **刚出地面（500 hPa，0.5–1.5 km 之上）**：+2.72 K，随高度升到 1.5–3 km 降为 +0.84 K——**受地面加热，真实但与外推无关**
+
+上一轮那个"500 hPa 残余"因此有了完整解释：它不是外推，而是**贴着高原地面的那一段**。
+
+**三、两处必须如实标注**
+
+1. **参照系换了**：此处用该纬度**整圈**的平均作对照，而前一版用的是"同纬度带内排除高原框"。两者未做过比较。
+2. **权利状态**：Copernicus DEM 免费且有署名即可再分发，但**不是公有领域、不是 CC0**——按 `PUBLICATION_BOUNDARY.md`，它**不可准入**项目的公开仓库。
+   **没有 vendoring**：瓦片经 HTTPS 读取，只保留派生的逐格均值，且**放在 `/tmp`，在本目录之外**。
+   代价是**这份派生产物无法在不重新下载的情况下复查**——已写进契约的 `residuals`。
+
+**四、过程中修掉两个自己的 bug**
+
+- DEM 聚合用了 `(previous+value)/2`，**那不是均值**，多于两个贡献值就错（测试区均值 4885 → 修正后 4937 m，范围也从虚高的 1960–5839 收回到 3100–5622）
+- 网格对齐里 `lat0 = 90.0 - (lat + step/2)` 算错（i=0 时会得 52°N），改成按纬度值匹配
+
+契约**第五次重钉**（`ed32e1aa…`），更正笔记第五次追加。
+
+### 2026-09-17 · 学习：把欠着的 `problem_card.py` 用上了，它逼出两样我注册表里没有的东西
+
+一直欠着的那个工具（Adva 工具工作流的第二个助手）终于用在了 θe 这条 claim 上。
+十字段：原始问题 / 对象与版本 / 成功条件 / 解释与前提 / 当前候选 / 检查范围 / **预算** /
+**本轮结果** / 剩余问题 / 下一步，外加 `stop_conditions`、`attempts[]`、`handoff`。
+
+卡片写在 `docs/problem-cards/theta-e-plateau-clamp.json`（12.5 KB）。
+上游校验器的判定是：
+
+```
+incomplete — 1 open item(s), none filled in for you:
+  - handoff: the receiver has not confirmed this is the same question;
+    the round stays open rather than complete
+```
+
+**十字段全齐、预算合法、四次尝试各自带 `first_failure`、停止条件齐备**——
+唯一未决的是接收方确认。**而这一项恰恰是我整份注册表里没有的结构。**
+
+**它逼出的第一样东西：`first_failure`。**
+`attempts[]` 的每一次尝试都必须保留**首次失败**。回看这条 claim，我犯了四次错：
+
+| 尝试 | 首次失败 |
+|---|---|
+| 直接压缩对照 | 只取 1 个瓦片（北极附近）→ 得出"所有变量 RAW 更优"的错误方向 |
+| DEM 提取 | `(previous+value)/2` **不是均值**，多于两个贡献值即错：4885 m / 1960–5839 m → 修正后 4937 m / 3100–5622 m |
+| 逐格点剖线 | `lat0 = 90.0 - (lat+step/2)` 在 i=0 时得 52°N；`np.asarray(heights)` 漏取单帧导致 3 维掩码索引 2 维数组 |
+| θe 分箱 | 码本上限 357.0 K **被硬编码**——脚本在拿自己当对照；另有一次 urlopen 403 缺 User-Agent |
+
+**这四次失败此前都只作为叙述存在于报告里，没有一次被保留为产物。** 卡片要求它们各自成栏。
+
+**它逼出的第二样东西：接收方确认。**
+一张卡在**接收方确认"这是同一个问题"之前不算闭合**——不能由出题人自己宣布完成。
+
+**第三样（顺带）**：`check_scope` 逼我把"**没有充分性证明**"写出来，
+`objects_and_versions` 逼我把输入分成**原始产物 / 外部数据集 / 派生中间物 / 本仓库代码**四类——
+其中"派生高程网格在 `/tmp`、不重新下载无法复查"原本只在契约的 `residuals` 里，
+现在在卡片里有了明确的位置。
+
+**这三条已补进契约的 `protected`**（现 10 条）：首次失败须留产物、一轮须经接收方确认方可闭合、
+码本边界须从发布元数据读出而不得硬编码。
+
+### 2026-09-17 · 换问题：按问题卡的规则开了第二轮，并实测了界面能量项的供给
+
+提问方指出上一轮把地下层称作"外推伪值"是**措辞失当**，并改变了问题：关心的是
+**界面热交换与冰融潜热这个相变过程如何刻画**，并要求补**冰川地图数据**。
+按 `problem_card.py` 的规则（改问题须新开一轮 + `predecessor` + `change_reason`），
+开了 `docs/problem-cards/interface-heat-exchange-and-melt.json`。两张卡现在都只差
+**接收方确认**这一项。
+
+**校验器又抓到一处**：`predecessor` 必须是**相对本卡目录的文件名**
+（`previous_path = (path.parent / predecessor)`），我第一版填的是 `question_id`——
+它如实报出 "does not exist beside this card"，而不是默默放过。
+
+**本轮实测（供给核对，尚未做检验）**
+
+源文件 `gfs.t00z.sfluxgrbf000.grib2.idx` **共 54 条记录**，与界面相关的：
+
+| 记录 | 是什么 | xue 发布 |
+|---|---|---|
+| `SHTFL` / `LHTFL` / `GFLUX` | 感热 / 潜热 / 土壤热通量 | ❌ |
+| `DSWRF` / `DLWRF` / `USWRF` / `ULWRF` | 四项辐射 | 仅 DSWRF |
+| `TMP:surface` | 皮温 | ✅ `tmpsfc` |
+| `TSOIL` / `SOILW` / `SOILL` ×4 层 | 土壤温度/含水量/液水 | ❌ |
+| `SNOD` / `WEASD` | 雪深 / 雪水当量 | ❌ |
+
+**xue 从这 16 项里发布了 2 项。** 连名为 "GFS surface flux" 的 `sflux` 源，
+也只发 `tmp2m` / `prate` / `dswrf` / `wind10m`。
+
+**判据性的一条**：54 条记录里**没有任何 melt / freeze 场**——融化潜热**不是交付物，
+而是陆面模式内部的残差**。它可由**同在文件里**的四项重建：
+`Qm = Rn − H − LE − G`，`Rn = (1−α)·DSWRF + DLWRF − ULWRF`，`α` 由 `USWRF/DSWRF` 得。
+
+**过程中的一次自查**：第一次检索 `melt|freez|snow|ice|heat|flux` 只回出三条，
+**我一度以为检索式写漏**；改用对 54 条记录名**全量去重**后才确认
+"没有 melt 场"是可靠的，不是检索失败。**把"我没找到"读成"不存在"**——
+本研究反复出现的那类塌陷，这次靠全量枚举排除掉了。
+
+### 2026-09-17 · 第三轮换问题：冰川垮塌的链式地质灾害
+
+提问方指出真正关心的是**大面积冰川垮塌带来的地质灾害**，并提到中科院等机构已有论文、
+且已对近期墨脱与尼泊尔的重大灾难作出预报。按问题卡规则开了第三轮
+（`docs/problem-cards/glacier-collapse-cascading-disaster.json`）。
+
+**本轮只做文献与字段核对，不做任何预测**，因为这类问题上"我读到的事实"与"我的推断"必须分开。
+
+**读到的一手事实**（姚檀栋等，《创新》2026，DOI 10.1016/j.xinn.2026.101571；
+科学网 2026/9/15 报道，链接见卡片 `objects_and_versions`）：
+
+- 2026-08-26 尼泊尔错坚河冰崩；冰川编号 **RGI60-15.04173**、面积 **3.13 km²**
+- 冰崩体约 980 m × 780 m（0.76 km²）；下游与我国 22 km 边界河段，与吉隆口岸落差约 3500 m
+- 河道由 **170 m 拓至 700 m**；台站记录到 **5.2 级地震**；10:52:15 起崩、10:59 过口岸（约 **190 km/h**）；影响逾 **80 km**
+- **触发条件**：距崩点 31 km 的自动站，崩前十几日**平均 7.4 °C、最高逾 16 °C、最低始终在 0 °C 以上**
+- **临界前兆**：8/12–8/24 冰体流速约 **0.4 m/天**，高出正常冰川运动**一个量级**
+- 机制链：变暖 → 冰裂隙扩张 + 冰面融水向冰内与冰床输送加剧 → **冰床润滑增强** → 流速跃升 → 高位启动、低位展开、链式传导、瞬时成灾
+
+**据此得到的判断（我的解释，非报道原话）**：这条链里**只有第一环是大气模式能给的**；
+裂隙与排水通道、冰床润滑是冰体内部与冰床过程；**流速是遥感量**；冰碛物裹挟与洪水演进是水文-泥沙过程。
+
+**一条未能取得的**：中新网那条（冰冻圈灾害频次增加与链式放大）**取回的是要求启用 JavaScript 的空壳**，
+未取得正文——**故本轮只引用了确实读到的科学网一篇**，不引用来路不明的转述。
+
+### 2026-09-17 · 预报：冰川垮塌的触发条件**没有判别力**（可量化的负结果）
+
+提问方要的是"大面积冰川垮塌的地质灾害"。我不等论文就能做一件有判别力的事：
+用 **GFS 分析场**（NOAA 公开桶，单条 `TMP:2m` 记录经字节范围取回、由 GDAL 解码）
+回溯错坚河个例记载的触发条件——**崩前十几日最低气温始终在 0 °C 以上**——
+看它在区域内是否罕见。
+
+**结果（区域 25–40°N/70–105°E，窗口 8/12–8/26）**
+
+| 年份 | 连续 ≥10 天日最低 >0 °C | 占比 | 面积 |
+|---|---:|---:|---:|
+| 2024 | 7,693 / 8,400 | 91.6% | 5,024 千 km² |
+| 2025 | 7,717 / 8,400 | 91.9% | 5,040 千 km² |
+| **2026** | **7,669 / 8,400** | **91.3%** | **5,008 千 km²** |
+
+**2026 与往年无从区分**（比值 0.997 / 0.994）。
+
+**排除低海拔混淆**——按 GFS **自身地形**分箱（域内 7–5918 m）：
+
+| GFS 地形 | 格点数 | 满足条件 | 占比 |
+|---|---:|---:|---:|
+| < 3000 m | 4,043 | 4,043 | **100.0%** |
+| 3000–4000 m | 1,012 | 1,009 | 99.7% |
+| 4000–5000 m | 2,331 | 1,950 | 83.7% |
+| **≥ 5000 m** | **1,014** | **667** | **65.8%** |
+
+**即使在模式认为 ≥5000 m 的格点上，仍有三分之二满足。**
+
+**结论：论文记载的触发条件在该区域 8 月是气候常态**——91% 的面积、最高地形上也有三分之二，
+且三年不变。**它无法把垮塌的那条冰川与成千上万条没垮的区分开。**
+
+这正是我在上一轮写下的判据：*"若该量在已知个例的崩前并不突出，则这条路无效——
+那就应当老实说无效。"* 现在它有数字了。
+
+**边界**：用的是**模式 2 m 温度**，其陡峭地形偏差未量化；但**年际比较对固定偏差稳健**，
+而"2026 与往年不可分"这一点不因偏差而改变。论文中真正的临界前兆（**流速 0.4 m/天**）
+不在任何大气数据集里，本检验无法触及。
+
+新增 `scripts/collapse_trigger_check.py`。第三轮问题卡已补入该结果。
+
+### 2026-09-17 · 撤回：我曾说「喜马拉雅框基本落在 CMA 拼图覆盖之外」——**错了**，该框横跨覆盖边缘
+
+提问方指定方向：「降雨还有一个雷达拼图的资料，这个方向我们资料更加多，先推这个方向」。
+按目录核对，「资料更多」成立：`catalog.json` 下有三个降水雷达/临近集合（`cma`、`mrms`、`jma`），
+三个机构、三个区域、三种时次间隔。但**更多不等于更深**，而这轮的两次反转都出在我自己身上。
+
+**先说错的那一条。** 我读了**一个** cma 窗口（20 帧，02:00–04:06Z），在喜马拉雅/西藏框
+（80–92E, 26–32N）里只有 851/37,264 = **2.3%** 的格点曾出现回波，而华东对照是 40.7%。
+我据此告诉提问方：该框**基本落在覆盖之外**，不只是没下雨；并说码本的 `0` 同时表示
+「无回波」与「无雷达」，而 xue 没有任何位图能分开这两者。
+
+**后半句半对，前半句是错的。**
+
+**（一）码本其实声明了 nodata 码——我没读变量的元数据就先断言了。**
+`cref` 的 `quantization` 为 `minimumCode 0`、`maximumCode 160`、`scale 0.5` dBZ/码、
+**`nodataCode 255`**；zarr 数组的 `fill_value` 也是 255。准确的表述更窄、也更糟：
+**码是声明了的，却从不写入**——合并窗口 40,370,176 个样本里码 255 出现 **0 次**，
+观测码值范围 **0–139**。射程外的孟加拉湾与阿拉伯海被填成 `0`，与「无回波」**同码**。
+
+**（二）那个低回波比例不是覆盖假象。** 用四个判据检验该框内**已有**的回波——斑块相干性、
+时间持续性、帧间 IoU、回波强度——它表现得像**真降水**：回波像元 **74.5%** 落在
+≥25 格的 4-连通斑块中、单帧即消失的格点仅 **9.4%**、逐格最长连续帧中位数 **5.0**（共 30 帧）、
+帧间 IoU **0.642**、p90 **43 dBZ**、最大 **88 dBZ**。覆盖无疑义的华北对照是
+74.4% / IoU 0.581 / p90 34 dBZ——**同级**。
+
+**判据是先在已知伪回波上校准过才用的**：南海框落在所有中国雷达射程之外，是六个方框里
+**唯一**一个高 p90（76 dBZ）而大斑块占比低（**20.1%**）、IoU 低（**0.374**）、
+单帧格点高（**36.3%**）的框。真降水不长这样，**泄漏长这样**。
+
+**（三）真相在两个版本之间，而且比两者都更锋利：该框横跨边缘。**
+80–92E 经向上，26–27N / 27–28N / 28–29N 三带的雷达回波**全为 0.0%**，而模式在
+这三带分别报雨 81.8% / 94.8% / 74.0%；到 **29–30N 骤升到 10.4%**，与模式雨强的
+Pearson r = **0.507**——**台阶在 29°N，即喜马拉雅山脊**。
+
+**（四）但边缘是参差的，不是射程圆。** 95–100E 经向上方向**相反**：26–27N 有 **8.8%**
+回波（r = −0.222），而 29–30N / 30–31N / 31–32N 三带**全为 0.0%**，
+模式在该三带报雨 98.8–100%。**相隔 15 度的两条断面在 29°N 交叉。**
+
+**为什么这个错误要紧**：它在降雨方向唯一要回答的问题上，指向与真相相反的一侧。
+「覆盖之外」意味着雷达对喜马拉雅什么也说不了；而实测是雷达**看得见高原一侧、看不见
+尼泊尔一侧**，边界既未发布、也无法从数据本身推出——因为该标记的码从不写入。
+正确结论是一个**有条件的**能力，不是空白；而条件每换一个方框都必须重新测。
+
+**另一处同类的自伤，记在这里**：第一次探测历史窗口时，我对 11 个旧 run 一律试猜的窗口 ID
+（`0500`），全部 404。若就此收工，我会报告「连前驱窗口都没有」。改为读源码弄清
+`window_hours` 与 run 的关系（run = 窗口**起始**小时）、再按起始小时**稠密扫描**（442 个候选）
+之后，才找到前驱窗口。**探测返回空 ≠ 东西不在**——这与 §13 更正三是同一类错误，
+已是第三次。
+
+**这轮实际测到的（两个方向都与预期相反）**：
+
+- **保留深度**：三个集合**各只暴露两个滚动窗口**（当前 + 前驱）。cma 442 个候选命中 2 个，
+  mrms/jma 各 196 个候选各命中 2 个；列目录接口全部 404。合并 cma 两窗口得 **30 帧、
+  01:00–04:06Z**（约 3 小时 6 分钟）。**没有历史档案**——所以「资料更多」在**广度**上成立
+  （三个区域、三种间隔），在**深度**上不成立。
+- **重建是确定性的**：两窗口重叠的 **15 帧逐格完全相同**（uint8，1024×1792），
+  且两次独立构建缺**同一时隙 `03:12Z`**——缺口在源侧，不在构建过程。
+  活窗口会推进：同一目录相隔约一小时两次读取，帧数由 **20 → 22**。
+- **回波真实性**：见上（三）。同时**保留一处未解释的反例**——华北对照雷达在 **64.6%**
+  的模式格点上看到回波而模式只在 **1.5%** 报雨（r = −0.068）；这与「模式在 35–42N 少报」
+  和「雷达在华北含非降水回波」都相容，**本轮不判定**是哪一种。
+- **一处空结果如实报告**：模式阈值从 0.02 扫到 1.00 mm/h，各带命中率小数点后三位**完全不变**。
+  这既说明读数由雷达一侧的存在性主导，也说明该扫描**没有**检验出模式阈值的影响——
+  它**不能**当作稳健性证据。
+
+**两个方向的阈值不等价，是这轮最主要的混杂**：雷达一侧是「0.25° 格内最多 32 个子格点 ×
+30 帧 ≈ 960 次抽样的『或』」，极灵敏；模式一侧是「5 个小时次里任一次 ≥0.10 mm/h」。
+因此「模式报雨而雷达没看到」系统性**偏大**、「雷达看到而模式报干」系统性**偏小**。
+所有列联表读数都带这个偏置。
+
+新增 `scripts/radar_coverage_check.py`（码本 + 四判据，六方框，`--box` 可复算任意方框）、
+`scripts/radar_vs_model_check.py`（降到模式网格出列联表，`--window` 多窗口且重叠帧不一致即**失败退出**）、
+`scripts/radar_coverage_figure.py` 与 `radar-coverage-edge.png`。
+新增 claim 两条（注册表扩到 **8** 条），契约已重钉：`docs/claims.toml` sha256
+`fbf220b4…` → `aebe4bbf…`，cases 6 → 8，`scripts/check_contract.py` 报 `digest match`。
+第四轮问题卡 `docs/problem-cards/radar-mosaic-capability-and-coverage.json` 已开，
+校验通过（唯一未决项是接收方确认）。
+
+**边界**：全部数字来自**一个约 3 小时的窗口、一天、三个模式小时次**；mrms 与 jma 只做了
+保留深度探测；非降水回波（晴空回波、地物杂波、异常传播）**未排除**；边缘成因**未建立**
+（未叠地形数据）；**冰川本体是否落在盲带内未判定**——实测 80–92E/26–29N 全为 0.0%，
+而错坚河个例下游包括吉隆口岸一带（约 28.3°N/85.4°E，落在这条盲带内），
+但**两个来源都没有给出冰川本体的经纬度**，故不据此断言。
+
+### 2026-09-17 · 更正四：雷达保留深度我**数错了**——是 4 个窗口，不是 2 个；错在探测方法
+
+上一条 §13 记录里我写「三个集合各只暴露两个滚动窗口」，并用「cma 442 个候选命中 2 个」
+支撑它。**数字是错的。** 实际是**4 个窗口**：2 个相邻 run（run = 窗口起始小时），
+**每个 run 保留最近 2 次构建**——`cma.2026091701/0351`（01:00–03:24Z，24 帧）、
+`cma.2026091701/0400`（01:00–03:30Z，25 帧）、`cma.2026091702/0452`（02:00–04:18Z，22 帧）、
+`cma.2026091702/0502`（02:00–04:42Z，24 帧，当前活窗口）。
+
+**错因是我自己的探测网格。** 我假设构建 ID 落在 6 分钟网格上，按 6 分钟步长扫——
+而构建 ID 是**构建完成时刻**，分钟数没有固定模：实测有 `0351`、`0400`、`0452`、`0502`。
+6 分钟步长只抽到约 **1/6** 的可能 ID，于是漏掉了 3/4 的窗口。
+
+**是现场驱逐把它暴露出来的**：写到这一节时我去重跑动画脚本，活窗口已经由
+`cma.2026091702/0442` 变成 `cma.2026091702/0502`，而 `0442` 返回 404。
+`0502` 不在我的候选网格上（44 分在、02 分不在）——**我在同一次会话里观测到了自己
+claim 里描述的驱逐行为，同时发现自己的候选集不完备**。
+细网复核：对 5 个 run 各探测 **run+1h 至 run+6h 的每一分钟**，共 **1,505** 个候选，
+命中 4 个；run 2026091700 及更早**一个都没有**。
+
+**顺带得到的确定性证据更强了**：不再是两窗口 15 帧，而是**四个窗口两两重叠的帧逐格全部相同**
+（含跨 run 的重叠），仍缺 `03:12Z` 同一时隙。活窗口在会话中 `0442 → 0452 → 0502`，
+帧数 20 → 22 → 24——**旧构建在被驱逐，尺度是数十分钟**。
+
+**这条错误与我前两次是同一类**：§13 更正三（「我没找到」说成「不存在」）与雷达方向那次
+猜错窗口 ID（11 个 run 一律试 `0500`），都是**在候选集不完备时把「探测返回空」当成结论**。
+这是第三次，且这次污染的是我自己刚写的 claim。已按纪律**两版读数都留在 claim 里**，
+不只改数字：`xue.radar.public-retention-and-rebuild-determinism.v0` 的 `scope` 保留了
+粗网那版、写明了错因，`forbidden_conflations` 新增「在一套不完备的候选集里没命中 —— 与 ——
+保留期就是那么短」「活窗口的构建 ID —— 与 —— 落在整齐的时间网格上」两条。
+
+**仍未复核**：mrms 与 jma 的窗口数用的是同一个粗网（各 196 个候选、各命中 2 个），
+**可能同样被低估**——这一条我已写进 claim 的 `assumptions` 与契约的 `residuals`，
+不当作已复核的结论。
+
+契约重钉：`docs/claims.toml` sha256 `8d39bb4d…` → `e30487ad…`，`scripts/check_contract.py`
+报 `digest match` / `cases 8/8`。
+
+### 2026-09-17 · 点产品（sounding / 测站）：**补上欠了的一次测量，并让探空独立坐实了 θe 那条 claim 的机制**
+
+提问方指定方向：「sounding 和测站数据有更多细节」。「更多细节」实测成立——
+但**深度仍不成立**，而这一轮的形状与雷达那轮完全一样。
+
+#### 一、欠账补上：README §二 那句「两跳、只取那一站」是从注册表结构推出的，没测过
+
+按本笔记自己的纪律，未测量的观察不进注册表，所以它一直挂在 §七「没有建立的」里。现在测了。
+结论是**形状对、代价的形状错**：
+
+| 读一次 | 跳 | 字节 | 其中索引 | 相比整份文件 |
+|---|---|---|---|---|
+| 探空「拉萨这一次上升」 | 3 | **184,739 B**（4.5 s） | **89%**（164,895 B） | 省 98.29%（整份 10,809,718 B） |
+| 测站「某机场 24 小时 + TAF」 | 3 | **600,823 B**（5.4 s） | **99%**（596,302 B） | 省 96.41%（整份 16,722,437 B） |
+
+「只取那一站」省的是**数据文件**的 98%，但**索引照付**，而索引才是大头。
+`Content-Range` 两边都实测到被精确满足（`bytes 4817089-4836781/10809718`）。
+
+**但这不等于昂贵**：读**全部**站时索引只付一次，而逐站读要付 N 次——探空 491 站 ≈ 81 MB 索引。
+规范自己就把两条路并列为「查看器读法」与「分析者读法」。本 claim 只测了「一个」这个端点。
+
+#### 二、探空独立坐实了 θe 机制——把那条 claim 的**首个假设**换成了观测
+
+θe 那条 claim 原本的假设是「850 hPa 在高原上是地下，从高原平均海拔（约 4500 m）**推断**，
+没有用地形数据集核对」。探空给的是**实测的逐层气压**：
+
+| 站 | 海拔 | 24 次上升中最高气压 | 850 hPa 在地面之下 |
+|---|---|---|---|
+| 55299 | 4508 m | **590.2 hPa** | 259.8 hPa |
+| 56029 | 3717 m | 650.4 hPa | 199.6 hPa |
+| 55591 拉萨 | 3650 m | 655.3 hPa | 194.7 hPa |
+
+**青藏高原框（75–105E, 25–40N）内 6 个站、24 次上升，没有一次的最高气压达到 850 hPa**，
+且产品**自己拒算**依赖该层的派生量——这 24 次上升的 `derived.lapse850_500` **全部为 null**。
+这不是我的推算，是产品在自己的字段里承认那里没有 850 hPa 层。
+
+顺带把另一条残余也量了：**测站产品在该框内最高的站只有 3,256 m**（VILH 列城），
+**36 个站中没有任何一个高于 3,300 m**，`ZULS`（拉萨贡嘎）与 `ZUBD`（昌都邦达）**都不在索引里**。
+所以高原的**站级**观测实际只有探空一条路。
+
+#### 三、同一条规律第四次出现：**没有任何一族保留历史**
+
+| 族 | 声明 | 实测 |
+|---|---|---|
+| 栅格 run | 只发当前 run | 指针只指当前 run |
+| cma 雷达 | 滚动窗口 | **4 个窗口 = 2 run × 2 构建** |
+| sounding | 每时一发，**目录保留两天** | **5 个 issue（240 分钟）** |
+| airport | 每 10 分钟一轮，`KEEP=18` | **19 轮（230 分钟）** |
+
+sounding 的 **5 与规范写明的「两天」不符**——7 天 168 个候选全试过。要区分**目录被裁**与
+**数据消失**：sounding 每站携带自己最新的 **4 个名义时次**（实测 412/491 站为 4 个），
+最新一期里就含约 1.5 天的站级数据，所以被裁掉的是 **issue 目录**，不是数据。
+
+airport 还多出一处：存在图 `OxOOOOOxOOOOOxOOOOOxOOxOxxx…` 显示**每个小时的 `:10` 那一轮都缺**
+（0510/0410/0310/0210，四次齐整缺失），另有 `0140` 缺一次——**有效节奏是每小时 5–6 轮，不是 6 轮**；
+19 轮与 `KEEP=18` 也不符，且最旧一轮两次探测都钉在 `0130`，与「保留最近 18 轮」不相容。
+发布缺口与清理是两件事，本条只把两者都测到，**不判定成因**。
+
+#### 四、规范里可检验的数值条款：抽稀的 3% 规则，线上**零违规**
+
+`docs/sounding.md` §2 规定：层被发布当且仅当 `sig` 的 1–7 位任一置位、或它是最低/最高层、
+或其气压比上一个已发布层低至少 3%（`p_last/p >= 1.03`）。全量读 1,844 次上升、**283,617 层**，
+排除规范豁免的最低/最高层后检验 **279,929 个相邻对**：
+
+- 未置位且比值 < 1.03 的：**0 对**
+- 未置位**受检**对 **86,074** 个，比值**最小恰为 1.0300**、5 分位 1.0301、中位 1.0308
+  ——分布正压在阈值上，**最小值恰好等于阈值**，规则在边界上被零余量地满足
+- `p` 严格递减：**0/1,844 违例**；七个平行数组长度都等于 `n`：**0 违例**
+
+**这一条我改过一次数**：「最小 1.0010」是在**未排除豁免最高层**的集合上算的，那版给出
+「规则有例外」的假象。旧数不留在注册表里，但改动写在 claim 的 `assumptions` 里，
+以免读者把两版混起来。
+
+#### 五、我这一轮的判据错了两次，都记在 claim 里
+
+判定产品该不该算 `lapse850_500` 时，我先用**值域**判（`max(p) >= 85000`）得 86 处「不符」，
+再用**恰好报了 85000/50000** 判得 45 处——**两次都不是产品的规则**。反例：站 42056 报的是
+85040 与 50080，两个判据都说「没有」，而产品算出了值，说明它在阈值附近取层。
+把不是规则的东西当规则去验，得到的「违规」全是判据的错。真正的原因是**缺测哨兵**：
+`t == -32768`（int16 最小值）使依赖温度插值的派生量变 null——227/1,844 次上升的四个派生量
+全为 null。**而 `-32768` 只写在散文规范里，产物里没有**：sounding 的 `item.json` 没有任何
+变量元数据，量纲（`t` 为 **K × 100**、`ws` 为 **m/s × 10**）与哨兵都只在 `docs/sounding.md` 里。
+这与 §三 那条「生态读者读降水会拿到码值」是**同一类**：拿到数据的人，如果没有规范，
+会把 `-32768` 读成一个数。
+
+**另一处同类错误出在我新写的检查器里**：airport 的目录名是 10 的整数倍，而第一版按
+`now - 10k 分钟` 生成候选，探到了 `:x5` 网格上、**0 命中**，看起来像「什么都没有」。
+改为先按各族声明的节奏向下取整。这与雷达那轮「6 分钟网格对不上不规则构建 ID」是同一种错误
+——**在候选集不完备时把「探测返回空」当成结论**，这是第四次。
+
+#### 六、测站 `elev` 的单位不是统一的（一处未解释的异常）
+
+规范写 `elev` 单位是米。用 5 个已知海拔的站定标：SLLP 报 4061（拉巴斯 El Alto 实测 4,061 m）、
+KDEN 1656、EGLL 26、VNKT 1334、ZBAA 31——**都对得上米**。但**5 个站报 >4000 m**，其中
+`KC24` 报 **8680**、`KN24` 7700、`KXNI` 6370、`KU96` 4388 —— 按坐标（全在美国）**不可能是米**
+（若为英尺则分别为 2646/2347/1942/1337 m，都合理）。**哪 4 个站是异常的我定到了，但它们
+到底在什么单位、为什么，未查明**，故只作为测量记录，不当作缺陷断言。
+
+#### 七、落盘
+
+新增 `scripts/point_products_check.py`（三个子命令 `cost` / `retention` / `thinning`，
+各对应一条新 claim）。注册表扩到 **11 条**，`navigate.py` 报 **`runnable-here=11`**（此前三条
+只指到 `.md` 故被判 `historical`，补上检查器后全部可运行）。契约重钉：
+`docs/claims.toml` sha256 `027771f6…` → `f823ad13…`，cases 8 → 11，
+`scripts/check_contract.py` 报 `digest match`。
+
+**边界**：探空的站级覆盖是 **6 站 24 次上升**（2026-09-15 12Z 至 2026-09-17 00Z）；
+抽稀检验只验「已发布的都合规」，**反方向不可检验**（被抽掉的层不在产物里）；
+保留探测把 404 当作「不在」，未区分 403/超时；`reported`（抽稀前层数）未与原始 TEMP 公报比对；
+规范的另外几条（同压层折叠、半上进位、无气压层不发布）未验。
+
+### 2026-09-17 · 事实锚点：**第一次拿实测值检验交付的栅格场**
+
+提问方给出定位：「测站和 sounding 都是测量的事实锚点」。此前 11 条 claim **全部**是内部一致性
+——容器字节、编解码器、store profile、交付契约、产品自洽。契约的 `residuals` 里一直写着
+「没有任何 claim 建立交付场物理正确」。这一条是第一次有**事实**可比。
+
+探空报告了它在某地实际测到的气压、高度、温度；机场报告了它实际测到的温度。
+把 GFS 场放到这两个锚集旁边，得到三个结果。
+
+#### 一、850 hPa 在**不存在**的地方，比实测地面暖 9.5 K
+
+2026-09-17 00Z 全球探空。地面层用「报告高度落在站点海拔 ±150 m 内」定位——
+
+**这一条我改过一次，而且改之前的结果是荒谬的**：第一版用 `max(p)` 当地面气压，
+于是把 4 次**残缺上升**（只报平流层、最大气压 94–99 hPa、站点海拔 3–4 m）当成了「地面」，
+算出 **+93.7 K 到 +101.3 K** 的偏差。改用高度匹配后那 4 次被正确剔除（492 站中 282 次上升
+有匹配层，**44 次判为残缺**）。
+
+| 850 hPa | n | 模式 `tmp850` − **实测**地面温度 | 模式更暖 |
+|---|---|---|---|
+| **不存在**（Ps < 850 hPa） | 19 | 中位 **+9.50 K**（范围 −1.70…+21.20） | **18/19**，且 **19/19** 比模式自己的 `tmpsfc` 更暖 |
+| **存在**（Ps ≥ 850 hPa） | 263 | 中位 **−6.30 K** | 29/263 |
+
+**两组干净分离**。最清楚的一例：
+
+| 站 | 海拔 | 地面气压 | 实测地面 | 模式 `tmpsfc` | 模式 `tmp850` | 差 |
+|---|---|---|---|---|---|---|
+| **55299** | 4508 m | 590.2 hPa | **+1.3 °C** | +2.5 °C | **+22.5 °C** | **+21.2 K** |
+| 52836 | 3190 m | 693.6 hPa | 4.2 | 7.0 | 20.0 | +15.8 |
+| 56029 | 3717 m | 650.4 hPa | 6.2 | 3.0 | 20.0 | +13.8 |
+| 56137 | 3307 m | 684.4 hPa | 8.3 | 4.5 | 22.0 | +13.7 |
+
+55299 站上，模式**自己的地面温度与实测只差 1.2 K**，而它发布的 850 hPa 比那里实测的空气
+**暖 21.2 K**——因为 850 hPa 在地面之下 260 hPa。这把 θe 那条 claim 的机制从
+「用另一个模式变量间接支持」推进到「用实测值直接锚定」。
+
+**但这仍不是「模式误差」**：那个高度层没有测量可以出错。它建立的是「发布值不是测量值」，
+以及它与邻近实测差多远。真正的误差量在下面。
+
+#### 二、低平处模式几乎无偏：5,354 个锚点上中位 **−0.40 K**
+
+同一 GFS 场的 05Z 帧，5,354 个机场站的实测 `t` 对模式 `tmp2m`：
+
+| 站点海拔 | n | 中位偏差 | 均值 | 1 个标准差 |
+|---|---|---|---|---|
+| <100 m | 2221 | −0.50 K | −0.47 | **2.23 K** |
+| 100–500 m | 2027 | −0.30 | −0.40 | 2.48 |
+| 500–1000 m | 559 | 0.00 | −0.42 | 3.43 |
+| 1000–2000 m | 445 | 0.00 | −0.34 | 3.34 |
+| **≥2000 m** | 102 | −0.50 | −1.08 | **4.17** |
+| 全体 | 5354 | **−0.40** | −0.44 | 2.62 |
+
+**这是本项目第一次给交付的场一个物理偏差数字，而它是好的**：中位 −0.40 K。
+离散随海拔单调增大（2.23 → 4.17 K），与地形代表性的预期一致。
+
+#### 三、代表性天花板：格内两站实测差中位 **1.00 K**
+
+5,076 个被占用的 0.25° 格点中 243 个含 2 站以上。同格内实测温度差：中位 **1.00 K**、
+均值 1.40、90 分位 **3.00 K**、最大 12.00 K；**19%** 的格点站间差超过 2 K。
+其中 25 个格点的站间海拔跨度超过 100 m（跨度中位 144 m，按 6.5 K/km 只对应 0.94 K）。
+
+**边界很重要**：这 243 个格点测的是**测站网络所在的地形区制**——低平、人口密集处。
+陡峭地形下该天花板必然更大，而**该网络在那里没有站**。所以这个 1.0 K **不是**高原的
+代表性天花板。
+
+#### 四、两个锚集覆盖的地形区制几乎不相交 —— 这才是它们互补的地方
+
+- **机场网络**：5,416 站，密在低平处；全球仅 **23 站 ≥3000 m**，**青藏高原框内一个都没有**。
+- **探空**：492 站，全球稀疏，但**够得着高原**（该框内 6 站，最高 4508 m）。
+
+所以 `surfacebias` 给的低偏差**不能**推广到高原——那一箱只有 102 个站且几乎全在安第斯与
+北美西部，**没有青藏高原站**。这就是 round-3 卡里「0.25° 温度在深谷-高峰上的偏差未量化」
+那条残余：**本条仍未解决它**，只是给出了该箱的数值（中位 −0.50 K、sd 4.17 K）
+并说明其地理构成。**高原那一格，只有探空锚够得着。**
+
+#### 五、这一轮错误仍然同类，且第五次出现在我刚写的脚本里
+
+`max(p)` 当 `tmp850`/`tmp850` 的地面气压 —— 判据不是对象的规则。与前面的「值域判
+`lapse850_500`」「恰好 85000/50000」「6 分钟网格」「`now - 10k` 网格」是同一类：
+**在判据不对时把结果当成结论**。这次它给出的 +101 K 荒谬到无法忽略，才被抓住；
+前几次没有这么幸运。已写进 claim 的 `assumptions`。
+
+#### 六、落盘
+
+新增 `scripts/anchor_check.py`（`underground850` / `cellspread` / `surfacebias`）。
+注册表扩到 **12 条**，`navigate.py` 报 **`runnable-here=12`**。
+契约重钉 `f823ad13…` → `c78f42e4…`，cases 11 → 12。
+契约里那条笼统的残余「没有任何 claim 建立交付场物理正确」**已替换**为窄形式：
+一个时次、一次运行、三个变量，且锚点网络在最关心的地形区制上几乎不存在。
+
+**边界**：一个时次（00Z 探空 / 05Z 测站）、一次运行的两帧；只测了 `tmp2m`、`tmp850`、
+`tmpsfc`，`prmsl`/`dpt2m`/`thetae850` 未与锚点比对；模式那一侧是**预报**不是分析场；
+机场 `obsTime` 跨度一小时与模式帧不同时；`thetae` 那个**量本身**仍未检验——锚定的是机制。
+
+### 2026-09-17 · 追加：高原那个数补上了 —— **sd 4.38 K，逐站 −5.6…+11.1 K**
+
+上一条 §13 记录里写「高原那一格，只有探空锚够得着」，并说 round-3 卡里的残余**本条仍未解决**。
+探空锚点本来就在手上，所以补测了。同一 00Z 帧，**282 次上升**的实测地面温度对模式 `tmp2m`：
+
+| 海拔带 | n | 中位偏差 | 均值 | 1 个标准差 |
+|---|---|---|---|---|
+| <500 m | 221 | −0.20 K | −0.15 | 2.19 |
+| 500–1500 m | 43 | **+2.10** | +2.29 | 3.59 |
+| 1500–2500 m | 10 | −0.70 | −0.19 | 3.70 |
+| 2500–3500 m | 5 | **−3.00** | −0.64 | 4.19 |
+| **≥3500 m** | 3 | **−4.20** | −2.80 | 2.87 |
+| 全体 | 282 | −0.15 | +0.18 | 2.74 |
+
+**青藏高原框（75–105E, 25–40N）：n=23，中位 −0.20 K、均值 +0.82 K、sd 4.38 K。** 逐站：
+
+| 站 | 海拔 | 实测 | 模式 | 差 |
+|---|---|---|---|---|
+| 55299 | 4508 m | 1.3 | 2.5 | **+1.2** |
+| 56029 | 3717 m | 6.2 | 2.0 | −4.2 |
+| 55591 拉萨 | 3650 m | 10.4 | 5.0 | **−5.4** |
+| 56146 | 3394 m | 8.6 | 3.0 | **−5.6** |
+| 56137 | 3307 m | 8.3 | 5.0 | −3.3 |
+| 52836 | 3190 m | 4.2 | 8.0 | +3.8 |
+| 52983 | 1875 m | 4.9 | 13.5 | **+8.6** |
+| 51777 | 889 m | 11.9 | 23.0 | **+11.1** |
+
+**符号有解释，而且这个解释本身就是结论**：偏差的方向由「站点自身海拔与所处 0.25° 格点
+**平均海拔**之差」决定——谷中站（拉萨、昌都一带）比格点暖，模式反而报得更冷；峰上或
+格点内含低谷的站（52983、51777）则相反。**这是地形代表性，不是模式误差项**，
+所以它**不能**当作一个可以加到模式上的偏差订正。
+
+它给出的是 round-3 那条残余真正想要的东西：**在这个地形区制下，点对格点的 2 m 温度比较
+能离谱到什么程度——sd 4.38 K，单站最高 11.1 K。** 这个数量级比测站锚在低平处测到的
+格内天花板（中位 1.00 K）大四倍以上，两者之差就是地形。
+
+**仍未做**：没有用一份高程数据把每站的「格点平均海拔」真正算出来做回归——本条靠的是
+**符号与该差一致**这一判读，而不是回归。500–1500 m 与 1500–2500 m 两箱非单调
+（+2.10 与 −0.70），样本只有 43 与 10，不当作普遍偏差。
+
+新增子命令 `soundingbias`（`scripts/anchor_check.py`），注册表重钉 `c78f42e4…` → `4f182932…`。
+
+### 2026-09-17 · 拉取 adva 主线：#192–#195 四个实验、**工具层零改动**、并把「接收方」学了过来
+
+#### 漂移
+
+| 仓库 | 本地 | main | 结论 |
+|---|---|---|---|
+| `adva` | `f8722a5` | **`f6106cc`** | **+8 个提交**（4 个 merge，PR #192–#195） |
+| `adva-library` | `7e73821` | `7e73821` | **无漂移** |
+| `adva-machine` | `6646582` | `6646582` | **无漂移** |
+
+拉取一开始两次失败：`Empty reply from server` 与 75 s 连接超时。诊断后是网络慢——
+`github.com` 首个 TLS 请求花了 **19.98 s**，而 `api.github.com` 只要 0.38 s。
+放宽 git 的 `http.lowSpeedTime` 后正常。
+
+**风险核查：工具层零改动。** `git diff f8722a5..HEAD -- scripts docs` 只命中
+`docs/claims.toml`（+52 行）与一个新的 roadmap；`scripts/` **一个字节都没变** ——
+`navigate.py`、`problem_card.py`、`run_bounded.py`、`check_publication_boundary.py` 全部原样。
+**我的 12 条 claim 的字段集也未受影响**：四条新 claim 用的仍是同样 11 个字段
+（新 status 值 `bounded-experiment` 与我的 `bounded-measurement` 并列，说明它是分类不是枚举）。
+
+#### 四个实验的形状
+
+每个 PR 加一个 `experiments/<name>/`：`README.md`、`contract.json`、`run.py`、
+**`receive.py`**、`evidence/{manifest,execution}.json`、`attempt-1.tar.gz`，外加一个 workflow。
+roadmap 显示这是**优先级序列**：1 单位运输 → 2 核合成 → 3 有理线性系统 → 4 区间包络，
+**priority 5 是有界优化**，并且已经立了那条禁止混同：
+「contracted search intervals、小残差、均值吻合**不能替代**最优性证书」。
+
+值得注意的是四个 `contract.json` 的**键集并不相同**——最早那个 19 键、另一套词汇，
+后三个收敛到 `level` / `costs` / `protected` / `preexecution_review` / `attribution` / `origin`。
+收敛是在四次里发生的，不是一开始就定好的。
+
+#### 学过来的东西：`receive.py` 把「接收方」机械化了
+
+四张问题卡全卡在 `handoff.receiver_confirms_same_question = false` —— 这一格问的是
+**工人无法替自己回答的问题**：你交回来的还是我问的那个问题吗。Adva 把它做成了
+**独立进程**：`receive.py --expected E --candidate C`，输出一个小词表的判定，并且
+**明确声明自己什么也没授权**：`native_authority: false`、`close_authorized: false`、
+`free_authorized: false`。
+
+照同样的形状写了 `scripts/receive_question.py`：`--expected <卡> --candidate <交接>`，
+判定 `SameQuestion` / `ChangedQuestion` / `ChangedScope` / `InvalidCandidate`，
+同样三个 authorized 全为 false。**它不 import 生产者**，读的是**卡在开轮时声明的**那些字段
+（`handoff.question`、`candidates`、`check_scope`、`success_condition`），
+所以一张卡无法靠重复自己来通过。
+
+**反向控制（关键——只有正向通过等于没测）：**
+
+| 控制 | 判定 |
+|---|---|
+| 原样交接 | `SameQuestion` |
+| 改写问题 | `ChangedQuestion` |
+| 加挂子问题 | `ChangedQuestion` |
+| 缩窄检查范围 | `ChangedScope` |
+| 删掉一个候选 | `ChangedScope` |
+| 缺 `question` 字段 | `InvalidCandidate` |
+| 用别轮的问题 id | `InvalidCandidate` |
+| **仅重排空白** | `SameQuestion`（刻意：换行不是改题） |
+
+八取七区分、一条刻意放行。
+
+**但四张卡的 `receiver_confirms_same_question` 仍然是 `false`，这是刻意的。**
+那个通过的候选是我**从卡本身生成**的——退化测试只证明仪器能工作，
+**不构成一次真正的接收**。工人无法为自己制造接收方的候选；真正的接收需要
+**另一方产出候选**。这一点与 Adva 的 `close_authorized: false` 是同一个立场：
+接收通过也只确认一件事——问的是同一个问题——其余一概不授权。
+
+#### 悬置未决：`~/Adva/adva` 只能重置，不能快进
+
+实测：旧 HEAD `cb84d21` 与其子模块 pin `9928b118` 在**改写后的公开线上都不存在**
+（`git cat-file -e` 失败，`merge-base --is-ancestor` 也为否）。`adva` 仍带
+`adva-library` 子模块映射（`dd1a02a` 注册），而对面的 `main` 是 `7e73821`。
+所以这个 checkout 追的是一个**已被 rewrite 掉的历史 + 一个无处可达的子模块 pin**，
+**无法 fast-forward**。它还在会话 workspace 之外（写 `.git/FETCH_HEAD` 被沙箱拒绝），
+故**本轮未动**，等指示。
+
+**边界**：本轮只做了只读的漂移核查与工具采用；四个新实验的 `run.py` 我**没有执行**
+（它们各自声明了 30–35 s 的 wall 预算与独立 workflow，在这里跑不会增加关于 xue 的信息）；
+roadmap 与四个 README 只读了与工具层相关的部分。**采用一个约定不等于验证它**——
+`receive_question.py` 的判定语义是我按 Adva 的形状重新定义的，不是 Adva 的实现。

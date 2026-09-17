@@ -1,0 +1,178 @@
+diff --git a/xuebuild/cli.py b/xuebuild/cli.py
+index 89e955b..0a1ac01 100644
+--- a/xuebuild/cli.py
++++ b/xuebuild/cli.py
+@@ -163,9 +163,13 @@ def parser() -> argparse.ArgumentParser:
+     )
+     export_zarr_parser.add_argument(
+         "--delta",
+-        action="store_true",
++        nargs="?",
++        const="all",
++        choices=("all", "auto"),
+         help="put the xue.delta codec in front of zstd on the variables the bundle predicts from the previous "
+-        "frame, so their chunks compress to the bundle's own bytes; a client then needs the codec registered",
++        "frame, so their chunks compress to the bundle's own bytes; a client then needs the codec registered. "
++        "'all' is every such variable, 'auto' picks per array by measuring which chain is smaller (no argument "
++        "means 'all')",
+     )
+     export_zarr_parser.add_argument(
+         "--index-location",
+@@ -402,10 +406,17 @@ def main(argv: list[str] | None = None) -> int:
+         elif arguments.command == "verify-bin":
+             print(json.dumps(verify_bin(arguments.bundle), indent=2))
+         elif arguments.command == "export-zarr":
++            # --delta with no value means every PREVIOUS variable; --delta auto
++            # measures per array.
++            delta: bool | str = False
++            if arguments.delta == "all":
++                delta = True
++            elif arguments.delta == "auto":
++                delta = "auto"
+             report = export_bundle(
+                 arguments.bundle,
+                 arguments.out if arguments.out is not None else store_path_for(arguments.bundle),
+-                delta=arguments.delta,
++                delta=delta,
+                 index_location=arguments.index_location,
+             )
+             print(json.dumps(report.to_dict(), indent=2))
+diff --git a/xuebuild/zarrstore.py b/xuebuild/zarrstore.py
+index 8048ca4..9d12915 100644
+--- a/xuebuild/zarrstore.py
++++ b/xuebuild/zarrstore.py
+@@ -298,9 +298,12 @@ class ExportReport:
+     path: Path
+     byte_length: int
+     crc32: str
+-    delta: bool
++    delta: bool | str
+     index_location: str
+     arrays: dict[str, int] = field(default_factory=dict)
++    delta_arrays: dict[str, bool] = field(default_factory=dict)
++    """Which arrays ended up on the delta chain. Under ``delta="auto"`` this
++    is the measurement's answer per variable, not one flag for the store."""
+     chunk_count: int = 0
+     comparable_chunks: int = 0
+     identical_chunks: int = 0
+@@ -321,6 +324,7 @@ class ExportReport:
+             "byteLength": self.byte_length,
+             "crc32": self.crc32,
+             "delta": self.delta,
++            "deltaArrays": dict(self.delta_arrays),
+             "indexLocation": self.index_location,
+             "arrays": dict(self.arrays),
+             "chunkCount": self.chunk_count,
+@@ -572,6 +576,73 @@ def _comparable_chunk(
+     return None
+ 
+ 
++def _delta_wins(
++    bundle: binformat.Bundle, numeric_id: int, nodata: int, geometry: ArrayGeometry, executor: ThreadPoolExecutor
++) -> bool:
++    """Say whether the delta chain is the smaller of the two for one array.
++
++    Which predictor a field wants is a property of the field, not of the
++    format: a smooth field codes far smaller as a difference against the
++    frame before it, while a field of moving discontinuities (cloud cover,
++    vertical velocity, the pressure family) codes *larger* that way, because
++    differencing draws an edge on both sides of every feature that moved.
++    The container picks its predictor from a rule (``docs/format.md``,
++    "Encoder rules (v2)": RAW for prate and cref, PREVIOUS for every other
++    linear codebook), and the rule is wrong for several of the fields added
++    since it was written.
++
++    The store is derived, so it does not have to inherit that: both chains
++    decode to the same codes, and the choice is per array. The decision is
++    exact rather than sampled: both chains are compressed for every time
++    chunk, so the winner is the smaller store, not an estimate of it.
++    Sampling was tried and is not good enough — the benefit of differencing
++    depends on the step, and a mixed-cadence run is hourly for most of its
++    chunks and three-hourly for the rest. The first chunk alone decides
++    `rh850` wrong; first, middle and last over-weight the coarse segment and
++    decide `cape`, `htsgw` and `wind10m` wrong; every eighth chunk still
++    decides `rh850` wrong, whose margin is 1.4%. The cost is one extra
++    compression pass over the array, on the pool the build already shares,
++    and the payloads are discarded rather than held.
++    """
++    plain = differenced = 0
++    for time_chunk in range(geometry.time_chunks):
++        blocks = [
++            _pad_block(block, geometry, nodata)
++            for block in _tile_blocks(bundle, numeric_id, geometry, geometry.frames(time_chunk))
++        ]
++        plain += sum(
++            len(payload)
++            for payload in executor.map(
++                lambda block: zstdcli.compress(block.tobytes(), level=ZSTD_LEVEL, checksum=True), blocks
++            )
++        )
++        differenced += sum(
++            len(payload)
++            for payload in executor.map(
++                lambda block: zstdcli.compress(_delta_encode(block).tobytes(), level=ZSTD_LEVEL, checksum=True), blocks
++            )
++        )
++    return differenced < plain
++
++
++def _resolve_delta(
++    mode: bool | str,
++    bundle: binformat.Bundle,
++    numeric_id: int,
++    variable: dict[str, Any],
++    geometry: ArrayGeometry,
++    executor: ThreadPoolExecutor,
++) -> bool:
++    """The codec chain one array gets. ``"auto"`` measures; a RAW variable is
++    never differenced, under any mode, because the bundle stores it RAW and
++    the two files are meant to agree where they can."""
++    if _predictor_name(bundle, numeric_id) != "previous":
++        return False
++    if mode == "auto":
++        return _delta_wins(bundle, numeric_id, variable["quantization"]["nodataCode"], geometry, executor)
++    return bool(mode)
++
++
+ def _write_array(
+     bundle: binformat.Bundle,
+     numeric_id: int,
+@@ -634,7 +705,7 @@ def export_bundle(
+     xue_path: Path,
+     zarr_dir: Path,
+     *,
+-    delta: bool = False,
++    delta: bool | str = False,
+     index_location: str = DEFAULT_INDEX_LOCATION,
+     tile: tuple[int, int] | None = None,
+     executor: ThreadPoolExecutor | None = None,
+@@ -645,8 +716,10 @@ def export_bundle(
+     whole. ``delta`` puts the ``xue.delta`` codec in front of ``bytes`` on
+     every PREVIOUS variable — never on a RAW one — so the standard chain
+     stays the default any Zarr client reads without registering anything.
+-    ``tile`` is only for a v1 bundle, which carries no tiling of its own.
+-    ``executor`` bounds the compression a build shares between bundles.
++    ``"auto"`` decides that per array by measuring which chain is smaller
++    (see :func:`_delta_wins`); ``True`` is every PREVIOUS variable, ``False``
++    none. ``tile`` is only for a v1 bundle, which carries no tiling of its
++    own. ``executor`` bounds the compression a build shares between bundles.
+     """
+     if index_location not in INDEX_LOCATIONS:
+         raise ConversionError(f"index location must be one of {', '.join(INDEX_LOCATIONS)}, not {index_location!r}")
+@@ -678,13 +751,15 @@ def export_bundle(
+         name_to_numeric = {name: numeric_id for numeric_id, name in bundle.variable_ids.items()}
+         for name in array_names:
+             numeric_id = name_to_numeric[name]
++            use_delta = _resolve_delta(delta, bundle, numeric_id, variables[numeric_id], geometry, pool)
++            report.delta_arrays[name] = use_delta
+             written, chunks, comparable, identical = _write_array(
+                 bundle,
+                 numeric_id,
+                 variables[numeric_id],
+                 geometry,
+                 zarr_dir / name,
+-                delta=delta,
++                delta=use_delta,
+                 index_location=index_location,
+                 executor=pool,
+             )

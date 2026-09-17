@@ -1,0 +1,103 @@
+{
+  "schema": "xue.conformance-contract.v0",
+  "kind": "reproducible bounded measurement, not open-ended research",
+  "question": "Do the twelve registered xue claims hold, and does each declared checker reproduce its recorded outcome under a declared budget?",
+  "level": "measurement only; no claim about the format beyond each claim's recorded scope and counterexample boundary",
+  "imports": [
+    "NOAA GFS public GRIB over HTTPS (no credentials)",
+    "The native encoder in the xuepy wheel, which links its own GDAL",
+    "zarr 3.3.0 + xarray 2026.7.0 + fsspec + aiohttp for the ecosystem-reader checks",
+    "The system Chrome driven by Playwright headless for the rendering outcome",
+    "Adva scripts/navigate.py for claim navigation (read-only)",
+    "WMO WIS2 TEMP bulletins as aggregated by the sounding product, and the NOAA Aviation Weather Center caches behind the airport product (both read from the published bucket, no credentials)"
+  ],
+  "corpus": {
+    "path": "docs/claims.toml",
+    "sha256": "815725b42730e53589d3be77a406dc02fe0a3b4a14cd5a69eed96ede1f336413",
+    "cases": 12
+  },
+  "protected": [
+    "A checker's exit code is not its result; the recorded outcome is",
+    "A matching digest is not byte-for-byte identity of every object",
+    "A skipped comparison is not a passed comparison",
+    "A record that is not-yet-executed is not a record that failed",
+    "A claim's counterexample boundary is part of the claim and travels with it",
+    "An unmeasured observation is not registered as a claim",
+    "A later correction supersedes; it does not rewrite the earlier text",
+    "A failed attempt keeps its first failure as an artifact, not as prose about how it was fixed",
+    "A round stays open until a receiver confirms the question is the same one, rather than closing on the worker's own say-so",
+    "A codebook's bounds are read from the published metadata, never typed into the checker that tests against them"
+  ],
+  "limits": {
+    "wall_seconds_per_case": 900,
+    "build_wall_seconds": 1200,
+    "downloaded_bytes": 2000000000,
+    "worktree_bytes": 4000000000,
+    "child_processes": 40,
+    "automatic_retries": 0
+  },
+  "attempts_per_invocation": 1,
+  "exit": "Every case received with its recorded outcome, a mismatch, or a resource exhaustion; retain every report",
+  "note": "Unlike adva.machine.conformance-contract.v0, this pins one corpus (the claim registry) but not one case list: each claim's checker takes its own inputs, and the registry does not yet carry a per-claim budget field. That gap is recorded here rather than papered over.",
+  "authorship": "Assembled by deepseek-v4-flash-vision-exp (DeepSeek Harness) in session with the repository owner; the measurements were executed on this host, not reviewed by him.",
+  "base_commit": {
+    "note": "The commit the measurements were taken against, and the one they were re-verified at. Without this a claim cannot say what it was measured on.",
+    "xue_measured_at": "8af4376 (2026-09-16)",
+    "xue_reverified_at": "a20c774 (2026-09-17)",
+    "adva_tooling": "scripts/navigate.py unchanged between the two pulls; docs/claims.toml field set unchanged",
+    "radar_measured_at": "2026-09-17, against the live dataset bucket (no commit pin: the radar carriers are data, not source); claims.toml sha256 advanced from fbf220b4 (6 cases) to aebe4bbf (8 cases)",
+    "point_products_measured_at": "2026-09-17, against the live bucket (no commit pin): the point products are data whose retention is itself one of the claims; claims.toml 027771f6 (8 cases) -> 52bad07d (11 cases)",
+    "anchor_measured_at": "2026-09-17, against the live GFS run and the live point products; claims.toml f823ad13 (11 cases) -> c78f42e4 (12 cases)"
+  },
+  "controls": [
+    "scripts/check_contract.py refuses on a digest mismatch instead of reporting a match - exercised twice on 2026-09-17",
+    "scripts/verify.py states NOT COMPARED when no chunk coincides, instead of reporting zero differences - added 2026-09-17 after that collapse was found",
+    "scripts/verify.py labels none-identical as EXPECTED or UNEXPECTED by chain and predictor; the UNEXPECTED branch found the zstd-level fixture case",
+    "scripts/interop.py includes a client with no codec registered, so 'opens' is not reported from a registered environment only",
+    "scripts/predictors.py reports both winners, so a variable that prefers the container's chain is not dropped",
+    "the zstd-level counterexample: a shipped pair whose codes match and whose bytes do not, which keeps 'byte-identical' from being read as a property of the codes",
+    "scripts/check_contract.py's corpus pin advanced three times on 2026-09-17 without ever being edited to match by hand: the digest is recomputed from the registry, so a stale pin shows up as REFUSED rather than as a silent pass",
+    "scripts/radar_vs_model_check.py and the point-product probes both treat a 404 as 'absent' only inside a candidate set generated from the object's own declared cadence; the one time that assumption was wrong (a 6-minute grid against irregular build ids) it produced a wrong claim, which is kept in the registry rather than edited away",
+    "scripts/receive_question.py is exercised in both directions, not only the accepting one: eight controls (unchanged, reworded question, widened question, narrowed scope, dropped candidate, missing field, wrong round id, whitespace-only reflow) receive seven discriminating verdicts and one deliberate pass. A receiver that only ever says yes is not a receiver.",
+    "docs/claims.toml is validated by tomllib as a whole corpus before the contract is re-pinned, so a structural break is caught at the point of edit rather than at the next reader"
+  ],
+  "residuals": [
+    "No source other than GFS is measured.",
+    "The aggregate saving is calibrated from 8 of 43 variables (factor 0.406), not measured.",
+    "The rendering outcome rests on one headless screenshot of one layer of one run.",
+    "Nothing here establishes what a viewer concludes from what is drawn.",
+    "The plateau elevation is measured from Copernicus DEM GLO-90, which is not public domain and is therefore not vendored; the derived grid lives in /tmp and cannot be re-checked without re-downloading it.",
+    "The per-gridpoint profile uses the whole latitude circle as its reference, not the same-latitude band excluding the plateau; the two references have not been compared.",
+    "The two radar claims are measured against live rolling windows, which advance while they are read: one CMA window's frame count changed from 20 to 22 between two reads about an hour apart, and its predecessor may be evicted at any rebuild. Neither claim has been re-run twice against identical inputs.",
+    "No radar claim is anchored to a commit; the carriers are published data whose retention is itself the subject of one of the claims.",
+    "The radar retention claim was filed with a wrong count (2 windows) from a 6-minute-step probe and corrected within the same session to 4 windows from a 1-minute-step probe; both readings are kept in the claim. The MRMS and JMA counts still rest on the coarse probe and have not been re-checked.",
+    "No radar claim can be re-run against its recorded input: the rolling windows they were measured on were evicted during the session (cma.2026091702/0442 now returns 404). A re-measurement on the windows that were still readable reproduces the structure, which is a substitute for reproducibility, not reproducibility.",
+    "The retention claim's sounding figure (5 issues) contradicts the upstream spec's stated two days; the cause is not established, so the number is reported as measured rather than as the policy.",
+    "The thinning-rule check verifies only that published levels satisfy the rule's exemptions; the reverse direction (that everything the rule keeps was published) is not checkable from the product, because thinned levels are absent from it.",
+    "One elevation field in the airport index is not uniformly in the unit its spec states: four US stations carry values that cannot be metres at their coordinates. The four are identified; which unit they are in, and why, is not established.",
+    "The airport retention count (19 rounds) does not match the documented AIRPORT_KEEP=18, and the HH:10 round is absent in every hour probed; whether that is a publish gap or a pruning artifact is not established.",
+    "One claim measures a delivered field against station and sounding observations, so the earlier blanket residual no longer holds as stated. It holds narrowly: one moment, one run, three variables. The plateau temperature figure it now reports (sd 4.38 K over 23 points) is dominated by the difference between a station's elevation and its cell's mean elevation, and that mean elevation was not computed; the reading rests on the sign agreeing, not on a regression.",
+    "The four problem cards remain open. The receiver that could confirm their questions now exists and discriminates, but a receive requires a candidate produced by the receiving party; a candidate generated from the card itself is a degenerate test of the instrument, not a receive.",
+    "The claim registry is the contract's pinned corpus and was, until 2026-09-17, under no version control and with no backup. A scripted edit corrupted it: the theta-e claim was duplicated, one radar claim lost its header, another was destroyed entirely, and four lines broke the TOML. The file was repaired and the two radar claims reconstructed from the session record, not recovered; the reconstruction is marked in their assumptions. The corpus is now a git repository."
+  ],
+  "adva_drift_2026_09_17": {
+    "adva": {
+      "was": "f8722a5",
+      "now": "f6106cc",
+      "commits": 8,
+      "prs": "#192-#195",
+      "tooling_changed": false
+    },
+    "adva_library": {
+      "was": "7e73821",
+      "now": "7e73821",
+      "commits": 0
+    },
+    "adva_machine": {
+      "was": "6646582",
+      "now": "6646582",
+      "commits": 0
+    },
+    "note": "scripts/ unchanged across the drift; the claims.toml field set is unchanged (11 fields), so this repository's 12 claims need no edit. Adopted: the separate-process receiver convention."
+  }
+}

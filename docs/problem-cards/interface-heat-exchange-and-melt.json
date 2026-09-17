@@ -1,0 +1,77 @@
+{
+ "question_id": "xue.surface.interface-heat-exchange-and-melt",
+ "round": 2,
+ "predecessor": "theta-e-plateau-clamp.json",
+ "change_reason": "提问方在本轮指出：上一轮把地表之下的值当作『外推伪值』是**措辞失当**——那不是垃圾，而是**动态平衡过程**的产物：地表模式解地表能量收支，地下层只是把该状态向上传播。关心的问题也随之改变：上一轮问『异常是不是伪值』，本轮问『**界面热交换与冰融吸收的潜热如何刻画**』，并要求补充**冰川地图数据**。按问题卡的规则，改问题须新开一轮并记 change_reason。",
+ "raw_question": "地表界面上的热交换，以及冰融吸收的大量潜热，这个相变过程如何刻画？（提问方原话：『我最关心的是界面上的热交换，已经冰融吸收大量的潜热，这个相变过程如何刻画？我们还需要冰川的地图数据』）",
+ "objects_and_versions": "(1) 原始发布产物——GFS run 2026091618 的 sflux 与 half store（经 HTTPS 读，未保留）；\n(2) **源 GRIB 的索引**——`gfs.t00z.sfluxgrbf000.grib2.idx`，54 条记录，本轮实测；\n(3) 待补的外部数据——**冰川轮廓**（RGI 7.0 等），尚未取得；\n(4) 本仓库代码——尚无；本轮只做了清单核对，没有写检查器。",
+ "success_condition": "尚未定义。可定义的候选：**从已交付的场中把融化潜热算成地表能量收支的残差**，并检验该残差在冰川格点上是否系统性为正（融冰）而在同高程非冰川格点上不显著。判断的作出者应当是脚本，而不是读图印象。",
+ "interpretation_and_assumptions": "对象如何进入模型：把 GFS 的地表通量文件当作**已解析相变**的模式输出——其地表状态由 Noah 陆面模式解能量收支得到，相变能量在模式内部结算；地下气压层则由该地表状态向上传播。假设：\n- 融化潜热在场里**不存在**，只能作为残差重建（本轮已验证无 melt 记录）；\n- 残差法要求四个通量项与辐射项同时可用且同号约定一致——**未核对 GFS 的正负号约定**；\n- 冰川轮廓只给出『可能有冰』的必要条件，不给出冰厚或是否存在活动融水。",
+ "candidates": "(A) **残差法**：Qm = Rn − H − LE − G，其中 Rn = (1−α)·DSWRF + DLWRF − ULWRF，α 由 USWRF/DSWRF 得到。四项与 α 的原料**全部在同一 GRIB 文件里**（本轮实测）。\n(B) **状态退化法**：不改能量，只看**温度被钉在融点**——同一温度对应差异极大的辐射强迫，说明能量不是去加热而是去了相变。此法不需要任何新场，但只能给出『哪里在相变』，不能给出『吸收了多少』。\n两者的区别尚未检验。",
+ "check_scope": "本轮**只做了供给核对**，未做检验：核对了 sflux 的 54 条 GRIB 记录名与 xue 实际发布的 4 个场。覆盖条件：一个源（GFS）、一个 run、一个时刻（f000）。**没有充分性证明**：『xue 未发布通量场』这一点只对 GFS sflux 核对过，ECMWF / HRRR / sflux 之外未查。",
+ "budget": {
+  "wall_seconds": 300,
+  "launches": 4,
+  "output_bytes": 200000
+ },
+ "round_result": "**保存原始清单，不只保存结论**。sflux 的 54 条记录中与界面相关的有：\n  SHTFL:surface（感热）、LHTFL:surface（潜热）、GFLUX:surface（土壤热）、SFEXC、\n  DSWRF / DLWRF / USWRF / ULWRF（四项辐射）、TMP:surface（皮温）、\n  TSOIL / SOILW / SOILL × 4 层、SNOD（雪深）、WEASD（雪水当量）、CNWAT、ICEC、ICETK\nxue 实际发布的：`tmp2m`、`prate`、`dswrf`、`wind10m` ——**即 16 项里只有 2 项**（DSWRF 与 TMP:surface，分别作 dswrf 与 tmpsfc）。\n**判据性的一项**：54 条记录里**没有任何 melt / freeze 场**（对 melt|freez|snow|ice|heat|flux 全文检索，雪只有 SNOD 与 WEASD）——融化潜热**不是交付物，而是模式内部残差**。",
+ "remaining_questions": "- GFS 通量的**正负号约定**未核对（残差法据此成立或反号）；\n- 残差法在冰川上是否真的为正，未检验（缺冰川掩膜）；\n- **冰川数据本身的准入**：RGI 7.0 是 **CC BY 4.0**（DOI 10.5067/F6JMOVY5NAVZ），而 PUBLICATION_BOUNDARY.md 明写『CC BY 这类开放许可本身不构成公有领域依据』——**与 Copernicus DEM 同属不可准入**；是否存在 CC0/公有领域的冰川轮廓替代源未查；\n- 地下层的温度被当作地表状态的代理，**这个代理关系本身未检验**。",
+ "next_step": "**改变前提**：先核对 GFS 通量的正负号约定（读一条真实记录的值域即可判断），再判断残差法是否成立；**改变观察**：用状态退化法（B）先定位相变发生的格点，它不需要新场，可以立刻做；**改变输入**：取得冰川轮廓（本地分析用，不入库），把『相变只能发生在有冰之处』变成可检验的必要条件。",
+ "stop_conditions": [
+  "冰川数据无法在不违反 PUBLICATION_BOUNDARY 的前提下取得，则只做状态退化法",
+  "残差法所需四项的正负号约定无法从公开文档确认，则不采用残差法",
+  "预算耗尽（wall 300 s 或 launch 4 次）"
+ ],
+ "attempts": [
+  {
+   "command": "curl .../gfs.t00z.sfluxgrbf000.grib2.idx | grep -iE 'SHTFL|LHTFL|GFLUX|SNOD|WEASD|ALBDO|TSOIL|SOILW|DLWRF|ULWRF|USWRF'",
+   "tool_and_version": "curl 8 / grep",
+   "input": "NOAA GFS 公开桶的 sflux 索引",
+   "output_dir": "/tmp/sflux.idx",
+   "stop_condition": "记录名列表打印完毕",
+   "budget": {
+    "wall_seconds": 30,
+    "launches": 1
+   },
+   "outcome": "completed",
+   "reason": "",
+   "first_failure": ""
+  },
+  {
+   "command": "awk -F: '{print $4}' /tmp/sflux.idx | sort | uniq -c | sort -rn",
+   "tool_and_version": "awk / sort",
+   "input": "同上 54 条记录",
+   "output_dir": "(stdout only)",
+   "stop_condition": "去重列表打印完毕",
+   "budget": {
+    "wall_seconds": 10,
+    "launches": 1
+   },
+   "outcome": "completed",
+   "reason": "",
+   "first_failure": "第一次直接搜 melt|freez|snow|ice|heat|flux，只回出 GFLUX / ICEC / ICETK 三条，**我一度以为检索式写漏**；改为对 54 条记录名全量去重后才确认，**『没有 melt 场』这个结论是可靠的，不是检索失败**。——这正是本研究反复出现的那类塌陷：把『我没找到』读成『不存在』，这次是靠全量枚举把它排除掉的。"
+  },
+  {
+   "command": "uv run python -c \"pystac ... 遍历 catalog 找 flux|heat|snow|melt|ice|glac\"",
+   "tool_and_version": "python 3.14 / pystac 1.15.2",
+   "input": "STAC 目录全部 collection",
+   "output_dir": "(stdout only)",
+   "stop_condition": "匹配名列表打印完毕",
+   "budget": {
+    "wall_seconds": 60,
+    "launches": 1
+   },
+   "outcome": "completed",
+   "reason": "",
+   "first_failure": ""
+  }
+ ],
+ "handoff": {
+  "question": "地表界面热交换与冰融潜热这个相变过程，如何刻画？",
+  "candidates": "（A）从四项通量算能量收支残差；（B）用温度被钉在融点的状态退化来定位相变",
+  "checks": "本轮只有供给核对：sflux 的 54 条记录 vs xue 发布的 4 个场",
+  "evidence": "SHTFL/LHTFL/GFLUX/DLWRF/USWRF/ULWRF/TSOIL/SOILW/SNOD/WEASD 均在源文件里，xue 一项未发布；54 条里无 melt 场",
+  "residuals": "正负号约定未核对；缺冰川掩膜；冰川数据 CC BY 不可准入；地下层作为地表代理未检验",
+  "receiver_confirms_same_question": false
+ }
+}
