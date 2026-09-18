@@ -2865,3 +2865,77 @@ ITS_LIVE 朗唐（Zarr 懒读），127,000 个影像对，564 个冰川像元（
 
 **这是本会话第一次把正确结果误判为 bug** —— 之前的错都是采信了错的。
 方向相反，成因相同：**没有把量纲和基数想清楚就下判断。**
+
+### 2026-09-17 · 滑动团块的前提：采集器，以及 xue 目录的真实结构
+
+#### 架构（用户口述，记录如下）
+
+预报不是「训练一个模型再一次预测」，而是**维护一个向前滑动的时空团块**：
+团块内装着已核实的状态与关系，新数据持续进入，在每个时空点上做
+**预测 vs 实况**的对比，团块向前推一格，重复。**技巧是在滑动中持续量出来的。**
+
+因此有一条硬前提：**上游不留档，团块无法事后补建。**
+实测目录时间范围即为证据：`cma` 当时只有 **2.4 小时**，
+而 `gfs` 的自述是 **"Four cycles a day; only the newest is kept"**。
+
+#### xue 目录的真实结构（此前只记录了 5 个产品族，实为 16 个源）
+
+```
+预报侧  gfs · ecmwf · aifs · sflux · hrrr · tc
+实况侧  cma · mrms · jma · himawari · goeseast · goeswest · meteosat · sounding · airport
+外加    showcase
+```
+
+`catalog.json` 是 **STAC 1.1.0**；每个 collection 带 `item.json` 与一个
+**`xue:pointer` → `latest.json`**，即此前记录的「可变指针 → 不可变 CRC 目录」。
+条目 id 形如 `cma.2026091722.0040`（collection.运行.帧）。
+
+#### 关键发现：Zarr 存储不能当文件取
+
+`item.json` 声明 `cref.zarr` 且给出 `file:size = 915661`，
+但对 `<path>.zarr` 直接 GET/HEAD **均 404**。原因不是文件被删，而是
+**它本就是存储**：`file:size` 是这个**存储的总字节数**，按单文件的形式声明。
+
+分块键名格式（穷举试出，非文档所得）：
+
+```
+<节点>/c/<索引…>        cref/c/0/0/0 → 200
+                        cref/c0/0/0 · c0/0/0 · 0/0/0 · c/0/0 → 全部 404
+```
+
+`c` 是**独立的路径段**。
+
+存储结构（Zarr v3 + 合并元数据，`zarr.json` 一次 GET 拿全）：
+
+```
+cref  shape[25,1024,1792] uint8  chunk[30,1024,1792]   ← 外层只有一块
+      codecs: sharding_indexed → shard[6,64,64] → bytes → zstd(15, checksum)
+      fill_value 255
+```
+
+取全 9 个键后与声明值核对：**完全一致**（root zarr.json + 4 个数组各自
+的 zarr.json + 4 个分块 = 声明的 byteLength）。
+
+#### 一处自我更正
+
+核对的差值一度恒为 2.8 kB。**不是网络问题，是我用
+`len(json.dumps(obj).encode())` 计数 —— 重新序列化的长度不等于原始字节数。**
+改用原始字节后完全对上。
+
+另外，我先前说「cma cref 只有 0.92 MB，够小可全取」，那个数是从
+`file:size` **读来的声明值**，我的探测脚本在 `file:size` 存在时不会去 HEAD，
+**从未验证过它取得到**。这与更早记录的「声明了 `nodataCode 255` 却从未写过」
+是同一模式：**采信声明而未实测。**
+
+#### 上游不一致（两处，均记录不掩饰）
+
+- `meteosat`：目录 advertise 了 `meteosat/collection.json`，实际 **404**。
+- `showcase`：`manifest` 与 `cref-poster` 均 **404**。
+
+#### 产物
+
+`scripts/xue_collect.py` —— 按策略采集（默认只取 manifest/index/poster
+及小而完整的存储），append-only 索引，逐 collection 落盘，
+不可达与跳过分别记录且**分开标注原因**（策略性跳过 vs 出错/超限）。
+原因：全盘收是 ~2 GB/小时的量级（`dustrgb` 单幅 416–496 MB × 四颗卫星），
+那不是采集而是消防水带。
