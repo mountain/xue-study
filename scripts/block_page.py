@@ -157,6 +157,7 @@ PAGE = """<!doctype html>
 <h1>团块 · block</h1>
 <div class="sub" id="sub">读取中…</div>
 <div id="body"></div>
+<div id="skill"></div>
 <div id="gal"></div>
 <div class="note">
  本页显示的是 <code>archive/</code> 的<strong>快照</strong>，不是实时流 ——
@@ -199,6 +200,29 @@ fetch('/block.json',{cache:'no-store'}).then(r=>r.json()).then(b=>{
     document.getElementById('body').insertAdjacentHTML('beforeend',
       `<div class="note absent">上游声明但取不到：${b.unreachable.join(', ')}</div>`);
 }).catch(e=>{ document.getElementById('sub').textContent = '读取失败: '+e; });
+fetch('/block-skill.json',{cache:'no-store'}).then(r=>r.json()).then(k=>{
+  const ok = k.curve.filter(c=>c.state==='ok');
+  if(!ok.length){ document.getElementById('skill').innerHTML =
+    '<h2 style="font-size:14px;margin:26px 0 8px">团块的技巧</h2><div class="note">尚无可用时效</div>'; return; }
+  const mx = Math.max(...ok.map(c=>c.mae));
+  const rows = k.curve.map(c=>{
+    if(c.state!=='ok') return `<tr class="warnrow"><td>${c.lead_h}h</td>
+      <td class="n">${c.n}</td><td colspan="3">样本不足，不作结论</td></tr>`;
+    return `<tr><td>${c.lead_h}h</td><td class="n">${c.n}</td>
+      <td class="n">${c.median_bias.toFixed(2)}</td><td class="n">${c.mae.toFixed(2)}</td>
+      <td><span class="bar" style="width:${Math.round(120*c.mae/mx)}px"></span></td></tr>`;}).join('');
+  const mono = ok.every((c,i)=> i===0 || c.mae>=ok[i-1].mae);
+  document.getElementById('skill').innerHTML =
+    `<h2 style="font-size:14px;margin:26px 0 8px">团块的技巧 · GFS tmp2m 对机场站气温</h2>
+     <table><tr><th>时效</th><th class="n">n</th><th class="n">中位偏差 K</th>
+       <th class="n">MAE K</th><th></th></tr>${rows}</table>
+     <div class="note">观测自身误差按 WMO/CIMO <b>±${k.declared_obs_k} K</b>（declared）。
+     生成于 ${k.generated}。<br>
+     MAE 随时效单调不减：<b class="${mono?'':'warnrow'}">${mono}</b>
+     ${mono?'':'→ 「误差随时效增长」在本数据上<b>未建立</b>。'}<br>
+     MAE 在可用时效内基本持平，<b>与「代表性误差主导」相符</b>（该项不随时效增长）——
+     这是与本数据一致的假说，不是已建立的结论。</div>`;
+}).catch(()=>{});
 fetch('/block-posters.json',{cache:'no-store'}).then(r=>r.json()).then(g=>{
   if(!g.length) return;
   const cards = g.map(m=>`<figure style="margin:0 0 14px">
