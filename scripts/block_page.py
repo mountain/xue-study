@@ -157,6 +157,7 @@ PAGE = """<!doctype html>
 <h1>团块 · block</h1>
 <div class="sub" id="sub">读取中…</div>
 <div id="body"></div>
+<div id="gal"></div>
 <div class="note">
  本页显示的是 <code>archive/</code> 的<strong>快照</strong>，不是实时流 ——
  由 <code>scripts/block_page.py</code> 生成。上游最易失的是 <code>cma</code>
@@ -198,6 +199,21 @@ fetch('/block.json',{cache:'no-store'}).then(r=>r.json()).then(b=>{
     document.getElementById('body').insertAdjacentHTML('beforeend',
       `<div class="note absent">上游声明但取不到：${b.unreachable.join(', ')}</div>`);
 }).catch(e=>{ document.getElementById('sub').textContent = '读取失败: '+e; });
+fetch('/block-posters.json',{cache:'no-store'}).then(r=>r.json()).then(g=>{
+  if(!g.length) return;
+  const cards = g.map(m=>`<figure style="margin:0 0 14px">
+     <img src="/blockimg/${m.file}" style="width:100%;display:block;border-radius:3px"
+          alt="${m.collection} ${m.variable}">
+     <figcaption style="color:var(--dim);font-size:11px;margin-top:4px">
+       <b style="color:var(--fg)">${m.collection}</b> · ${m.variable}
+       · ${m.item} · ${m.ramp}</figcaption></figure>`).join('');
+  document.getElementById('gal').innerHTML =
+    `<h2 style="font-size:14px;margin:26px 0 10px">团块里归档的场 · 共 ${g.length} 张</h2>
+     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px">${cards}</div>
+     <div class="note">解码链：zlib → <b>垂直差分反滤波</b> → <code>offset+code*scale</code>
+      → xue 自己的色标。差分那一步漏掉时画出的是差分而非值（横条纹），已修正。<br>
+     poster 是降低后的网格（GFS 0.5°，stores 是 0.25°），故这是 poster 的视图，不是全分辨率产物。</div>`;
+}).catch(()=>{});
 </script>
 </html>
 """

@@ -3331,3 +3331,62 @@ color = interpolate(STOPS, value)
 看平面到像素的映射到底怎么做的（那里面的调用方 `main.ts:5601`
 明确说 poster 是「paint the variable's tiny first-frame poster」——
 **first-frame** 这个词提示 poster 可能是多帧的）。下一轮从这里入手。
+
+### 2026-09-18 · 团块的场画出来了：缺的是**垂直差分反滤波**
+
+#### 病因（上一轮未查明的那一步）
+
+`web/src/poster.ts` 的注释写着 "Inflate and **unfilter** one poster payload"，
+而它的循环是：
+
+```js
+for (let row = 1; row < height; row += 1) {
+  plane[current + column] = (plane[current+column] + plane[previous+column]) & 0xff;
+}
+```
+
+**poster 是垂直差分编码的：每一行存的是与上一行之差（模 256）。**
+
+**我上一轮一直在看差分，不是值。** 所以那片紫白横条纹不是调色错、不是布局反 ——
+是**画的量根本不对**。这与 PNG 的 Up 滤波是同一个东西，我漏了反滤波。
+
+行统计正是这个错的签名：
+
+```
+漏掉反滤波：行内相关 +0.500  列内相关 +0.191  行均值标准差 40.58（列仅 7.05）
+```
+
+差分行之间跳变剧烈是**应该的**；真实场不该如此。**当时我也看到了这组数，却没有从
+「行间跳变异常」推到「我读错了量」**，而是先去查了布局和调色。
+
+#### 完整解码链（现已验证）
+
+```
+zlib 解压
+  → 【垂直差分反滤波】cumsum(axis=0) % 256
+  → 量化解码 value = offset + code × scale   (code == nodataCode 或 > maximumCode → 透明)
+  → xue 自己的色标（web/src/palettes.ts 的 TEMPERATURE_STOPS，照抄）
+  → 最小 PNG 编码器（无图像库依赖）
+```
+
+结果**对得上物理**：大陆轮廓清晰，南极与北极冷（蓝），撒哈拉与阿拉伯热（深红），
+**青藏高原与安第斯在温度场上显出冷脊**。
+
+#### 产物
+
+```
+scripts/poster_render.py     55 张 PNG，14 张用温度色标
+/blockimg/*.png              与主页面同源同端口
+/block-posters.json          图集索引（含色标来源、是否取到量化）
+block.html                   新增「团块里归档的场」区块
+```
+
+页面明说：poster 是**降低后的网格**（GFS 0.5°，而 stores 是 0.25°），
+故这是 poster 的视图，不是全分辨率产物；并写明解码链与「差分那一步漏掉会画出横条纹」。
+
+#### 教训（与本会话其它几次同类）
+
+**「结果看起来像噪声」时，第一该怀疑的是「我读的是不是那个量」，而不是布局或配色。**
+差分、累积量、已经是物理单位的值（GRIB 那次是摄氏度）——
+这三类在本会话各出现过一次，症状都是「数据看着不对」，
+而我三次都先去调了外围参数。

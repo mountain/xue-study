@@ -65,6 +65,19 @@ def interpolate(stops, value):
     return stops[-1][1:]
 
 
+
+def unfilter_rows(plane: bytes, width: int, height: int) -> bytes:
+    """Undo the poster's vertical delta encoding.
+
+    Row 0 is stored as-is; every later row stores its difference from the row
+    above, modulo 256.  So the values are the running sum down each column.
+    """
+    import numpy as np
+    a = np.frombuffer(plane, dtype=np.uint8).reshape(height, width).astype(np.uint64)
+    a = np.cumsum(a, axis=0) % 256          # mod 256 at every step is the same
+    return a.astype(np.uint8).tobytes()     # as taking the sum mod 256
+
+
 def write_png(path: Path, rgb_rows, width: int, height: int) -> None:
     """Minimal RGBA PNG writer -- no image library needed."""
     raw = bytearray()
@@ -140,6 +153,13 @@ def render(archive: Path, out_dir: Path, max_per_var: int) -> list[dict]:
             continue
         if len(plane) != W * H:
             continue
+        # POSTERS ARE VERTICALLY DELTA-ENCODED.  Each row holds the difference
+        # from the row above, modulo 256, and the reader must un-filter it --
+        # xue's own web/src/poster.ts runs exactly this loop.  Skipping it
+        # renders the DIFFERENCES as if they were values, which is what the
+        # first attempt did: horizontal streaks that no palette could fix,
+        # because the wrong quantity was being drawn.
+        plane = unfilter_rows(plane, W, H)
         q = quantization_of(Path(p).parent, name)
         temp = name in TEMPERATURE_VARS and q is not None
         rows = []
