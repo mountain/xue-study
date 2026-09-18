@@ -51,7 +51,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DECLARED_SIGMA_K = 0.5          # WMO/CIMO synoptic temperature
-F_ICAO, F_TIME, F_T, F_LAT, F_LON = 0, 4, 5, 1, 2
+F_ICAO, F_TIME, F_T, F_LAT, F_LON, F_ELEV = 0, 4, 5, 1, 2, 3
 
 
 def haversine_km(a_lat, a_lon, b_lat, b_lon) -> float:
@@ -85,9 +85,9 @@ def main() -> int:
             row = math.floor((90.0 - lat) / args.cell)
             col = math.floor((lon + 180.0) / args.cell)
             hour = r[F_TIME][:13]          # YYYY-MM-DDTHH
-            cells[(row, col)][hour][r[F_ICAO]] = (lat, lon, float(r[F_T]))
+            cells[(row, col)][hour][r[F_ICAO]] = (lat, lon, float(r[F_T]), r[F_ELEV] or 0.0)
 
-    diffs, sep = [], []
+    diffs, sep, eband = [], [], []
     n_cells_multi = 0
     for (row, col), hours in cells.items():
         got = False
@@ -101,6 +101,7 @@ def main() -> int:
                     diffs.append(vals[i][2] - vals[j][2])
                     sep.append(haversine_km(vals[i][0], vals[i][1],
                                             vals[j][0], vals[j][1]))
+                    eband.append(0.5 * (vals[i][3] + vals[j][3]))
         if got:
             n_cells_multi += 1
 
@@ -133,6 +134,32 @@ def main() -> int:
     print(f"    代表性(实测下限) {repr_only:.2f} K  ({100*repr_only**2/total**2:.0f}% 的方差)")
     print(f"    仪器(declared)  {DECLARED_SIGMA_K:.2f} K  ({100*DECLARED_SIGMA_K**2/total**2:.0f}%)")
     print(f"    模式(余项)      {model_only:.2f} K  ({100*model_only**2/total**2:.0f}%)")
+    print()
+    print("  === 按海拔分层（代表性误差是否随地形放大）===")
+    edges = [(0,100),(100,500),(500,1000),(1000,2000),(2000,10000)]
+    print(f"    {'海拔带 m':<16}{'对数':>7}{'温差sd K':>11}{'代表性sd K':>13}{'间距中位km':>12}")
+    band_out=[]
+    for lo,hi in edges:
+        idx=[k for k,e in enumerate(eband) if lo<=e<hi]
+        if len(idx)<15:
+            print(f"    {lo:>5}-{hi:<9}{len(idx):>7}{'—':>11}{'—':>13}{'—':>12}   样本不足")
+            continue
+        d=[diffs[k] for k in idx]; sp=[sep[k] for k in idx]
+        sdd=statistics.stdev(d)
+        r=math.sqrt(max(sdd**2/2 - DECLARED_SIGMA_K**2, 0.0))
+        print(f"    {lo:>5}-{hi:<9}{len(idx):>7}{sdd:>11.2f}{r:>13.2f}"
+              f"{statistics.median(sp):>12.1f}")
+        band_out.append({"lo":lo,"hi":hi,"n":len(idx),"sd_diff":sdd,
+                         "repr_k":r,"median_sep_km":statistics.median(sp)})
+    if len(band_out)>=2:
+        a,b=band_out[0],band_out[-1]
+        if b["repr_k"]>a["repr_k"]:
+            print(f"    → 代表性误差随海拔【增大】：{a['lo']}-{a['hi']} m 为 {a['repr_k']:.2f} K，"
+                  f"{b['lo']}-{b['hi']} m 为 {b['repr_k']:.2f} K，比 {b['repr_k']/max(a['repr_k'],1e-9):.1f} 倍")
+            print(f"      这支持「在高海拔，代表性误差可能反超模式误差」—— 需按同海拔重算三项分解才能定量。")
+        else:
+            print(f"    → 代表性误差【未随海拔增大】：低带 {a['repr_k']:.2f} K，高带 {b['repr_k']:.2f} K")
+    print()
     print()
     print("  边界：机场集中在大城市，同格点两站通常相距几公里而非横跨整个格点，")
     print(f"  实测间距中位 {statistics.median(sep):.1f} km。**所以这是下限，不是该格点的真实代表性误差。**")
