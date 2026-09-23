@@ -1,0 +1,48 @@
+{
+ "here": {
+  "gfs": {
+   "n_runs": 3,
+   "plateau_median": 356.5,
+   "plateau_median_lo": 355.0,
+   "plateau_median_hi": 357.0,
+   "plateau_sat": 0.5497435897435898,
+   "warmpool_median": 341.5,
+   "ceiling": 357.0
+  },
+  "ecmwf": {
+   "n_runs": 2,
+   "plateau_median": 325.5,
+   "plateau_median_lo": 325.0,
+   "plateau_median_hi": 326.0,
+   "plateau_sat": 0.012307692307692308,
+   "warmpool_median": 342.75,
+   "ceiling": 357.0
+  },
+  "aifs": {
+   "n_runs": 3,
+   "plateau_median": 325.0,
+   "plateau_median_lo": 325.0,
+   "plateau_median_hi": 326.0,
+   "plateau_sat": 0.0,
+   "warmpool_median": 343.0,
+   "ceiling": 357.0
+  }
+ },
+ "recorded": {
+  "era5_plateau": 331.6,
+  "era5_warmpool": 338.64,
+  "merra_mask_frac": 0.6514,
+  "merra_mask_agree": 0.973,
+  "merra_valid_mean": 353.81,
+  "merra_valid_median": 354.25,
+  "merra_valid_share": 0.3486,
+  "merra_warmpool": 338.63,
+  "gfs_plateau_range": [
+   366.2,
+   371.3
+  ],
+  "surface_pressure": 582.6,
+  "surface_pressure_merra": 579.7,
+  "surface_pressure_era5": 582.6
+ }
+}

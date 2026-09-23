@@ -1,0 +1,62 @@
+{
+ "result": {
+  "thetae850": {
+   "distinct": 1,
+   "n_codes": 255,
+   "first": "112,20,65,255",
+   "last": "112,20,65,255"
+  },
+  "tmp850": {
+   "distinct": 211,
+   "n_codes": 231,
+   "first": "39,25,89,255",
+   "last": "146,26,60,255"
+  },
+  "tmp2m": {
+   "distinct": 221,
+   "n_codes": 221,
+   "first": "39,25,89,255",
+   "last": "112,20,65,255"
+  },
+  "tmp500": {
+   "distinct": 151,
+   "n_codes": 201,
+   "first": "39,25,89,255",
+   "last": "254,185,92,255"
+  }
+ },
+ "codebooks": {
+  "thetae850": {
+   "type": "linear",
+   "offset": 230.0,
+   "scale": 0.5,
+   "minimumCode": 0,
+   "maximumCode": 254,
+   "nodataCode": 255
+  },
+  "tmp850": {
+   "type": "linear",
+   "offset": -70.0,
+   "scale": 0.5,
+   "minimumCode": 0,
+   "maximumCode": 230,
+   "nodataCode": 255
+  },
+  "tmp2m": {
+   "type": "linear",
+   "offset": -60.0,
+   "scale": 0.5,
+   "minimumCode": 0,
+   "maximumCode": 220,
+   "nodataCode": 255
+  },
+  "tmp500": {
+   "type": "linear",
+   "offset": -85.0,
+   "scale": 0.5,
+   "minimumCode": 0,
+   "maximumCode": 200,
+   "nodataCode": 255
+  }
+ }
+}

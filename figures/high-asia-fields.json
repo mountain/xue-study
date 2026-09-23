@@ -1,0 +1,41 @@
+{
+ "gfs/thetae850": {
+  "item": "gfs.2026091806",
+  "ceiling": 357.0,
+  "n": 325,
+  "cells": 325,
+  "mean": 352.4123076923077,
+  "median": 356.5,
+  "min": 330.5,
+  "max": 357.0,
+  "sd": 6.056084231004202,
+  "saturated_frac": 0.556923076923077,
+  "at_ceiling_frac": 0.49846153846153846
+ },
+ "ecmwf/thetae850": {
+  "item": "ecmwf.2026091800",
+  "ceiling": 357.0,
+  "n": 325,
+  "cells": 325,
+  "mean": 330.9738461538462,
+  "median": 325.0,
+  "min": 315.0,
+  "max": 353.0,
+  "sd": 12.198364038144646,
+  "saturated_frac": 0.0,
+  "at_ceiling_frac": 0.0
+ },
+ "gfs/tmp500": {
+  "item": "gfs.2026091806",
+  "ceiling": 15.0,
+  "n": 325,
+  "cells": 325,
+  "mean": -2.9615384615384617,
+  "median": -3.5,
+  "min": -9.0,
+  "max": 1.5,
+  "sd": 2.0322547014578745,
+  "saturated_frac": 0.0,
+  "at_ceiling_frac": 0.0
+ }
+}

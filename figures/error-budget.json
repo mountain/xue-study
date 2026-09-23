@@ -1,0 +1,242 @@
+{
+ "recomputed_here": {
+  "representativeness_0p25": {
+   "cell_deg": 0.25,
+   "n_pairs": 4261,
+   "n_obs": 304922,
+   "median_sep_km": 13.467001865048557,
+   "max_sep_km": 28.07891266909073,
+   "sd_diff_k": 1.507118587432841,
+   "repr_plus_instr_k": 1.0656937732260525,
+   "repr_k": 0.9411180682001494,
+   "declared_instr_k": 0.5,
+   "total_scatter_k": 2.14,
+   "model_residual_k": 1.8557739037143557
+  },
+  "representativeness_0p5": {
+   "cell_deg": 0.5,
+   "n_pairs": 18341,
+   "n_obs": 304922,
+   "median_sep_km": 26.302464575351944,
+   "max_sep_km": 66.1018964906503,
+   "sd_diff_k": 1.726586422920484,
+   "repr_plus_instr_k": 1.2208809679516985,
+   "repr_k": 1.1137999541689145,
+   "declared_instr_k": 0.5,
+   "total_scatter_k": 2.14,
+   "model_residual_k": 1.7575692481644427
+  },
+  "elevation_bands": [
+   {
+    "lo": 0,
+    "hi": 100,
+    "n_pair_obs_025": 2102,
+    "n_distinct_pairs_025": 163,
+    "repr_k_025": 0.92,
+    "median_sep_km_025": 13.404249289921054,
+    "n_pair_obs_050": 8094,
+    "n_distinct_pairs_050": 613,
+    "repr_k_050": 1.1,
+    "median_sep_km_050": 24.9,
+    "insufficient_here": false
+   },
+   {
+    "lo": 100,
+    "hi": 500,
+    "n_pair_obs_025": 1470,
+    "n_distinct_pairs_025": 111,
+    "repr_k_025": 0.83,
+    "median_sep_km_025": 14.25495278708505,
+    "n_pair_obs_050": 7857,
+    "n_distinct_pairs_050": 581,
+    "repr_k_050": 0.99,
+    "median_sep_km_050": 28.1,
+    "insufficient_here": false
+   },
+   {
+    "lo": 500,
+    "hi": 1000,
+    "n_pair_obs_025": 319,
+    "n_distinct_pairs_025": 26,
+    "repr_k_025": 1.07,
+    "median_sep_km_025": 10.581988741038286,
+    "n_pair_obs_050": 956,
+    "n_distinct_pairs_050": 75,
+    "repr_k_050": 1.22,
+    "median_sep_km_050": 23.5,
+    "insufficient_here": false
+   },
+   {
+    "lo": 1000,
+    "hi": 2000,
+    "n_pair_obs_025": 338,
+    "n_distinct_pairs_025": 26,
+    "repr_k_025": 1.31,
+    "median_sep_km_025": 15.34936913688089,
+    "n_pair_obs_050": 1212,
+    "n_distinct_pairs_050": 92,
+    "repr_k_050": 1.39,
+    "median_sep_km_050": 25.9,
+    "insufficient_here": false
+   },
+   {
+    "lo": 2000,
+    "hi": 10000,
+    "n_pair_obs_025": 17,
+    "n_distinct_pairs_025": 2,
+    "repr_k_025": 0.51,
+    "median_sep_km_025": 8.578172550302561,
+    "n_pair_obs_050": 207,
+    "n_distinct_pairs_050": 15,
+    "repr_k_050": 2.62,
+    "median_sep_km_050": 27.0,
+    "insufficient_here": true
+   }
+  ],
+  "decomposition": {
+   "total_k": 2.14,
+   "repr_k": 0.9411180682001494,
+   "instrument_k": 0.5,
+   "model_k": 1.8557739037143557,
+   "shares_pct": [
+    19.34018731532844,
+    5.458992051707573,
+    75.20082063296398
+   ],
+   "sigma_sum_linear_k": 3.296891971914505
+  },
+  "high_band_distinct_pairs": {
+   "K7BM–KAEJ": [
+    38.805315,
+    -106.17017,
+    2708.0
+   ],
+   "SETU–SKIP": [
+    0.8335,
+    -77.6925,
+    2950.0
+   ]
+  },
+  "high_band_pairs_in_plateau_box": 0,
+  "high_band_pairs_in_control_box": 1,
+  "local_replication": [
+   {
+    "item": "gfs.2026091718",
+    "run_hour": "2026-09-17T18",
+    "n": 55,
+    "median_k": -0.5,
+    "sd_k": 7.733776110626228,
+    "pct_2sigma_instr": 34.54545454545455,
+    "pct_2sigma_instr_repr": 81.81818181818183,
+    "pct_2sigma_own_scatter": 98.18181818181819
+   },
+   {
+    "item": "gfs.2026091800",
+    "run_hour": "2026-09-18T00",
+    "n": 4912,
+    "median_k": 0.0,
+    "sd_k": 2.3679742301902493,
+    "pct_2sigma_instr": 31.758957654723126,
+    "pct_2sigma_instr_repr": 73.2084690553746,
+    "pct_2sigma_own_scatter": 95.19543973941367
+   },
+   {
+    "item": "gfs.2026091806",
+    "run_hour": "2026-09-18T06",
+    "n": 4977,
+    "median_k": -0.10000000000000142,
+    "sd_k": 2.2893968434464953,
+    "pct_2sigma_instr": 32.730560578661844,
+    "pct_2sigma_instr_repr": 73.05605786618446,
+    "pct_2sigma_own_scatter": 95.45911191480812
+   }
+  ],
+  "local_replication_used": {
+   "item": "gfs.2026091806",
+   "run_hour": "2026-09-18T06",
+   "n": 4977,
+   "median_k": -0.10000000000000142,
+   "sd_k": 2.2893968434464953,
+   "pct_2sigma_instr": 32.730560578661844,
+   "pct_2sigma_instr_repr": 73.05605786618446,
+   "pct_2sigma_own_scatter": 95.45911191480812
+  }
+ },
+ "recorded": {
+  "total_scatter_k": {
+   "value": 2.14,
+   "ref": "报告 §2943 节表（第 2971 行；7 时效 n=4770，block_pair 路径）"
+  },
+  "lead7_n": {
+   "value": 4196,
+   "ref": "报告 §3242 节表（第 3257 行）"
+  },
+  "lead7_median_k": {
+   "value": -0.3,
+   "ref": "报告 §3242 节表（第 3257 行）"
+  },
+  "lead7_sd_k": {
+   "value": 2.13,
+   "ref": "报告 §3242 节表（第 3257 行）"
+  },
+  "lead7_pct_2sigma_instr": {
+   "value": 36.2,
+   "ref": "报告 §3242 节表（第 3257 行）"
+  },
+  "lead7_pct_2sigma_wide": {
+   "value": 94.5,
+   "ref": "报告 §3242 节表（第 3257 行）"
+  },
+  "repr_k_old": {
+   "value": 0.96,
+   "ref": "报告 §3449 节（第 3471 行）"
+  },
+  "shares_old_pct": {
+   "value": [
+    20.0,
+    5.0,
+    75.0
+   ],
+   "ref": "报告 §3449 节（第 3477–3481 行）"
+  },
+  "n_obs_old": {
+   "value": 16347,
+   "ref": "报告 §3449 节（第 3466 行）"
+  },
+  "n_pairs_old": {
+   "value": 478,
+   "ref": "报告 §3449 节（第 3466 行）"
+  },
+  "bands_old": {
+   "value": [
+    242,
+    154,
+    44,
+    34,
+    2
+   ],
+   "ref": "报告 §3507 节表（第 3513–3517 行）"
+  },
+  "high_band_pairs_old": {
+   "value": 2,
+   "ref": "报告 §3507 节（第 3517 / 3524 行）"
+  }
+ },
+ "verdict_standards": {
+  "threshold_2sigma_instr_k": 1.0,
+  "threshold_2sigma_instr_repr_k": 2.131387546452105,
+  "threshold_2sigma_own_scatter_k": 4.26,
+  "recorded_pct": [
+   36.2,
+   null,
+   94.5
+  ],
+  "normal_prediction_pct": [
+   35.79634622208878,
+   67.82204198541996,
+   95.23541423993022
+  ],
+  "explanation": "三个阈值相对记录自身散布是 0.47σ / 1.00σ / 2.00σ，第三个恒等于「±2 个标准差」，故必然接近 95%，与模式无关。"
+ },
+ "boundary": "代表性与仪器项均为下限/规格值；2000 m 以上无足够独立测站对；36.2%/94.5% 为 RECORDED，存档的 tmp2m store 上游已 404，本仓库无法重算。"
+}
