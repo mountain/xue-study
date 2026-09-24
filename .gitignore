@@ -6,3 +6,7 @@ __pycache__/
 # 第三方气象数据的本地缓存：CMA/JMA/EUMETSAT 等再分发受限，
 # 且可由 scripts/xue_collect.py 重建，故不随仓库发布。
 archive/
+
+# macOS
+.DS_Store
+**/.DS_Store
