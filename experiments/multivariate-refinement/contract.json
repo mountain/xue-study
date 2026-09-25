@@ -1,0 +1,96 @@
+{
+  "version": "climatetensor-multivariate-l12-v1",
+  "frozen_before_training": true,
+  "training": [
+    "1979-01",
+    "2014-12"
+  ],
+  "validation": [
+    "2015-01",
+    "2019-12"
+  ],
+  "development_backtest": [
+    "2020-01",
+    "2025-12"
+  ],
+  "prior_exposure": "Both L6 wind and L6 multivariate 2020\u20132025 results already inspected; all later comparisons are development backtests.",
+  "data": "NOAA PSL NCEP/NCAR R1 monthly means and ERSST v5; retrospective reanalysis/reconstruction, not operational as-of inputs",
+  "representation": "L12 complete real scalar and gradient/rotation vector harmonics; same source grids, domains and units as frozen L6",
+  "domains": "Native grids. Ocean SST uses finite training-data domain. Pressure levels screened using bilinear surface pressure, with training-minimum mask and additional per-month screening. No zero-fill of unobserved cells.",
+  "humidity": "Project log(max(q, 1e-7 kg/kg)); inverse exponential gives positive forecasts. This is a transformed-state approximation, not a humidity conservation law.",
+  "normalization": "Training-only 12-month climatology; one RMS anomaly coefficient norm per physical scalar/vector channel; equal weight per channel",
+  "learner": "Joint training-only EOF coordinates; separate direct ridge regression from initial EOF state to each 1\u20136 month target anomaly. Cross-variable and cross-mode terms permitted. No autoregressive rollout or Floquet claim.",
+  "ranks": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "ridge_mean_loss_penalties": [
+    0.01,
+    0.1,
+    1.0
+  ],
+  "selection": "One global rank/penalty minimizing mean validation normalized coefficient MSE across all 13 channels and all six leads; all fit pairs confined to training.",
+  "comparisons": [
+    "climatology",
+    "persistence",
+    "independent_ar1",
+    "independent_channels",
+    "joint",
+    "frozen L6 on the same full native observation domains"
+  ],
+  "scoring": "Report resolved and full observed-domain errors per channel and per lead; transformed-space q errors explicitly labeled. Physical q RMSE additionally computed against native-grid observations. Backtest not used for any selection.",
+  "initial_month": "2025-12",
+  "target_months": [
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06"
+  ],
+  "publication": "Separate ctmulti12 model, preserving original ctmulti L6 artifacts and URLs byte-for-byte; 1.25 degree output sampling on same latitude extent; monthly historical initial state unchanged.",
+  "resolution_ladder": [
+    {
+      "stage": 1,
+      "degree": 6,
+      "cadence": "monthly",
+      "grid_step_degrees": 2.5,
+      "status": "retained frozen model"
+    },
+    {
+      "stage": 2,
+      "degree": 12,
+      "cadence": "monthly",
+      "grid_step_degrees": 1.25,
+      "status": "this experiment"
+    },
+    {
+      "stage": 3,
+      "degree": 12,
+      "cadence": "daily / weekly",
+      "status": "not executed"
+    },
+    {
+      "stage": 4,
+      "degree": 24,
+      "cadence": "daily",
+      "status": "not executed"
+    }
+  ],
+  "deferred_fields": [
+    "z1000",
+    "r850",
+    "r700",
+    "ssr",
+    "str",
+    "sd",
+    "tisr"
+  ],
+  "degree": 12,
+  "grid_step_degrees": 1.25,
+  "projection_storage": "Unique observed-domain Gram matrices with per-month indices; mathematically equivalent unregularized least squares; condition cap 1e8; no zero filling.",
+  "cross_resolution_score": "Compare full observed-domain physical MSE per channel. q uses inverse-log physical kg/kg error. Aggregate each channel after dividing by the frozen L6 TRAINING climatology full physical MSE, then equal mean over 13 channels and six leads. Do not compare unequal-dimensional coefficient errors as refinement skill.",
+  "preservation": "Original L6 is an independent frozen learned model, not a downsample of L12. Also expose L12 evaluated on the original 2.5 degree grid as an explicitly identified sample of the fine model."
+}

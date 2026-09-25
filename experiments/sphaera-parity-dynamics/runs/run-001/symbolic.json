@@ -1,0 +1,16 @@
+{
+  "streamfunction": "a*(x**2 - y**2) + 2*b*x*y - w*z",
+  "relative_vorticity": "-6*a*x**2 + 6*a*y**2 - 12*b*x*y + 2*w*z",
+  "phase_speed": "-p/3 + 2*w/3",
+  "pde_residual": "0",
+  "wrong_speed_residual": "-8*w*(-2*a*x*y + b*x**2 - b*y**2)",
+  "spectral_power": "3*a**2/20 + 3*b**2/20",
+  "angular_momentum": [
+    "0",
+    "0",
+    "2*w/3"
+  ],
+  "kinetic_energy": "4*a**2/5 + 4*b**2/5 + w**2/3",
+  "even_to_odd_tendency": "-224*x*y*z*(x**2 + y**2)",
+  "odd_tendency_at_unit_point": "-4480/243"
+}

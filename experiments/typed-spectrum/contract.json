@@ -1,0 +1,20 @@
+{
+  "version": "typed-sphere-v1",
+  "purpose": "Local scalar/vector/tensor directional encodings, scalar and tangential field spectra, and a kinematic scalar transport check",
+  "scope": "Representation prototype; no real weather time model, no native Adva execution, no assimilation, no forecast publication",
+  "degree": 6,
+  "normalization": "real spherical harmonics orthonormal under dOmega/(4*pi); scalar Y00=1; gradient and rotational vector bases divided by sqrt(l*(l+1))",
+  "kernels": {"bandlimited": "beta_l=1 within retained degrees", "even": "K(x)=abs(x)", "odd": "K(x)=x*abs(x)/2"},
+  "synthetic_grid": [24, 48],
+  "analytic_tolerance": 1e-10,
+  "coupling": "Galerkin projection of df/dt=-u.dot(grad_S(f))/radius with prescribed stationary tangential u",
+  "coupling_example": "solid rotation Omega=(0,0,1); f0=280+3*x+2*(x*x-y*y); dimensionless radius=1; evaluate t=pi/4",
+  "real_snapshot": "ERA5 2020-01-01T00:00, previously downloaded 1.5 degree sample; exact poles excluded",
+  "scalar_codes": ["t850", "t2m", "sst", "sp", "msl", "z500", "q850", "q700", "w500", "w700", "tisr", "z1000"],
+  "vector_pairs": [["u850", "v850"], ["u500", "v500"], ["u250", "v250"]],
+  "real_fit": {"relative_ridge": 1e-8, "unregularized_rank_tolerance": 1e-10, "area_weights": "cos(latitude), normalized globally; shared valid mask for wind components"},
+  "real_fit_limit": "In-sample representation residual only, not forecast skill; masked coefficients define a regularized extension, not observed land SST or subsurface atmosphere",
+  "fine_grid_fields": "ssr/str/sd require a separately validated regridding and domain pipeline; excluded from this snapshot run",
+  "radiation": "tisr sample remains in its source J/m2; this representation check does not infer accumulation duration",
+  "checks": ["local vector and symmetric tensor inverse", "scalar/vector basis Gram", "scalar and tangent field recovery", "kernel parity and original-kernel relation", "rotation covariance", "masked-value poison invariance and rank refusal", "kinematic transport and conservation", "original even wind spectrum cannot identify transport speed"]
+}

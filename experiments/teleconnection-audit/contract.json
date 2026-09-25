@@ -1,0 +1,22 @@
+{
+  "question": "Trace the claimed background wind to its sources, and test the user's co-varying East Asia, North America east coast and Middle East 500 hPa winds without dismissing seasonal structure as noise.",
+  "created_before_new_correlations": true,
+  "adva_reference": "adva @ 1ecd29b47d216b4e1c482d61a1c3e68252f8a07b; README and docs/TOOLING_WORKFLOW.md; finite external statistical evidence, no native certificate",
+  "scope": "1979-2025 cached NCEP/NCAR R1 monthly winds, 500 hPa. Regions confirmed by user; exact boxes below chosen before correlation calculation. January-June 2026 frozen L6/L12 outputs only for descriptive comparison.",
+  "regions": [
+    {"id":"east_asia","label":"East Asia","lat":[25,40],"lon":[130,170],"point":[32.5,150]},
+    {"id":"north_america","label":"North America east coast","lat":[32.5,47.5],"lon":[280,310],"point":[40,295]},
+    {"id":"middle_east","label":"Middle East","lat":[20,35],"lon":[35,65],"point":[27.5,50]}
+  ],
+  "source": "u500.npz and v500.npz from NOAA monthly uwnd/vwnd NetCDF; raw snapshots rehashed and selected 500 hPa arrays independently reread with xarray before use",
+  "primary_observer": "S(t)=hypot(area_mean(u),area_mean(v)); speed of regional monthly vector; not mean instantaneous wind speed or gust speed",
+  "background_observer": "C_m=(mean(u_y,m),mean(v_y,m)) over 1979-2014, then norm. Norm of mean vector differs from mean of norms. Original forecast seasonal background is mean of projected coefficients, reconstructed at requested points.",
+  "anomaly_observer": "For correlation, remove each series' own 1979-2014 calendar-month means. Use raw physical region u, v and S. S anomalies do not equal norm(vector anomaly).",
+  "primary_tests": "Three simultaneous regional S anomaly correlations, 1979-2025; report raw and deseasonalized, 1979-2014 and 2015-2025 separately; no automatic strong/weak threshold or causal verdict",
+  "secondary_observers": ["u and v anomaly correlations", "linear detrend fitted only 1979-2014 after deseasonalizing", "December-January-February subset", "smaller boxes point +/-5 latitude and +/-10 longitude", "area mean of gridpoint vector norms", "observed native versus frozen forecast six-month raw and anomaly correlation"],
+  "uncertainty": "1999 phase-randomized surrogate pairs preserving each full-record anomaly power spectrum, two-sided absolute correlation; Holm correction over three primary S pairs. Null assumes stationary second-order structure and destroys cross-region phase; it is not an atmospheric dynamics model. Independently report all nonzero whole-year circular shifts (46) as a discrete null preserving within-series temporal order and month phase. Approximate 95% percentile confidence interval from 1999 joint moving blocks, block length 24 months; sensitive to stationarity, records and block choice.",
+  "calibration": "Fixed synthetic common annual cycle plus independent AR anomalies; injected shared AR anomalies; changed held-out values must not affect train seasonal fit. Retain numerical failures. Calibration is finite, not proof of the inference method.",
+  "limits": ["Only 47 years and monthly means; cannot decide synoptic propagation or causality", "Same reanalysis family supplies training and diagnostic data; not independent observations", "2015-2025 segment was used in prior model development; not a newly untouched test", "Six future monthly maps share a fitted model and initial state; no inferential p-values on them", "Seasonal phase alignment is real structure and is not random noise", "Failure of three simple same-sign speed correlations does not exclude a signed vector or wave-pattern teleconnection", "No search over locations or lags this round; exact user-tracked centers may move"],
+  "budget": {"wall_seconds":1800,"numerical_launches":3,"surrogates":1999,"bootstrap_replicates":1999,"memory_GiB":4,"output_MiB":30},
+  "stop": "One declared analysis and calibrations; allow implementation repairs within three numerical launches, never retune boxes or method to achieve a desired conclusion"
+}

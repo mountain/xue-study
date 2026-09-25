@@ -1,0 +1,10 @@
+{
+  "name": "climatetensor-observable-seasonal",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "notebooks build --root docs -- docs/annual-spectrum.html",
+    "preview": "notebooks preview --root docs"
+  },
+  "dependencies": {"@observablehq/notebook-kit": "2.6.4"}
+}

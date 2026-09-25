@@ -1,0 +1,18 @@
+{
+  "version": "climatetensor-wind500-spectral-ar1-v1",
+  "quantity": "monthly mean 500 hPa eastward and northward wind, m/s",
+  "source": "NOAA PSL NCEP/NCAR Reanalysis 1 monthly means; reanalysis is not independent observations",
+  "training": ["1979-01", "2014-12"],
+  "validation": ["2015-01", "2019-12"],
+  "test": ["2020-01", "2025-12"],
+  "representation": "real toroidal and poloidal vector spherical harmonics, degrees 1 through 6; exclude singular pole rows",
+  "climatology": "12 monthly coefficient means fitted using training dates only",
+  "learner": "least-squares scalar AR(1) per harmonic coefficient, constrained to [-0.98,0.98], shrinkage selected on validation from [0,0.25,0.5,0.75,1]",
+  "comparison": "full low-degree anomalies vs even-degree toroidal anomalies; both add identical full climatology",
+  "ablation_boundary": "even-only suppresses odd and divergent anomaly channels, not the entire climatological wind; no claim that even degrees imply slow dynamics",
+  "baselines": ["training climatology", "persisted spectral anomaly plus target-month climatology"],
+  "lead_months": [1,2,3,4,5,6],
+  "score": "cos(latitude)-weighted vector RMSE against independent-time low-degree projections and full resolved wind; skill=1-MSE/model_climatology_MSE",
+  "test_protocol": "target month in test interval; initial state strictly before target; all fitted parameters fixed before test; monthly inputs are retrospectively available reanalysis, not an operational as-of archive",
+  "publication": "experimental; generation date and input cutoff explicit; no weather skill assertion from delivery tests; no assimilation; numerical Python prototype, not a native Adva learned model"
+}

@@ -1,0 +1,10 @@
+{
+  "scope": "Synthetic annual baseline plus periodic perturbation; no weather training or period discovery",
+  "time": {"unit": "idealized equal-length year", "years": 32, "samples_per_year": 12},
+  "seasonal_fit": {"training_years": 24, "harmonics": 2, "intercept": true},
+  "perturbation": {"period_years": 4, "amplitude": 0.2, "cases": ["additive", "amplitude modulation", "phase modulation"]},
+  "floquet_scalar_example": {"gamma_per_year": 0.25, "kappa_per_year": 0.8},
+  "budget": {"maximum_samples": 384, "search": false, "outer_seconds": 15},
+  "tolerance": 1e-10,
+  "limits": "The four-year period is prescribed, not identified in climate observations. Calendar months have unequal physical durations; here time is a declared seasonal coordinate."
+}

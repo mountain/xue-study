@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>球面模态的年周期与扰动</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef2f6;color:#182a40;font:16px/1.65 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:28px 20px}h1{font-size:28px;margin:0}p{max-width:850px}section{background:white;border:1px solid #d9e1ea;border-radius:14px;padding:20px;margin:18px 0}label{display:inline-flex;flex-direction:column;margin:0 20px 12px 0;gap:5px}select,input{font:inherit;max-width:100%}select{padding:7px;border:1px solid #b7c5d5;border-radius:6px}svg{width:100%;height:auto;display:block}text{font:14px system-ui;fill:#526780}.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:14px}.baseline{color:#8393a5}.signal{color:#007b88}.tag{color:#697d93;font-size:14px}#formula{font:16px/1.7 ui-monospace,monospace;overflow-wrap:anywhere}a{color:#006c9c}output{font-variant-numeric:tabular-nums}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #e8edf3;padding:7px}@media(max-width:500px){main{padding:18px 10px}section{padding:12px}h1{font-size:23px}label{display:flex;margin-right:0}text{font-size:17px}}
+</style>
+<main><div class="tag">Climatetensor · 表示研究 · 合成例子</div><h1>年周期之上，扰动怎样留下谱？</h1>
+<p>把图中的曲线看作一个球面空间模态的系数。灰线是每年重复的季节基线；青线加入扰动。这里的扰动周期由我们指定，尚未从气象资料中识别。</p>
+<section><label>扰动方式<select id="kind"><option value="additive">独立周期相加</option><option value="amplitude">改变年周期的强度</option><option value="phase">改变年周期的相位</option></select></label>
+<label>扰动周期<select id="period"><option value="4">4 年</option><option value="2">2 年</option><option value="8">8 年</option></select></label>
+<label>扰动幅度 <output id="epsilonText">0.20</output><input id="epsilon" type="range" min="0" max="0.6" step="0.01" value="0.2"></label>
+<div id="formula"></div><p id="interpretation"></p></section>
+<section><div class="legend"><span class="baseline">━ 季节基线</span><span class="signal">━ 基线＋扰动</span><span>展示前 8 年 · 纵轴为归一化模态系数</span></div><svg id="timePlot" viewBox="0 0 960 300" role="img" aria-label="季节基线与扰动后的时间曲线"></svg></section>
+<section><strong>去除已知季节基线后的频谱</strong><p class="tag">32 个理想化年、每年 12 个等间隔样本；矩形窗；频率间隔 1/32 次/年。频谱显示幅度，计算保留相位。</p><svg id="spectrumPlot" viewBox="0 0 960 260" role="img" aria-label="异常的时间频谱"></svg>
+<table><thead><tr><th>主要频率（次/年）</th><th>幅度</th><th>复系数相位（弧度）</th></tr></thead><tbody id="peaks"></tbody></table></section>
+<p>真实资料需仅用训练年份估计气候态，并保留日期、观测掩膜和变量单位。重复季节变化容易获得很高的拟合度，预报评价还必须检验异常是否优于气候态和持续性基线。</p>
+<p><a href="annual-check.json">有限数值检验</a> · <a href="demo.html">球面标量与风场演示</a></p></main>
+<script>
+const $=id=>document.getElementById(id), tau=2*Math.PI;
+function base(t){return Math.cos(tau*t)+.3*Math.sin(2*tau*t)}
+function field(t,kind,period,eps){const c=Math.cos(tau*t/period);return kind==='additive'?base(t)+eps*c:kind==='amplitude'?base(t)+eps*c*Math.cos(tau*t):Math.cos(tau*t+eps*c)+.3*Math.sin(2*tau*t)}
+function frame(ymin,ymax,xmax,height,xlabel){
+  const x=v=>55+v/xmax*875,y=v=>height-40-(v-ymin)/(ymax-ymin)*(height-60);let s='';
+  for(let k=0;k<=4;k++){const v=ymin+(ymax-ymin)*k/4;s+=`<path d="M55 ${y(v)} H930" stroke="#e2e9f0"/><text x="7" y="${y(v)+5}">${v.toFixed(1)}</text>`}
+  for(let k=0;k<=4;k++){const v=xmax*k/4;s+=`<text text-anchor="middle" x="${x(v)}" y="${height-16}">${v.toFixed(1)}</text>`}
+  return {x,y,s:s+`<text text-anchor="end" x="930" y="17">${xlabel}</text>`};
+}
+function render(){
+ const kind=$('kind').value,period=+$('period').value,eps=+$('epsilon').value;
+ $('epsilonText').textContent=eps.toFixed(2);const names={additive:'B(t) + ε cos(2πt/P)',amplitude:'B(t) + ε cos(2πt/P) cos(2πt)',phase:'cos[2πt + ε cos(2πt/P)] + 0.3 sin(4πt)'};
+ $('formula').textContent=names[kind]+'；B(t) = cos(2πt) + 0.3 sin(4πt)';
+ const low=1-1/period,high=1+1/period;
+ $('interpretation').textContent=kind==='additive'?`独立扰动在 ${1/period} 次/年处出现谱峰。`:kind==='amplitude'?`调幅把异常能量放在年频率两侧：${low} 和 ${high} 次/年。它们来自同一个 ${period} 年调制。`:`调相的小幅近似也在 ${low} 和 ${high} 次/年处出现谱峰，但复系数相位不同；幅度增大后出现更多频率分量。`;
+ let f=frame(-2,2,8,300,'年');const path=fn=>Array.from({length:513},(_,i)=>`${i?'L':'M'}${f.x(i/64).toFixed(2)} ${f.y(fn(i/64)).toFixed(2)}`).join(' ');
+ $('timePlot').innerHTML=f.s+`<path d="${path(base)}" fill="none" stroke="#95a5b6" stroke-width="2"/><path d="${path(t=>field(t,kind,period,eps))}" fill="none" stroke="#007b88" stroke-width="2.3"/>`;
+ const n=384,values=Array.from({length:n},(_,i)=>field(i/12,kind,period,eps)-base(i/12)),bins=[];
+ for(let k=1;k<=80;k++){let re=0,im=0;for(let j=0;j<n;j++){re+=values[j]*Math.cos(tau*k*j/n)/n;im-=values[j]*Math.sin(tau*k*j/n)/n}bins.push({freq:k/32,amp:2*Math.hypot(re,im),phase:Math.atan2(im,re)})}
+ f=frame(0,.65,2.5,260,'次/年');$('spectrumPlot').innerHTML=f.s+bins.filter(b=>b.amp>1e-8).map(b=>`<path d="M${f.x(b.freq)} ${f.y(0)} V${f.y(b.amp)}" stroke="#007b88" stroke-width="4"/>`).join('');
+ const peaks=bins.filter(b=>b.amp>1e-8).sort((a,b)=>b.amp-a.amp).slice(0,5);
+ $('peaks').innerHTML=peaks.length?peaks.map(b=>`<tr><td>${b.freq.toFixed(3)}</td><td>${b.amp.toFixed(4)}</td><td>${b.phase.toFixed(3)}</td></tr>`).join(''):'<tr><td colspan="3">扰动为零</td></tr>';
+}
+for(const id of ['kind','period','epsilon'])$(id).addEventListener('input',render);render();
+</script></html>

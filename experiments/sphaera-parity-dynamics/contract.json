@@ -1,0 +1,14 @@
+{
+  "schema": "xue-study.sphaera-parity-dynamics.v0",
+  "question": "Can suppressing odd degrees retain a persistent shape while losing information needed for its future location?",
+  "status_at_design": "Finite synthetic check; no weather data or forecast training",
+  "machine_revision": "3043be35ff1186d502d091baa8bb96581449595c",
+  "model": "Unit sphere, inviscid nondivergent barotropic vorticity equation; prescribed planetary rotation p; streamfunction -w*z + a*(x*x-y*y) + 2*b*x*y",
+  "derived_dynamics": "c=(2*w-p)/3; a_dot=-2*c*b; b_dot=2*c*a; w_dot=0",
+  "targets": ["fixed-axis original spectrum", "normalized degree-two spectral power"],
+  "controls": ["same initial even spectrum, different future even spectrum", "same shape power for both trajectories", "wrong phase speed obtained by dropping w", "nonzero odd tendency generated from degrees two and four", "original finite quadrature compared with actual native evaluation"],
+  "native_boundary": "Existing Rust driver compiles and checks GraftFrames and evaluates Real arithmetic. Symbolic PDE identities, integration, coordinate matrices and trajectory parameters are external references.",
+  "limits": {"checker_wall_seconds": 90, "checker_cpu_seconds": 60, "native_wall_seconds": 45, "native_cpu_seconds": 40, "native_address_space_mb": 2048, "native_evidence_mb": 16, "functions": 16, "evaluations": 512, "assertions": 2000, "continuations": 0},
+  "acceptance": "Exact symbolic PDE residual is zero; wrong-speed residual is nonzero; finite native values agree with rational references to 1e-12; target-dependent loss and retained invariant are both witnessed.",
+  "residuals": ["dimensionless time is not a month", "no seasonal prediction skill measured", "single harmonic family is not general atmospheric closure", "finite quadrature is not a converged spherical transform", "a native structural certificate does not prove the PDE interpretation", "the same author supplies symbolic and native formulations"]
+}

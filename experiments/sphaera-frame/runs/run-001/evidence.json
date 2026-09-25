@@ -1,0 +1,1911 @@
+{
+  "status": "FiniteNativeSpectrumFrameChecked",
+  "machine_revision": "3043be35ff1186d502d091baa8bb96581449595c",
+  "source_sha256": "5540b54c60403f0afa591a8d0c36b211e61895b3c9eb41d9dc7c74698bb28810",
+  "contract_sha256": "00532a0ae4da9e225034213a5935856925fd680bda890c275ff76a6d4c8e4b3e",
+  "checker_sha256": "44eb56986259e2a41678d1a3c56e4169aae836d869e2f6394470fd2d37a8a0eb",
+  "driver_sha256": "7172d378b3d305062236afc14131a64c934ef3d65dbfb9af488076606f235ccc",
+  "binary_sha256": "aded1787b42407f3370213d1e77483515434fca6dd6b1c932dbd2db40b790f80",
+  "profile_sha256": "1ce2310b00427b49047273e42518d6ed0cc000100187c0d8b0448ba1c8aee554",
+  "checks": [
+    {
+      "label": "machine revision is pinned",
+      "passed": true
+    },
+    {
+      "label": "unit node 0",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 0",
+      "passed": true
+    },
+    {
+      "label": "unit node 1",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 1",
+      "passed": true
+    },
+    {
+      "label": "unit node 2",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 2",
+      "passed": true
+    },
+    {
+      "label": "unit node 3",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 3",
+      "passed": true
+    },
+    {
+      "label": "unit node 4",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 4",
+      "passed": true
+    },
+    {
+      "label": "unit node 5",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 5",
+      "passed": true
+    },
+    {
+      "label": "unit node 6",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 6",
+      "passed": true
+    },
+    {
+      "label": "unit node 7",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 7",
+      "passed": true
+    },
+    {
+      "label": "unit node 8",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 8",
+      "passed": true
+    },
+    {
+      "label": "unit node 9",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 9",
+      "passed": true
+    },
+    {
+      "label": "unit node 10",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 10",
+      "passed": true
+    },
+    {
+      "label": "unit node 11",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 11",
+      "passed": true
+    },
+    {
+      "label": "unit node 12",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 12",
+      "passed": true
+    },
+    {
+      "label": "unit node 13",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 13",
+      "passed": true
+    },
+    {
+      "label": "unit node 14",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 14",
+      "passed": true
+    },
+    {
+      "label": "unit node 15",
+      "passed": true
+    },
+    {
+      "label": "antipodal node 15",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:0",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:1",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:2",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:3",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:4",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:5",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:6",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:7",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:8",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:9",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:10",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:11",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:12",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:13",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:14",
+      "passed": true
+    },
+    {
+      "label": "tangent zero:15",
+      "passed": true
+    },
+    {
+      "label": "axis reversal zero",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:0",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:1",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:2",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:3",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:4",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:5",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:6",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:7",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:8",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:9",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:10",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:11",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:12",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:13",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:14",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_z:15",
+      "passed": true
+    },
+    {
+      "label": "axis reversal rigid_z",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:0",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:1",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:2",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:3",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:4",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:5",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:6",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:7",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:8",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:9",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:10",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:11",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:12",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:13",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:14",
+      "passed": true
+    },
+    {
+      "label": "tangent gradient_z:15",
+      "passed": true
+    },
+    {
+      "label": "axis reversal gradient_z",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:0",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:1",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:2",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:3",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:4",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:5",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:6",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:7",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:8",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:9",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:10",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:11",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:12",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:13",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:14",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l2:15",
+      "passed": true
+    },
+    {
+      "label": "axis reversal toroidal_l2",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:0",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:1",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:2",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:3",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:4",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:5",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:6",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:7",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:8",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:9",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:10",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:11",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:12",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:13",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:14",
+      "passed": true
+    },
+    {
+      "label": "tangent toroidal_l3:15",
+      "passed": true
+    },
+    {
+      "label": "axis reversal toroidal_l3",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:0",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:1",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:2",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:3",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:4",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:5",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:6",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:7",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:8",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:9",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:10",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:11",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:12",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:13",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:14",
+      "passed": true
+    },
+    {
+      "label": "tangent rigid_plus_l2:15",
+      "passed": true
+    },
+    {
+      "label": "axis reversal rigid_plus_l2",
+      "passed": true
+    },
+    {
+      "label": "native process returned successfully",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: zero",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: rigid_z",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: gradient_z",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: toroidal_l2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: toroidal_l3",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: rigid_plus_l2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:-1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:0:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:0:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:0:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:1:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:1:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:1:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:1:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:2:-2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:2:-1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: turn-i:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: twice-i:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: conjugate:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: p-after-i:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: i-after-p:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: shear:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: unshear:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-i:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: norm:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: chart-norm:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: old-then-i:2:2",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: project-first:zero",
+      "passed": true
+    },
+    {
+      "label": "native agrees with Fraction oracle: project-first:rigid_z",
+      "passed": true
+    },
+    {
+      "label": "declared gradient probe remains invisible",
+      "passed": true
+    },
+    {
+      "label": "odd observer distinguishes rigid rotation",
+      "passed": true
+    },
+    {
+      "label": "odd observer also distinguishes degree three",
+      "passed": true
+    },
+    {
+      "label": "original even observer retained",
+      "passed": true
+    },
+    {
+      "label": "multiplying the old spectrum by i does not recover the odd witness",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -2:-2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -2:-1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -2:0",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -2:1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -2:2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -1:-2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -1:-1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -1:0",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -1:1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: -1:2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 0:-2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 0:-1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 0:0",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 0:1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 0:2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 1:-2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 1:-1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 1:0",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 1:1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 1:2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 2:-2",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 2:-1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 2:0",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 2:1",
+      "passed": true
+    },
+    {
+      "label": "parity anticommutes with J: 2:2",
+      "passed": true
+    },
+    {
+      "label": "nonorthogonal chart witness",
+      "passed": true
+    },
+    {
+      "label": "transported observer returns original reading",
+      "passed": true
+    },
+    {
+      "label": "stale observer exposes a false reading",
+      "passed": true
+    },
+    {
+      "label": "transported metric preserves norm",
+      "passed": true
+    },
+    {
+      "label": "stale metric exposes a false norm",
+      "passed": true
+    },
+    {
+      "label": "native alias refusal retained",
+      "passed": true
+    },
+    {
+      "label": "native nonfinite-input refusal retained",
+      "passed": true
+    }
+  ],
+  "check_count": 456,
+  "native_evaluations": 283,
+  "max_float_error": 5.551115123125783e-17,
+  "fields": {
+    "zero": {
+      "exact": [
+        "0",
+        "0"
+      ],
+      "native": [
+        0.0,
+        0.0
+      ]
+    },
+    "rigid_z": {
+      "exact": [
+        "0",
+        "42/125"
+      ],
+      "native": [
+        0.0,
+        0.336
+      ]
+    },
+    "gradient_z": {
+      "exact": [
+        "0",
+        "0"
+      ],
+      "native": [
+        0.0,
+        0.0
+      ]
+    },
+    "toroidal_l2": {
+      "exact": [
+        "-126/125",
+        "0"
+      ],
+      "native": [
+        -1.008,
+        0.0
+      ]
+    },
+    "toroidal_l3": {
+      "exact": [
+        "0",
+        "-441/625"
+      ],
+      "native": [
+        0.0,
+        -0.7056
+      ]
+    },
+    "rigid_plus_l2": {
+      "exact": [
+        "-126/125",
+        "42/125"
+      ],
+      "native": [
+        -1.008,
+        0.3360000000000001
+      ]
+    }
+  },
+  "graft_frame_count": 48,
+  "elapsed_seconds": 0.4302060970076127,
+  "boundary": [
+    "no native general complex-frame API",
+    "no automatic source-program recovery",
+    "no full-sphere quadrature convergence guarantee",
+    "no empirical forecasting model",
+    "J acting after an information-losing observation cannot recreate missing information"
+  ],
+  "independence": "Fraction quadrature and native Rust evaluation are different arithmetic paths but share this experiment's author and mathematical formulation."
+}

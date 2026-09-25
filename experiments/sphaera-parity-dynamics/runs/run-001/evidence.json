@@ -1,0 +1,1348 @@
+{
+  "status": "ExactModelAndNativeTargetDependentLossChecked",
+  "machine_revision": "3043be35ff1186d502d091baa8bb96581449595c",
+  "sympy_version": "1.14.0",
+  "checks": [
+    {
+      "label": "degree-one eigenvalue",
+      "passed": true
+    },
+    {
+      "label": "degree-two eigenvalues",
+      "passed": true
+    },
+    {
+      "label": "degree-four eigenvalue",
+      "passed": true
+    },
+    {
+      "label": "exact nonlinear vorticity equation for symbolic a,b,w,p",
+      "passed": true
+    },
+    {
+      "label": "discarding the hidden rotation changes the PDE tendency",
+      "passed": true
+    },
+    {
+      "label": "shape amplitude is constant in this exact family",
+      "passed": true
+    },
+    {
+      "label": "continuous normalized even spectral power",
+      "passed": true
+    },
+    {
+      "label": "degree one carries normalized angular momentum",
+      "passed": true
+    },
+    {
+      "label": "exact kinetic energy retains a degree-one contribution",
+      "passed": true
+    },
+    {
+      "label": "two different even degrees generate a nonzero odd tendency",
+      "passed": true
+    },
+    {
+      "label": "odd tendency witness lies on the unit sphere",
+      "passed": true
+    },
+    {
+      "label": "machine revision is pinned",
+      "passed": true
+    },
+    {
+      "label": "source export insertion has one target",
+      "passed": true
+    },
+    {
+      "label": "source module has expected closing boundary",
+      "passed": true
+    },
+    {
+      "label": "proper rational observation chart: z",
+      "passed": true
+    },
+    {
+      "label": "proper rational observation chart: x",
+      "passed": true
+    },
+    {
+      "label": "proper rational observation chart: diagonal",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:z:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:x:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.initial:diagonal:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:z:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:x:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.initial:diagonal:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:z:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:x:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: still.final:diagonal:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:z:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:x:15",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:0",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:1",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:2",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:3",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:4",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:5",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:6",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:7",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:8",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:9",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:10",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:11",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:12",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:13",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:14",
+      "passed": true
+    },
+    {
+      "label": "tangent wind: moving.final:diagonal:15",
+      "passed": true
+    },
+    {
+      "label": "native request inside budget",
+      "passed": true
+    },
+    {
+      "label": "native compiler and evaluator completed",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.initial:coeff",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.initial:coeff",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.initial:shape",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.initial:shape",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.initial:rhs",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.initial:rhs",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.initial:z",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.initial:z",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.initial:x",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.initial:x",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.initial:diagonal",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.initial:diagonal",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.initial:coeff",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.initial:coeff",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.initial:shape",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.initial:shape",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.initial:rhs",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.initial:rhs",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.initial:z",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.initial:z",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.initial:x",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.initial:x",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.initial:diagonal",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.initial:diagonal",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.final:coeff",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.final:coeff",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.final:shape",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.final:shape",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.final:rhs",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.final:rhs",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.final:z",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.final:z",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.final:x",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.final:x",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: still.final:diagonal",
+      "passed": true
+    },
+    {
+      "label": "unique native result: still.final:diagonal",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.final:coeff",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.final:coeff",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.final:shape",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.final:shape",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.final:rhs",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.final:rhs",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.final:z",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.final:z",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.final:x",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.final:x",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: moving.final:diagonal",
+      "passed": true
+    },
+    {
+      "label": "unique native result: moving.final:diagonal",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: speed:-3/2:0",
+      "passed": true
+    },
+    {
+      "label": "unique native result: speed:-3/2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:-3/2:0:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:-3/2:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:-3/2:0:3/5",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:-3/2:0:3/5",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: speed:-3/2:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: speed:-3/2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:-3/2:1:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:-3/2:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:-3/2:1:3/5",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:-3/2:1:3/5",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: speed:0:0",
+      "passed": true
+    },
+    {
+      "label": "unique native result: speed:0:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:0:0:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:0:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:0:0:3/5",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:0:0:3/5",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: speed:0:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: speed:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:0:1:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:0:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:0:1:3/5",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:0:1:3/5",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: speed:3/2:0",
+      "passed": true
+    },
+    {
+      "label": "unique native result: speed:3/2:0",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:3/2:0:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:3/2:0:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:3/2:0:3/5",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:3/2:0:3/5",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: speed:3/2:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: speed:3/2:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:3/2:1:1",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:3/2:1:1",
+      "passed": true
+    },
+    {
+      "label": "native agrees with rational reference: rhs:3/2:1:3/5",
+      "passed": true
+    },
+    {
+      "label": "unique native result: rhs:3/2:1:3/5",
+      "passed": true
+    },
+    {
+      "label": "all requested observations returned",
+      "passed": true
+    },
+    {
+      "label": "initial complete even spectrum is identical",
+      "passed": true
+    },
+    {
+      "label": "future complete even spectrum differs",
+      "passed": true
+    },
+    {
+      "label": "hidden degree one changes the current tendency",
+      "passed": true
+    },
+    {
+      "label": "shape target remains identical at both times",
+      "passed": true
+    },
+    {
+      "label": "native original quadrature initially hides degree one: z",
+      "passed": true
+    },
+    {
+      "label": "native original quadrature initially hides degree one: x",
+      "passed": true
+    },
+    {
+      "label": "native original quadrature initially hides degree one: diagonal",
+      "passed": true
+    },
+    {
+      "label": "native original quadrature distinguishes the future states",
+      "passed": true
+    },
+    {
+      "label": "native odd observer detects the initial hidden rotation",
+      "passed": true
+    }
+  ],
+  "check_count": 305,
+  "native_evaluations": 42,
+  "max_float_error": 2.220446049250313e-16,
+  "witness": {
+    "time": "pi/4 dimensionless",
+    "planet_rotation": 0,
+    "continuous_fixed_x_spectrum": {
+      "still.initial": "-3/4",
+      "moving.initial": "-3/4",
+      "still.final": "-3/4",
+      "moving.final": "0"
+    },
+    "continuous_shape_power": "3/20 for all four states",
+    "states": {
+      "still.initial": [
+        "1",
+        "0",
+        "0"
+      ],
+      "moving.initial": [
+        "1",
+        "0",
+        "3/2"
+      ],
+      "still.final": [
+        "1",
+        "0",
+        "0"
+      ],
+      "moving.final": [
+        "0",
+        "1",
+        "3/2"
+      ]
+    },
+    "native_finite_quadrature": {
+      "still.initial:z": [
+        0.0,
+        0.0
+      ],
+      "still.initial:x": [
+        -1.008,
+        0.0
+      ],
+      "still.initial:diagonal": [
+        0.28224,
+        0.0
+      ],
+      "moving.initial:z": [
+        0.0,
+        0.504
+      ],
+      "moving.initial:x": [
+        -1.008,
+        0.0
+      ],
+      "moving.initial:diagonal": [
+        0.28224000000000005,
+        0.0
+      ],
+      "still.final:z": [
+        0.0,
+        0.0
+      ],
+      "still.final:x": [
+        -1.008,
+        0.0
+      ],
+      "still.final:diagonal": [
+        0.28224,
+        0.0
+      ],
+      "moving.final:z": [
+        0.0,
+        0.504
+      ],
+      "moving.final:x": [
+        0.0,
+        0.0
+      ],
+      "moving.final:diagonal": [
+        -0.9676799999999999,
+        0.0
+      ]
+    }
+  },
+  "symbolic": {
+    "streamfunction": "a*(x**2 - y**2) + 2*b*x*y - w*z",
+    "relative_vorticity": "-6*a*x**2 + 6*a*y**2 - 12*b*x*y + 2*w*z",
+    "phase_speed": "-p/3 + 2*w/3",
+    "pde_residual": "0",
+    "wrong_speed_residual": "-8*w*(-2*a*x*y + b*x**2 - b*y**2)",
+    "spectral_power": "3*a**2/20 + 3*b**2/20",
+    "angular_momentum": [
+      "0",
+      "0",
+      "2*w/3"
+    ],
+    "kinetic_energy": "4*a**2/5 + 4*b**2/5 + w**2/3",
+    "even_to_odd_tendency": "-224*x*y*z*(x**2 + y**2)",
+    "odd_tendency_at_unit_point": "-4480/243"
+  },
+  "elapsed_seconds": 4.524594878999892,
+  "hashes": {
+    "checker": "8a77084f8cf8d1f505271b8e80e1cdd94e259315f4f754358f776d4fe865ea71",
+    "contract": "000b7a68c26d7d9342b21dcbd6992b381b1af41b1b2e0bb19a2de7bd9126ddc8",
+    "previous_checker": "44eb56986259e2a41678d1a3c56e4169aae836d869e2f6394470fd2d37a8a0eb",
+    "driver": "7172d378b3d305062236afc14131a64c934ef3d65dbfb9af488076606f235ccc",
+    "binary": "aded1787b42407f3370213d1e77483515434fca6dd6b1c932dbd2db40b790f80",
+    "source": "b70e3740d03438b2cb14080267e818c4d9b92698399a4072f10f08be5747a8a4",
+    "native": "80d48a8b347df85bc1346075d596be73982eab5fdf0ae0e49b0c647a89804e6e",
+    "request": "5a45dd027126c4f8030326d9a184c42abf51c30cd17963ae0b5057aed43626c5"
+  },
+  "residuals": [
+    "dimensionless time is not a month",
+    "no seasonal prediction skill measured",
+    "single harmonic family is not general atmospheric closure",
+    "finite quadrature is not a converged spherical transform",
+    "a native structural certificate does not prove the PDE interpretation",
+    "the same author supplies symbolic and native formulations"
+  ]
+}

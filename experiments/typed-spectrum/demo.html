@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>球面响应与谱间输送 · ClimateTensor</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101923;color:#e6edf3;font:16px/1.65 system-ui,sans-serif}main{max-width:1160px;margin:auto;padding:28px 22px 50px}h1{font-size:28px;line-height:1.35;margin:4px 0 12px}h2{font-size:19px;margin:6px 0}p{max-width:900px;color:#b8cad8}.eyebrow{color:#79cfbf;letter-spacing:.1em;font-size:12px}.notice{border-left:3px solid #d3ad72;padding:8px 14px;background:#1b2733}.controls{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;background:#1a2937;padding:18px;border-radius:12px;margin:22px 0}label{font-size:14px;display:block}input,select{width:100%;margin-top:7px;accent-color:#6dd9be}select,button{background:#233949;color:white;border:1px solid #607789;border-radius:5px;padding:8px;font:inherit}output{color:#92e2ce}button{cursor:pointer;margin-top:8px}.globes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:#162431;border:1px solid #304658;padding:14px;border-radius:12px}.card h2{font-size:17px}.card p{font-size:13px;margin:4px 0}.globe{width:100%;height:auto;display:block}.legend{display:flex;align-items:center;gap:10px;justify-content:center;font-size:12px;color:#b8cad8;margin:16px}.bar{width:220px;height:12px;background:linear-gradient(90deg,#3d77bf,#f0f1e9,#cc6038);border-radius:8px}.metrics{display:flex;gap:25px;flex-wrap:wrap;padding:16px 0;color:#9addca}.trace{width:100%;height:auto;border:1px solid #304658;border-radius:8px}small{color:#a5bacb}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}td,th{text-align:left;padding:9px;border-bottom:1px solid #304658}th{color:#91c7bf}a{color:#93d8cb}code{color:#e5c795}.equation{font:17px/1.8 ui-monospace,monospace;color:#c5dded}details{margin-top:18px}summary{cursor:pointer;color:#9addca}@media(max-width:760px){main{padding:18px 14px}.controls{grid-template-columns:1fr 1fr;gap:12px}.globes{grid-template-columns:1fr}.globe{max-width:360px;margin:auto}.card{text-align:center}h1{font-size:23px}}
+</style>
+<main>
+<div class="eyebrow">CLIMATETENSOR / TYPED SPHERE / REPRESENTATION PROTOTYPE</div>
+<h1>一根箭头，可以成为遍布球面的响应</h1>
+<p>一阶谱与一个箭头等价；二阶谱可以表达更丰富的方向结构。这里用同一球面上的标量谱和风谱，观察一个已知的旋转怎样搬动标量图样。</p>
+<p class="notice">交互图是解析构造的单位球输送实验，时间无量纲。下方 ERA5 是 2020-01-01 的单时次表示检查。本页没有新增真实天气预报。</p>
+<div class="controls">
+<label>标量的空间结构<select id="shape"><option value="combined">一阶＋二阶</option><option value="dipole">一阶：箭头的球面表达</option><option value="quadrupole">二阶：四瓣结构</option></select></label>
+<label>旋转驱动 Ω：<output id="omegaValue"></output><input id="omega" aria-label="旋转驱动" type="range" min="-2" max="2" step="0.05" value="1"></label>
+<label>时间 t：<output id="timeValue"></output><input id="time" aria-label="无量纲时间" type="range" min="0" max="6.283185307179586" step="0.01" value="0.7853981633974483"><button id="play" type="button">播放</button></label>
+<label>观察经度：<output id="viewValue"></output><input id="view" aria-label="观察方向" type="range" min="-180" max="180" step="1" value="40"></label>
+</div>
+<div class="globes">
+<section class="card"><h2>初始标量谱</h2><canvas class="globe" id="initial" width="320" height="320" aria-label="初始球面标量谱"></canvas><p>完整保留所选的一阶／二阶空间结构。</p></section>
+<section class="card"><h2>保留完整风谱后的输送</h2><canvas class="globe" id="full" width="320" height="320" aria-label="完整风谱输送后的球面标量谱"></canvas><p>形状强度不变，相位由 Ω 驱动。</p></section>
+<section class="card"><h2>删去不可见风模态的对照</h2><canvas class="globe" id="omitted" width="320" height="320" aria-label="删去一阶风驱动后的对照"></canvas><p>原偶风谱 E(a) 始终为零；将未观测通道置零，丢失输送驱动。</p></section>
+</div>
+<div class="legend"><span>负异常</span><div class="bar"></div><span>正异常</span><span id="scaleLabel"></span></div>
+<div class="metrics"><span id="rms"></span><span id="point"></span><span>原偶风谱：E(a) ≡ 0</span></div>
+<h2>固定方向 a = (1, 0, 0) 的读数</h2>
+<canvas class="trace" id="trace" width="1000" height="210" aria-label="固定方向谱响应随时间变化曲线"></canvas>
+<p><span style="color:#74dfc1">绿色：完整驱动</span>　<span style="color:#eab677">虚线：省略驱动的对照</span>。移动观察经度只改变视图；Ω 和 t 才改变输送。球面表示使用完整低阶投影核，显示的数值是标量异常，不是原来的偶风谱。</p>
+<details open><summary>这个例子检验了什么</summary>
+<p class="equation">Sᵥ(a) = a · v<br>u(r) = Ω e_z × r<br>∂ₜ f + u · ∇ₛ f = 0<br>f₀ = 280 + 3x + 2(x² − y²)</p>
+<p>前三个球显示 f − 280。Ω 控制一阶相位以 Ω、二阶相位以 2Ω 演化。原偶风谱不能区分不同的 Ω；这是单次观测的不可辨识性。允许标量历史、其他观测或先验后，学习器可能推断 Ω，本例并未否定这种可能。风是规定的，标量不反过来改变风。</p>
+</details>
+<h2 style="margin-top:30px">真实资料：单时次的表示检查</h2>
+<p id="realSummary"></p>
+<div class="table-wrap"><table><thead><tr><th>通道</th><th>单位</th><th>有效面积</th><th>域内重建 RMSE</th><th>Gram 条件数</th></tr></thead><tbody id="fields"></tbody></table></div>
+<p id="sstSummary"></p>
+<p>海温只使用海洋和有限值；压力层使用同期地面气压筛查；风的两个分量共用有效域。缺测外延由有限基和正则项决定，不能视为陆地海温或地下大气的观测。以上 RMSE 使用参与拟合的同一时次，仅说明表示误差。</p>
+<p><a href="report.json">完整数值报告</a> · <a href="synthetic.npz">合成例子的谱系数与输送矩阵</a> · <a href="era5-representation.npz">ERA5 表示系数与观测域 Gram</a></p>
+</main>
+<script id="report" type="application/json">__REPORT_JSON__</script>
+<script>
+'use strict';
+const report=JSON.parse(document.getElementById('report').textContent);
+const el=id=>document.getElementById(id), canvases=['initial','full','omitted'].map(el);
+let playing=false,last=0;
+function mode(){return el('shape').value}
+function field(x,y,angle){const X=Math.cos(angle)*x+Math.sin(angle)*y,Y=-Math.sin(angle)*x+Math.cos(angle)*y;return (mode()==='quadrupole'?0:3*X)+(mode()==='dipole'?0:2*(X*X-Y*Y))}
+function scale(){return mode()==='dipole'?3:mode()==='quadrupole'?2:5}
+function color(value){const f=Math.min(1,Math.abs(value)/scale()),c=value<0?[61,119,191]:[204,96,56],white=[240,241,233];return white.map((v,i)=>Math.round(v+(c[i]-v)*f))}
+function globe(canvas,angle){const ctx=canvas.getContext('2d'),N=canvas.width,im=ctx.createImageData(N,N),lon=+el('view').value*Math.PI/180,lat=20*Math.PI/180;
+ for(let j=0;j<N;j++)for(let i=0;i<N;i++){const e=(i+.5-N/2)/(N*.46),n=(N/2-j-.5)/(N*.46),rr=e*e+n*n,k=4*(j*N+i);if(rr>1)continue;const d=Math.sqrt(1-rr),x=-e*Math.sin(lon)-n*Math.sin(lat)*Math.cos(lon)+d*Math.cos(lat)*Math.cos(lon),y=e*Math.cos(lon)-n*Math.sin(lat)*Math.sin(lon)+d*Math.cos(lat)*Math.sin(lon),z=n*Math.cos(lat)+d*Math.sin(lat);let c=color(field(x,y,angle));const pl=Math.asin(z)*180/Math.PI,pm=Math.atan2(y,x)*180/Math.PI,g=Math.min(Math.abs(pl/30-Math.round(pl/30)),Math.abs(pm/30-Math.round(pm/30)))<.015;for(let h=0;h<3;h++)im.data[k+h]=Math.round(c[h]*(.78+.22*d)*(g?.79:1));im.data[k+3]=255;}ctx.putImageData(im,0,0);ctx.fillStyle='#a9c4d8';ctx.font='12px system-ui';ctx.fillText('N',N/2-4,12);}
+function curve(){const c=el('trace'),ctx=c.getContext('2d'),W=c.width,H=c.height,L=45,R=W-20,T=18,B=H-30,omega=+el('omega').value,t=+el('time').value,s=scale();ctx.clearRect(0,0,W,H);const xx=v=>L+v/(2*Math.PI)*(R-L),yy=v=>(T+B)/2-v/(s*1.12)*(B-T)/2;ctx.strokeStyle='#43586a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,yy(0));ctx.lineTo(R,yy(0));ctx.stroke();ctx.font='13px system-ui';ctx.fillStyle='#b8cad8';ctx.fillText('0',L-15,H-8);ctx.fillText('2π',R-15,H-8);ctx.fillText('t（无量纲）',W/2-30,H-6);ctx.strokeStyle='#eab677';ctx.setLineDash([8,6]);ctx.beginPath();ctx.moveTo(L,yy(field(1,0,0)));ctx.lineTo(R,yy(field(1,0,0)));ctx.stroke();ctx.setLineDash([]);ctx.strokeStyle='#74dfc1';ctx.lineWidth=2;ctx.beginPath();for(let k=0;k<=500;k++){const q=k*2*Math.PI/500;const p=yy(field(1,0,omega*q));if(k===0)ctx.moveTo(xx(q),p);else ctx.lineTo(xx(q),p)}ctx.stroke();ctx.strokeStyle='#cad8e3';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(xx(t),T);ctx.lineTo(xx(t),B);ctx.stroke();}
+function render(){const omega=+el('omega').value,t=+el('time').value,angle=omega*t;el('omegaValue').textContent=omega.toFixed(2);el('timeValue').textContent=t.toFixed(3);el('viewValue').textContent=el('view').value+'°';el('scaleLabel').textContent='±'+scale()+' K（合成异常）';globe(canvases[0],0);globe(canvases[1],angle);globe(canvases[2],0);const mse=(mode()==='quadrupole'?0:6*(1-Math.cos(angle)))+(mode()==='dipole'?0:32/15*(1-Math.cos(2*angle)));el('rms').textContent='省略驱动的全球 RMSE：'+Math.sqrt(Math.max(0,mse)).toFixed(4)+' K';el('point').textContent='固定方向读数：'+field(1,0,angle).toFixed(3)+' K';curve();}
+for(const id of ['shape','omega','time','view'])el(id).addEventListener('input',render);
+el('play').onclick=()=>{playing=!playing;el('play').textContent=playing?'暂停':'播放';last=0;if(playing)requestAnimationFrame(tick)};
+function tick(now){if(!playing)return;if(!last||now-last>70){if(last)el('time').value=(+el('time').value+(now-last)/2000)%(2*Math.PI);last=now;render()}requestAnimationFrame(tick)}
+const real=report.real_snapshot;
+el('realSummary').textContent=real.time+'；12 个标量通道、3 对水平风；截断到 ℓ = '+real.degree+'。每个标量 '+real.scalar_coefficients+' 个系数，每层风 '+real.vector_coefficients_per_level+' 个系数。';
+for(const row of real.field_results){const tr=document.createElement('tr');for(const value of [row.code,row.units,(100*row.area_fraction).toFixed(1)+'%',row.observed_domain_rmse.toPrecision(4),row.unregularized_condition===null?'秩不足':row.unregularized_condition.toFixed(2)]){const td=document.createElement('td');td.textContent=value;tr.append(td)}el('fields').append(tr)}
+const sst=real.field_results.find(row=>row.code==='sst');el('sstSummary').textContent='海温对照：有效域拟合 RMSE = '+sst.observed_domain_rmse.toFixed(3)+' K；把无效区域填零后做全球拟合，海洋域 RMSE = '+sst.zero_fill_control_observed_rmse.toFixed(3)+' K。';
+render();
+</script>
+</html>

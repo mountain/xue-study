@@ -1,0 +1,17 @@
+{
+  "schema": "xue-study.sphaera-frame-trial.v0",
+  "question": "Can the existing native Adva compiler, GraftFrame and Real evaluator express a paired spectrum (even, odd), its complex structure J, and transported observation, while distinguishing added measurement from mere multiplication by i?",
+  "level": "Finite native arithmetic plus an external mathematical interpretation; not a stable native complex-frame extension",
+  "sphaera_revision": "3ebc0d845b39e20c98f48f8dbd0a45d3a63ed208",
+  "machine_revision": "3043be35ff1186d502d091baa8bb96581449595c",
+  "source_profile": "spec/framework/iota-frame-v1.md",
+  "native_boundary": "parse_module -> link_modules -> compile_function -> checked import -> evaluate_finite; every native identity and GraftFrame is allocated by Rust",
+  "geometry": {"axis": [0, 0, 1], "z_rings": ["3/5", "-3/5", "4/5", "-4/5"], "azimuths": ["+x", "-x", "+y", "-y"], "weight": "1/16", "scope": "finite antipodally symmetric quadrature, not an exact spherical integration rule"},
+  "kernels": {"even": "sign(a.r) (a cross r)", "odd": "abs(a.r) (a cross r)", "complex": "even + i odd"},
+  "protected": ["linear source use and explicit copy", "source/occurrence and graft history", "J squared equals minus identity", "original even channel retained", "metric and observer travel with coordinate changes", "quadrature evidence is not forecast skill"],
+  "fields": ["zero", "rigid_z", "gradient_z", "toroidal_l2", "toroidal_l3", "rigid_plus_l2"],
+  "controls": ["old channel followed by i cannot distinguish zero from rigid rotation", "no sign change in odd kernel is an added observer, not coordinate transport", "stale observer after shear", "stale metric after shear", "parity and J anticommute", "implicit alias refused", "nonfinite input refused"],
+  "limits": {"build_wall_seconds": 300, "native_wall_seconds": 45, "native_cpu_seconds": 40, "native_address_space_mb": 2048, "checker_wall_seconds": 90, "functions": 16, "evaluations": 512, "assertions": 2000, "native_evidence_mb": 16, "continuations": 0},
+  "acceptance": "Native finite outputs agree with independent Fraction quadrature within 1e-12; original and extended channels separate the declared parity probes; all negative controls expose their declared failure.",
+  "residuals": ["no native general complex-frame API", "no automatic source-program recovery", "no full-sphere quadrature convergence guarantee", "no empirical forecasting model", "J acting after an information-losing observation cannot recreate missing information"]
+}

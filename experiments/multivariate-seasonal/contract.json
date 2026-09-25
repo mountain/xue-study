@@ -1,0 +1,29 @@
+{
+  "version": "climatetensor-multivariate-seasonal-v1",
+  "frozen_before_training": true,
+  "training": ["1979-01", "2014-12"],
+  "validation": ["2015-01", "2019-12"],
+  "development_backtest": ["2020-01", "2025-12"],
+  "prior_exposure": "500 hPa wind results for 2020–2025 were already inspected in v1; this interval is not a new untouched confirmatory test.",
+  "data": "NOAA PSL NCEP/NCAR R1 monthly means and ERSST v5; retrospective reanalysis/reconstruction, not operational as-of inputs",
+  "representation": "L6, complete real scalar harmonics and gradient/rotation vector harmonics; retain all parity and phase channels; exclude exact poles",
+  "domains": "Native grids. Ocean SST uses finite training-data domain. Pressure levels screened using bilinear surface pressure, with training-minimum mask and additional per-month screening. No zero-fill of unobserved cells.",
+  "humidity": "Project log(max(q, 1e-7 kg/kg)); inverse exponential gives positive forecasts. This is a transformed-state approximation, not a humidity conservation law.",
+  "normalization": "Training-only 12-month climatology; one RMS anomaly coefficient norm per physical scalar/vector channel; equal weight per channel",
+  "learner": "Joint training-only EOF coordinates; separate direct ridge regression from initial EOF state to each 1–6 month target anomaly. Cross-variable and cross-mode terms permitted. No autoregressive rollout or Floquet claim.",
+  "ranks": [8, 16, 32, 64],
+  "ridge_mean_loss_penalties": [0.01, 0.1, 1.0],
+  "selection": "One global rank/penalty minimizing mean validation normalized coefficient MSE across all 13 channels and all six leads; all fit pairs confined to training.",
+  "comparisons": ["training climatology", "persisted anomaly", "independent coefficient AR1", "independent channel EOF/ridge with same candidates and training/validation split"],
+  "scoring": "Report resolved and full observed-domain errors per channel and per lead; transformed-space q errors explicitly labeled. Physical q RMSE additionally computed against native-grid observations. Backtest not used for any selection.",
+  "initial_month": "2025-12",
+  "target_months": ["2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06"],
+  "publication": "Separate experimental MULTI model alongside frozen FULL/EVEN; generation date explicit; monthly averages, display interpolation only; no native Adva training or assimilation",
+  "resolution_ladder": [
+    {"stage": 1, "cadence": "monthly", "degree": 6, "status": "this experiment"},
+    {"stage": 2, "cadence": "monthly", "degree": 12, "status": "next controlled spatial comparison; same data and split"},
+    {"stage": 3, "cadence": "daily then weekly targets", "degree": 12, "status": "requires daily data ingestion, anti-alias aggregation and a separately frozen protocol"},
+    {"stage": 4, "cadence": "daily", "degree": 24, "status": "conditional on stage 3 skill and memory/runtime measurements"}
+  ],
+  "deferred_fields": ["z1000", "r850", "r700", "ssr", "str", "sd", "tisr"]
+}

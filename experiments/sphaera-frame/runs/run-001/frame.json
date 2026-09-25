@@ -1,0 +1,205 @@
+{
+  "schema": "xue-study.spectrum-interpretation-frame.v0",
+  "native_compilation_certificate": "compile:spectrum-frame/spectrum:v1",
+  "native_graft_root": "graft:spectrum-frame/spectrum:root",
+  "native_graft_certificate": "graft-trace:spectrum-frame/spectrum:v1",
+  "native_artifact_sha256": "a352e561fa92c91ab9f8d47d2df28e5d7de2d9052045be77b73d8fb118f853a8",
+  "source_sha256": "5540b54c60403f0afa591a8d0c36b211e61895b3c9eb41d9dc7c74698bb28810",
+  "geometry": {
+    "nodes": [
+      [
+        "4/5",
+        "0",
+        "3/5"
+      ],
+      [
+        "-4/5",
+        "0",
+        "3/5"
+      ],
+      [
+        "0",
+        "4/5",
+        "3/5"
+      ],
+      [
+        "0",
+        "-4/5",
+        "3/5"
+      ],
+      [
+        "4/5",
+        "0",
+        "-3/5"
+      ],
+      [
+        "-4/5",
+        "0",
+        "-3/5"
+      ],
+      [
+        "0",
+        "4/5",
+        "-3/5"
+      ],
+      [
+        "0",
+        "-4/5",
+        "-3/5"
+      ],
+      [
+        "3/5",
+        "0",
+        "4/5"
+      ],
+      [
+        "-3/5",
+        "0",
+        "4/5"
+      ],
+      [
+        "0",
+        "3/5",
+        "4/5"
+      ],
+      [
+        "0",
+        "-3/5",
+        "4/5"
+      ],
+      [
+        "3/5",
+        "0",
+        "-4/5"
+      ],
+      [
+        "-3/5",
+        "0",
+        "-4/5"
+      ],
+      [
+        "0",
+        "3/5",
+        "-4/5"
+      ],
+      [
+        "0",
+        "-3/5",
+        "-4/5"
+      ]
+    ],
+    "weights": [
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16",
+      "1/16"
+    ],
+    "axis": [
+      0,
+      0,
+      1
+    ]
+  },
+  "carrier": [
+    "even observer output",
+    "odd observer output"
+  ],
+  "J": [
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "G": [
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "O": [
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "parity": [
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      -1
+    ]
+  ],
+  "chart": {
+    "T": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "J": [
+      [
+        1,
+        -2
+      ],
+      [
+        1,
+        -1
+      ]
+    ],
+    "G": [
+      [
+        1,
+        -1
+      ],
+      [
+        -1,
+        2
+      ]
+    ],
+    "O": [
+      [
+        1,
+        -1
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "interpretation_boundary": "A new finite interpretation over actual native GraftFrames, not an instance of the old iota cut-graph H profile and not a new stable Frame type.",
+  "dynamics": "NotSpecified",
+  "weather_skill": "NotTested",
+  "parity_boundary": "For a full axis field C(-a)=conj(C(a)); uniform multiplication by i does not preserve this reality condition. No global parity-preserving complex structure on that constrained signature space is claimed."
+}
