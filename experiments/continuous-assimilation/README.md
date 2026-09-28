@@ -109,6 +109,31 @@ journalctl --user -u xue-assim-freeze -n 50   # 每次运行的输出
 | `xue-assim-freeze.timer` | 每 3 小时 | `orchestrate.py freeze`：探测最新起报并冻结其分析场 | 09:40 触发，2.7 秒，正确判定 `already_frozen`（exit 0） |
 | `xue-backup-sync.timer` | 每日 03:20（随机延迟 ≤10 分钟） | `plan` → `sync` → `verify` | 4 分 28 秒；`copied 0, already present 114`（**增量跳过生效**）；`digest_ok=114 mismatched=0` |
 | `xue-backup-deep.timer` | 每周日 04:40（随机延迟 ≤20 分钟） | `deep`：逐件下载回来重算 sha256 | 2 分 39 秒；**`ok=114 mismatched=0`** |
+| `xue-era5.timer` | 每日 05:10（随机延迟 ≤15 分钟） | `orchestrate.py era5 --from 2026-09-01`：补采缺失日、月聚合、与 R1 重叠比较 | 首轮 22 天全补（每 12 秒一天）；次轮全跳过（`already_present`），exit 0 |
+
+## 7.1 ERA5 源（`sp`／`sst`）——与 gfs 层**性质不同**，故单独一个定时器
+
+**契约**：`contract-era5-source-v1.json`（原契约的增补，不改原契约任何一条）。
+
+| | |
+|---|---|
+| 来源 | `gs://gcp-public-data-arco-era5`（HTTPS、**无需凭据**、滞后约 6 天） |
+| 保留 | 每日 **四个定时次（00/06/12/18Z）** 的 `sp` 与 `sst`，**原生 0.25°**、float32；其余 20 个时次登记为 `discarded` |
+| 落盘 | **13.3 MB/日**（实测）⇒ 约 **4.8 GB/年**；上限 20 GB，到顶大声失败且不删 |
+| 处理 | 月平均＝日均的月平均，保留在原生网格（重网格留给分析层）；有重叠月时才与 R1 比较 |
+| 账本 | `~/xue-assimilation/ledger/{era5_frozen.jsonl,era5_months.jsonl,era5_status.json}` |
+
+**两条必须记住的差别**：
+
+1. **没有抢救紧迫性。** ARCO-ERA5 是**永久档案（1940 起）**，与 gfs「只留最新一次起报」根本不同 ⇒
+   **漏采不丢数据**，缺口随时可补。这个定时器的用途是一致性与便利，**不是防止数据消失**。
+2. **本层只做采集与处理，不含替换。** 「是否允许用 ERA5 的 `sp`/`sst` 替代 R1/ERSST 进入模型状态」
+   **仍是未作出的声明**；采集器**不**把 ERA5 的值写进任何分析态、预报或 S3 备份。
+
+**首轮实测（2026-09-28）**：补 2026-09-01..22 共 **22 天**（280 MB）；月聚合写出 2026-09
+（**22/30 天，`complete=False`**，这是预期的部分月）；与 R1 的比较状态为 **`no_overlap`**
+（R1 止于 2026-02）——**这是预期而非失败**。预测 **5/5**。控制 **6/6**
+（含 C1 的 Pa/hPa/degC 三种注入与 C3 的缺测处理）。
 
 三个定时器都 `Persistent=true`（机器若关机，开机后补跑）。
 
