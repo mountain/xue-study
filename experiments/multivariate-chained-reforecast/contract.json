@@ -1,0 +1,149 @@
+{
+  "version": "multivariate-chained-reforecast-v1",
+  "question_id": "xue.derived.multivariate-chained-reforecast",
+  "round": 1,
+  "frozen_before_run": true,
+  "predecessor": "docs/problem-cards/reforecast-winter-2026-27-from-latest-month.json（并列直映版）",
+  "change_reason": "提问方 2026-09-28 指定：按**读取记录**里「时面」的读法重跑——把冻结模型的**并列直映**补成**依次推进**，即在相邻步之间**真的建立界面并做相容检验**。E2 已实测：时面在「重叠／相容／粘合」三格**指不出实例**（六支箭头共源）。本件把那三格真的做出来，并让**可达性随之一变**：由观测的 2026-02 逐月推进 10 步即到 2026-12。",
+  "what_changes_structurally": {
+    "before": "六支箭头**共源**：`(x_init @ vectors) @ maps` 一次给出 lead 1..6，箭头之间**不存在**相邻对 ⇒ 目标月必须落在初始月之后 6 个月内（`reachability_rule`）。",
+    "after": "**一条链**：`x_{m+1} = (x_m @ vectors) @ maps[0]`，逐步推进。**界面**＝(月份, 归一化异常系数向量)；第 k 步的**输出**就是第 k+1 步的**输入**（逐位相同）。⇒ 目标月由步数决定，不再受六支箭头限制。",
+    "interface_typing": "`maps[lead]` 的拟合约定是「原点的月归一化异常 → 目标的月归一化异常」，而 `encode` 用的气候态随**该月**变化。因此 `x_m`（按月归一化）正是 lead-1 算子所声明的输入类型，链式复合**在类型上成立**；变的是**历史**（输入由观测变成预测），这正是 `0036` §1.12「闭于类型不闭于历史」的现场。"
+  },
+  "honest_limits_declared_up_front": [
+    "**模型从未为迭代应用拟合过**：`maps[0]` 只用「观测原点 → 观测目标」的配对训练。把**预测**状态喂回去，输入落在训练分布之外（分布外输入），本件不声称这一点无害——而是**把它量出来**。",
+    "链式结果**不是**「有技巧的季节预报」：它是**结构性外推（补上时面的重叠与粘合）＋ 在回测期量出的代价**两件东西一起交付。",
+    "冻结件（`archive/multivariate-l12-v1/`）与既有 reforecast（`multivariate-reforecast-202602-v1/`）**只读、不覆盖、不改动**。"
+  ],
+  "design": {
+    "operator": "`M1(x) = (x @ vectors) @ maps[0]`——与冻结代码**同一算式同一顺序**（不预先乘成 `vectors@maps[0]`，避免结合律带来的末位差异）",
+    "chain": "从观测的 2026-02 状态起，逐步推进 **10** 步 ⇒ 2026-03 … **2026-12**",
+    "calibration_window": "开发回测期 2020-01..2025-12（冻结契约的 `development_backtest`），**有真值**，用来量链式代价",
+    "calibration_pairs": "对每个步数 k：原点 m 取遍回测期内满足 m+k ≤ 2025-12 的月；**链式** = 从该原点迭代 k 次；**直接** = `maps[k-1]`（仅 k ≤ 6 存在）",
+    "primary_quantity": "`resolved_ratio_k = mean_通道( resolved_mse_chain[k] / resolved_mse_direct[k] )`——**只含预测本身**的那部分误差（不含被丢弃空间模态的残差），故对链式劣化敏感",
+    "secondary_quantity": "`full_ratio_k`（含残差的全误差比）、逐 k 的`chain_skill_vs_climatology`＝`1 − full_mse_chain / full_mse_climatology`",
+    "iterated_baseline": "`independent_ar1`（冻结报告已有的**迭代**基线：`x_{m+1} = rho ⊙ x_m`）——它是唯一与链式**同类**的对手，必须并排给出",
+    "scope_check": "每步输出的**逐分量** z 分数 `z = x_step / std_train`（`std_train` 为训练期逐分量标准差）；`max|z| > 6` 即登记 `out_of_scope`。这是「相容条件」里**可执行**的那一半（类型相符由构造保证，作用域必须实测）",
+    "readouts": "2026-03..12 的三区 500 hPa 矢量风（**与 CFSv2 参考同一批框、同一算法**：east_asia 25–40N/130–170E、north_america 32.5–47.5N/280–310E、middle_east 20–35N/35–65E）＋ 高原 t2m（28–36N/80–100E，带已知表示误差告示）",
+    "read_only": [
+      "archive/multivariate-l12-v1/",
+      "archive/multivariate-reforecast-202602-v1/",
+      "archive/cfs-reference-2026-12-v1/",
+      "experiments/multivariate-refinement/",
+      "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/"
+    ],
+    "write_root": "archive/multivariate-chained-reforecast-v1/（拒绝覆盖）"
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "冻结摘要不变",
+      "rule": "`archive/multivariate-l12-v1/` 与 `archive/multivariate-reforecast-202602-v1/` 逐件 sha256 跑前＝跑后，且与 reforecast 记录的 `frozen_hashes_sha256` 一致"
+    },
+    {
+      "id": "G2a",
+      "name": "单步复刻（历史末月）",
+      "rule": "对冻结历史末月 2025-12：`decode((x @ vectors) @ maps[0])` 必须与冻结 `forecast.npz` 的 **lead-1** 逐位相同（atol 1e-12）⇒ 链的第一步就是冻结件那一步"
+    },
+    {
+      "id": "G2b",
+      "name": "单步复刻（新初始月）",
+      "rule": "对 2026-02：`decode((x_init @ vectors) @ maps[0])` 必须与 `multivariate-reforecast-202602-v1/forecast.npz` 的 **2026-03**（lead-1）逐位相同（atol 1e-12）⇒ 链的起点接过既有 reforecast"
+    },
+    {
+      "id": "G3",
+      "name": "界面记账（粘合的机械定义）",
+      "rule": "每步写出 (输入月, 输出月, 输入状态指纹, 输出状态指纹)；断言 `step[k].输出月 == step[k+1].输入月` 且 `step[k].输出指纹 == step[k+1].输入指纹`（逐字节）。任一不符 ⇒ 失败"
+    },
+    {
+      "id": "G4",
+      "name": "作用域检查有记录",
+      "rule": "每步的 `max|z|` 与逐通道 `max|z|` 必须落盘；若 > 6 则登记 `out_of_scope`（**登记不阻断，但必须逐阶列出**）"
+    },
+    {
+      "id": "G5",
+      "name": "拒绝覆盖",
+      "rule": "`write_root/report.json` 已存在即 raise FileExistsError"
+    },
+    {
+      "id": "G6",
+      "name": "k=1 链式＝直接",
+      "rule": "回测期上，k=1 的链式与直接预测必须**逐位相同**（atol 1e-12）⇒ 证明两者用的是同一个算子，链式劣化**不是**实现差异"
+    }
+  ],
+  "negative_controls": {
+    "C1_identity_chain": {
+      "rule": "把算子换成恒等（`x_k = x_0`，即**系数空间的持续性**），在 **k=2..6** 上回测技巧必须**变差**。**k=1 只作读数、不作闸门**：一个月的异常持续性本身是很强的对手，那里的比较不构成对照。",
+      "on_failure": "工具失败（评分或数据有问题）"
+    },
+    "C2_misaligned_interface": {
+      "rule": "把链的**输入**错位 12 个月（用 `x_{m-12}` 起链），技巧必须**变差**。",
+      "on_failure": "工具失败（界面记账没有判别力）"
+    },
+    "C3_scope_gate_has_teeth": {
+      "rule": "**双向**：① 把真实状态整体放大 **100 倍**后，作用域检查**必须**报 `out_of_scope`；② 未放大的真实链式状态**不得**被误报（若真报，属 G4 的合法登记，不算误报）。",
+      "on_failure": "工具失败（作用域闸门是装饰）"
+    }
+  },
+  "criteria": {
+    "verdict_chain_degrades": "`resolved_ratio_k > 1` 对 k=2..6 成立且随 k 上升 ⇒ 依次推进**可用但有代价**，代价已量出",
+    "verdict_chain_amplifies": "链式状态幅度随 k **上升**（`mean|x_k| / mean|x_0|` 增）且出现 `out_of_scope` ⇒ 迭代在放大，外推**不可用**，必须降级",
+    "verdict_chain_decays": "链式状态幅度随 k **下降**并趋于气候态，且逐 k 都劣于直接映射 ⇒ 链**可用但趋于无信息**（等于报气候态），必须如实说",
+    "verdict_instrument_failure": "任一闸门或对照不成立 ⇒ 不报判定"
+  },
+  "predictions": {
+    "note": "**跑之前写死**（2026-09-28），以便被实测否证。依据：`maps[0]` 是岭回归拟合的**异常**映射，一般把异常往零收缩 ⇒ 猜测链在**衰减**。",
+    "items": [
+      {
+        "id": "P1",
+        "claim": "`resolved_ratio_k > 1` 对 k=2..6 全部成立（链式劣于直接映射）"
+      },
+      {
+        "id": "P2",
+        "claim": "k=1 时链式与直接**逐位相同**（atol 1e-12）"
+      },
+      {
+        "id": "P3",
+        "claim": "`resolved_ratio_2` ∈ [1.2, 3.0]"
+      },
+      {
+        "id": "P4",
+        "claim": "`resolved_ratio_k` 随 k（2..6）**单调上升**"
+      },
+      {
+        "id": "P5",
+        "claim": "`resolved_ratio_6` > 2.0"
+      },
+      {
+        "id": "P6",
+        "claim": "链式状态幅度随步数**衰减**：`mean|x_k| / mean|x_0|` 随 k 单调下降（k=1..10）"
+      },
+      {
+        "id": "P7",
+        "claim": "十步之内**不出现** `out_of_scope`（因为链在衰减；若出现，说明映射在放大 ⇒ 与 P6 同时被否证，两条都要如实登记）"
+      },
+      {
+        "id": "P8",
+        "claim": "k=1 处链式**劣于**系数空间持续性（持续性在一个月尺度上很强）"
+      }
+    ]
+  },
+  "prohibited": [
+    "改动或覆盖 `archive/multivariate-l12-v1/` 与 `archive/multivariate-reforecast-202602-v1/`",
+    "把链式 2026-12 结果称为「有技巧的季节预报」或「我们的预报」而不带本件量出的代价与 `out_of_scope` 登记",
+    "声称该模型为迭代应用拟合过",
+    "用链式结果去支撑报告层的「厄尔尼诺强度」结论（本件只给结构与代价；强度问题另需声明与判据）",
+    "把回测期（2020–2025）当全新验证样本（冻结契约已记 `prior_exposure`）"
+  ],
+  "stop_conditions": [
+    "G1/G2a/G2b/G3/G6 任一失败 ⇒ 停止并登记（不报判定）",
+    "C1/C2/C3 任一不成立 ⇒ 停止（不报判定）",
+    "任何一步出现 NaN/Inf ⇒ 停止并登记",
+    "预算耗尽（wall 1800 s 或 launch 2 次）"
+  ],
+  "budget": {
+    "wall_seconds": 1800,
+    "launches": 2,
+    "output_bytes": 200000000
+  }
+}
