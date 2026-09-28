@@ -1,0 +1,11 @@
+[Unit]
+Description=Poll the Xue service every 3 hours and freeze each new analysis
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=3h
+AccuracySec=1min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

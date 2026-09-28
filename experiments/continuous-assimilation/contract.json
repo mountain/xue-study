@@ -1,0 +1,179 @@
+{
+  "version": "continuous-assimilation-v1",
+  "question_id": "xue.derived.continuous-assimilation",
+  "round": 1,
+  "frozen_before_run": true,
+  "purpose": "把已有的一次性研究件完善成一台**可以持续运行**的同化—预报—验证流水线：定时轮询数据服务、把**最新一次起报的分析场**冻结成只追加的档案、把日→月聚合成模型口径、生成分析态并发出 1–6 个月预报、并在**观测到期的当月**自动给既有预报打分。用一句话说：**从今天起，数据不会再因为我们没保存而消失，预报也不会再因为我们没打分而白做。**",
+  "why_now": "此前已判定：业务服务**只保留最新一次起报**（昨日的 `gfs.2026092500` 已 404），且**没有例行历史**（`showcase` 只留具名个例）⇒ **不开始冻结，任何未来某个月的月平均都永远拿不回来**。这是本项目里唯一一件「晚一天做就永久损失一天」的事。",
+  "source_facts_verified_2026_09_28": {
+    "service": "https://dataset.ringsaturn.me/xue（静态 STAC v1.1.0，UA 必需）",
+    "collection_item_path": "`<collection>/item.json`（＝最新）与 `<collection>.<run>/item.json`（带版本，随时可能消失）；资产 href 是**相对路径**，须对 item.json 的 URL 解析",
+    "newest_gfs_run": "gfs.2026092718（reference 2026-09-27T18:00Z，horizon PT240H，161 步）",
+    "assets_per_run": "170 个，合计 **4,224.7 MB**",
+    "zarr_read": "`xr.open_zarr(href)` 可读；`time` 维 161 步；**step 0 ＝ 分析场**（f000）",
+    "available_for_model": {
+      "直接可用": "t850←tmp850；t2m←tmp2m；msl←prmsl（**hPa**）；z500←hgt500（**gpm**）；w500←vvel500；w700←vvel700；wind850/500/250←(ugrd,vgrd)",
+      "需推导": "q850/q700 ← rh850/rh700 ＋ tmp ＋ 层压（**推导，非观测**）",
+      "缺失": "**sst 无**（服务不含海表温度）；**sp 无**（只有 prmsl 与 orog）",
+      "覆盖计数": "13 个模型通道 = **9 个直接可用**（t850/t2m/msl/z500/w500/w700/wind850/wind500/wind250）＋ **2 个需推导**（q850/q700）＋ **2 个缺失**（sst/sp）；冻结的变量共 **12** 个。（初稿在 cycle_steps 里把 12 误写成 11，本轮更正。）"
+    },
+    "units_absent": "Zarr 内**没有 units 属性**（实测 `tmp2m` 等 attrs 为空）⇒ 单位只能由产品规格声明，并**用物理量级反查**",
+    "magnitude_spot_check_2026092718_f000": "tmp850 −23.0 K／tmp700 −29.0 K／tmp2m −16.0 K／prmsl 1001.5 hPa／hgt500 4972.0 gpm／rh850 100 %／rh700 86 %／vvel700 0.05 Pa/s／(ugrd500,vgrd500) (−16.0, −5.0) m/s／orog 14.0 m ⇒ **量级全部合理**"
+  },
+  "what_is_not_claimed": [
+    "**sst 与 sp 缺失** ⇒ **完整的分析态做不出来**（冻结模型的算子是 2698 维联合态，缺块就不可作用）⇒ 本流水线在缺通道时**停住不发预报**，而不是拿代理凑数。代理需要**声明**（见 `open_declarations`）。",
+    "本流水线**不是**变分同化／卡尔曼同化：它做的「同化」是**观测投影到冻结观测域得到的分析态**；与预报背景场的差（增量）会被**记账**，但**不**参与任何求解。",
+    "**0.25° → 2.5° 重网格**与**四时次 → 月平均**都是**口径变更**，必须逐周期登记；它们改变读数，本契约不声称等价。",
+    "服务方是第三方且**保留策略会变**；本流水线把每一次探测（含 404）都记进账，使保留策略本身成为**可观测对象**。"
+  ],
+  "design": {
+    "states": {
+      "run": "一次周期运行（`runs.jsonl` 一行）",
+      "analysis": "由某个**完整月**的观测生成的模型态；缺通道 ⇒ `blocked`",
+      "forecast": "由某个分析态发出的 1–6 月预报，**只追加**",
+      "verification": "某个**目标月**的观测到位后，对覆盖该月的每一条预报打分；状态 ∈ {`pending`, `provisional`, `verified`}"
+    },
+    "cycle_steps": [
+      "1 探测：读各集合的 `item.json` → 最新起报 id 与参考时刻；与账本比对",
+      "2 冻结：若不是已冻结的起报 ⇒ 取 **step 0（分析场）** 的 **12** 个可用变量（`tmp850/tmp700/tmp2m/prmsl/hgt500/rh850/rh700/vvel500/vvel700/wind850/wind500/wind250`），写 `raw/<source>/<YYYY-MM-DDTHH>/` ＋ 清单（摘要、字节数、量级核对结果）；**只追加**",
+      "3 聚合：对每个**四时次齐全的日**求日均、对每个**日齐全的月**求月平均（2.5° 口径，另一份 0.25° 原始件保留）",
+      "4 分析：把月平均投影到**冻结**的观测域与 Gram ⇒ 系数 ⇒ 归一化分析态；缺通道 ⇒ `blocked` 并停止",
+      "5 预报：由分析态发 lead 1–6，落 `forecasts/`",
+      "6 验证：对每条预报，若其目标月已有**可用**观测 ⇒ 打分（bias／RMSE／相对气候态与持续性的技巧）并落 `verification/`",
+      "7 状态：写 `status.json` ＋ 追加 `runs.jsonl`"
+    ],
+    "observations_admissibility": {
+      "verified": "R1 月平均（**模型训练口径**）——主口径",
+      "provisional": "业务冻结档案聚合出的月平均——**只有在 V3（重叠月一致性）通过之后**才可用于「正式」验证；在此之前一律标 `provisional`",
+      "rule": "**任何一次验证都必须记录观测来源＋月份＋摘要**；换口径的分数不得混入同一汇总行"
+    },
+    "freeze_policy": {
+      "default": "轮询到新起报即冻结其 **f000**；每天最多 4 次（00/06/12/18Z）",
+      "native_grid_kept": "0.25°（721×1440）原始件保留 ⇒ 未来更好的方法仍可用",
+      "derived": "2.5°（73×144）月平均（供模型口径使用）",
+      "expected_size": "约 15–25 MB/次分析（压缩后）⇒ 约 60–100 MB/日",
+      "cap": "**30 GB** 硬上限；到顶即**大声失败并停止冻结**，**不自动删除**任何已冻结件（删数据是决定，不是默认动作）"
+    },
+    "read_only": [
+      "archive/multivariate-l12-v1/",
+      "archive/multivariate-reforecast-202602-v1/",
+      "archive/multivariate-chained-reforecast-v1/"
+    ],
+    "write_root": "~/xue-assimilation/（与仓库分离，避免把大件塞进 git；仓库内只放代码、契约、账本摘要与文档）",
+    "ledger_files": [
+      "runs.jsonl",
+      "frozen.jsonl",
+      "forecasts/<initial_month>.json",
+      "verification/<target_month>.jsonl",
+      "verification/summary.json",
+      "status.json"
+    ],
+    "idempotent": "同一周期重复运行**不产生重复条目**（按起报 id／初始月／目标月去重）；无新数据时只追加一条 `no_new_data` 记录"
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "只读件不变",
+      "rule": "冻结模型／投影／既有结果的 sha256 跑前＝跑后"
+    },
+    {
+      "id": "G2",
+      "name": "量级守卫",
+      "rule": "每个变量的物理范围检查（表在 `caspaths.PHYS_RANGES`）；越界即**拒绝该起报**并登记（历史教训：CFSv2 的 `tmpsfc` 是 degC，减 273.15 曾给出 −243 °C）"
+    },
+    {
+      "id": "G3",
+      "name": "单位由规格声明",
+      "rule": "服务无 units 属性 ⇒ 单位取自产品规格并写进账本；**量级核对是唯一的机械验证**"
+    },
+    {
+      "id": "G4",
+      "name": "口径变更登记",
+      "rule": "0.25°→2.5°、四时次→月平均、缺通道清单，逐周期写入 `runs.jsonl`"
+    },
+    {
+      "id": "G5",
+      "name": "只追加",
+      "rule": "任何已存在的冻结件／账本条目**不得改写**；重复起报被去重并登记"
+    },
+    {
+      "id": "G6",
+      "name": "验证必须记录数据版本",
+      "rule": "每条验证记录含观测来源、月份、文件摘要；缺一即拒绝写入"
+    },
+    {
+      "id": "G7",
+      "name": "缺通道即停",
+      "rule": "分析态缺任一通道 ⇒ 该周期**不得**发出预报（宁可停，不可凑）"
+    }
+  ],
+  "negative_controls": {
+    "C1_duplicate_freeze": {
+      "rule": "对同一个已冻结的起报再冻结一次，必须被 G5 去重拒绝。",
+      "on_failure": "工具失败"
+    },
+    "C2_unit_injection": {
+      "rule": "把 `tmp2m` 的数值整体减 273.15（模拟 degC 误标）后送入量级守卫，必须被 G2 抓住。",
+      "on_failure": "工具失败（量级守卫是装饰）"
+    },
+    "C3_missing_channel": {
+      "rule": "人为去掉 `sst` 通道，分析态必须为 `blocked` 且该周期**不发预报**。",
+      "on_failure": "工具失败"
+    },
+    "C4_verification_without_version": {
+      "rule": "构造一条不含观测摘要的验证记录，写入必须被 G6 拒绝。",
+      "on_failure": "工具失败"
+    }
+  },
+  "predictions": {
+    "note": "**开跑之前写死**（2026-09-28），用于在持续运行中逐条核对；命中与否都只作记录。",
+    "items": [
+      {
+        "id": "P1",
+        "claim": "30 天内 R1 仍止于 2026-02 ⇒ **主口径路径仍不可用**"
+      },
+      {
+        "id": "P2",
+        "claim": "业务服务对每个集合**保留恰好一次**起报；30 天内观测到的起报间隔中位数 ≈ **6 小时**"
+      },
+      {
+        "id": "P3",
+        "claim": "从 2026-10-01 起持续冻结 ⇒ **2026-10 是第一个完整月**（月平均在 11-01 之后第一次完整）"
+      },
+      {
+        "id": "P4",
+        "claim": "首次 `provisional` 验证出现在 **2026-11 上旬**"
+      },
+      {
+        "id": "P5",
+        "claim": "**sst 与 sp 在整个观察期内一直缺失** ⇒ 分析态一直 `blocked`，直到有人就代理作出**声明**"
+      }
+    ]
+  },
+  "open_declarations": [
+    "**sp 的代理**：是否允许由 `prmsl` ＋ `orog` 按 `sp ≈ prmsl·exp(g·orog/(R·T̄))` 反算（需声明层结温度口径与误差限）？**只能由人作出**。",
+    "**sst 的代理**：是否允许用 ERSST v5 的月平均（有 1–2 个月滞后，且**不得**与不同月的大气混合）？**只能由人作出**。",
+    "**q850/q700 的推导**：由 `rh` ＋ `T` ＋ 层压反算水汽，属**推导量**；是否允许作为通道值使用（冻结模型训练时用的是 R1 的 `shum`）？**只能由人作出**。",
+    "**存储上限**：默认 30 GB 硬顶；是否允许在到顶时轮转（删除最旧原始件）——**删数据是决定**。"
+  ],
+  "prohibited": [
+    "用代理通道凑出分析态而不带声明（G7）",
+    "改写任何已冻结件或账本条目",
+    "把 `provisional` 验证分数与 `verified` 分数混进同一汇总",
+    "把本流水线称为变分／卡尔曼同化",
+    "改动 `archive/multivariate-l12-v1/` 或任何既有结果目录",
+    "在存储到顶时自动删除数据"
+  ],
+  "stop_conditions": [
+    "G1 只读件变化 ⇒ 停止并登记",
+    "任一起报量级守卫失败 ⇒ 拒绝该起报、登记、继续下一周期",
+    "缺通道 ⇒ 分析态 `blocked`、不发预报、登记（不视为工具失败）",
+    "写盘到顶（30 GB）⇒ **大声失败并停止冻结**，等人工处置",
+    "网络不可达 ⇒ 登记失败、继续下一周期（连续运行必须容忍单次失败）"
+  ],
+  "budget": {
+    "per_cycle_wall_seconds": 900,
+    "poll_interval_hours": 3,
+    "storage_cap_bytes": 32212254720
+  }
+}

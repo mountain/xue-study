@@ -1,0 +1,15 @@
+[Unit]
+Description=Xue continuous assimilation — freeze the newest analysis (collection layer)
+Documentation=file:///home/ubuntu/xue-study/experiments/continuous-assimilation/README.md
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/xue-study/experiments/continuous-assimilation
+ExecStart=/home/ubuntu/climatetensor-env/bin/python orchestrate.py freeze
+# The cycle records its own failures in ~/xue-assimilation/ledger/*.jsonl; a non-zero
+# exit means the TOOL failed (a gate or control broke), not that there was no new data.
+SuccessExitStatus=0
+TimeoutStartSec=1800
+Nice=10
+IOSchedulingClass=idle
