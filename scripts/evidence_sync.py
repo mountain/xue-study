@@ -34,7 +34,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -43,7 +42,10 @@ REPO = Path(__file__).resolve().parents[1]
 ARCHIVE = REPO / 'archive'
 EVIDENCE = REPO / 'evidence'
 MANIFEST = EVIDENCE / 'MANIFEST.jsonl'
-SIZE_CAP = 1_000_000
+# Raised from 1 MB to 3 MB for the ERA5 feasibility report (2.4 MB), which exceeds the old
+# cap only because it EMBEDS the two compared fields (73x144-equivalent grids on both sides)
+# -- that is evidence, not padding. The cap still keeps arrays and figures out.
+SIZE_CAP = 3_000_000
 DENY_SUFFIXES = {'.npz', '.npy', '.png', '.svg', '.gif', '.jpg', '.jpeg', '.webp', '.mp4',
                  '.nc', '.h5', '.hdf5', '.zarr', '.zip', '.gz', '.pkl', '.pt', '.bin'}
 ALLOW_NAMES = {'report.json', 'run.log'}

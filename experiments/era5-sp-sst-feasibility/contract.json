@@ -1,0 +1,136 @@
+{
+  "version": "era5-sp-sst-feasibility-v1",
+  "question_id": "xue.derived.era5-sp-sst-feasibility",
+  "round": 1,
+  "frozen_before_run": true,
+  "purpose": "判定 **ARCO-ERA5（GCS 公有桶，无需凭据）** 能否作为冻结模型 `sp` 与 `sst` 两个缺失通道的**候选来源**。这只是可行性事实收集：**替换是否被允许仍是一个未作出的声明**（见 prohibited）。",
+  "why": "2026-09-28 逐个测过：xue 服务的五个大气集合（gfs/ecmwf/aifs/ifshres/cfs）**没有任何一个暴露 `sp`**，也没有专门的 SST 产品（只有 `tmpsfc` 皮温）。而模型要出分析态，恰恰缺 `sp` 与 `sst` 这两块。",
+  "source_facts_verified_2026_09_28": {
+    "bucket": "gs://gcp-public-data-arco-era5（HTTPS 可读，**无需任何凭据**；实测 storage.googleapis.com 200，gcsfs 未安装但 fsspec+h5netcdf 可读）",
+    "path": "raw/date-variable-single_level/YYYY/MM/DD/<variable>/surface.nc",
+    "coverage": "1940-01 起；逐日探测到 **2026-09-22**（服务器日期 2026-09-28 ⇒ 滞后约 6 天）",
+    "variables": "`surface_pressure` ✓、`sea_surface_temperature` ✓、另有 `skin_temperature`、`mean_sea_level_pressure`",
+    "grid": "0.25° 全球 721×1440；lat 90→−90、lon 0→359.75",
+    "time": "每日 24 个整点时次（valid_time）",
+    "sp_units": "**Pa**（属性 units=Pa、standard_name=surface_air_pressure；实测东亚框 84694–102051 Pa）",
+    "file_size": "sp 33.66 MB／日、sst 23.61 MB／日",
+    "hdf5_chunks": "(12, 361, 720) ⇒ **按小框读取只需 0.1–0.5 秒**（全 24 时次的框读了 0.5 s），不必整文件下载",
+    "ar_zarr_limitation": "`ar/`（analysis-ready Zarr）只到 **2022／2023-01** ⇒ **近月必须走 `raw/` 逐日文件**",
+    "r1_native_grids": "**R1 各通道并不同网格**（实测 npz）：`sp` 在 **T62 高斯网格 94×192**（纬向非均匀、经向 1.875°）；`sst` 在 **ERSST 2° 网格 89×180**。⇒ 重网格不能假设 0.25°→2.5° 的整数对齐，见 design.regrid。"
+  },
+  "design": {
+    "probes": {
+      "A_currency": "列出 2026-09 的可取日，与服务器当前日期比较，给出滞后天数",
+      "B_units_magnitude": "sp 与 sst 的单位与值域；量级闸门",
+      "C_caliber_overlap": "对**重叠月 2026-02**（R1 的扩展输入覆盖该月），把 ERA5 的 sp/sst 按保守面积权重重网格到模型 2.5° 口径，与 R1 的 sp/sst 逐格比较：偏差均值／标准差／最大绝对偏差；高原框（28–36N/80–100E）单独列出",
+      "D_screening_flip": "**这一条才是 sp 的用途**：对 850／700／500 hPa 分别按 R1 sp 与 ERA5 sp 算「月平均地面气压 ≥ 层压」的掩码，数出**翻转格数**（0 表示替换 sp 不改变层压筛选结果）",
+      "E_current_month": "2026-09 的 1–22 日在几个区域框上的月平均（**部分月**，必须标明不是完整月）"
+    },
+    "sampling_caliber": "只取 **00/06/12/18Z 四个时次**再求日均与月均 —— 与 R1 月平均的取样口径一致（R1 是每日 4 个定时次的月平均），不是随意抽样。",
+    "regrid": "本实验自带**通用保守重网格** `regrid_conservative`：两轴都用精确重叠积分（纬向在 sin(lat) 上、经向在度上，二者外积即球面面积权重），因此不要求整数对齐、支持高斯纬向非均匀；NaN（陆地无 sst）排除后按有效权重归一。**不沿用** `cas.regrid_to_model`——它要求目的经向格恰好是源格的整数倍。",
+    "comparison_target": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/{sp,sst}.npz（R1 口径，1979-01..2026-02）",
+    "read_only": [
+      "archive/ 全目录（不读也不写）",
+      "experiments/multivariate-refinement/"
+    ],
+    "write_root": "archive/era5-sp-sst-feasibility-v1/（拒绝覆盖）"
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "量级闸门",
+      "rule": "sp ∈ [4.5e4, 1.1e5] Pa；sst ∈ [265, 320] K。**下界由 5e4 更正为 4.5e4**：2026-02 的月平均 sp 在喜马拉雅上空实测 48890.9 Pa，物理正确（那里地面本就在 500 hPa 以上），是最初的声明写错了。更正不削弱单位检测：Pa 误当 hPa（~1000）或 degC 误当 K（~−5..30）仍远在界外。"
+    },
+    {
+      "id": "G2",
+      "name": "网格与坐标",
+      "rule": "纬度 90→−90 递减且含两端、经度 0→359.75、格距 0.25°、每日 24 时次；不符即停止"
+    },
+    {
+      "id": "G3",
+      "name": "不碰冻结件",
+      "rule": "`archive/` 下任何文件都不读不写；只写本实验自己的输出目录"
+    },
+    {
+      "id": "G4",
+      "name": "拒绝覆盖",
+      "rule": "输出 report.json 已存在即 raise"
+    },
+    {
+      "id": "G5",
+      "name": "缺测处理",
+      "rule": "ERA5 的 GRIB 缺测值 3.4028235e38（陆地无 sst）必须转成 NaN 后再统计；统计必须报出有效格数"
+    }
+  ],
+  "negative_controls": {
+    "C1_unit_injection": {
+      "rule": "把 ERA5 的 sp（Pa）当成 hPa 送入量级闸门，**必须**被拒。",
+      "on_failure": "工具失败"
+    },
+    "C2_month_misalignment": {
+      "rule": "用 **2026-01** 的 ERA5 sp 去比 **2026-02** 的 R1 sp，其偏差**必须大于**正确对齐（2026-02 对 2026-02）时的偏差。",
+      "on_failure": "工具失败（说明对齐没有内容，比较无意义）"
+    }
+  },
+  "predictions": {
+    "note": "**跑之前写死**，以便被实测否证。",
+    "items": [
+      {
+        "id": "P1",
+        "claim": "ERA5 `sea_surface_temperature` 的单位是 **K**（不是 degC）"
+      },
+      {
+        "id": "P2",
+        "claim": "2026-02 的 sp 偏差（ERA5 − R1）**全局平均绝对值 < 2 hPa**"
+      },
+      {
+        "id": "P3",
+        "claim": "偏差**空间上不均匀**：高原框的 |偏差| 明显大于全球平均（地形陡、sp 低）"
+      },
+      {
+        "id": "P4",
+        "claim": "层压筛选翻转：**500 与 850 hPa 零翻转**；**700 hPa 少于 50 格**（只有高原边缘的窄带可能翻）"
+      },
+      {
+        "id": "P5",
+        "claim": "2026-09 可取 **22 天**（1–22 日），滞后 ≤ 7 天"
+      },
+      {
+        "id": "P6",
+        "claim": "sst 的偏差（ERA5 − ERSST）在**纬向与区域上都比 sp 大**（两套海温分析的口径差异大于再分析地面气压的差异）"
+      }
+    ]
+  },
+  "prohibited": [
+    "把 ERA5 的值写进任何分析态、预报或 S3 备份",
+    "声称「sp／sst 的替换已获准」——**声明尚未作出**，本件只给事实",
+    "改动 archive/ 下任何文件",
+    "把单个重叠月的结果写成普遍结论（一个月就是一个月）",
+    "把 2026-09 的部分月平均写成整月读数"
+  ],
+  "stop_conditions": [
+    "G1/G2/G3/G5 任一失败 ⇒ 停止并登记",
+    "C1/C2 任一不成立 ⇒ 停止（不报判定）",
+    "累计下载超过 3 GB ⇒ 停止（成本上限）",
+    "预算耗尽（wall 3600 s）"
+  ],
+  "budget": {
+    "wall_seconds": 3600,
+    "egress_bytes_cap": 3000000000,
+    "output_bytes": 50000000
+  },
+  "change_log_before_run": [
+    "更正量级下界 5e4 → 4.5e4 Pa（理由见 gates G1）。",
+    "新增通用保守重网格（理由见 design.regrid），因为发现 R1 各通道网格不同。",
+    "以上两处都发生在**首次跑出结果之前**（首轮以 instrument_failure 退出，未产出任何判定）。",
+    "v2（仍在产出判定之前）修两处程序错误：① 日均未对 4 个时次求平均，留下幻影 (4,…) 轴；② 报告含 NaN 导致 json.dumps(allow_nan=False) 抛错——数值都算完了才死在序列化。",
+    "v2 把 C2 改形：原式（错位月的比较必须更差）**实测不成立**（对齐 8360.8 对 错位 8314.8），原因是差异被**静态分量**（网格／地形）主导 ⇒ **记为对照设计缺陷，不改数据**；另立 C2a（同一网格上重网格必须恒等）与 C2b（月际变化必须在两个来源间相关）。",
+    "v3（仍在产出判定之前）：**C2a 抓出我自己重网格里的真 bug** —— `cell_edges` 内部一律按升序工作，而我没有把**结果**按目的纬向还原；于是恒等重网格把场按纬度翻转了，最大改动 52568 Pa。后果：v2 那一轮的所有比较（偏差图、层压翻转计数、C2b 的相关）都是**纬度反着比**的，其中最刺眼的一项恰好是「高原 vs 南大洋」被当成同一格。已修（进出双向规范化）。",
+    "v3 同时标注 **P6 的表述缺陷**：把 Pa 的标准差与 K 的标准差比大小没有意义，该条无论实测为何都不构成证据。"
+  ],
+  "post_hoc_readouts": [
+    "**看到数据之后**追加、并明确标注为事后读数（不当作预注册结果）：",
+    "① 把 ERA5−R1 的差分解为**静态分量与月际信号**：给出 `era_change` 与 `r1_change`（Feb−Jan），并用 C2b 的相关性判定两者是否看到同一个大气。",
+    "② `near_threshold_cells`：与层压阈值相差 5 hPa 以内的格数——它决定筛选掩码**天生有多脆**。"
+  ]
+}
