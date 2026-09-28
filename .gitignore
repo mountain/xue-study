@@ -10,3 +10,6 @@ archive/
 # macOS
 .DS_Store
 **/.DS_Store
+
+# IDE
+.idea/
