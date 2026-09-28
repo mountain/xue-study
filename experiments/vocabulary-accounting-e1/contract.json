@@ -1,0 +1,72 @@
+{
+  "version": "vocabulary-accounting-e1-v1",
+  "question_id": "xue.derived.vocabulary-accounting-e1",
+  "round": 1,
+  "frozen_before_run": true,
+  "purpose": "按 adva 0036 的语法，把「谱的词汇有限 ＋ 其和最短 ＋ 加可信度」变成可算的记账：对每个截断阶数 d（＝观测者分辨率 Q）给出词汇量、观测商、位数、残差码长与总和，并回答现用的 d=12 是否落在最小处。",
+  "framework_basis": {
+    "doc": "adva/docs/research/0036-triangular-symbolic-interpretation-learning-calculus.md",
+    "quotes": [
+      "A feature is therefore not merely a flat section: it is a finite vocabulary on an observational quotient, dynamics descends to that quotient, and its form survives transport between local observer charts.",
+      "The base triangle closes, but its history may behave like a lift under a deck or monodromy transformation S_{n+1} = tau S_n. One circuit can therefore increase birthday, covering layer, construction depth, or an exact residual without changing the type of the state (§1.12).",
+      "learn cycle feature = learn observation quotient + learn descended dynamics + learn holonomy + manage residual (§2.12)",
+      "Q <= Q' => N_Q <= N_Q' => ceil(log2 N_Q) <= ceil(log2 N_Q') (§2.12, observer-refinement monotonicity)",
+      "golden-ratio-atlas §13: 若用新术语，应是对这些关系有见证压缩，而不是重复注册一个名字"
+    ],
+    "not_found": "TRIADICITY-LEVEL-RULING.md（0207 引其 §8.2 裁定「三元性属于载体，不属于作用」）不在本地与远端的 adva／adva-library checkout 中；本卡只作二手引用，不以它为判据。"
+  },
+  "design": {
+    "observer_resolution": "截断阶数 d（frame）",
+    "ladder": [
+      4,
+      6,
+      8,
+      10,
+      12,
+      16
+    ],
+    "per": "13 个物理通道 × 每个 d",
+    "measured": [
+      "系数个数 p(d)",
+      "观测商 N_Q（masked_project 的不同掩膜组数）",
+      "位数 L_coeff = p × 64",
+      "残差码长 L_resid = Σ_t (n_obs,t/2)·log2(2πe σ_t²)",
+      "L(d) = L_coeff + L_resid",
+      "零假设 L_null（完全不用系数＝气候态）",
+      "Gram 条件数与最小面积占比"
+    ],
+    "code_convention": "两部分 MDL：系数按未编码 float64 计 64 位/个（**声明为简化**，未做熵编码）；残差按高斯码长计。",
+    "null_control": "d = -1 语义：不含任何系数（represent nothing）⇒ 用掩膜内均值算残差码长。",
+    "known_limit": "N_Q（掩膜组数）由数据掩膜决定、**不随 d 变**，故 0036 §2.12 的单调性在这一轴上平凡成立；有信息量的轴是（位数 ↑ vs 残差 ↓）的权衡与 L(d) 的最小点。"
+  },
+  "reads": [
+    "experiments/multivariate-refinement/{fields.py,project.py,model.py}（导入，不修改）",
+    "/home/ubuntu/climatetensor-inputs/ncep-multivariate/{<code>.npz}（1979-01..2025-12，只读）",
+    "archive/multivariate-l12-v1/projection-L12.npz（只作对照，不修改；本卡不依赖它出数）"
+  ],
+  "writes": [
+    "/home/ubuntu/xue-study/archive/vocabulary-accounting-e1-v1/report.json（拒绝覆盖）"
+  ],
+  "gates": [
+    "每个 d×通道的组合要么出数、要么把失败逐条登记（不得静默跳过）",
+    "零假设 L_null 必须算出，作为「什么都不表示」的对照",
+    "结果目录拒绝覆盖",
+    "报告须给出 argmin(d) 与 shipped(d)=12 是否为 argmin"
+  ],
+  "budget": {
+    "wall_seconds": 3600,
+    "launches": 2,
+    "output_bytes": 5000000
+  },
+  "stop_conditions": [
+    "常驻内存超限（单次 masked_project 的 p 过大）⇒ 降低阶梯上界并登记，不静默降级",
+    "某 d 在多数通道上 mask.sum() < p ⇒ 该 d 记为不可用并登记",
+    "预算耗尽（wall 3600 s 或 launch 2 次）"
+  ],
+  "prohibited": [
+    "改动冻结模型（vectors/maps/climatology/scale）",
+    "把「L(d) 最小」说成「词汇已正确」——最小只是可交代的压缩点，不是认证",
+    "以本卡的记账冒充 0036 的完整回路学习（本卡只做「观测商＋残差」两面中的记账部分）",
+    "由三个面／三个标签推三周期或任何三元周期结构"
+  ]
+}

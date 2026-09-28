@@ -1,0 +1,134 @@
+{"channel": "t850", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": -17339990, "null": -5781372, "secs": 1.5}
+{"channel": "t2m", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": -28081554, "null": -10936977, "secs": 1.3}
+{"channel": "sst", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": -23597679, "null": -8149898, "secs": 0.9}
+{"channel": "sp", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": 74789083, "null": 78005804, "secs": 1.0}
+{"channel": "msl", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": 26962526, "null": 30155280, "secs": 0.6}
+{"channel": "z500", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": 25143751, "null": 38978079, "secs": 1.5}
+{"channel": "q850", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": -33590089, "null": -26064680, "secs": 1.3}
+{"channel": "q700", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": -32907329, "null": -27349244, "secs": 1.3}
+{"channel": "w500", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": -55866139, "null": -55091852, "secs": 1.2}
+{"channel": "w700", "degree": 4, "p": 25, "L_coeff": 1600, "L_resid": -52069236, "null": -51567132, "secs": 1.2}
+{"channel": "wind850", "degree": 4, "p": 48, "L_coeff": 3072, "L_resid": -29342346, "null": -23390809, "secs": 2.2}
+{"channel": "wind500", "degree": 4, "p": 48, "L_coeff": 3072, "L_resid": -28047450, "null": -17882526, "secs": 2.1}
+{"channel": "wind250", "degree": 4, "p": 48, "L_coeff": 3072, "L_resid": -19725275, "null": -8550109, "secs": 2.2}
+{"channel": "t850", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": -19596020, "null": -5781372, "secs": 1.5}
+{"channel": "t2m", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": -31900177, "null": -10936977, "secs": 1.6}
+{"channel": "sst", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": -26710783, "null": -8149898, "secs": 1.2}
+{"channel": "sp", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": 72220021, "null": 78005804, "secs": 1.0}
+{"channel": "msl", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": 24380002, "null": 30155280, "secs": 0.6}
+{"channel": "z500", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": 21400842, "null": 38978079, "secs": 1.3}
+{"channel": "q850", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": -35558675, "null": -26064680, "secs": 1.3}
+{"channel": "q700", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": -34871503, "null": -27349244, "secs": 1.3}
+{"channel": "w500", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": -57026141, "null": -55091852, "secs": 1.3}
+{"channel": "w700", "degree": 6, "p": 49, "L_coeff": 3136, "L_resid": -52914672, "null": -51567132, "secs": 1.1}
+{"channel": "wind850", "degree": 6, "p": 96, "L_coeff": 6144, "L_resid": -31540223, "null": -23390809, "secs": 2.3}
+{"channel": "wind500", "degree": 6, "p": 96, "L_coeff": 6144, "L_resid": -32242638, "null": -17882526, "secs": 2.3}
+{"channel": "wind250", "degree": 6, "p": 96, "L_coeff": 6144, "L_resid": -25247338, "null": -8550109, "secs": 2.1}
+{"channel": "t850", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": -22303112, "null": -5781372, "secs": 1.9}
+{"channel": "t2m", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": -34144818, "null": -10936977, "secs": 2.1}
+{"channel": "sst", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": -28546832, "null": -8149898, "secs": 1.7}
+{"channel": "sp", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": 70778988, "null": 78005804, "secs": 1.0}
+{"channel": "msl", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": 20960667, "null": 30155280, "secs": 0.6}
+{"channel": "z500", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": 17669590, "null": 38978079, "secs": 1.3}
+{"channel": "q850", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": -36879336, "null": -26064680, "secs": 1.3}
+{"channel": "q700", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": -36037754, "null": -27349244, "secs": 1.3}
+{"channel": "w500", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": -57931193, "null": -55091852, "secs": 1.2}
+{"channel": "w700", "degree": 8, "p": 81, "L_coeff": 5184, "L_resid": -53496577, "null": -51567132, "secs": 1.2}
+{"channel": "wind850", "degree": 8, "p": 160, "L_coeff": 10240, "L_resid": -36943921, "null": -23390809, "secs": 2.2}
+{"channel": "wind500", "degree": 8, "p": 160, "L_coeff": 10240, "L_resid": -36490791, "null": -17882526, "secs": 2.2}
+{"channel": "wind250", "degree": 8, "p": 160, "L_coeff": 10240, "L_resid": -29493972, "null": -8550109, "secs": 2.2}
+{"channel": "t850", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": -24001701, "null": -5781372, "secs": 2.3}
+{"channel": "t2m", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": -35645271, "null": -10936977, "secs": 2.9}
+{"channel": "sst", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": -30529307, "null": -8149898, "secs": 2.4}
+{"channel": "sp", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": 69006537, "null": 78005804, "secs": 1.1}
+{"channel": "msl", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": 18576597, "null": 30155280, "secs": 0.7}
+{"channel": "z500", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": 13712934, "null": 38978079, "secs": 1.4}
+{"channel": "q850", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": -37982505, "null": -26064680, "secs": 1.3}
+{"channel": "q700", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": -36942972, "null": -27349244, "secs": 1.3}
+{"channel": "w500", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": -58684699, "null": -55091852, "secs": 1.3}
+{"channel": "w700", "degree": 10, "p": 121, "L_coeff": 7744, "L_resid": -54040018, "null": -51567132, "secs": 1.3}
+{"channel": "wind850", "degree": 10, "p": 240, "L_coeff": 15360, "L_resid": -40435728, "null": -23390809, "secs": 2.5}
+{"channel": "wind500", "degree": 10, "p": 240, "L_coeff": 15360, "L_resid": -41877890, "null": -17882526, "secs": 2.5}
+{"channel": "wind250", "degree": 10, "p": 240, "L_coeff": 15360, "L_resid": -35201276, "null": -8550109, "secs": 2.4}
+{"channel": "t850", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": -25453554, "null": -5781372, "secs": 3.1}
+{"channel": "t2m", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": -36868279, "null": -10936977, "secs": 4.3}
+{"channel": "sst", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": -31975593, "null": -8149898, "secs": 3.4}
+{"channel": "sp", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": 67832852, "null": 78005804, "secs": 1.2}
+{"channel": "msl", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": 17071011, "null": 30155280, "secs": 0.7}
+{"channel": "z500", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": 9893079, "null": 38978079, "secs": 1.6}
+{"channel": "q850", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": -38749206, "null": -26064680, "secs": 1.4}
+{"channel": "q700", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": -37610667, "null": -27349244, "secs": 1.4}
+{"channel": "w500", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": -59424559, "null": -55091852, "secs": 1.3}
+{"channel": "w700", "degree": 12, "p": 169, "L_coeff": 10816, "L_resid": -54580013, "null": -51567132, "secs": 1.3}
+{"channel": "wind850", "degree": 12, "p": 336, "L_coeff": 21504, "L_resid": -42895207, "null": -23390809, "secs": 2.7}
+{"channel": "wind500", "degree": 12, "p": 336, "L_coeff": 21504, "L_resid": -46273868, "null": -17882526, "secs": 2.5}
+{"channel": "wind250", "degree": 12, "p": 336, "L_coeff": 21504, "L_resid": -40292910, "null": -8550109, "secs": 2.6}
+{"channel": "t850", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": -28030893, "null": -5781372, "secs": 4.9}
+{"channel": "t2m", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": -39283491, "null": -10936977, "secs": 7.3}
+{"channel": "sst", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": -35006543, "null": -8149898, "secs": 6.2}
+{"channel": "sp", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": 65891070, "null": 78005804, "secs": 1.3}
+{"channel": "msl", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": 14821521, "null": 30155280, "secs": 0.8}
+{"channel": "z500", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": 4444261, "null": 38978079, "secs": 1.4}
+{"channel": "q850", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": -40039023, "null": -26064680, "secs": 1.5}
+{"channel": "q700", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": -38861452, "null": -27349244, "secs": 1.4}
+{"channel": "w500", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": -61249591, "null": -55091852, "secs": 1.5}
+{"channel": "w700", "degree": 16, "p": 289, "L_coeff": 18496, "L_resid": -55850231, "null": -51567132, "secs": 1.2}
+{"channel": "wind850", "degree": 16, "p": 576, "L_coeff": 36864, "L_resid": -47026626, "null": -23390809, "secs": 3.3}
+{"channel": "wind500", "degree": 16, "p": 576, "L_coeff": 36864, "L_resid": -53856173, "null": -17882526, "secs": 2.8}
+{"channel": "wind250", "degree": 16, "p": 576, "L_coeff": 36864, "L_resid": -50435824, "null": -8550109, "secs": 3.3}
+{
+ "argmin_degree": 16,
+ "shipped": 12,
+ "shipped_is_argmin": false,
+ "wall_s": 145.3,
+ "ladder": [
+  {
+   "degree": 4,
+   "coefficients_total": 394,
+   "L_coeff_total_bits": 25216,
+   "L_resid_total_bits": -193671728,
+   "L_total_bits": -193646512,
+   "null_total_bits": -87625437
+  },
+  {
+   "degree": 6,
+   "coefficients_total": 778,
+   "L_coeff_total_bits": 49792,
+   "L_resid_total_bits": -229607304,
+   "L_total_bits": -229557512,
+   "null_total_bits": -87625437
+  },
+  {
+   "degree": 8,
+   "coefficients_total": 1290,
+   "L_coeff_total_bits": 82560,
+   "L_resid_total_bits": -262859062,
+   "L_total_bits": -262776502,
+   "null_total_bits": -87625437
+  },
+  {
+   "degree": 10,
+   "coefficients_total": 1930,
+   "L_coeff_total_bits": 123520,
+   "L_resid_total_bits": -294045299,
+   "L_total_bits": -293921779,
+   "null_total_bits": -87625437
+  },
+  {
+   "degree": 12,
+   "coefficients_total": 2698,
+   "L_coeff_total_bits": 172672,
+   "L_resid_total_bits": -319326913,
+   "L_total_bits": -319154241,
+   "null_total_bits": -87625437
+  },
+  {
+   "degree": 16,
+   "coefficients_total": 4618,
+   "L_coeff_total_bits": 295552,
+   "L_resid_total_bits": -364482994,
+   "L_total_bits": -364187442,
+   "null_total_bits": -87625437
+  }
+ ]
+}
