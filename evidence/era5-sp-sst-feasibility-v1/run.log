@@ -1,0 +1,14 @@
+contract era5-sp-sst-feasibility-v1
+  surface_pressure 2026-09: 22 天  01 .. 22
+  surface_pressure 2026-02: 28 天  01 .. 28
+  surface_pressure 2026-01: 31 天  01 .. 31
+  sea_surface_temperature 2026-09: 22 天  01 .. 22
+  sea_surface_temperature 2026-02: 28 天  01 .. 28
+  sea_surface_temperature 2026-01: 31 天  01 .. 31
+  surface_pressure: 单位=Pa 值域=[48935.9,103409.1] gate=True bias=+89.445 std=1246.231 maxabs=12193.381
+  sea_surface_temperature: 单位=K 值域=[270.4,304.5] gate=True bias=-0.068 std=0.543 maxabs=5.595
+  层压筛选 850 hPa: 翻转 164 格（R1 入选 16238，ERA5 入选 16242，最小余量 2 Pa）
+  层压筛选 700 hPa: 翻转 148 格（R1 入选 17129，ERA5 入选 17183，最小余量 4 Pa）
+  层压筛选 500 hPa: 翻转 1 格（R1 入选 18047，ERA5 入选 18048，最小余量 9 Pa）
+  2026-09 部分月（22 天，到 22）: east_asia=1012.8 hPa, plateau=591.3 hPa, north_america=1009.6 hPa
+  C1 单位注入被拒=True  C2a 同网格重网格最大改动=0.0  C2b 月际变化相关 r=0.985
