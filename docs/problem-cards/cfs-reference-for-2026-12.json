@@ -1,0 +1,64 @@
+{
+  "question_id": "xue.derived.cfs-reference-for-2026-12",
+  "round": 1,
+  "predecessor": "docs/problem-cards/reforecast-winter-2026-27-from-latest-month.json",
+  "change_reason": "提问方要求「推进」。前一轮已判定：同源口径下 2026-12 不可达（R1 输入止于 2026-02，目标月为提前 10 个月）；且本轮复核确认卡点在**上游本身**（PSL 该文件 Last-Modified 仍为 2026-03-02，DODS 报 stop>=size 960:938 ⇒ 服务端时间维即 938）。故按候选路径 (C) 先取**外部业务模式**对 2026-12 的参考读数，用于填充「业界普遍的预报」。",
+  "raw_question": "推进（在前一轮判定「同源口径不可达」之后）。",
+  "objects_and_versions": "外部资料，**不是本模型输出**：\n(1) xue 数据服务 STAC 目录 `https://dataset.ringsaturn.me/xue/catalog.json`；集合 `cfs`（NCEP CFSv2 季节预报，成员 01，六小时一次，起报后 6–6552 小时）；指针 `latest-cfs.json` 指向 **run `cfs.2026092512`（2026-09-25 12Z 起报）**；Zarr 资产（v3）经 HTTPS 直读：`wind500.half.zarr`（ugrd500/vgrd500，time 1092 步 2026-09-25T18 → 2027-06-25T12，91×180 ≈2°）、`hgt500.half.zarr`、`tmpsfc.half.zarr`。\n(2) 运行环境：远端 `~/climatetensor-env/bin/python`（xarray 2026.7.0 + zarr 直读 HTTPS）。\n(3) 脚本：`experiments/multivariate-reforecast/cfs_reference.py`（本轮新增）。\n(4) 背景：`docs/xue-cloud-point-20260924.md`（同服务、同成员、2026-09-23 起报的云量核对）与 `docs/maintenance/2026-09-24-regional-forecast-audit.md`（ENSO 外部依据与日期口径）。\n**未取得**：历史起报——`cfs.2026092312`／`cfs.2025122512`／`cfs.2025092512` 全部 **HTTP 404**，服务只保留最新一次，故**无法**取 2025-12 起报的 CFSv2 来与本项目冻结预报（2026-01..06）做同目标月对照。",
+  "success_condition": "由一个脚本产出的读数：在同一套区域框（东亚近海 25–40N/130–170E、北美东岸 32.5–47.5N/80–50W、中东 20–35N/35–65E）上，用与上一轮**相同**的算法（区域面积加权矢量均值风速）给出 2026-10/11/12 与 2027-01 的 500 hPa 风速，并给出 Niño 3.4 框（5S–5N/170W–120W）的地表温度代理；全部写入 `archive/cfs-reference-2026-12-v1/report.json`。**成功不等于对照**：因服务只留最新起报，本读数与本项目可达月份（2026-03..08）**无重叠**，故只作参考、不作评分。",
+  "interpretation_and_assumptions": "- 该读数是**单成员、原始绝对值**：未经集合平均、未对回报气候态作异常化、无历史技巧遮罩 ⇒ **不是** NOAA CPC 的官方季节产品（其方法见 CPC 说明）；用作参考时可以，用作「官方预测」不可以。\n- `tmpsfc` 在本服务里以**摄氏度**存储（首算误减 273.15 得 −243 °C，已按量级判据修正为原值）；它是**地表温度**，不是 SST 分析、也不是 ONI ⇒ 只作 Niño 3.4 的**代理**。\n- 月均值由**有效时刻落在该月内的六小时步**等权平均（2026-10 有 124 步、11 月 120 步、12 月 124 步、2027-01 有 124 步）。\n- 区域框与本项目一致，但**网格不同**（CFSv2 ≈2° vs 本项目 1.25°），且算法同为面积加权，故量级可比、逐位不可比。\n- 与上一轮的读数（2026-03..08）**无共同目标月**，任何并列只可作**背景**，不可读作一致或不一致。",
+  "candidates": "（A）用最新 CFSv2 起报填「业界普遍的预报」——**本轮采用**；（B）等 CFSv2 保留更多历史起报后再做同目标月对照——**不可控**；（C）改用 NOAA CPC 官方季节产品（集合＋异常＋技巧遮罩）——需要其数据通道与准入，**本轮未做**。",
+  "check_scope": "本轮**做**：STAC 目录与集合核对；run 指针核对；`wind500`/`hgt500`/`tmpsfc` 三个 Zarr 的直读与月均值；同框区域读数与 Niño 3.4 代理；写入一份 JSON。\n本轮**不做**：不评分、不作异常化、不与本项目模型输出做同月对照（无重叠月）、不声称这是 CPC 官方产品或「业界共识」、不把单成员读数当作概率。",
+  "budget": {
+    "wall_seconds": 900,
+    "launches": 2,
+    "output_bytes": 200000
+  },
+  "round_result": "**产出**：`archive/cfs-reference-2026-12-v1/report.json`（run `cfs.2026092512`）。\n**区域 500 hPa 矢量均值风速（m/s，同框同算法）**：\n| 目标月 | 东亚近海 | 北美东岸 | 中东 |\n|---|---:|---:|---:|\n| 2026-10 | 9.37 | 13.70 | 4.86 |\n| 2026-11 | 15.81 | 19.81 | 11.07 |\n| **2026-12** | **27.12** | **21.71** | **14.94** |\n| 2027-01 | 25.48 | 18.69 | 15.92 |\n**Niño 3.4 地表温度代理（°C）**：29.88（10 月）→ 30.06（11 月）→ **30.24（12 月）** → 30.01（1 月）⇒ 与 NOAA CPC 2026-09-10 展望所指的**极强厄尔尼诺**方向一致（但此代理非 ONI）。\n**30–60N 500 hPa 纬向均值高度（m）**：5710.2 → 5608.9 → **5535.7** → 5540.4（冬季降低，符合季节进程）。\n**必须随行的三条**：① 单成员、原始值、无异常化与技巧遮罩 ⇒ **非官方季节产品**；② 与本项目可达月份**无重叠** ⇒ **不是对照、不是评分**；③ 2026-12 的三个区域风速（27.12/21.71/14.94）与本项目 2026-03 的读数（26.77/17.81/15.82）量级相近，**纯属巧合**——两个模型、两个月份、两个初值，**不得读作一致**。",
+  "remaining_questions": "- CFSv2 服务是否/何时保留历史起报（决定能否做同目标月对照）。\n- CPC 官方季节产品（集合＋异常＋技巧遮罩）的通道与准入未落实。\n- Niño 3.4 需**真正的 SST**（如 ERSST v5，本项目输入里已有，末端 2026-08）才能给异常；本轮只给了地表温度代理。\n- 本项目自模型仍够不到 2026-12（同源口径不可达，见前一轮）。",
+  "next_step": "- 若提问方要「能评分」的对照：等 CFSv2 保留历史起报，或在使用前**冻结**当次起报（把 Zarr 快照存下来），以便日后与本项目同月对照。\n- 若提问方要「官方口径」：走 CPC 季节产品的数据通道，并单独立契约。\n- 若提问方要「自家结果到 2026-12」：只能在 (A) 换初始场来源（需声明）或 (B) 等 R1 更新之间选。",
+  "stop_conditions": [
+    "若 Zarr 直读失败或月份缺失，则只报可读部分，不插值填补",
+    "若服务不保留历史起报，则不做同目标月对照，并在结果中显式登记",
+    "若某量的单位无法由量级判据确认，则不换算、直接报原值并标注",
+    "预算耗尽（wall 900 s 或 launch 2 次）"
+  ],
+  "attempts": [
+    {
+      "command": "curl STAC 目录 / 集合 / item.json / latest-cfs.json",
+      "tool_and_version": "curl 8（macOS）",
+      "input": "catalog.json → child cfs/collection.json → cfs.2026092512/item.json（79 资产）",
+      "output_dir": "(stdout only)",
+      "stop_condition": "确认存在可读的 CFSv2 目标月",
+      "budget": {
+        "wall_seconds": 120,
+        "launches": 4
+      },
+      "outcome": "completed",
+      "reason": "run 2026-09-25 12Z，覆盖至 2027-06-25；资产含 wind500/hgt500/tmpsfc",
+      "first_failure": "目录为 **STAC**（links 子目录），非内联集合列表；`/xue/collections` 返回 Cloudflare 404 页面 ⇒ 改为沿 links 逐个取 collection.json。"
+    },
+    {
+      "command": "~/climatetensor-env/bin/python cfs_reference.py",
+      "tool_and_version": "python 3.11 / xarray 2026.7.0 / zarr（HTTPS 直读）",
+      "input": "wind500.half.zarr / hgt500.half.zarr / tmpsfc.half.zarr",
+      "output_dir": "archive/cfs-reference-2026-12-v1/",
+      "stop_condition": "四个月的区域读数齐备",
+      "budget": {
+        "wall_seconds": 900,
+        "launches": 2
+      },
+      "outcome": "completed",
+      "reason": "首轮即得到风速与高度场；温度代理按量级判据修正后重跑一次",
+      "first_failure": "`tmpsfc` 误按开尔文处理 ⇒ Niño 3.4 得 **−243 °C**（物理不可能）⇒ 按量级判据（>100 才减 273.15）修正，并在脚本内保留该判据与说明。"
+    }
+  ],
+  "handoff": {
+    "question": "在自家模型够不到 2026-12 的情况下，业务模式对 2026-12 怎么说？",
+    "candidates": "（A）最新 CFSv2 起报（本轮采用）；（B）等历史起报留档后做同目标月对照；（C）CPC 官方季节产品",
+    "checks": "STAC 目录/集合/run 指针核对；三个 Zarr 直读；月均值与区域算法与前一轮一致",
+    "evidence": "run cfs.2026092512（2026-09-25 12Z）；2026-12 区域 500 hPa 风速 27.12/21.71/14.94 m/s；Niño 3.4 地表温度代理 30.24 °C；30–60N 500 hPa 纬向均值 5535.7 m",
+    "residuals": "单成员、原始值、无异常化与技巧遮罩；与本项目可达月份无重叠 ⇒ 非对照；历史起报 404 不可得；Niño 3.4 用的是地表温度代理而非 SST",
+    "receiver_constraints": "不得称为 CPC 官方产品或「业界共识」；不得与本项目 2026-03..08 并列作一致/不一致；不得据单成员给概率；量级相近（2026-12 对 2026-03）纯属巧合，不得读作印证"
+  }
+}

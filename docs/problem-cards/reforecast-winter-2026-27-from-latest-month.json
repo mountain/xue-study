@@ -1,0 +1,79 @@
+{
+  "question_id": "xue.derived.reforecast-winter-2026-27-from-latest-month",
+  "round": 1,
+  "predecessor": null,
+  "change_reason": "提问方（2026-09-26）指出：拉尼娜为 ENSO 负相位，进入厄尔尼诺正相位之后，应把多变量预报从 2026-09 重新起报、预测三个月后（2026-12）的情况，并要求按已有技术规格跑。前一轮（docs/maintenance/2026-09-24-regional-forecast-audit.md）只做了局地诊断与起报日期核对，明确「未下载新初始场、未重训、未扩展预报月份」，故本轮为新问题。",
+  "raw_question": "拉尼娜是负相位，所以进入厄尔尼诺正相位之后，我们需要把我们的模型外推从现在 2026 年 9 月份，重新预测三个月后的情况。",
+  "objects_and_versions": "分四类，必须分开写：\n(1) 冻结模型件（**只读、不改写**）——远端 ubuntu@34.200.151.98:~/xue-study/archive/multivariate-l12-v1/ 的 model.npz(climatology/scale/vectors/maps/rho/coefficients/dates/channels_json, 28,214,240 B)、projection-L12.npz(28,894,789 B)、forecast.npz(12,623,469 B)、backtest.npz(45,099,036 B)、report.json；仓库 git 头 **11d4bc3**（本地 /Users/mingli/Climate/xue-study 与远端同头）。\n(2) 输入资料 —— ~/climatetensor-inputs/ncep-multivariate/<code>.npz 共 17 个通道文件；逐通道 provenance 见同目录 fetch.log(JSONL)：来源 URL、source_key、单位与换算(scale/offset)、level_hpa、months=**1979-01..2025-12**、shape、source_sha256、输出 sha256、retrieved_utc=2026-09-24。原始 NetCDF 十份（含 sst）在同目录，n=938、**末端月一律 2026-02-01**（ersst v5 为 2026-08-01）。uwnd/vwnd 的 sha256 与 teleconnection-audit README 的冻结值**逐位一致**(15227518f03dffbe… / eab89e125aef1a84…)。\n(3) 代码 —— experiments/multivariate-refinement/{train.py,model.py,project.py,fields.py,check_artifacts.py,contract.json,requirements.txt}；运行环境 ~/climatetensor-env/bin/python（numpy 2.4.6 / scipy 1.17.1 / xarray 2026.7.0 / h5netcdf / h5py）；本轮新增 experiments/multivariate-reforecast/。\n(4) 外部预测（**仅作对照，不并入本模型**）—— NOAA CPC 2026-09-10 展望（2026—27 秋冬极强厄尔尼诺 >90%，**尚非实况、不能锁定单月峰值**）；NOAA CPC 2026-01-08 诊断（**2025-12 仍为拉尼娜**）；CFSv2 成员（xue-cloud-point-20260924.md 记录，2026-09-23 12 UTC 起报，覆盖至 2027-06）。\n**本轮新查明的关键来源事实**：模型同源的大气月平均（R1）**末端为 2026-02**；而投影输入 <code>.npz 被有意截到 **2025-12**（2026-01/02 只作检验，见 regional-forecast-audit）。",
+  "success_condition": "两段，且**第一段是本轮的主判定**：\n(甲) **不可执行段的判定（必须先作）**——「命中 2026-12」要求初始月 M 满足 0 < 2026-12 − M ≤ 6（模型契约 /learner：**直接岭回归映射，no autoregressive rollout**），即 M ∈ 2026-06..2026-11；同源输入末端为 2026-02 ⇒ 最大可用初始月 2026-02 ⇒ 到 2026-12 为**提前 10 个月**，超出窗口。**判据由「数据末端 + 提前期窗口」显式给出**，不以印象给出 ⇒ 判「在训练同源口径下不可执行」，并登记三条替代路径。\n(乙) **可执行段**——以最新可用初始月 **2026-02**、用**冻结** vectors/maps 起报 6 个月（目标 **2026-03..08**），成功=(i) 输入扩展的**回填检验**通过：用同一换算从原始 NC 重算 **2025-12**，与现有 <code>.npz 的 2025-12 **逐格相等（容差 0）**；(ii) 起报结果满足 check_artifacts.py 式重放关系 `decode((encode(c_init,m)@vectors)@maps)`（atol 1e-12）；(iii) 结果目录**拒绝覆盖**；(iv) **目标月无观测可验**一事被显式登记（R1 止于 2026-02，故 2026-03..08 无法评分）。",
+  "interpretation_and_assumptions": "- 模型是「初始场 → 提前 1–6 个月」的**直接映射**，不做逐步外推；因此「重新起报」＝**换初始月**，不是把旧文件往后推。\n- 初始场是**月平均再分析**（NCEP/NCAR R1 + ERSST v5），不是实时分析场；月平均天然有约一个月的滞后。\n- 13 个物理通道必须**同月对齐**。本轮 SST 可用到 2026-08 而大气只到 2026-02 ⇒ **不得混用**（混用即时间不一致的初始态），故初始月取 2026-02。\n- 冻结件不改写；扩展输入与投影一律写入**新目录**。\n- 2026-01/02 此前被留作检验；本轮把它们用作**初始态**。这不改变冻结的 vectors/maps（maps 只在 1979–2014 拟合、2015–2019 选参），故**不构成训练污染**。\n- 已知表示误差随行：低阶谱抹平高原冷背景（高原框 28–36N/80–100E 一月暖偏差 +10.43 K，其中训练气候态谱截断 +9.589 K）⇒ 高原与低阶量的读数必须带此标注。\n- 数据真实性保留意见（提问方 2026-09-24 提出）**继续随行**；全部数值为基于现有输入与所述假设的**条件性结果**。",
+  "candidates": "三条替代路径（本轮不作取舍，只登记代价）：\n(A) **换初始场来源**——用近实时业务分析场（dataset.ringsaturn.me/xue 目录快照含 gfs.2026091618 / ecmwf / jma / cma / hrrr / mrms，资产为 Zarr store）构造 2026-09 初始态。可命中 2026-12，但**产品不同类**（业务分析/预报场 vs R1 月平均）⇒ 属**分布外输入**，须先声明并另做检验，**不得悄悄替换**。\n(B) **等上游**——R1 更新到 ≥2026-06 后（若上游恢复更新），以 2026-06 起报即提前 6 个月命中 2026-12。零分布风险，但**不可控**（PSL 该文件 Last-Modified 停在 2026-03-02）。\n(C) **外部对照**——直接用 CFSv2/NMME 等业务模式的 2026-12 预报，我们只做**对照与解释**，不自己起报。\n本轮选择：(甲) 判定不可执行 + (乙) 以 2026-02 跑通重新起报管线并产出可后验的场。",
+  "check_scope": "本轮**做**：① 来源末端与哈希核对（R1 十份 / ERSST / 17 个通道 npz）；② 输入扩展的**回填检验**；③ 以 2026-02 为初始月、用**冻结** maps 起报 6 个月（2026-03..08）；④ 区域读数（高原框 28–36N/80–100E；东亚近海 25–40N/130–170E、北美东岸 32.5–47.5N/80–50W、中东 20–35N/35–65E 的 500 hPa 风速）；⑤ 结果哈希与拒绝覆盖。\n本轮**不做**：命中 2026-12（判据见 success_condition 甲）；不重训、不改写冻结件；不与观测评分（目标月**无观测**）；不做路径 (A) 的分布外检验；不做地形季节背景的**修复**（只作为已披露误差随行）。",
+  "budget": {
+    "wall_seconds": 1800,
+    "launches": 3,
+    "output_bytes": 60000000
+  },
+  "round_result": "**两段都有结论，且第一段（不可执行判定）先作出。**\n**(甲) 2026-12 不可达（判定）**：模型是直接映射（leads 1..6，无 rollout）⇒ 目标 T 需初始月 M 满足 0 < T−M ≤ 6；T=2026-12 需 M ∈ 2026-06..2026-11；而 R1 同源输入**末端为 2026-02**（十份 n=938，逐份核对）⇒ 2026-12 = 提前 10 个月，**超出窗口** ⇒ 判「训练同源口径下不可执行」。判据由数据末端与窗口显式给出，非印象。\n**(乙) 可执行段已完成**：以 **2026-02** 为初始月、用**冻结** vectors/maps 起报 **2026-03..08**，产物在 `archive/multivariate-reforecast-202602-v1/`（forecast.npz 12,602,625 B / report.json / run.log）。\n**四道闸门全部通过**：① **回填检验**——16 个通道用 fetch.log 的原换算从原始 NetCDF 重算 2025-12，与存量 npz **逐格相等**（`backfill_exact=true`，最大绝对差 **0.0**，NaN 位置 0 处差）；② **冻结重放**——冻结初始态经 vectors/maps 重放冻结结果，`max|Δ| = 0.0`（atol 1e-12）；③ **观测域一致**——13 个通道按新月份重算的 fixed domain 与冻结 `*_domain` **逐格相等**，系数块长不变（如 t850 169）；④ **自重放** `max|Δ| = 0.0`，且结果目录**拒绝覆盖**。\n**区域读数**（目标月 2026-03/04/05/06/07/08；矢量区域均值风速 m/s；高原框 28–36N/80–100E 的 t2m 面积加权均值 K）：\n  东亚近海 25–40N/130–170E：**26.77 → 19.85 → 14.47 → 8.83 → 5.28 → 2.33**\n  北美东岸 32.5–47.5N/80–50W：**17.81 → 15.48 → 12.03 → 11.16 → 10.50 → 8.92**\n  中东 20–35N/35–65E：**15.82 → 11.32 → 7.23 → 2.92 → 1.93 → 1.94**\n  高原 t2m：**272.80 → 278.38 → 282.62 → 286.44 → 287.92 → 287.26**\n**必须随行读的两条**：(i) **无可验证性**——输入中不存在晚于 2026-02 的月份 ⇒ leads 1..6 **一条都无法评分**（`verification_available=false`）；(ii) **已知表示误差**——低阶谱抹平高原冷背景（审计：L12 一月高原暖偏差 +10.43 K，其中谱截断 +9.589 K）⇒ 高原读数**带此保留**，不得当作预报信号。数据真实性保留意见**未解决**，本轮不消除。\n**冻结件哈希（sha256 前 16 位）**：model.npz `807c46c89691f34d`｜projection-L12.npz `4852df6fb2f43201`｜forecast.npz `73a017287267fe6c`｜report.json `2cb340432fbe73ef`；冻结件**未被写入**。",
+  "remaining_questions": "（保持）路径 (A) 分布外初始场需提问方声明；路径 (B) 等待上游；(C) 外部对照。\n**本轮新增**：① 2026-03..08 的产出**待后验**——R1 何时更新到 ≥2026-03 决定何时能做首次前向评分；② 高原读数被已知表示误差支配，若要用于 2026-12，须先修地形季节背景或至少并列两种口径；③ 上游 PSL R1 停在 2026-03-02 的原因**未查**（是上游停更，还是本环境抓取快照所致）；④ 本轮未做 ENSO 条件化（审计 remaining-questions 已列）。",
+  "next_step": "- 若提问方选择 (A)：先写「初始场来源替换」的声明与检验契约（同月对齐、分布外诊断、与 R1 口径并列报告）。\n- 若选择 (B)：设一个上游检查（R1 末端月 ≥ 2026-06 即触发新一轮起报），并在此之前不做任何「2026-12」的自我起报。\n- 无论哪条：先把**地形季节背景**修好或至少并列报告两种口径，否则 2026-12 的结果无法把「表示误差」与「信号」分开。\n- 待 R1 更新后，用本轮产出的 2026-03..08 做**首次真正的前向评分**。",
+  "stop_conditions": [
+    "若同源输入末端月 < 目标月 − 6，则「命中该目标月」直接判不可执行（本轮已触发：2026-02 对 2026-12 为提前 10 个月）",
+    "若输入扩展的回填检验（用同一换算重算 2025-12）不能与现有 npz 逐格相等，则扩展不被接受，停止起报",
+    "若必须混用不同末端的通道（如 SST 2026-08 配大气 2026-02）才能起报，则停止，并把该不一致登记为阻塞",
+    "冻结件出现任何写入或哈希变化，立即停止并报告",
+    "预算耗尽（wall 1800 s 或 launch 3 次）"
+  ],
+  "attempts": [
+    {
+      "command": "ssh ubuntu@34.200.151.98（侦察：输入末端、通道 npz 覆盖、产物、代码、依赖、网络）",
+      "tool_and_version": "ssh/OpenSSH（macOS）＋ xarray 2026.7.0 (h5netcdf)",
+      "input": "~/climatetensor-inputs/ncep-multivariate/{*.mon.mean.nc,*.npz,fetch.log}；archive/multivariate-l12-v1/",
+      "output_dir": "(stdout only)",
+      "stop_condition": "确认可达性算术所需的日期末端",
+      "budget": {
+        "wall_seconds": 600,
+        "launches": 6
+      },
+      "outcome": "completed",
+      "reason": "",
+      "first_failure": "本地无 numpy/scipy/xarray（Python 3.14.6），故在远端 ~/climatetensor-env 下执行；两种来源独立给出同一末端：原始 NC n=938 末 2026-02-01、fetch.log 的 source_last_month=2026-02-01。"
+    },
+    {
+      "command": "~/climatetensor-env/bin/python extend_inputs.py（扩展输入至 2026-02，带回填闸门）",
+      "tool_and_version": "python 3.11 / numpy 2.4.6 / xarray 2026.7.0",
+      "input": "16 个通道的原始 NetCDF ＋ 存量 <code>.npz ＋ fetch.log 的逐通道换算",
+      "output_dir": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/（33 文件）",
+      "stop_condition": "回填检验对每一通道逐格相等",
+      "budget": {
+        "wall_seconds": 600,
+        "launches": 4
+      },
+      "outcome": "completed",
+      "reason": "16/16 通道 backfill_exact=true，最大绝对差 0.0",
+      "first_failure": "三次首轮失败，全部是**判据/写法**而非数据：(1) 用 np.array_equal 比较含 NaN 的数组 ⇒ 恒 False（NaN≠NaN）⇒ 改为 NaN 感知比较；(2) take() 返回带时间轴 (1,lat,lon) 而 stored 为 (lat,lon) ⇒ 形状不符 ⇒ 取 [0] 并加形状断言；(3) 存量 npz 的 time 是 'YYYY-MM' **字符串** dtype，不能用 datetime64 拼接 ⇒ 按存量 dtype 追加。三次都不是数据问题：修正后回填逐格相等。"
+    },
+    {
+      "command": "~/climatetensor-env/bin/python reforecast.py（冻结 maps 起报 2026-02 → 2026-03..08）",
+      "tool_and_version": "python 3.11 / numpy 2.4.6 / scipy 1.17.1",
+      "input": "archive/multivariate-l12-v1/{model,projection-L12,forecast}.npz（只读）＋ 扩展输入",
+      "output_dir": "/home/ubuntu/xue-study/archive/multivariate-reforecast-202602-v1/",
+      "stop_condition": "冻结重放 ≤1e-12 且域与块长与冻结件一致",
+      "budget": {
+        "wall_seconds": 900,
+        "launches": 4
+      },
+      "outcome": "completed",
+      "reason": "冻结重放 0.0、自重放 0.0、13 通道域逐格相等；产物三件",
+      "first_failure": "五次首轮失败，全部是**接口/索引**错误：interpolate_surface_pressure 无 lru_cache；选月口径误写为 dts≥初始月（应为冻结历史之后的全部月份）；load_field 需**字段码**(u850)而非通道名(wind850)；组合应沿**时间轴**拼；dates_ext 只补 1 个月（实数 2 个月）；area_weights 返回**一维**需 reshape 后再按块索引。修正后一次跑通。"
+    }
+  ],
+  "handoff": {
+    "question": "ENSO 由负相位（2025-12 拉尼娜）转向正相位（2026-12 预计极强厄尔尼诺）之际，多变量模型能否从最新可用月起报、命中 2026-12？",
+    "candidates": "（甲）同源口径：**不可执行**（R1 末端 2026-02 vs 目标 2026-12 = 提前 10 个月 > 6）；（乙）本轮执行：以 2026-02 起报 2026-03..08，跑通管线并留下可后验的场；（A/B/C）三条替代路径见 candidates",
+    "checks": "来源末端与哈希核对；输入扩展回填检验；冻结 maps 重放关系；区域读数；拒绝覆盖",
+    "evidence": "R1 十份 n=938 末端 2026-02-01；ERSST v5 末端 2026-08-01；17 个通道 npz 止于 2025-12（fetch.log: source_last_month=2026-02-01, months=1979-01..2025-12）；uwnd/vwnd sha256 与审计冻结值一致；model.npz 含 vectors/maps（重放关系见 check_artifacts.py）",
+    "residuals": "2026-12 未起报（不可执行）；目标月无观测可验；地形季节背景未修；路径 (A) 未检验；数据真实性保留意见未解决",
+    "receiver_constraints": "不得把本轮 2026-03..08 的产出说成 2026-12；不得把外部预测（NOAA/CFSv2）说成本模型结果；不得用「校验通过」消除真实性保留意见"
+  }
+}

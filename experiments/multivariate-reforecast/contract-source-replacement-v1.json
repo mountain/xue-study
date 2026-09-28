@@ -1,0 +1,124 @@
+{
+  "version": "source-replacement-operational-vs-r1-v1",
+  "question_id": "xue.derived.source-replacement-operational-vs-r1",
+  "round": 1,
+  "frozen_before_run": true,
+  "purpose": "记录并检验「把初始场来源由 R1 月平均替换为业务分析场」这一动作；规定替换与检验的闸门，使替换后的结果要么带限定地成立、要么被拒。",
+  "declaration": {
+    "made_by": "提问方（Mingli Yuan）",
+    "date": "2026-09-26",
+    "text": "业务分析场 vs R1 月平均属分布外输入。",
+    "what_it_authorizes": [
+      "把「业务分析场」作为可讨论、可检验的替换来源（此前被禁止悄悄替换）",
+      "据此写下本契约的替换与检验条款"
+    ],
+    "what_it_does_not_do": [
+      "不预先认可任何替换结果；替换是否可用由本契约的 V1–V4 闸门判定",
+      "不改变冻结模型（vectors/maps/climatology/scale 一字不动）",
+      "不改变已完成轮次的结论，也不消解数据真实性保留意见"
+    ]
+  },
+  "source_under_test": {
+    "operational": {
+      "service": "https://dataset.ringsaturn.me/xue（STAC）",
+      "collections": [
+        "gfs (NOAA GFS 0.25°, pgrb2.0p25)",
+        "ecmwf (IFS open data 0.25°)",
+        "aifs (AIFS Single 0.25°)"
+      ],
+      "retention": "**只保留最新一次起报**：gfs.2026092600 = 200，而 gfs.2026092500／2026091600／2026090100／2026082600 全部 404",
+      "coverage_of_latest_run": "2026-09-26T00 → 2026-10-06T00（forecastHours=240，161 步）",
+      "unit_metadata": "**Zarr 内无 units/long_name 属性** ⇒ 单位必须由上游产品规格给出并留档，不得默认",
+      "not_suitable": [
+        "jma（降水临近预报）",
+        "cma（雷达拼图）"
+      ]
+    },
+    "baseline_to_be_replaced": {
+      "name": "NOAA PSL NCEP/NCAR R1 月平均 + ERSST v5",
+      "end_month": "2026-02（R1，n=938；上游 Last-Modified 2026-03-02，DODS 报 stop>=size 960:938）",
+      "sst_end_month": "2026-08（ERSST v5）",
+      "note": "模型的状态是**日历月平均**的 13 通道联合向量"
+    }
+  },
+  "channel_map": {
+    "available": {
+      "t850": "tmp850",
+      "t2m": "tmp2m",
+      "msl": "prmsl",
+      "z500": "hgt500（×9.80665 转 m² s⁻²）",
+      "w500": "vvel500",
+      "w700": "vvel700",
+      "wind850": "wind850(ugrd/vgrd)",
+      "wind500": "wind500(ugrd/vgrd)",
+      "wind250": "wind250(ugrd/vgrd)"
+    },
+    "needs_derivation": {
+      "q850": "由 rh850 + tmp850 + p(850 hPa) 反算比湿（近似 + 声明）",
+      "q700": "由 rh700 + tmp700 + p(700 hPa) 反算比湿（近似 + 声明）"
+    },
+    "gaps": {
+      "sp": "业务源**无地面气压**（只有 prmsl 与 orog）⇒ 需声明代理（如由 prmsl+orog 静力反算）或判缺口",
+      "sst": "业务源**无 SST**；ERSST v5 只到 2026-08 ⇒ 初始月为 2026-09 时 SST 无同月来源"
+    }
+  },
+  "feasibility_gate": {
+    "verdict": "**在今天的可得来源下，(A) 来源替换不能产出「月平均」初始态**",
+    "reasons": [
+      "保留策略：服务只留最新一次起报（昨日 404）⇒ 无法拼出任何一个日历月的月平均",
+      "聚合不匹配：模型状态是**日历月平均**，可得的是**10 天预报窗**（2026-09-26→10-06）⇒ 代理态跨月，且「减哪个月的气候态」无良定义",
+      "通道缺口：sp 与 sst 无同月来源；q850/q700 需由 RH 反算；**单位元数据缺失**"
+    ],
+    "consequence": "本轮**不得产出**任何自称「预测」的替换结果；只做可行性判定与检验设计"
+  },
+  "verification_design": {
+    "V1_channel_and_units": {
+      "gate": "13 通道逐一给出替换源、换算与缺口声明；单位由上游产品规格书面落实",
+      "status_now": "部分（映射已列，缺 sp/sst 与单位书面来源）",
+      "fails_if": "任一通道未声明，或单位靠默认"
+    },
+    "V2_distribution_distance": {
+      "gate": "把替换初始态投影到冻结 EOF 基，算归一化系数；与训练(1979–2014)/验证(2015–2019)分布比较：逐通道 z 分数 + 整体范数分位",
+      "status_now": "可做（只要候选态能构造出来）",
+      "fails_if": "整体范数落在训练分布之外 ⇒ 结果必须带「分布外距离」限定，且不得与 R1 源结果并列"
+    },
+    "V3_overlap_consistency": {
+      "gate": "同一日历月，两个来源各构造一次状态，逐通道比较（同截断、同域）",
+      "status_now": "**现在做不了**：R1 止于 2026-02，业务源无历史起报，无重叠月",
+      "how_to_make_it_possible": "**冻结—后验**：即日起每日冻结业务起报的关键通道快照并留哈希；待 R1 更新到该月（月平均约滞后一个月）后比对",
+      "fails_if": "同月差异超过事先声明的容差 ⇒ 替换源不得用于该通道"
+    },
+    "V4_backtest_with_substituted_source": {
+      "gate": "用替换源重建 2020–2025 各月初始态，重跑冻结映射，与 R1 源的冻结回测比技巧（同域同权重）",
+      "status_now": "**现在做不了**（无历史业务起报）",
+      "how_to_make_it_possible": "同 V3 的累积冻结；或换取有归档的分析源（见 candidates A3）",
+      "fails_if": "技巧显著低于 R1 源 ⇒ 替换只能作探索，不得作为结论来源"
+    }
+  },
+  "candidates": {
+    "A1_ten_day_mean_surrogate": "用最新一次起报的 0–240 h 场构造「10 天平均态」，**需第二条声明**（时间聚合与月份归属约定），并声明 sp/sst 的代理。可立刻做 V1/V2；**产出不得称为「预测 2026-12」**",
+    "A2_accumulate_from_now": "即日起每日冻结业务起报 ⇒ 凑齐 2026-10（lead 6 到 2027-03）或 2026-11（**lead 1 到 2026-12**）。代价：需每日运行与存储；**2026-06..09 的历史起报已不可得**",
+    "A3_archived_analysis_source": "换取有归档的分析资料（如 ERA5T 等）：需先解决许可与准入（本项目发布边界只准入公有领域；ERA5 为 Copernicus，非公有领域）",
+    "A4_keep_external_reference": "维持 (C)：只用外部模式作参考（已执行，见 cfs-reference-for-2026-12）"
+  },
+  "bottom_line": "**在今天的可得来源下，2026-12 的「自家预测」没有可行路径**：自产 2026-12 需初始月 ∈ 2026-06..11，而 R1 停在 2026-02、业务源无历史起报。(A2) 是唯一能自产 2026-12 的路线，但它**在 11 月末才发得出来，且提前期只有 1 个月**。",
+  "budget": {
+    "wall_seconds": 900,
+    "launches": 2,
+    "output_bytes": 200000
+  },
+  "stop_conditions": [
+    "若替换源无法给出日历月平均初始态 ⇒ 不得产出「预测」，只做诊断（本轮已触发）",
+    "若 sp／sst 的代理未被提问方声明 ⇒ 停止，并把缺口登记为阻塞",
+    "若单位无法由上游产品规格确定 ⇒ 停止（Zarr 无 units 属性）",
+    "若 V3／V4 无法执行 ⇒ 必须显式登记为「不可检验」，不得以 V1／V2 通过替代",
+    "预算耗尽（wall 900 s 或 launch 2 次）"
+  ],
+  "prohibited": [
+    "悄悄替换来源（替换必须声明、留痕、并带限定）",
+    "把 10 天均值的代理态结果称为「2026-12 预测」",
+    "把替换源结果与 R1 源结果并列而不标分布外距离",
+    "以 V1／V2 通过冒充 V3／V4 通过",
+    "修改冻结模型任何参数"
+  ]
+}

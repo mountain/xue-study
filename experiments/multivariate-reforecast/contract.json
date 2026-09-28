@@ -1,0 +1,49 @@
+{
+  "version": "multivariate-reforecast-202602-v1",
+  "question_id": "xue.derived.reforecast-winter-2026-27-from-latest-month",
+  "frozen_before_run": true,
+  "purpose": "以最新可用初始月重新起报，检验「换初始月起报」这条路径；并显式判定能否命中 2026-12。",
+  "round": 1,
+  "model": {
+    "artifact": "archive/multivariate-l12-v1/model.npz",
+    "kind": "frozen direct ridge map, initial EOF state -> each 1-6 month target anomaly",
+    "no_retraining": true,
+    "no_rollout": true,
+    "vectors_maps_reused_unchanged": true
+  },
+  "reads": [
+    "archive/multivariate-l12-v1/{model,projection-L12,forecast,report}.npz/json (read-only, hashed)",
+    "/home/ubuntu/climatetensor-inputs/ncep-multivariate/{<code>.npz,<code>.json,fetch.log,*.mon.mean.nc} (read-only)",
+    "experiments/multivariate-refinement/{fields.py,project.py,model.py,train.py} (imported, unmodified)"
+  ],
+  "writes": [
+    "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/ (new inputs, 1979-01..2026-02)",
+    "archive/multivariate-reforecast-202602-v1/ (new results; refuses overwrite)"
+  ],
+  "initial_month": "2026-02",
+  "target_months": ["2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08"],
+  "reachability_rule": "target T needs initial M with 0 < T-M <= 6 (direct map, leads 1..6). For T=2026-12: M in 2026-06..2026-11. R1-based inputs end 2026-02 => 2026-12 unreachable (lead 10).",
+  "gates": [
+    "input extension must reproduce 2025-12 from the raw NetCDF with bitwise float32 equality (tolerance 0)",
+    "frozen replay: frozen initial state -> frozen forecast must match forecast.npz at atol 1e-12",
+    "observation domains computed for the new months must equal the frozen *_domain arrays exactly",
+    "channel coefficient block sizes must equal the frozen block sizes",
+    "result directory must refuse overwrite"
+  ],
+  "budget": {"wall_seconds": 1800, "launches": 3, "output_bytes": 60000000},
+  "stop_conditions": [
+    "backfill test fails for any channel",
+    "frozen replay exceeds 1e-12",
+    "a channel grid or observation domain differs from the frozen projection",
+    "any frozen artifact hash changes",
+    "budget exhausted"
+  ],
+  "prohibited": [
+    "rewriting any file under archive/multivariate-l12-v1/",
+    "retraining or refitting vectors/maps/climatology/scale",
+    "mixing channels of different end months (e.g. SST 2026-08 with atmosphere 2026-02)",
+    "calling the 2026-03..08 output a 2026-12 forecast",
+    "presenting external forecasts (NOAA CPC / CFSv2) as this model's output",
+    "using 'checks passed' to dissolve the questioner's data-authenticity reservation"
+  ]
+}

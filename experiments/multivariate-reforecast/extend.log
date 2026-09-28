@@ -1,0 +1,17 @@
+{"code": "t850", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "t2m", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "sst", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 5032}
+{"code": "msl", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "sp", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "q850", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "q700", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "z500", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "u850", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "u500", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "w500", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "u250", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "w700", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "v850", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "v500", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"code": "v250", "backfill_exact": true, "backfill_max_abs_diff": 0.0, "nan_mismatch": 0, "nan_cells": 0}
+{"extended_codes": 16, "dest": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602"}

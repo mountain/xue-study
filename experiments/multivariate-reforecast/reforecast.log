@@ -1,0 +1,39 @@
+{
+ "out": "/home/ubuntu/xue-study/archive/multivariate-reforecast-202602-v1",
+ "frozen_replay_max_abs_diff": 0.0,
+ "self_replay_max_abs_diff": 0.0,
+ "plateau_t2m_K": [
+  272.80334385860124,
+  278.3834419435927,
+  282.620803370375,
+  286.44276451216723,
+  287.916727266391,
+  287.26309529036115
+ ],
+ "region_speeds": {
+  "east_asia": [
+   26.77,
+   19.85,
+   14.47,
+   8.83,
+   5.28,
+   2.33
+  ],
+  "north_america": [
+   17.81,
+   15.48,
+   12.03,
+   11.16,
+   10.5,
+   8.92
+  ],
+  "middle_east": [
+   15.82,
+   11.32,
+   7.23,
+   2.92,
+   1.93,
+   1.94
+  ]
+ }
+}
