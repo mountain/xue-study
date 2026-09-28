@@ -1,0 +1,115 @@
+{
+  "version": "vocabulary-skill-axis-e1b-v3",
+  "question_id": "xue.derived.vocabulary-skill-axis-e1b",
+  "round": 1,
+  "supersedes_chain": [
+    "contract.json（e1b-v1）⇒ 逐字节保留为 contract-v1.json（sha256 fb28312c8814c952fa6ddd25f650d8c48798d84101c6a4a12d992f4147cc91cb）",
+    "contract-v2.json ⇒ 完整保留（三次启动失败 ＋ 有界阶梯 ＋ 揭盲声明）"
+  ],
+  "frozen_before_run": true,
+  "claims_unchanged": "**本件不改任何科学主张**：`design`（阶梯、划分、rank/penalty 网格、选参口径、评分口径）、`criteria` 的判据含义、`predictions` 的 P1–P5 文字，与 v1 **逐字相同**。本件只修**仪器**（两处对照的写法、一处检查式的符号），并**新增一个复现闸门**。",
+  "change_reason": "v2 跑完了整条 8 阶阶梯（414.5 s，G1/G2/G3 全过），但**两个负对照都不成立** ⇒ 按失败语义**没有报出判定**。逐条查明原因后确认：**科学读数没有问题，问题在对照的写法**。若只是把对照改到能过，那是事后挪动球门；因此本件：① 把两处对照的**原样失败结果与诊断一并保留**；② 另立**写法正确**的对照作为闸门；③ 新增 G5 用冻结报告的公开数字做独立复现；④ 输出到新目录，v1／v2 的失败记录**不覆盖、不删除**。",
+
+  "diagnosed_control_defects": [
+    {
+      "control": "C2（v1/v2）：沿 **lead 轴**滚动预测，技巧必须变差",
+      "measured": "八个阶里实测 `lead_rolled_skill == skill`（完全相等）",
+      "diagnosis": "**对照设计错误，数学上不可能失败**：技巧是**对 lead 取平均**的量，而沿 lead 轴滚动只是对 lead 轴做**置换** ⇒ 平均值不变。这不是模型的发现。",
+      "correction": "改为 C2′：沿**目标月轴**（target）滚动，使预测与真值**错位**；技巧必须变差。这才是「评分对时间对齐敏感」的真正检验。"
+    },
+    {
+      "control": "C1（v1/v2）：用**回测期**选参（后见之明），其**物理技巧**必须不差于验证期选参",
+      "measured": "d=16（0.04223 对 0.04302）与 d=24（0.04226 对 0.04297）**更差**；其余各阶**完全相等**",
+      "diagnosis": "两条独立原因使该前提不成立：(i) `select` 最小化的是**系数空间**损失，而物理 `full_mse` 技巧是**另一个量** ⇒ **选参判据 ≠ 评分判据**；(ii) 八个阶**全部**选中网格角点 `rank=64, penalty=0.1` ⇒ 用哪一段选参都得到**同一个模型**，后见之明**没有优势可言**。",
+      "correction": "拆成两条：**C1a（闸门）**——后见之明必须在**它自己最小化的那个量**（回测期系数空间损失）上不差于验证期选参（否则搜索本身坏了）；**C1b（诊断，非闸门，按原样记录）**——记录「是否选中同一组参数」以及物理技巧之差，并写明两条原因。"
+    },
+    {
+      "check": "P4 的机械检查式（v1/v2）：写成「bits 单调**升**」",
+      "diagnosis": "**符号写反**。E1 的 `L_total_bits` 是**负值**（高斯码长在 σ²<1 时为负）且随 d **递减**。P4 的**claim 文字**（「记账轴单调偏向更细而技能轴非单调」）本来就对，只有检查式写错 ⇒ 把检查式改成 `monotone_nonincreasing(L_total)`；**claim 文字一字未改**，并在报告里附注这次更正。"
+    }
+  ],
+
+  "new_gate_g5": {
+    "id": "G5",
+    "name": "独立复现冻结报告的公开数字",
+    "rule": "在 d=12 上，本件算出的**通道等权平均 `full_skill_vs_climatology`** 必须与冻结 `archive/multivariate-l12-v1/report.json` 里 `metrics[variant][通道]['full_skill_vs_climatology']` 的通道平均相符（容差 1e-9），`variant ∈ {joint, independent_channels}`。",
+    "why": "G2 只证明**投影**复刻；G5 证明**拟合＋评分**这条链也复刻，且是对**已公开的数字**做对账 —— 比自证强。"
+  },
+
+  "purpose": "（同 v1/v2）E1 在**记账轴**上量出判据退化。本件问同一件事在**技能轴**上是否也退化：把截断阶数 d 当作谱词汇的细度，对每一个 d 独立重跑同一套流程（同划分、同网格、**只**在验证期选参），再在开发回测上评分。判据：技能是否随 d 单调？有没有内部极大／平台？两轴是否同向？",
+  "carrier": "同上位卡：多年尺度（年际）地球系统演化过程",
+
+  "design": {
+    "ladder_degrees": [4, 6, 8, 10, 12, 16, 20, 24],
+    "splits": {"training": "1979-01..2014-12", "validation": "2015-01..2019-12", "development_backtest": "2020-01..2025-12"},
+    "samples_asserted": [432, 60, 72],
+    "ranks": [8, 16, 32, 64],
+    "ridge_mean_loss_penalties": [0.01, 0.1, 1.0],
+    "selection": "每个 d 只用**验证期**选一个全局 rank/penalty；回测期**不参与任何选择**",
+    "baselines": ["climatology", "persistence", "independent_ar1", "independent_channels", "joint"],
+    "primary_yardstick": "逐通道 `full_mse` 对**同一 d 的气候态**取相对技巧，通道等权、lead 等权（与冻结报告同一口径）",
+    "bounded_ladder": {"per_degree_seconds": 900, "total_seconds": 5400, "on_overrun": "停止阶梯并报出已完成子集，标 `ladder_complete: false`"},
+    "read_only": ["archive/multivariate-l12-v1/", "archive/multivariate-seasonal-v1/", "archive/vocabulary-accounting-e1-v1/report.json", "experiments/multivariate-refinement/", "/home/ubuntu/climatetensor-inputs/ncep-multivariate/"],
+    "write_root": "archive/vocabulary-skill-axis-e1b-v3/",
+    "preserved_failure_records": ["archive/vocabulary-skill-axis-e1b-v1/report.json（第三次启动失败：KeyError）", "archive/vocabulary-skill-axis-e1b-v2/report.json（阶梯跑完但两对照不成立 ⇒ 未报判定）"],
+    "frozen_dir_protection": "`project.build()` 的产物目录在调用前改写为 write_root/L<d>；冻结目录只读。"
+  },
+
+  "gates": [
+    {"id": "G1", "rule": "每个 d、每个通道，观测域必须与冻结 `projection-L12.npz` 的 `<channel>_domain` 逐格相同"},
+    {"id": "G2", "rule": "d=12 重建投影的**全部数组**与冻结件精确相等（NaN 视为相等）⇒ 同一套流程，且防住静默复用产物"},
+    {"id": "G3", "rule": "跑前跑后冻结目录逐件 sha256 不变，并与 reforecast 记录的摘要一致"},
+    {"id": "G4", "rule": "write_root/report.json 已存在即拒绝"},
+    {"id": "G5", "rule": "见 `new_gate_g5`"}
+  ],
+
+  "criteria": {
+    "skill_of_d": "skill(d) ＝ 13 通道等权、六 lead 等权的 `full_skill_vs_climatology`（joint 模型）",
+    "valid_loss_of_d": "valid_loss(d) ＝ `select` 在验证期的最优归一化系数 MSE",
+    "accounting_prefers_finer": "E1 的 `L_total_bits(d)` 在 E1 测过的阶上单调**递减**",
+    "skill_prefers_finer": "skill(d) 在**本件跑完的整条阶梯**上非减",
+    "verdict_skill_has_interior_optimum": "skill 的 argmax 落在**内部**阶且 skill 不是非减 ⇒ 技能轴有内部极大",
+    "verdict_skill_nonmonotone_bits_monotone": "记账轴单调偏向更细、而技能轴不单调（出现回撤）⇒ **两轴不同向**",
+    "verdict_two_axes_align": "两轴同向单调 ⇒ 记账轴可作技能轴代理",
+    "verdict_instrument_failure": "任一闸门／对照不成立 ⇒ 不报判定"
+  },
+
+  "predictions": {
+    "note": "P1–P5 的**文字与 v1 逐字相同**；揭盲情况见下。核对式只改了 P4 的符号（见 `diagnosed_control_defects` 第 3 条）。",
+    "items": [
+      {"id": "P1", "claim": "valid_loss(d) 单调不增", "unblinded_by_probe": true, "v2_observed": "假：14.657／15.091／15.089／14.877／14.947／14.993／14.991／14.754"},
+      {"id": "P2", "claim": "skill(d) 在 d≥8 之后进入平台（相邻相对增量 < 0.02），且 argmax 不在最低两阶", "unblinded_by_probe": false, "v2_observed": "假（相邻相对增量 0.094／0.092／0.022 …）"},
+      {"id": "P3", "claim": "joint 相对 independent_channels 的增益随 d 不增", "unblinded_by_probe": false, "v2_observed": "假（增益在 d=24 回升到 ≈0）"},
+      {"id": "P4", "claim": "两轴不同向：记账轴单调偏向更细而 skill 非单调（平台）", "unblinded_by_probe": false, "v2_observed": "实质**成立**（v2 的检查式符号写反，故当时记为假）"},
+      {"id": "P5", "claim": "d≥16 时选中 rank ≥ 32", "unblinded_by_probe": true, "v2_observed": "真（八个阶几乎都选中网格上界 rank=64）"}
+    ],
+    "rule": "**已揭盲的 P1／P5 不得当作预注册的成功**；命中与否都只作记录。"
+  },
+
+  "negative_controls": {
+    "C1a_hindsight_on_its_own_criterion": {"rule": "后见之明（用回测期选参）在**回测期系数空间损失**上必须不差于验证期选参。", "on_failure": "工具失败（网格搜索本身坏了）"},
+    "C1b_hindsight_false_premise_recorded": {"rule": "**非闸门**：按原样记录 v1/v2 的 C1 失败、是否选中同一组参数、以及物理技巧之差与两条原因。", "on_failure": "无（只记录）"},
+    "C2_target_axis_misalignment": {"rule": "沿**目标月轴**滚动预测后，技巧必须变差。", "on_failure": "工具失败（评分器对时间对齐不敏感）"},
+    "C2_lead_roll_recorded_as_ill_posed": {"rule": "**非闸门**：按原样记录 v1/v2 的 lead 轴滚动结果与「数学上不可能失败」的诊断。", "on_failure": "无（只记录）"}
+  },
+
+  "failure_semantics": "**工具失败**（非零退出）⇔ G1–G5 任一不成立 ／ C1a 或 C2′ 不成立 ／ 任何未捕获异常。**阶梯没跑完不是失败**。**已揭盲的预测命中与否不影响判定**。",
+
+  "prohibited": [
+    "改动 archive/multivariate-l12-v1/",
+    "删除或覆盖 v1／v2 的失败报告",
+    "为了让判定好看而改写 P1–P5 的文字或判据含义",
+    "把已揭盲的 P1／P5 当作预注册的成功",
+    "把 v1/v2 两处对照的失败从报告里抹掉（它们必须与原样数据一起保留）",
+    "把技能轴结果读成物理结论"
+  ],
+
+  "stop_conditions": [
+    "G1／G2／G3／G5 任一失败 ⇒ 停止",
+    "C1a 或 C2′ 不成立 ⇒ 停止（不报判定）",
+    "单阶超过 900 s 或总计超过 5400 s ⇒ 停止阶梯、报出已完成子集",
+    "预算耗尽（wall 5400 s 或 launch 2 次）"
+  ],
+
+  "budget": {"wall_seconds": 5400, "launches": 2, "output_bytes": 800000000}
+}

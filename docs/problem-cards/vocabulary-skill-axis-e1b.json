@@ -1,0 +1,45 @@
+{
+  "question_id": "xue.derived.vocabulary-skill-axis-e1b",
+  "round": 1,
+  "predecessor": "docs/problem-cards/vocabulary-accounting-e1.json",
+  "change_reason": "E1 在**记账轴**上量出判据退化：`L_total(d)` 单调、argmin 落在阶梯端点、**没有内部极小** ⇒ 「词汇越细越省」使判据无法选阶。提问方 2026-09-26 的原问正是这件事：「如果能给误差与最短长度加上一种可信度呢？」（记为 Q-b）。本件把那句问话翻成可测的形式：**记账轴的对面是技能轴**——同一个「细度」参数 d，在**预报技巧**上是否也退化？",
+  "raw_question": "如果能给误差与最短长度加上一种可信度呢？",
+  "objects_and_versions": "**契约链（写下即冻结；改则另立，不覆盖）**：`experiments/vocabulary-skill-axis-e1b/contract-v1.json`（sha256 `fb28312c8814c952fa6ddd25f650d8c48798d84101c6a4a12d992f4147cc91cb`）→ `contract-v2.json`（修三处程序错误 ＋ 加有界阶梯 ＋ 声明揭盲）→ **`contract-v3.json`（本次运行的契约：只修仪器，claim 一字未改）**。\n**脚本**：`experiments/vocabulary-skill-axis-e1b/run_skill_axis.py`（本轮从 v1 改到 v3：三处 bug 修复、两处对照重写、一处符号更正、新增 G5）。\n**结果**：`archive/vocabulary-skill-axis-e1b-v3/{report.json,run.log}`（本地仓库另存一份）。\n**未删除的失败记录**：`archive/vocabulary-skill-axis-e1b-v1/report.json`（`KeyError`）、`archive/vocabulary-skill-axis-e1b-v2/report.json`（阶梯跑完但两对照不成立 ⇒ 未报判定）。\n**只读、未改动**：`archive/multivariate-l12-v1/`（逐件 sha256 跑前＝跑后，并与 reforecast 记录一致）、`archive/vocabulary-accounting-e1-v1/report.json`（E1 的记账数）、`experiments/multivariate-refinement/`、`/home/ubuntu/climatetensor-inputs/ncep-multivariate/`。",
+  "success_condition": "把一个「细度」参数 d 的**技能曲线**测出来，并与 E1 的**记账曲线**并置，回答「两轴是否同向」。判据：① 技能是否随 d 单调？② 有没有**内部**极大或平台？③ 记账轴（E1：`L_total` 单调递减）与技能轴是否同向？并要求五个闸门全过：**G1** 域不变性（每阶每通道的观测域与冻结件逐格相同）／**G2** d=12 投影**全部数组**与冻结件精确相等／**G3** 冻结摘要不变／**G4** 拒绝覆盖／**G5** d=12 的技巧读数与**冻结报告已公开的数字**逐位相符。",
+  "interpretation_and_assumptions": "- 「细度」＝截断阶数 d（谱词汇量 `(d+1)²` 每标量通道；矢量通道 2×）。\n- 每个 d **独立重跑同一套流程**：同一划分（1979-01..2014-12 训练／2015-01..2019-12 验证／2020-01..2025-12 开发回测）、同一 rank/penalty 网格（rank [8,16,32,64]、penalty [0.01,0.1,1.0]）、**只在验证期选参**。\n- 评分口径与冻结报告**逐字相同**：逐通道 `full_mse`（含被丢弃空间模态的残差）对**同一 d 的气候态**取相对技巧，13 通道等权、6 个提前期等权。\n- 阶梯前六阶与 E1 重合（`[4,6,8,10,12,16]`），另加 `20,24` 以问「趋势会不会在 16 之后翻转」。\n- 有界阶梯：单阶上限 900 s、总上限 5400 s；超限即停并报出已完成子集（本次 8/8 跑完）。",
+  "candidates": "E1b-a 全阶梯独立重跑（本件）／E1b-b 只在 E1 的六阶上做（省一半时间，但问不了「16 之后会不会翻转」）／E1b-c 不做，接受 E1 的记账判据",
+  "check_scope": "本轮**做**：① 八阶独立重跑并评分；② 两轴并置；③ 五道闸门（含用冻结报告公开数字对账的 G5）；④ 两条负对照；⑤ 与契约里先写死的 P1–P5 逐条核对。\n本轮**不做**：不改冻结模型与上游；不声称「找到最优阶」；不据本件宣称「跨通道联合无价值」（比较不对等）；不把本件读成对自然的发现。",
+  "budget": {"wall_seconds": 5400, "launches": 2, "output_bytes": 800000000},
+  "round_result": "**判定 `skill_has_interior_optimum`（技能轴有内部极大）；`failures: []`；五道闸门全过；两条（重写后的）负对照全过。** 实测 wall **433.3 s**（上限 5400）、峰值内存 **4,032 MB**、阶梯 **8/8**。\n\n**技能曲线（joint，13 通道等权 × 6 提前期等权）**：\n| d | 4 | 6 | 8 | 10 | **12（出货）** | **16** | 20 | 24 |\n|---|---|---|---|---|---|---|---|---|\n| 技巧 | 0.01956 | 0.03043 | 0.03526 | 0.03856 | **0.04211** | **0.04302（最大）** | 0.04034 | 0.04297 |\n\n**两轴并置**：记账轴（E1）`L_total_bits` 从 −1.936e8 单调降到 −3.641e8（**单调偏向更细**）；技能轴**非单调**（16 处最大、20 处回撤、24 处回升）⇒ **`two_axes_agree: false`**。\n\n**三条要紧读数（各带限度）**：\n① **E1 的「最小词汇」判据不能单独用**：记账永远偏向更细，技能却不单调 ⇒ 判据**必须**加留出／可信度项（这正是 Q-b 那一问的判断依据）。**限度**：`d≥8` 之后各阶相对差只在 **1–6%** 量级，`d=24` 的系数数是 `d=12` 的 3.7 倍却几乎持平 ⇒ 正确的说法是「**平台加一次浅回撤，最优在 16 附近**」，**不是**「16 是明确最优阶」。\n② **joint 在八阶全部输给「每通道独立」**（增益 −0.0023…−0.0157，仅 d=24 约等于 0）；且冻结报告公开的 d=12 数字显示 `independent_ar1` **+0.05458** ＞ `independent_channels` **+0.05325** ＞ `joint` **+0.04211**。**这不是新发现**——三个数字本来就在冻结报告里，只是没被挑出来说；本件的贡献是**在整条阶梯上确认**＋**用 G5 证明算的是同一套**＋**把它变成显式读数**。**限度**：比较**不对等**（joint 对 13 通道共用一组参数，baseline 每通道各选一组）⇒ 只能写「**在本协议下**低于每通道独立模型」，**不得**写「跨通道联合没有价值」。\n③ **选参是 rank 轴上的角点解**：八阶里七阶选中 rank=64（网格上界），penalty 一律 0.1 ⇒ **rank 网格未覆盖最优**（此条已被成本探针事先揭盲，命中不算证据）。\n\n**G5（本件最硬的一条）**：d=12 的 joint 技巧 `0.042107039108189276` 与 independent_channels `0.05324627736715689` 与**冻结报告已公开数字逐位相同** ⇒ 本件不是自证。\n\n**预测 2/5 命中**（P4、P5 中；P1、P2、P3 假；P1／P5 事先已揭盲）。",
+  "remaining_questions": "- **判据该加什么项**：Q-b 的原话是「加上一种可信度」。本件证明**必须**加，但没证明加哪一项最好。候选：(i) 留出期损失（本件已有）；(ii) `0036` §1.12 的**提升记账**（生日／覆盖层／构造深度／精确残差）——那是 E3；(iii) 只把「平台内的最粗阶」当默认（最省参数且技巧不掉出平台）。\n- **`d=16` 该不该出货**：本件显示 16 的 joint 技巧比 12 高约 **2.1%**（相对），但系数数从 2,698 涨到 4,618。要不要为此重训并换出货阶？**这是决定，不是声明**，须由人作；且它牵动冻结件与已发布产物。\n- **joint 为什么输**：本件的比较不对等，因此还不能判「联合无用」。要做**同选参协议**的对照（joint 也按每通道选，或 baseline 也共用一组）才能判。\n- **rank 上界要不要抬**：八阶七次顶在 64 ⇒ 需要抬上界重测，否则本件报的技巧都是「rank ≤ 64 内」的技巧。\n- **C1 的两条原因**里「选参判据 ≠ 评分判据」这一条是否该反向利用：既然 `select` 最小化系数空间损失、而评分是物理技巧，那么**用物理技巧选参**是否会更好？这是一个便宜且未做的对照。",
+  "next_step": "1) 提问方就上面第一、二条作两项决定：(a) 判据加哪一项（建议先做最便宜的「平台内取最粗阶」＋留出期损失，不必等 E3）；(b) `d=16` 是否重训／换出货阶。\n2) 无论怎么定，先把两条**便宜的未做对照**补上：**同选参协议**的 joint vs 每通道独立；**用物理技巧选参** vs 用系数空间损失选参。两项都不动冻结件。\n3) 之后才是 E3（把时面从 1/4 补到 4/4），因为它要新写递推契约，成本高于上面两项。",
+  "stop_conditions": [
+    "G1 域不变性失败 ⇒ 停止（域被动过，比较失效）",
+    "G2 d=12 复刻失败 ⇒ 停止（本件与冻结件不是同一套流程，或发生了静默复用产物）",
+    "G3 冻结摘要变化 ⇒ 停止并登记阻塞",
+    "G5 与冻结报告公开数字不符 ⇒ 停止（不是同一套流程）",
+    "C1a 或 C2′ 不成立 ⇒ 停止（不报判定）",
+    "单阶超过 900 s 或总计超过 5400 s ⇒ 停止阶梯、报出已完成子集"
+  ],
+  "attempts": [
+    {"command": "python run_skill_axis.py（v1）", "tool_and_version": "python 3.14 ／ numpy 2.4.6 ／ scipy 1.17.1（远端 climatetensor-env）", "outcome": "failed-then-corrected", "reason": "`TypeError: log() got an unexpected keyword argument 'flush'`——把 `print` 的习惯带进自己的 `log()`；且顶层守卫只捕 `SystemExit` ⇒ **崩溃不留报告**。", "first_failure": "先只改了函数定义、没改调用点 ⇒ 第二次启动**同一错误再犯**。"},
+    {"command": "python run_skill_axis.py（v2）", "outcome": "failed-then-corrected", "reason": "`KeyError: 'climatology'`——重构进共用 `aggregate_skill()` 时忘了把 `score_coefficients` 的单次结果包成「变体键」形式。", "first_failure": "**阶梯 8/8 跑完**（414.5 s）但两个负对照都不成立 ⇒ 按失败语义**没有报出判定**（fail-closed 生效）。"},
+    {"command": "python run_skill_axis.py（v3）", "outcome": "completed", "reason": "判定 `skill_has_interior_optimum`；五道闸门与两条重写后的对照全过；预测 2/5 命中。"}
+  ],
+  "handoff": {
+    "question": "把截断阶数当作谱词汇的细度，技能轴是否也像记账轴一样退化（无内部最优）？两轴是否同向？",
+    "candidates": "E1b-a 全阶梯独立重跑（已跑，判定 `skill_has_interior_optimum`）／E1b-b 六阶／E1b-c 不做",
+    "checks": "五道闸门（含用冻结报告公开数字对账的 **G5**）＋ 两条重写后的负对照（C1a 后见之明在它自己最小化的量上不差；C2′ 目标月错位后技巧必须变差）＋ 两处**原样保留**的对照失败与诊断 ＋ 一处符号更正留痕",
+    "evidence": "技能：0.0196／0.0304／0.0353／0.0386／0.0421／**0.0430**／0.0403／0.0430（d=4…24）；记账（E1）：L_total −1.936e8 → −3.641e8 单调递减；joint 增益八阶全负；G5 逐位相符；wall 433.3 s；峰值内存 4,032 MB",
+    "residuals": "① joint vs independent 比较**不对等** ⇒ 不得过度解读；② 技巧是**相对同一阶气候态**的量，跨阶比较是相对技巧；③ d≥8 后各阶只差 1–6% ⇒ 「内部极大」很浅；④ rank 上界 64 是限制；⑤ 开发回测期已被看过（`prior_exposure`）；⑥ 本件度量的是**我们自己的呈现方式**；⑦ 两处对照失败按原样保留，引用判定时须说明 v2 曾因此不报判定；⑧ P1／P5 事先已揭盲",
+    "receiver_constraints": "不得写「找到了最优截断阶」；不得写「跨通道联合没有价值」；不得把「joint 输给 AR(1)」当新发现（冻结报告已有这些数字）；不得用本件技巧数字支撑**物理**结论；报告层若要用须按 `R2` 译成不含框架语汇且带前提标签的说法；不得删除 v1／v2 的失败报告"
+  },
+  "self_disclosure": "**本件是自审，不是对自然的发现。** 四处须自己先说清：① 度量对象是**我们自己的呈现方式**；② 十次运行里**三次是我的程序错误**、**两处对照写法本身有缺陷**、**一处检查式符号写反**——这些全部保留在记录里，没有一处被静默修好；③ **G5 是最硬的一条**：它把本件与**已公开的冻结数字**逐位对齐，使读数不是自证；④ 尽管如此，`d` 的阶梯、rank 网格、以及「只对同一阶气候态取相对技巧」这个口径，**都是我们定的**。",
+  "artifacts": {
+    "contracts": ["experiments/vocabulary-skill-axis-e1b/contract-v1.json", "experiments/vocabulary-skill-axis-e1b/contract-v2.json", "experiments/vocabulary-skill-axis-e1b/contract-v3.json"],
+    "script": "experiments/vocabulary-skill-axis-e1b/run_skill_axis.py",
+    "result": ["archive/vocabulary-skill-axis-e1b-v3/report.json", "archive/vocabulary-skill-axis-e1b-v3/run.log"],
+    "preserved_failures": ["archive/vocabulary-skill-axis-e1b-v1/report.json", "archive/vocabulary-skill-axis-e1b-v2/report.json"],
+    "note": "docs/maintenance/2026-09-28-vocabulary-skill-axis-e1b.md"
+  }
+}

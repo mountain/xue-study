@@ -1,0 +1,86 @@
+{
+  "version": "vocabulary-skill-axis-e1b-v1",
+  "question_id": "xue.derived.vocabulary-skill-axis-e1b",
+  "round": 1,
+  "frozen_before_run": true,
+  "purpose": "E1 在**记账轴**上量出判据退化（L_total(d) 单调，argmin 落在阶梯端点 d=16，无内部极小）。本件问同一件事在**技能轴**上是否也退化：把截断阶数 d 当作谱词汇的细度，对每一个 d **独立重跑同一套流程**（同划分、同 rank/penalty 网格、**只**在验证期选参），再在**开发回测**（2020-01..2025-12）上评分。判据：技能是否随 d 单调？有没有内部极大／平台？两轴是否同向？",
+  "carrier": "同上位卡：多年尺度（年际）地球系统演化过程（docs/problem-cards/vocabulary-accounting-e1.json 的 carrier_declaration）",
+  "relation_to_e1": "E1（experiments/vocabulary-accounting-e1/）给出记账轴 L_total_bits(d) 与残差；本件给出技能轴，并把两轴并置。E1 的阶梯是 [4,6,8,10,12,16]；本件**沿用该阶梯**并向下扩展到 [4,6,8,10,12,16,20,24]（后两阶用于看趋势是否在 16 之后翻转）。",
+
+  "design": {
+    "ladder_degrees": [4, 6, 8, 10, 12, 16, 20, 24],
+    "splits": {"training": "1979-01..2014-12", "validation": "2015-01..2019-12", "development_backtest": "2020-01..2025-12"},
+    "samples_asserted": [432, 60, 72],
+    "ranks": [8, 16, 32, 64],
+    "ridge_mean_loss_penalties": [0.01, 0.1, 1.0],
+    "selection": "每个 d 只用**验证期**选一个全局 rank/penalty；回测期**不参与任何选择**（与冻结 L12 契约同一口径）",
+    "baselines": ["climatology", "persistence", "independent_ar1", "independent_channels", "joint"],
+    "primary_yardstick": "逐通道 `full_mse`（原生观测域上的面积加权物理误差，含被丢弃空间模态的残差）对**同一 d 的气候态**取相对技巧，通道等权、lead 等权 —— 与冻结报告同一口径（full_skill_vs_climatology）",
+    "secondary_yardstick": "系数空间归一化 MSE（`select` 自身最小化的量），仅作对照",
+    "read_only": ["archive/multivariate-l12-v1/", "archive/multivariate-seasonal-v1/", "archive/vocabulary-accounting-e1-v1/report.json", "experiments/multivariate-refinement/", "/home/ubuntu/climatetensor-inputs/ncep-multivariate/"],
+    "write_root": "archive/vocabulary-skill-axis-e1b-v1/（每阶一个 L<d>/ 子目录；拒绝覆盖）",
+    "frozen_dir_protection": "`project.build()` 的产物目录由本脚本在调用前**改写**为 write_root/L<d>，因此**不会**在 archive/multivariate-l12-v1/ 里新建 projection-L6/L24 等文件（该目录的冻结件只读）。"
+  },
+
+  "gates": [
+    {"id": "G1", "name": "域不变性", "rule": "每个 d、每个通道，观测域必须与冻结 `projection-L12.npz` 的 `<channel>_domain` **逐格相同**（观测域与阶数无关，这是「没有偷偷换域」的闸门）"},
+    {"id": "G2", "name": "d=12 复刻", "rule": "本脚本在 d=12 上重建的投影，其**全部数组**必须与冻结 `projection-L12.npz` 精确相等（NaN 视为相等）⇒ 证明本件与冻结件是同一套流程"},
+    {"id": "G3", "name": "冻结摘要不变", "rule": "跑前跑后 `archive/multivariate-l12-v1/` 逐件 sha256 不变；若 `archive/multivariate-reforecast-202602-v1/report.json` 存在，还须与其中记录的 `frozen_hashes_sha256` 一致"},
+    {"id": "G4", "name": "拒绝覆盖", "rule": "write_root/report.json 已存在即 raise FileExistsError"}
+  ],
+
+  "criteria": {
+    "skill_of_d": "skill(d) ＝ 三通道等权、六 lead 等权的 `full_skill_vs_climatology`（joint 模型）",
+    "valid_loss_of_d": "valid_loss(d) ＝ `select` 在验证期报出的最优归一化系数 MSE",
+    "monotone": "相邻差全 ≤ 容差（1e-9）即为单调不增",
+    "plateau": "相邻相对增量 < 0.02 视为平台",
+    "verdict_skill_has_interior_optimum": "skill(d) 的 argmax 落在**内部**（既不是最小阶也不是最大阶），且 skill(d) 非单调 ⇒ 技能轴有内部最优，E1 的记账判据只是**错的代理**",
+    "verdict_skill_plateau_bits_monotone": "skill(d) 在低阶上升后**进入平台**（无内部降段），而 bits(d) 单调升 ⇒ **两轴不同向**：词汇越细在记账上永远更贵、在技能上不再更准 ⇒ 「最小词汇」判据**必须**加留出／可信度项",
+    "verdict_two_axes_align": "skill(d) 与 bits(d) 同向单调 ⇒ 记账轴可以作为技能轴的代理（E1 的退化对选阶无害）",
+    "verdict_instrument_failure": "任一闸门不成立 ⇒ 不报判定"
+  },
+
+  "predictions": {
+    "note": "**在跑之前写死**，以便被实测否证。",
+    "items": [
+      {"id": "P1", "claim": "valid_loss(d) 单调不增", "check": "monotone(valid_loss)"},
+      {"id": "P2", "claim": "skill(d) 在 d≥8 之后进入平台（相邻相对增量 < 0.02），且 argmax 不在最低两阶", "check": "plateau_from_8 and argmax not in {4,6}"},
+      {"id": "P3", "claim": "joint 相对 independent_channels 的增益随 d 不增", "check": "monotone_nonincreasing(joint_gain)"},
+      {"id": "P4", "claim": "两轴不同向：bits(d) 单调升而 skill(d) 非单调（进入平台）⇒ 判据须加留出／可信度项", "check": "monotone(bits) and not monotone_strict(skill)"},
+      {"id": "P5", "claim": "P2 成立时，选中的 rank 在高阶被顶到网格上界附近（≥32）", "check": "chosen rank at d>=16 is >= 32"}
+    ]
+  },
+
+  "negative_controls": {
+    "C1_hindsight_selection": {
+      "rule": "另用**回测期**当验证集选一次 rank/penalty（hindsight），并在回测期评分：hindsight 的 skill **必须不差于**验证期选参的 skill（通常更好）。",
+      "on_failure": "工具失败（说明选参口径写错，或评分不稳定）",
+      "why": "把「后见之明会更好看」这件事量出来，才能说明为什么本件的选择必须只用验证期。"
+    },
+    "C2_shuffled_lead_test": {
+      "rule": "把某个 d 的回测预测沿 lead 轴**置换**后重新评分，skill 必须**变差**（相对真实对齐）。",
+      "on_failure": "工具失败（评分器没有对齐判据）",
+      "why": "评分必须对「哪个 lead 对应哪个月」敏感，否则技巧数字不依赖时间对齐。"
+    }
+  },
+
+  "failure_semantics": "**工具失败**（非零退出）⇔ G1–G4 任一不成立 ／ C1／C2 不成立 ／ 某阶某通道投影抛错。判定（任何一种 verdict）不是工具失败。投影抛错按 E1 的先例**逐条登记**，但 G2 需要 d=12 全部通道成功，故 d=12 出错即工具失败。",
+
+  "prohibited": [
+    "改动 archive/multivariate-l12-v1/（含在其中新建 projection-L6/L24 等文件）",
+    "用回测期选参后把结果当「模型技巧」（那正是 C1 要量的东西）",
+    "把技能轴的结果读成物理结论（这是对**我们自己呈现方式**的度量，不是对自然的发现）",
+    "把高阶更好的技巧读成「气候分辨率更高」（输出采样步长不是技巧）",
+    "重训或改写冻结模型、vectors/maps/climatology/scale"
+  ],
+
+  "stop_conditions": [
+    "G1 域不变性失败 ⇒ 停止（域被动过，一切比较失效）",
+    "G2 d=12 复刻失败 ⇒ 停止（本件与冻结件不是同一套流程）",
+    "G3 冻结摘要变化 ⇒ 停止并登记阻塞",
+    "某阶投影因病态条件被拒 ⇒ 登记该阶失败并继续其余阶（d=12 除外）",
+    "预算耗尽（wall 5400 s 或 launch 2 次）"
+  ],
+
+  "budget": {"wall_seconds": 5400, "launches": 2, "output_bytes": 800000000}
+}
