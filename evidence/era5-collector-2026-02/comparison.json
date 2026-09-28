@@ -1,0 +1,34 @@
+{
+  "month": "2026-02",
+  "n_days": 28,
+  "complete": true,
+  "overlap_with_r1": true,
+  "channels": {
+    "sp": {
+      "status": "compared",
+      "unit": "Pa",
+      "n_compared": 18048,
+      "signed_mean": 89.44527329215242,
+      "median": 23.523630990384845,
+      "std": 1246.2307000572885,
+      "median_abs": 329.6694847148101,
+      "p95_abs": 2694.8051292350265,
+      "max_abs": 12193.38116944638,
+      "frac_abs_lt_1": 0.18533909574468085,
+      "r1_month_used": "2026-02"
+    },
+    "sst": {
+      "status": "compared",
+      "unit": "K",
+      "n_compared": 10980,
+      "signed_mean": -0.06792475013769553,
+      "median": 0.004801115020484303,
+      "std": 0.5431903820074734,
+      "median_abs": 0.21753447746951338,
+      "p95_abs": 1.0594472869999427,
+      "max_abs": 5.594681778610607,
+      "frac_abs_lt_1": 0.9431693989071038,
+      "r1_month_used": "2026-02"
+    }
+  }
+}
