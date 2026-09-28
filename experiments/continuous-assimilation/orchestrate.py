@@ -192,6 +192,8 @@ def main(argv=None) -> int:
                                         'verify', 'status', 'selftest', 'era5'])
     ap.add_argument('--month', action='append', help='month YYYY-MM (aggregate/analyze)')
     ap.add_argument('--dry-run', action='store_true', help='record the intent, write no data')
+    ap.add_argument('--from', dest='from_day', default=None,
+                    help='era5: first day to consider (YYYY-MM-DD); default comes from the contract')
     args = ap.parse_args(argv)
     cas.ensure_dirs()
 
@@ -206,8 +208,13 @@ def main(argv=None) -> int:
         passthrough = []
         if args.dry_run:
             passthrough.append('--dry-run')
-        if args.month:
-            passthrough = ['--from'] + list(args.month)
+        # `--from` is the ERA5 flag; `--month` is accepted as an alias so that an operator does
+        # not have to remember which subcommand takes which. (The unit file uses --from, and an
+        # earlier version of this entry point did NOT accept it, so the unit would have failed
+        # on its first scheduled run.)
+        start = args.from_day or (args.month[0] if args.month else None)
+        if start:
+            passthrough += ['--from', start]
         return cas_era5.main(passthrough)
     if args.command == 'status':
         step('status', cas.status())
