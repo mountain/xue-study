@@ -1,0 +1,947 @@
+{
+  "generated_utc": "2026-09-28T08:00:18Z",
+  "n_files": 114,
+  "total_bytes": 2946089008,
+  "sources": [
+    {
+      "prefix": "frozen",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1",
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "include": [
+        "*.npz",
+        "*.json"
+      ]
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate",
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "include": [
+        "*"
+      ]
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602",
+      "note": "extended inputs through 2026-02",
+      "include": [
+        "*"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "prefix": "frozen",
+      "remote": "frozen/backtest.npz",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/backtest.npz",
+      "bytes": 45099036,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "f89485e70bd7c1b0711d9d8d41ac4576d7ab3896bead61ee6a74b038998245dd"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/forecast-on-coarse-grid.npz",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/forecast-on-coarse-grid.npz",
+      "bytes": 3344565,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "267918966ba4267fcd9e6185ef59c966b54c7cb7d864c34d66a2d745ac9324af"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/forecast.npz",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/forecast.npz",
+      "bytes": 12623469,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/model.npz",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/model.npz",
+      "bytes": 28214240,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/projection-L12.npz",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/projection-L12.npz",
+      "bytes": 28894789,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/browser-local-integration.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/browser-local-integration.json",
+      "bytes": 967,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "68de2bdd73e1a4a3fe2b6187a519a76e6e15d95c5f15d94130c6ed9ff752f443"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/browser-local-tmp2m-tmp850-prmsl-hgt500-spfh850-spfh700.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/browser-local-tmp2m-tmp850-prmsl-hgt500-spfh850-spfh700.json",
+      "bytes": 1066,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "4df78710bd148920548e9b7eca6de9852bcf3a6c8b355087475ffcc1ff20fb53"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/browser-local-vvel500-vvel700-wind850-wind500-wind250.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/browser-local-vvel500-vvel700-wind850-wind500-wind250.json",
+      "bytes": 921,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "72a8b51908d6188a05f108a72983d22092f6ae19fd71310068360508547e249e"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/browser-public-integration.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/browser-public-integration.json",
+      "bytes": 970,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "0ffd85ad5ff7d09cdc8593a033c1becb729e2611524c924c13fe9ce010843ae0"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/browser-public-report-mobile.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/browser-public-report-mobile.json",
+      "bytes": 86,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "f0cecba91ae8ea0253bbee1c852f4cb2525c18289f0f6c373bea1a887393c007"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/coarse-preservation-before.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/coarse-preservation-before.json",
+      "bytes": 17262,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "17f4e4dfdbbca0ce20a6c40ccb8544f62e514762cd748a520e5d8a401b548645"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/encoding-verification.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/encoding-verification.json",
+      "bytes": 3676,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "0126518cccf670adb7534c5a8ba9857a28047b0710a9914ab6b821c8f6f29044"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/https-verification.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/https-verification.json",
+      "bytes": 16848,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "f4b55bc8b881761756dc28d9e4282f4b15d2ecfa025d4968d3f14743b155161c"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/implementation-verification.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/implementation-verification.json",
+      "bytes": 2627,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "0a25a994be3edd1bae7c0634bf10cb969afc973e05519bec1e485cffaa4ae77b"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/quality-check.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/quality-check.json",
+      "bytes": 731,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "5ef7e29b6396b6964077be23d44a8dc3637141b8696bcdae1019fe35c6ceebe7"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/report.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/report.json",
+      "bytes": 196496,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+    },
+    {
+      "prefix": "frozen",
+      "remote": "frozen/staging-verification.json",
+      "local": "/home/ubuntu/xue-study/archive/multivariate-l12-v1/staging-verification.json",
+      "bytes": 152,
+      "note": "frozen substrate: model + projection + forecast + backtest",
+      "sha256": "dc357e213f460c4381cbc6e71183ae5398564196ec580b4e15aa53cfcd2affc5"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/Caddyfile.before",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/Caddyfile.before",
+      "bytes": 536,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "dbf88b80ada85c9e61fbb3298169797dfdef20136cb3279db733880a342173a8"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/Caddyfile.next",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/Caddyfile.next",
+      "bytes": 607,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "df447827b886e96b14b199583097eebfc13256cc660c777782590fa3e246cc86"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/browser-local-integration.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/browser-local-integration.log",
+      "bytes": 1156,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "c9332117afd7a76355b595db56d01752d2a170fa58b0c5a6a4ee43fb94ff17c6"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/browser-local-mobile.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/browser-local-mobile.log",
+      "bytes": 421,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "1c2ef95c5e7c0e0fca0f4a33e4dd707849af7bfa3935303ece8e82ffa7ef3a44"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/browser-local.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/browser-local.log",
+      "bytes": 493,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "d629bb737bb4b3d1f21d4cf44206d801bcc2fa49ac5a6d8f2ce614f636a91c80"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/browser-public-a.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/browser-public-a.log",
+      "bytes": 1460,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "7c79c408e21a9d3485bf62379513875f7df328dc95c82adafb82fdf6678e694b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/browser-public-b.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/browser-public-b.log",
+      "bytes": 1260,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "70640c09770d2969c7e644d9d850e377c79f257d2d3f0271e1cbf37e18318197"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/browser-public-integration.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/browser-public-integration.log",
+      "bytes": 1274,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "0ea57e7e928691046d1d5438cc596330bc22e50c0685e77357c1534aaaf75cf5"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/encode.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/encode.log",
+      "bytes": 3670,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "bcbc26caf699461a38865087fdfafc4943753b898bac7e33156a35dfd611b331"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/fetch.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/fetch.log",
+      "bytes": 8899,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "e49f2ce81dc85de61a5a6f2f1f5a95862049648760a6a527a38a3e9a3cc195e0"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/https-check.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/https-check.log",
+      "bytes": 249,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "e4ced62303da99652f2557cfa4e8a7f384799a3a87ce4138f2e7f5c06543d365"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/msl.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/msl.json",
+      "bytes": 625,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "fa9884c62d8cf9706322646e96e81dde19324b62698039f2e50c2ba55c1115eb"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/msl.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/msl.npz",
+      "bytes": 16861312,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "b05e826e5d74a850f21dbb91af8903cd6f23f80a15315560871c5de1ee7426e0"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__air.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__air.mon.mean.nc",
+      "bytes": 357877597,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "4e1e1f593e538cc940590cccac8488dfad97de7a29e86a140300c8a791c640d8"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__hgt.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__hgt.mon.mean.nc",
+      "bytes": 320017606,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "8c767d849657f0f6fdc35bcc41877de1e4c604501ecf0ee2c16014612072cf7d"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__omega.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__omega.mon.mean.nc",
+      "bytes": 226412087,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "876a042bdaf8e8633865302751665e5f9222399c016fd9f235c94d746935080b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__shum.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__shum.mon.mean.nc",
+      "bytes": 206956887,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "c213f6f7659c6b867c42474a7f6ff17e684ee32254b1dfbd4e17588bc6cf14e6"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__uwnd.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__uwnd.mon.mean.nc",
+      "bytes": 436605227,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "15227518f03dffbe95e87071d0473713b36be81b7b5f889b2639b746981bfcb5"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__vwnd.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__pressure__vwnd.mon.mean.nc",
+      "bytes": 440317807,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "eab89e125aef1a84537980a3e80ea9b2dc1ee0bd2fb8db497a4fb2bbbbe23748"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__surface__slp.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__surface__slp.mon.mean.nc",
+      "bytes": 21519805,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "27bb132ffcab71edeb7fe2eaef2219737379c6b5a51bb74b5cc0b308416a27c9"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__surface_gauss__air.2m.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__surface_gauss__air.2m.mon.mean.nc",
+      "bytes": 39487895,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "1b9d2f0a002177a78b37ce1e3d8edda40f356f73900d3dbc1e3a8d11aa6d9aba"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/ncep.reanalysis.derived__surface_gauss__pres.sfc.mon.mean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/ncep.reanalysis.derived__surface_gauss__pres.sfc.mon.mean.nc",
+      "bytes": 27603045,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "e589a784c6b610ec2c26116678ed66d98a98ca75e57b2b3876e72092ab92908b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/noaa.ersst.v5__sst.mnmean.nc",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/noaa.ersst.v5__sst.mnmean.nc",
+      "bytes": 159094577,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "651c3ced3154619d634ef2c80c809314a9deb4aa77daf7162b536b5be201a971"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/page.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/page.log",
+      "bytes": 677,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "9ef6c76dd15927a8db628af4fbe1a16c4062d6dceaa84a6a1c1e9d7406026d76"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/probe.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/probe.log",
+      "bytes": 9789,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "905cc7a46b79cb3091b104929cb407d3ce415142a8ac3cfb859a8617ee3a1880"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/probe.py",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/probe.py",
+      "bytes": 1312,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "86e4f6348bff81c1c8a48df811b7e260950f8f708d6d0503311e9983ab18a0e1"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/project.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/project.log",
+      "bytes": 961,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "194c8aae7496848c525697f71fb8bffbc0eb051bc4a4ddfe990fcfd4ac51e896"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/projection-float32-weights-superseded.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/projection-float32-weights-superseded.npz",
+      "bytes": 77261710,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "a2e33fe6c34aa1a0538115745cd48764dfb10d09119dd01c94b2fba9c5bad37a"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/q700.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/q700.json",
+      "bytes": 627,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "6d00f9551f1a532646f285a20f48e2b5e8b4fb187f46256010d0a5d375ab7ab1"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/q700.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/q700.npz",
+      "bytes": 16210563,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "46a22e3ac84cd00f50b9e9605aed5af131ea1b03723ef7d066fba4d62267484f"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/q850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/q850.json",
+      "bytes": 627,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "69e4ae138f4c22d7f884bbfb4f192b83ab14eda6a70f44b32767fdda13c0f705"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/q850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/q850.npz",
+      "bytes": 17495788,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "0ed410969140a898ec77c8d6fc89308874b496c8bb091ad10f5e6b881892fb51"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/source-probe.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/source-probe.json",
+      "bytes": 13020,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "f81d33000c3c94e3b8797e3bc35be3cc84a66a0546b1c068ff21b52decda289b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/sp.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/sp.json",
+      "bytes": 632,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "f82df2dc44f6257cdbf98ba0b23e9f3486f3ecfc9f089e03a1397e171e2a4e00"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/sp.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/sp.npz",
+      "bytes": 21357590,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "5aba7361ecdcd2d40a93bf01560f5c385507cb001a92eb8014baeb3ac6c0a492"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/sst.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/sst.json",
+      "bytes": 601,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "41dbd39ee6774a40df97d93fc602e3b38e66c381154547ce4c8174f5d4d6238b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/sst.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/sst.npz",
+      "bytes": 16454058,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "31331e05c3293371b5a3a0450d8f517b5738748a74fcf38ca61022d354b803e7"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/t2m.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/t2m.json",
+      "bytes": 627,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "4e952b10b764179fcfa193bc1d390eb168b5fd5b5fc4239a7ac2da68634ed3c3"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/t2m.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/t2m.npz",
+      "bytes": 31253442,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "a2205689951eaf98ed86822c6910af76e757baf81f4e9c77a8120766f89e7460"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/t850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/t850.json",
+      "bytes": 622,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "4f1a1e9c536d1fc414310abc2506ad106b6d4d8639ae48d14996610e21b6949a"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/t850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/t850.npz",
+      "bytes": 13485470,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "73aaa7c6b08e3e0276edc4d01790cd2f848d5da846532e7afbec1b637440aeaa"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/train.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/train.log",
+      "bytes": 5109,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "f1e01a79a108d1d4f56ea603d92da9b1e944a47dbdec8a2f4be3706225bed371"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/u250.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/u250.json",
+      "bytes": 620,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "f8926032ccf5762a3252d571865986e9e4869985cc4db841db2360b6978e05fa"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/u250.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/u250.npz",
+      "bytes": 15152876,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "413e7e0b6a96e52d2e751181000c75289d18d8018d72e7f454af6a17a7957839"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/u500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/u500.json",
+      "bytes": 620,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "5feb58d383570fd01c70acff439944dd49c8b6cdfe580fd8ceac1e61c5d67b05"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/u500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/u500.npz",
+      "bytes": 14663929,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "abe57749ceb0a13298d41198e740be13bc681a40878321d4ed8eab45c98763fb"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/u850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/u850.json",
+      "bytes": 620,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "42865ac3a438b2362b619ca3c9c3ae25d55ff76128f8aa4dbbe216721f95b439"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/u850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/u850.npz",
+      "bytes": 14503527,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "501bac7093129cb6a4f73a75cd9471a5e68752428bf623fb7d458fb95f44ee80"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/v250.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/v250.json",
+      "bytes": 620,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "05913cb768cbd5ee179c6e93836e85c5a77e9050c62c83a8a7ab996e2cfb1863"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/v250.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/v250.npz",
+      "bytes": 14460557,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "378b4b668579b4bf3d362504b6d68894603e94ce4ca109f9efa737c65d627902"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/v500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/v500.json",
+      "bytes": 620,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "df48041d06c257176a8a86e3dae58a0521c7ff35556b0def8af2d49ab7967453"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/v500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/v500.npz",
+      "bytes": 14004309,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "2097a1f7c4284e9d45dbe55f220fc4eeefb7db2fac780747dea3a2914e72f686"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/v850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/v850.json",
+      "bytes": 620,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "91df29fa61fd930249ddd8adabd729a0ebe1d87777947c43ce406b2000e11257"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/v850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/v850.npz",
+      "bytes": 13967385,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "dcf871306496612d166d0d71f5ff7d582101a7d0dbe21fa255c78f1fb647a60d"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/verification-summary.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/verification-summary.json",
+      "bytes": 222,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "14b57ff7a1abdc649bb912246aeabd1f2f7a600042b3ad469ff777f704e31c32"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/w500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/w500.json",
+      "bytes": 627,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "f4d303e21aa89cc01db2654aa14fe1297754f06eadd0f33a4b404fc605803484"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/w500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/w500.npz",
+      "bytes": 9870060,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "8d58078cc2f5c27cacb5d4df8b671cf6ccbe0c034611ae2eed43758abfd2f0a4"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/w700.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/w700.json",
+      "bytes": 627,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "96e222b7ac64d488fb9c075576de934707d757f4c55cd61661f82ca9ae9abf9f"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/w700.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/w700.npz",
+      "bytes": 10251133,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "b720746ab6c57631d8218dc80d771623941ecd55c11b46c3ad58cb953d904b3d"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/web-build-final.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/web-build-final.log",
+      "bytes": 6396,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "01e7cf5f77e282ac86fe28db2bcfeb266d6e98f0f6e2c45c09dd5f6d0645419f"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/web-build.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/web-build.log",
+      "bytes": 6396,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "c45b916ec3f6e17ff580f3dcef4e78d93dd0290639c3d878d105cb04716f6f5d"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/web-tests.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/web-tests.log",
+      "bytes": 638,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "bea4d13dc87568723c8740857fe95a8d06c07000e478e7fe81444ee9e6d35944"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/z500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/z500.json",
+      "bytes": 620,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "c8388ba80b81e5800fb190df80c37a88458fe31d331a39254bfeb01a2813e66b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate",
+      "remote": "inputs/ncep-multivariate/z500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/z500.npz",
+      "bytes": 16630140,
+      "note": "R1 monthly inputs incl. raw NetCDF -- upstream replaces these IN PLACE",
+      "sha256": "c4574d3c8b6272bc6c8632591562b43e27a635470baaa5e4723cbec957418465"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/fetch-extended.log",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/fetch-extended.log",
+      "bytes": 10067,
+      "note": "extended inputs through 2026-02",
+      "sha256": "b1e561067c5073698e2b6e27fecabe8152ee112891a42d2fcfa1c3e41aa25925"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/msl.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/msl.json",
+      "bytes": 671,
+      "note": "extended inputs through 2026-02",
+      "sha256": "d2840c42dee9ea29a363d660a08dd997bbc0db9ed2eee774d3382b79540fa966"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/msl.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/msl.npz",
+      "bytes": 16921250,
+      "note": "extended inputs through 2026-02",
+      "sha256": "e8df5a90c5a410abfc8cd286da2c27d38c4e703fe2c6a1f6a3ab171c2222f3df"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/q700.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/q700.json",
+      "bytes": 673,
+      "note": "extended inputs through 2026-02",
+      "sha256": "318968c6734d245b5eebb6097c983e8f68fecb540b99b691ee9d27ae9890d6e8"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/q700.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/q700.npz",
+      "bytes": 16282273,
+      "note": "extended inputs through 2026-02",
+      "sha256": "7f2082c8b21c50ba8053ea939aa65461f4d38645c9fb05e55d984a38e68abe0b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/q850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/q850.json",
+      "bytes": 673,
+      "note": "extended inputs through 2026-02",
+      "sha256": "b962fba52d8c4dc0ea157ce017f55f953e32a9f85e91a15e351e9b0911dd2606"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/q850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/q850.npz",
+      "bytes": 17568456,
+      "note": "extended inputs through 2026-02",
+      "sha256": "269a7a2baa12baee8756c8ce6a56cee3467a0d68f75627bc2ca6c908de765df3"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/sp.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/sp.json",
+      "bytes": 678,
+      "note": "extended inputs through 2026-02",
+      "sha256": "0ec82e2b5a2bd6f4600d0758caffcfd5dafbae40c28ab473210a2973ecbcb5ae"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/sp.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/sp.npz",
+      "bytes": 21468479,
+      "note": "extended inputs through 2026-02",
+      "sha256": "4f97a18ece9a4263c52be2f463240bda7e45aa84719e329fae2a7655bf242d7b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/sst.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/sst.json",
+      "bytes": 647,
+      "note": "extended inputs through 2026-02",
+      "sha256": "06723ecf6f9903b34d8ecc180fad5f4dec29b5c62a8862d73592781560e19a7b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/sst.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/sst.npz",
+      "bytes": 16514249,
+      "note": "extended inputs through 2026-02",
+      "sha256": "9951d0a3fe667102772ebd1366f1cc6302be4b9944dfa52448e3c9fa2a6a30da"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/t2m.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/t2m.json",
+      "bytes": 673,
+      "note": "extended inputs through 2026-02",
+      "sha256": "b7e74ee873a148136e76730e14c7781962d5bcc7228ac2211c9db91243414ee8"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/t2m.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/t2m.npz",
+      "bytes": 31362165,
+      "note": "extended inputs through 2026-02",
+      "sha256": "1d91b877e3ec04bf11e03e71bf0681c6ca4a3904c262724886acc1d3e986961e"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/t850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/t850.json",
+      "bytes": 668,
+      "note": "extended inputs through 2026-02",
+      "sha256": "dd131e55cac54d72a00e2ec409c89c7cb1ec02442a91e84f81d8932bd11758ab"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/t850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/t850.npz",
+      "bytes": 13544005,
+      "note": "extended inputs through 2026-02",
+      "sha256": "bdc20db8fc2fed7d9f3ed906bbe15afc6e419bd1516d54a1cb44ad965331b22f"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/u250.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/u250.json",
+      "bytes": 666,
+      "note": "extended inputs through 2026-02",
+      "sha256": "7b5a2919940628d94c31f89c7659bd4df406b4142a948a3a2936051b11dbe429"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/u250.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/u250.npz",
+      "bytes": 15223505,
+      "note": "extended inputs through 2026-02",
+      "sha256": "edf62223f7bf14c0b70dd0a2ab523a08378aaf2a97043035325c9a493c555633"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/u500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/u500.json",
+      "bytes": 666,
+      "note": "extended inputs through 2026-02",
+      "sha256": "311862430905803a1383e57715447ab899e5e13a8fc8da5ed9c607042f47c0bd"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/u500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/u500.npz",
+      "bytes": 14734038,
+      "note": "extended inputs through 2026-02",
+      "sha256": "9598d864d2ae4304c5eed9194014cff8ee5663b94d3f2d8ad89654ba56bc9df9"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/u850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/u850.json",
+      "bytes": 666,
+      "note": "extended inputs through 2026-02",
+      "sha256": "f29f7728ffd3429c5713dc14964e86bda6a598a3881613c1773bbc2050f65e06"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/u850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/u850.npz",
+      "bytes": 14574838,
+      "note": "extended inputs through 2026-02",
+      "sha256": "2e2143af858ca1a97074c666d03652422aa2c129eb6c95d0604d47672ba85229"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/v250.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/v250.json",
+      "bytes": 666,
+      "note": "extended inputs through 2026-02",
+      "sha256": "ac34a532cd25039651603ffc1179a4cb606a856944c29c3e9d7076cb56be4106"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/v250.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/v250.npz",
+      "bytes": 14531441,
+      "note": "extended inputs through 2026-02",
+      "sha256": "8614cc85a84253c8e5324089508543d6a3eec4cfe6ed9d8d52b43fc65591e9cf"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/v500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/v500.json",
+      "bytes": 666,
+      "note": "extended inputs through 2026-02",
+      "sha256": "f71907cdb0a1f8c256bb3e1664cc2bb80fa433c9020082c0febd63021ab81426"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/v500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/v500.npz",
+      "bytes": 14074372,
+      "note": "extended inputs through 2026-02",
+      "sha256": "ccdeff79b00b81c11eea4852371de1c6c9451fe7b6b8a37a10d90f81520a721e"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/v850.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/v850.json",
+      "bytes": 666,
+      "note": "extended inputs through 2026-02",
+      "sha256": "e6456b1ad22098d069a0a0d49a552ec4b05bee65e2ce3ebf682fd8db162581a6"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/v850.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/v850.npz",
+      "bytes": 14039617,
+      "note": "extended inputs through 2026-02",
+      "sha256": "b4cb516a2f2231b22df235a12db4a1e6780bfcd0de0f669ca4f594dcf96bc2e6"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/w500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/w500.json",
+      "bytes": 673,
+      "note": "extended inputs through 2026-02",
+      "sha256": "4c3456126afe10905ec1a2e70c8fb9a2161d4370ce0102f083a619a55a43b4dc"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/w500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/w500.npz",
+      "bytes": 9944105,
+      "note": "extended inputs through 2026-02",
+      "sha256": "4e1abc660c263f48f1461ec4be45d425a23be41be211ad1f044ef12befdf179e"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/w700.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/w700.json",
+      "bytes": 673,
+      "note": "extended inputs through 2026-02",
+      "sha256": "bee98435b07861e86b71da8e72a687e40ecaf8b984648f39246490044c91d62b"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/w700.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/w700.npz",
+      "bytes": 10325469,
+      "note": "extended inputs through 2026-02",
+      "sha256": "d1c58a21ef39e3741a353bddf2917475310513bc9116f7e240d66bd012b786d0"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/z500.json",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/z500.json",
+      "bytes": 666,
+      "note": "extended inputs through 2026-02",
+      "sha256": "3ea219076ecfb9522733fc5bb7436e846e978c3ededc095aef1e291b66976d3f"
+    },
+    {
+      "prefix": "inputs/ncep-multivariate-ext-202602",
+      "remote": "inputs/ncep-multivariate-ext-202602/z500.npz",
+      "local": "/home/ubuntu/climatetensor-inputs/ncep-multivariate-ext-202602/z500.npz",
+      "bytes": 16691205,
+      "note": "extended inputs through 2026-02",
+      "sha256": "d9130a34c5aa4138fad7238d6dc5a8e334d072ffa455633e8b633b9b1380c826"
+    }
+  ],
+  "note": "local side hashed at generation time; run `plan --recheck` to confirm the local files are still byte-identical to this list"
+}
