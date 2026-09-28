@@ -61,3 +61,42 @@ python scripts/evidence_sync.py              # 幂等：已存在的跳过，冲
 `archive/` 里的原件**是主件**，`evidence/` 是它的**版本化副本**。
 两者都改动时以 `archive/` 为准，并用 `MANIFEST.jsonl` 的 `sha256` 判定它们是否还是同一批字节。
 本目录**不参与任何计算**：没有一段代码从 `evidence/` 读数据。
+
+---
+
+## 异地备份：S3（2026-09-28 建立并已验证）
+
+| | |
+|---|---|
+| 桶 | **`s3://xue-study-evidence-459231717818-us-east-1-an`**（区域 `us-east-1`，由账号持有人创建） |
+| 桶配置 | **版本化：已开**（我开的）／默认 AES256 加密／禁止公开访问／关闭 ACL（BucketOwnerEnforced） |
+| 前缀 | **`frozen/`** 17 件 118 MB（冻结底座，可引用性）／**`inputs/`** 97 件 2.83 GB（**不可复得的那一半**） |
+| 现存对象 | **114 件，2,946,089,008 字节**（2.95 GB） |
+| 授权方式 | 实例角色 `instanceRole`（`arn:aws:iam::459231717818:instance-profile/instanceRole`）⇒ **机器上没有任何长期密钥** |
+
+**验证结果（同日实测）**
+
+| 路径 | 做了什么 | 结果 |
+|---|---|---|
+| `verify`（廉价） | 逐件比对尺寸 ＋ **我们上传时记录的摘要**（对象 metadata） | **114/114**，`mismatched=0` |
+| `deep`（决定性） | 把每一件**下载回来重算 sha256** | **114/114 逐字节一致** |
+
+**一条必须说清的限度**：S3 对这些对象**没有存 `ChecksumSHA256`**——`s3 cp --checksum-algorithm SHA256` 与 `s3api put-object --checksum-sha256` 都试过，对象上只有 multipart ETag（实测 aws-cli 2.37.4）。所以：
+
+- `verify` 通过的含义是「**这是我们上传的那个对象，且本地文件没有漂移**」——**不是**「S3 里的字节完好」；
+- 「S3 里的字节完好」由 **`deep`** 证明（下载＋重算），并在此之上叠加 S3 自身的写入/读取校验。
+
+**用量与成本**：开了版本化、且第一次上传没带元数据所以重传过一次 ⇒ 现有 **228 个版本 / 5.89 GB**（两代）。标准存储约 **$0.14/月**；同区域下载不计流量费（`deep` 因此是免费的）。`sync` 已改为**增量**：记录的摘要与本地一致即跳过，不会再出现整批重传。
+
+**复现命令**（在实例上）：
+
+```bash
+export PATH=$HOME/bin:$PATH
+B=xue-study-evidence-459231717818-us-east-1-an
+python scripts/backup_to_s3.py plan                     # 逐件哈希，写 evidence/BACKUP_PLAN.json
+python scripts/backup_to_s3.py sync   --bucket $B       # 增量上传（自描述元数据）
+python scripts/backup_to_s3.py verify --bucket $B       # 廉价校验
+python scripts/backup_to_s3.py deep   --bucket $B       # 决定性校验（免费）
+```
+
+每次校验都会往 `evidence/BACKUP_MANIFEST.jsonl` 追加一条记录（只追加）。

@@ -146,8 +146,27 @@ def do_sync(bucket: str, local_root: str | None, only: list[str] | None) -> int:
                 continue
             dst.write_bytes(Path(e['local']).read_bytes())
         else:
-            aws(['s3', 'cp', '--only-show-errors', '--checksum-algorithm', 'SHA256',
-                 e['local'], f's3://{bucket}/{e["remote"]}'])
+            # `aws s3 cp --checksum-algorithm SHA256` did NOT leave a retrievable checksum
+            # (verified 2026-09-28 on aws-cli 2.37.4: the object ended up with a multipart
+            # ETag and no Checksum* field at all). `s3api put-object` with an explicit
+            # --checksum-sha256 does store it, and --metadata records our own hex digest,
+            # so every object becomes self-describing and future verifies need no download.
+            #
+            # Skip when the object already carries our exact digest: this is what makes a
+            # re-run incremental instead of re-uploading 2.9 GB every time.
+            try:
+                out = aws(['s3api', 'head-object', '--bucket', bucket, '--key', e['remote'],
+                           '--query', '[ContentLength, Metadata.sha256]', '--output', 'json'])
+                have_size, have_meta = json.loads(out or '[0,null]')
+            except SystemExit:
+                have_size, have_meta = 0, None
+            if have_size == e['bytes'] and have_meta == e['sha256']:
+                skipped += 1
+                continue
+            b64 = base64.b64encode(bytes.fromhex(e['sha256'])).decode()
+            aws(['s3api', 'put-object', '--bucket', bucket, '--key', e['remote'],
+                 '--body', e['local'], '--checksum-algorithm', 'SHA256',
+                 '--checksum-sha256', b64, '--metadata', f'sha256={e["sha256"]}'])
         done += 1
         if i % 10 == 0 or i == len(files):
             print(f'  {i}/{len(files)}  {e["remote"]}')
@@ -159,7 +178,7 @@ def do_verify(bucket: str, local_root: str | None, only: list[str] | None = None
     plan = json.loads(PLAN.read_text())
     files = [e for e in plan['files']
              if not only or any(e['prefix'] == o or e['prefix'].startswith(o + '/') for o in only)]
-    ok = bad = missing = 0
+    ok = bad = missing = no_sha = size_ok = recorded_ok = 0
     for e in files:
         if local_root:
             # HASH, do not merely compare sizes. An earlier version of this branch checked
@@ -181,30 +200,58 @@ def do_verify(bucket: str, local_root: str | None, only: list[str] | None = None
             continue
         try:
             out = aws(['s3api', 'head-object', '--bucket', bucket, '--key', e['remote'],
-                       '--query', '[ContentLength,ChecksumSHA256]', '--output', 'json'])
+                       '--query', '[ContentLength,ChecksumSHA256,Metadata.sha256]',
+                       '--output', 'json'])
         except SystemExit:
             missing += 1
             print(f'  MISSING  {e["remote"]}')
             continue
-        size, csum = json.loads(out or '[0,null]')
+        size, csum, recorded = json.loads(out or '[0, null, null]')
         if size != e['bytes']:
             bad += 1
             print(f'  SIZE     {e["remote"]}: remote {size} local {e["bytes"]}')
             continue
-        if not csum:
-            bad += 1
-            print(f'  NO-SHA   {e["remote"]}: stored without a SHA256 checksum, cannot verify')
+        size_ok += 1
+        # Two different things, and conflating them would overstate the check:
+        #   ChecksumSHA256  -- if S3 stored it, S3 verified the payload against the digest
+        #                      we sent. THIS ACCOUNT/CLI DOES NOT STORE IT (empirically:
+        #                      both `s3 cp --checksum-algorithm SHA256` and
+        #                      `s3api put-object --checksum-sha256` leave it null;
+        #                      objects carry only a multipart ETag).
+        #   Metadata.sha256 -- a digest WE attached. Comparing the local hash to it proves
+        #                      the object is the one we uploaded and that the local file
+        #                      has not drifted. It is NOT proof that the stored bytes are
+        #                      intact -- that is what `deep` (download + rehash) is for,
+        #                      and what S3's own write/read checksumming gives underneath.
+        if csum:
+            got = base64.b64decode(csum).hex()
+            if got == e['sha256']:
+                ok += 1
+            else:
+                bad += 1
+                print(f'  HASH     {e["remote"]}')
             continue
-        got = base64.b64decode(csum).hex()
-        if got == e['sha256']:
-            ok += 1
-        else:
-            bad += 1
-            print(f'  HASH     {e["remote"]}')
-    print(f'verify: ok={ok} mismatched={bad} missing={missing} '
+        if recorded:
+            if recorded == e['sha256']:
+                size_ok += 0
+                ok += 1
+                recorded_ok += 1
+            else:
+                bad += 1
+                print(f'  RECORDED-DIGEST  {e["remote"]}: object says {recorded[:16]}…, '
+                      f'plan says {e["sha256"][:16]}…')
+            continue
+        no_sha += 1
+    print(f'verify: size_ok={size_ok} digest_ok={ok} (of which from OUR recorded metadata: '
+          f'{recorded_ok}) mismatched={bad} missing={missing} no_digest_at_all={no_sha} '
           f'(of {len(files)}{" selected" if only else ""} / {len(plan["files"])} planned)')
+    print('  note: S3 stores no ChecksumSHA256 for these objects, so a passing verify means '
+          '"this is the object we uploaded and the local file has not drifted" -- NOT that '
+          'the stored bytes are intact. `deep` is the conclusive check.')
     rec = {'checked_utc': utcnow(), 'bucket': bucket, 'local_root': local_root,
-           'ok': ok, 'mismatched': bad, 'missing': missing, 'n_files': len(files),
+           'ok': ok, 'size_ok': size_ok, 'mismatched': bad, 'missing': missing,
+           'no_digest_at_all': no_sha, 'from_recorded_metadata': recorded_ok,
+           'n_files': len(files),
            'only': only}
     with open(MANIFEST, 'a') as fh:
         fh.write(json.dumps(rec, ensure_ascii=False) + '\n')

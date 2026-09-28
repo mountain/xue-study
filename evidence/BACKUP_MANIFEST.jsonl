@@ -1,0 +1,9 @@
+{"checked_utc": "2026-09-28T08:00:19Z", "bucket": "", "local_root": "/tmp/xue-backup-local", "ok": 17, "mismatched": 0, "missing": 97, "n_files": 114}
+{"checked_utc": "2026-09-28T08:00:33Z", "bucket": "", "local_root": "/tmp/xue-backup-local", "ok": 17, "mismatched": 0, "missing": 0, "n_files": 17, "only": ["frozen"]}
+{"checked_utc": "2026-09-28T08:00:33Z", "bucket": "", "local_root": "/tmp/xue-backup-local", "ok": 17, "mismatched": 0, "missing": 0, "n_files": 17, "only": ["frozen"]}
+{"checked_utc": "2026-09-28T08:00:43Z", "bucket": "", "local_root": "/tmp/xue-backup-local", "ok": 17, "mismatched": 0, "missing": 0, "n_files": 17, "only": ["frozen"]}
+{"checked_utc": "2026-09-28T08:00:44Z", "bucket": "", "local_root": "/tmp/xue-backup-local", "ok": 16, "mismatched": 1, "missing": 0, "n_files": 17, "only": ["frozen"]}
+{"checked_utc": "2026-09-28T09:14:07Z", "bucket": "xue-study-evidence-459231717818-us-east-1-an", "local_root": null, "ok": 0, "mismatched": 114, "missing": 0, "n_files": 114, "only": null}
+{"checked_utc": "2026-09-28T09:16:47Z", "bucket": "xue-study-evidence-459231717818-us-east-1-an", "local_root": null, "ok": 0, "mismatched": 114, "missing": 0, "n_files": 114, "only": null}
+{"checked_utc": "2026-09-28T09:28:56Z", "bucket": "xue-study-evidence-459231717818-us-east-1-an", "local_root": null, "ok": 0, "size_ok": 114, "mismatched": 0, "missing": 0, "no_stored_sha256": 114, "n_files": 114, "only": null}
+{"checked_utc": "2026-09-28T09:31:28Z", "bucket": "xue-study-evidence-459231717818-us-east-1-an", "local_root": null, "ok": 114, "size_ok": 114, "mismatched": 0, "missing": 0, "no_digest_at_all": 0, "from_recorded_metadata": 114, "n_files": 114, "only": null}
