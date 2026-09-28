@@ -194,6 +194,10 @@ def main(argv=None) -> int:
     ap.add_argument('--dry-run', action='store_true', help='record the intent, write no data')
     ap.add_argument('--from', dest='from_day', default=None,
                     help='era5: first day to consider (YYYY-MM-DD); default comes from the contract')
+    ap.add_argument('--to', dest='to_day', default=None,
+                    help='era5: last day to consider (YYYY-MM-DD); default = newest available. '
+                         'Required in practice for a one-month backfill, otherwise the sweep '
+                         'would also pull every missing day after it.')
     args = ap.parse_args(argv)
     cas.ensure_dirs()
 
@@ -215,6 +219,8 @@ def main(argv=None) -> int:
         start = args.from_day or (args.month[0] if args.month else None)
         if start:
             passthrough += ['--from', start]
+        if args.to_day:
+            passthrough += ['--to', args.to_day]
         return cas_era5.main(passthrough)
     if args.command == 'status':
         step('status', cas.status())

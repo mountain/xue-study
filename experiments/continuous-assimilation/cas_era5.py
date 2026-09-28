@@ -232,6 +232,12 @@ def freeze_day(day: str, dry_run: bool = False) -> dict:
 
 
 def collect(from_day: str, newest: str, dry_run: bool = False, max_days: int = 40) -> dict:
+    """Freeze every missing day in [from_day, newest], newest included.
+
+    `--to` exists because a backfill of ONE past month must not sweep up every missing day in
+    between: asking for 2026-02 with only a lower bound would also pull March, and with the
+    40-day cap it would silently stop in the middle of the wrong month.
+    """
     have = frozen_days()
     todo = [d for d in days_between(from_day, newest) if d not in have][:max_days]
     log(f'ERA5 采集：{from_day} .. {newest}，缺 {len(todo)} 天 → {todo[:3]}{"..." if len(todo) > 3 else ""}')
@@ -357,6 +363,8 @@ def main(argv=None) -> int:
     import argparse
     ap = argparse.ArgumentParser(description='ERA5 sp/sst collection and processing')
     ap.add_argument('--from', dest='start', default=BACKFILL_FROM)
+    ap.add_argument('--to', dest='end', default=None,
+                    help='last day to consider (YYYY-MM-DD); default = newest available')
     ap.add_argument('--max-days', type=int, default=40)
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--no-process', action='store_true')
@@ -369,8 +377,9 @@ def main(argv=None) -> int:
     log('ERA5 探测: ' + json.dumps({k: v for k, v in p.items() if k != 'archive_days'},
                                   ensure_ascii=False))
     res = {'probe': {k: v for k, v in p.items() if k != 'archive_days'}, 'collect': None, 'months': []}
-    if p['newest_day']:
-        res['collect'] = collect(a.start, p['newest_day'], dry_run=a.dry_run, max_days=a.max_days)
+    end = a.end or p['newest_day']
+    if end:
+        res['collect'] = collect(a.start, end, dry_run=a.dry_run, max_days=a.max_days)
     for month in sorted({d[:7] for d in frozen_days()}):
         agg = aggregate_month(month, dry_run=a.dry_run)
         log(f"月聚合 {month}: {agg['status']}"
