@@ -47,8 +47,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-PLAN = REPO / 'evidence' / 'BACKUP_PLAN.json'
-MANIFEST = REPO / 'evidence' / 'BACKUP_MANIFEST.jsonl'
+# The PLAN and the append-only MANIFEST are TRACKED evidence, and they are also written
+# on every run. A scheduled job that rewrites tracked files would leave the working tree
+# permanently dirty -- and this repo has already been bitten repeatedly by server-side
+# dirt blocking `git pull`. So the LIVE copies default to a path outside the repo when the
+# scheduled units set these variables, while the tracked ones remain deliberate snapshots.
+PLAN = Path(os.environ.get('XUE_BACKUP_PLAN', REPO / 'evidence' / 'BACKUP_PLAN.json'))
+MANIFEST = Path(os.environ.get('XUE_BACKUP_MANIFEST', REPO / 'evidence' / 'BACKUP_MANIFEST.jsonl'))
+DEFAULT_BUCKET = os.environ.get('XUE_BACKUP_BUCKET', '')
 AWS = os.path.expanduser('~/bin/aws')
 
 SOURCES = [
@@ -248,6 +254,7 @@ def do_verify(bucket: str, local_root: str | None, only: list[str] | None = None
     print('  note: S3 stores no ChecksumSHA256 for these objects, so a passing verify means '
           '"this is the object we uploaded and the local file has not drifted" -- NOT that '
           'the stored bytes are intact. `deep` is the conclusive check.')
+    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     rec = {'checked_utc': utcnow(), 'bucket': bucket, 'local_root': local_root,
            'ok': ok, 'size_ok': size_ok, 'mismatched': bad, 'missing': missing,
            'no_digest_at_all': no_sha, 'from_recorded_metadata': recorded_ok,
@@ -283,7 +290,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('command', choices=['plan', 'sync', 'verify', 'deep'])
-    ap.add_argument('--bucket', default='')
+    ap.add_argument('--bucket', default=DEFAULT_BUCKET)
     ap.add_argument('--local', default=None, help='run against a directory instead of S3')
     ap.add_argument('--only', action='append', help='restrict to a prefix (e.g. frozen)')
     ap.add_argument('--recheck', action='store_true')

@@ -1,0 +1,27 @@
+[Unit]
+Description=Xue evidence backup — daily incremental sync to S3 (+ cheap verify)
+Documentation=file:///home/ubuntu/xue-study/evidence/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/xue-study
+# The live plan and the append-only verify ledger are written OUTSIDE the repo on purpose:
+# a scheduled job that rewrites tracked files leaves the working tree permanently dirty, and
+# this repo has repeatedly had server-side dirt block `git pull`. The tracked copies under
+# evidence/ stay deliberate snapshots.
+Environment=XUE_BACKUP_BUCKET=xue-study-evidence-459231717818-us-east-1-an
+Environment=XUE_BACKUP_PLAN=/home/ubuntu/xue-assimilation/backup/BACKUP_PLAN.json
+Environment=XUE_BACKUP_MANIFEST=/home/ubuntu/xue-assimilation/backup/BACKUP_MANIFEST.jsonl
+# 1) re-hash the local side (the inputs grow when R1 publishes a new month)
+# 2) upload incrementally -- objects already carrying our digest are skipped
+# 3) cheap verify: size plus the digest we recorded on each object
+ExecStart=/home/ubuntu/climatetensor-env/bin/python scripts/backup_to_s3.py plan
+ExecStart=/home/ubuntu/climatetensor-env/bin/python scripts/backup_to_s3.py sync
+ExecStart=/home/ubuntu/climatetensor-env/bin/python scripts/backup_to_s3.py verify
+# A non-zero exit means a size or digest mismatch (or an upload/API failure). "Nothing new
+# to upload" is NOT a failure: it exits 0.
+TimeoutStartSec=3600
+Nice=10
+IOSchedulingClass=idle

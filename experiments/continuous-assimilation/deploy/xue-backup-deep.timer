@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly conclusive verification of the S3 evidence backup
+
+[Timer]
+OnCalendar=Sun *-*-* 04:40:00
+RandomizedDelaySec=20min
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

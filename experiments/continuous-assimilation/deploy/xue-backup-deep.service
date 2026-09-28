@@ -1,0 +1,21 @@
+[Unit]
+Description=Xue evidence backup — weekly conclusive verification (download + rehash)
+Documentation=file:///home/ubuntu/xue-study/evidence/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/xue-study
+Environment=XUE_BACKUP_BUCKET=xue-study-evidence-459231717818-us-east-1-an
+Environment=XUE_BACKUP_PLAN=/home/ubuntu/xue-assimilation/backup/BACKUP_PLAN.json
+Environment=XUE_BACKUP_MANIFEST=/home/ubuntu/xue-assimilation/backup/BACKUP_MANIFEST.jsonl
+# `deep` re-downloads every object and recomputes sha256. That is the ONLY check that proves
+# the stored bytes are intact: S3 stores no ChecksumSHA256 for these objects (verified
+# 2026-09-28 on aws-cli 2.37.4), so `verify` alone can only show that the object is the one
+# we uploaded. Downloading inside us-east-1 is not billed, which is what makes a weekly
+# full rehash affordable at all.
+ExecStart=/home/ubuntu/climatetensor-env/bin/python scripts/backup_to_s3.py deep
+TimeoutStartSec=5400
+Nice=10
+IOSchedulingClass=idle
