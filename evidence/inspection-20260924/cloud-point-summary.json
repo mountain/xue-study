@@ -1,0 +1,107 @@
+{
+  "run": "cfs.2026092312",
+  "requested_point": [
+    32,
+    90
+  ],
+  "sampled_cell": [
+    32.43489473684211,
+    90.0
+  ],
+  "row_col": [
+    30,
+    144
+  ],
+  "source": "tcdc.half.zarr; same res=half selection as previous browser",
+  "cloud_type": "total cloud cover, 6-hour mean, percent",
+  "store_bytes": 15441879,
+  "root_crc32_verified": "87ea048e",
+  "overall_mean_pct": 52.07,
+  "overall_median_pct": 53.5,
+  "fraction_ge80_pct": 36.0,
+  "longest_consecutive_ge80_hours": 84,
+  "last_value_pct": 92.0,
+  "months": [
+    {
+      "month": "2026-09",
+      "frames": 29,
+      "mean_pct": 81.34,
+      "median_pct": 95.0,
+      "fraction_ge80_pct": 75.9,
+      "fraction_lt20_pct": 10.3
+    },
+    {
+      "month": "2026-10",
+      "frames": 124,
+      "mean_pct": 61.69,
+      "median_pct": 75.0,
+      "fraction_ge80_pct": 41.9,
+      "fraction_lt20_pct": 12.9
+    },
+    {
+      "month": "2026-11",
+      "frames": 120,
+      "mean_pct": 17.86,
+      "median_pct": 10.0,
+      "fraction_ge80_pct": 3.3,
+      "fraction_lt20_pct": 71.7
+    },
+    {
+      "month": "2026-12",
+      "frames": 124,
+      "mean_pct": 18.61,
+      "median_pct": 7.0,
+      "fraction_ge80_pct": 4.0,
+      "fraction_lt20_pct": 73.4
+    },
+    {
+      "month": "2027-01",
+      "frames": 124,
+      "mean_pct": 27.16,
+      "median_pct": 9.0,
+      "fraction_ge80_pct": 10.5,
+      "fraction_lt20_pct": 62.1
+    },
+    {
+      "month": "2027-02",
+      "frames": 112,
+      "mean_pct": 52.83,
+      "median_pct": 47.5,
+      "fraction_ge80_pct": 33.0,
+      "fraction_lt20_pct": 23.2
+    },
+    {
+      "month": "2027-03",
+      "frames": 124,
+      "mean_pct": 65.56,
+      "median_pct": 74.0,
+      "fraction_ge80_pct": 46.8,
+      "fraction_lt20_pct": 11.3
+    },
+    {
+      "month": "2027-04",
+      "frames": 120,
+      "mean_pct": 71.58,
+      "median_pct": 83.5,
+      "fraction_ge80_pct": 56.7,
+      "fraction_lt20_pct": 7.5
+    },
+    {
+      "month": "2027-05",
+      "frames": 124,
+      "mean_pct": 74.78,
+      "median_pct": 89.0,
+      "fraction_ge80_pct": 63.7,
+      "fraction_lt20_pct": 8.1
+    },
+    {
+      "month": "2027-06",
+      "frames": 91,
+      "mean_pct": 78.27,
+      "median_pct": 84.0,
+      "fraction_ge80_pct": 60.4,
+      "fraction_lt20_pct": 0.0
+    }
+  ],
+  "claim_boundary": "single member, one initialization; absolute cover, not anomaly relative to climatology"
+}

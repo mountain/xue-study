@@ -1,0 +1,21 @@
+{
+  "seed": 1717,
+  "sample_months": 1200,
+  "common_annual_cycle_raw_r": [
+    0.9935851595839078,
+    0.9939233814421745,
+    0.9932859527517149
+  ],
+  "independent_AR_anomaly_r": [
+    0.01117443474020079,
+    0.047448809018827295,
+    -0.014940262139847784
+  ],
+  "injected_shared_AR_anomaly_r": [
+    0.9253358566363185,
+    0.9289522246534915,
+    0.9215729572468125
+  ],
+  "future_poison_does_not_change_season_fit": true,
+  "scope": "finite instrument calibration, not a significance theorem"
+}

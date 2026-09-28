@@ -1,0 +1,1158 @@
+{
+  "version": "typed-sphere-v1",
+  "generated_at": "2026-09-24T06:09:15.375170+00:00",
+  "contract_sha256": "e18c56823670d68b5df2b4500334df089f521a405a860d865430b98ae28c0d2f",
+  "weather_model_trained": false,
+  "native_adva": false,
+  "assimilation": false,
+  "synthetic": {
+    "scope": "analytic unit-sphere example, not weather prediction",
+    "time_units": "dimensionless",
+    "time": 0.7853981633974483,
+    "omega": 1.0,
+    "error_checks": {
+      "local_vector_inverse": 1.7763568394002505e-15,
+      "local_tensor_inverse": 5.329070518200751e-15,
+      "scalar_gram": 1.4654943925052066e-14,
+      "transport_against_analytic_max": 1.7053025658242404e-12,
+      "transport_mean_drift": 0.0,
+      "transport_anomaly_power_drift": 8.881784197001252e-16,
+      "original_even_wind_response_max": 3.362388732937346e-16
+    },
+    "full_transport_rmse": 9.635391528335822e-13,
+    "omitted_driver_transport_rmse": 1.9724838773014217,
+    "initial_anomaly_power": 4.066666666666676,
+    "future_anomaly_power": 4.066666666666675,
+    "interpretation": "Identical initial even wind responses can drive different future scalar fields. This is not a proof that an even-spectrum model with scalar history must fail."
+  },
+  "real_snapshot": {
+    "scope": "single-time representation; not temporal training or held-out forecast skill",
+    "time": "2020-01-01T00:00:00Z",
+    "input": "/home/ubuntu/climatetensor-inputs/era5/basic-state-smoke-20200101/arco_1p5deg_6h.npz",
+    "input_sha256": "3f8b43a73937c22ddcce8e201a1ca54c99fe65da58ef53ef0ec34b8d24eb7126",
+    "source_receipt": "/home/ubuntu/climatetensor-inputs/era5/basic-state-smoke-20200101/receipt.json",
+    "degree": 6,
+    "scalar_coefficients": 49,
+    "vector_coefficients_per_level": 96,
+    "exact_poles_excluded": true,
+    "points": 28560,
+    "field_results": [
+      {
+        "code": "t850",
+        "kind": "scalar",
+        "units": "K",
+        "role": "state",
+        "domain": "above_ground",
+        "coefficients": 49,
+        "observed_points": 25702,
+        "area_fraction": 0.9549080474600647,
+        "unregularized_rank": 49,
+        "unregularized_condition": 2.3369898189520284,
+        "smallest_gram_eigenvalue": 0.44813247158459757,
+        "largest_gram_eigenvalue": 1.0472810236350136,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000002e-08,
+        "observed_domain_rmse": 3.367781862762129,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "t2m",
+        "kind": "scalar",
+        "units": "K",
+        "role": "state",
+        "domain": "global",
+        "coefficients": 49,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.0016040520130731,
+        "smallest_gram_eigenvalue": 0.9984562859166001,
+        "largest_gram_eigenvalue": 1.0000578617319902,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 4.12413725689459,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "sst",
+        "kind": "scalar",
+        "units": "K",
+        "role": "state",
+        "domain": "ocean",
+        "coefficients": 49,
+        "observed_points": 18950,
+        "area_fraction": 0.71243500151619,
+        "unregularized_rank": 49,
+        "unregularized_condition": 27.296578782094713,
+        "smallest_gram_eigenvalue": 0.0514227241275597,
+        "largest_gram_eigenvalue": 1.403664440337856,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 1.4360011107614745,
+        "interpretation": "weighted in-sample representation; not forecast skill",
+        "zero_fill_control_observed_rmse": 68.89491755856733
+      },
+      {
+        "code": "sp",
+        "kind": "scalar",
+        "units": "Pa",
+        "role": "state",
+        "domain": "global",
+        "coefficients": 49,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.0016040520130731,
+        "smallest_gram_eigenvalue": 0.9984562859166001,
+        "largest_gram_eigenvalue": 1.0000578617319902,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 4615.38194363012,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "msl",
+        "kind": "scalar",
+        "units": "Pa",
+        "role": "state",
+        "domain": "global",
+        "coefficients": 49,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.0016040520130731,
+        "smallest_gram_eigenvalue": 0.9984562859166001,
+        "largest_gram_eigenvalue": 1.0000578617319902,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 646.597387136141,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "z500",
+        "kind": "scalar",
+        "units": "m2 s-2",
+        "role": "state",
+        "domain": "above_ground",
+        "coefficients": 49,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.0016040520130731,
+        "smallest_gram_eigenvalue": 0.9984562859166001,
+        "largest_gram_eigenvalue": 1.0000578617319902,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 718.1839958890699,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "q850",
+        "kind": "scalar",
+        "units": "kg kg-1",
+        "role": "state",
+        "domain": "above_ground",
+        "coefficients": 49,
+        "observed_points": 25702,
+        "area_fraction": 0.9549080474600647,
+        "unregularized_rank": 49,
+        "unregularized_condition": 2.3369898189520284,
+        "smallest_gram_eigenvalue": 0.44813247158459757,
+        "largest_gram_eigenvalue": 1.0472810236350136,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000002e-08,
+        "observed_domain_rmse": 0.0021083758513396993,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "q700",
+        "kind": "scalar",
+        "units": "kg kg-1",
+        "role": "state",
+        "domain": "above_ground",
+        "coefficients": 49,
+        "observed_points": 27279,
+        "area_fraction": 0.9834151156228381,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.5020529940684806,
+        "smallest_gram_eigenvalue": 0.6770218285384602,
+        "largest_gram_eigenvalue": 1.0169226646059115,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000002e-08,
+        "observed_domain_rmse": 0.0017565814909051391,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "w500",
+        "kind": "scalar",
+        "units": "Pa s-1",
+        "role": "state",
+        "domain": "above_ground",
+        "coefficients": 49,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.0016040520130731,
+        "smallest_gram_eigenvalue": 0.9984562859166001,
+        "largest_gram_eigenvalue": 1.0000578617319902,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 0.18136450514145466,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "w700",
+        "kind": "scalar",
+        "units": "Pa s-1",
+        "role": "state",
+        "domain": "above_ground",
+        "coefficients": 49,
+        "observed_points": 27279,
+        "area_fraction": 0.9834151156228381,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.5020529940684806,
+        "smallest_gram_eigenvalue": 0.6770218285384602,
+        "largest_gram_eigenvalue": 1.0169226646059115,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000002e-08,
+        "observed_domain_rmse": 0.18270324511905106,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "tisr",
+        "kind": "scalar",
+        "units": "J m-2",
+        "role": "forcing",
+        "domain": "global",
+        "coefficients": 49,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 49,
+        "unregularized_condition": 1.0016040520130731,
+        "smallest_gram_eigenvalue": 0.9984562859166001,
+        "largest_gram_eigenvalue": 1.0000578617319902,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 49387.90604908735,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "z1000",
+        "kind": "scalar",
+        "units": "m2 s-2",
+        "role": "diagnostic",
+        "domain": "above_ground",
+        "coefficients": 49,
+        "observed_points": 15243,
+        "area_fraction": 0.6441940185204058,
+        "unregularized_rank": 49,
+        "unregularized_condition": 24.161999569814814,
+        "smallest_gram_eigenvalue": 0.064204623736645,
+        "largest_gram_eigenvalue": 1.5513120911049385,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000002e-08,
+        "observed_domain_rmse": 309.91146685344614,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "wind850",
+        "components": [
+          "u850",
+          "v850"
+        ],
+        "kind": "tangent_vector",
+        "units": "m s-1",
+        "domain": "above_ground",
+        "role": "state",
+        "coefficients": 96,
+        "observed_points": 25702,
+        "area_fraction": 0.9549080474600647,
+        "unregularized_rank": 96,
+        "unregularized_condition": 2.2987956791050568,
+        "smallest_gram_eigenvalue": 0.4555781151940782,
+        "largest_gram_eigenvalue": 1.0472810027029729,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000002e-08,
+        "observed_domain_rmse": 8.481334037917245,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "wind500",
+        "components": [
+          "u500",
+          "v500"
+        ],
+        "kind": "tangent_vector",
+        "units": "m s-1",
+        "domain": "above_ground",
+        "role": "state",
+        "coefficients": 96,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 96,
+        "unregularized_condition": 1.0013745276139685,
+        "smallest_gram_eigenvalue": 0.9986851414274377,
+        "largest_gram_eigenvalue": 1.0000578617319897,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 12.48442125244613,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      },
+      {
+        "code": "wind250",
+        "components": [
+          "u250",
+          "v250"
+        ],
+        "kind": "tangent_vector",
+        "units": "m s-1",
+        "domain": "above_ground",
+        "role": "state",
+        "coefficients": 96,
+        "observed_points": 28560,
+        "area_fraction": 1.0,
+        "unregularized_rank": 96,
+        "unregularized_condition": 1.0013745276139685,
+        "smallest_gram_eigenvalue": 0.9986851414274377,
+        "largest_gram_eigenvalue": 1.0000578617319897,
+        "relative_ridge": 1e-08,
+        "ridge": 1.0000000000000004e-08,
+        "observed_domain_rmse": 17.747692232448692,
+        "interpretation": "weighted in-sample representation; not forecast skill"
+      }
+    ],
+    "scalar_labels": [
+      {
+        "l": 0,
+        "m": 0,
+        "phase": "real"
+      },
+      {
+        "l": 1,
+        "m": 0,
+        "phase": "real"
+      },
+      {
+        "l": 1,
+        "m": 1,
+        "phase": "real"
+      },
+      {
+        "l": 1,
+        "m": 1,
+        "phase": "imag"
+      },
+      {
+        "l": 2,
+        "m": 0,
+        "phase": "real"
+      },
+      {
+        "l": 2,
+        "m": 1,
+        "phase": "real"
+      },
+      {
+        "l": 2,
+        "m": 1,
+        "phase": "imag"
+      },
+      {
+        "l": 2,
+        "m": 2,
+        "phase": "real"
+      },
+      {
+        "l": 2,
+        "m": 2,
+        "phase": "imag"
+      },
+      {
+        "l": 3,
+        "m": 0,
+        "phase": "real"
+      },
+      {
+        "l": 3,
+        "m": 1,
+        "phase": "real"
+      },
+      {
+        "l": 3,
+        "m": 1,
+        "phase": "imag"
+      },
+      {
+        "l": 3,
+        "m": 2,
+        "phase": "real"
+      },
+      {
+        "l": 3,
+        "m": 2,
+        "phase": "imag"
+      },
+      {
+        "l": 3,
+        "m": 3,
+        "phase": "real"
+      },
+      {
+        "l": 3,
+        "m": 3,
+        "phase": "imag"
+      },
+      {
+        "l": 4,
+        "m": 0,
+        "phase": "real"
+      },
+      {
+        "l": 4,
+        "m": 1,
+        "phase": "real"
+      },
+      {
+        "l": 4,
+        "m": 1,
+        "phase": "imag"
+      },
+      {
+        "l": 4,
+        "m": 2,
+        "phase": "real"
+      },
+      {
+        "l": 4,
+        "m": 2,
+        "phase": "imag"
+      },
+      {
+        "l": 4,
+        "m": 3,
+        "phase": "real"
+      },
+      {
+        "l": 4,
+        "m": 3,
+        "phase": "imag"
+      },
+      {
+        "l": 4,
+        "m": 4,
+        "phase": "real"
+      },
+      {
+        "l": 4,
+        "m": 4,
+        "phase": "imag"
+      },
+      {
+        "l": 5,
+        "m": 0,
+        "phase": "real"
+      },
+      {
+        "l": 5,
+        "m": 1,
+        "phase": "real"
+      },
+      {
+        "l": 5,
+        "m": 1,
+        "phase": "imag"
+      },
+      {
+        "l": 5,
+        "m": 2,
+        "phase": "real"
+      },
+      {
+        "l": 5,
+        "m": 2,
+        "phase": "imag"
+      },
+      {
+        "l": 5,
+        "m": 3,
+        "phase": "real"
+      },
+      {
+        "l": 5,
+        "m": 3,
+        "phase": "imag"
+      },
+      {
+        "l": 5,
+        "m": 4,
+        "phase": "real"
+      },
+      {
+        "l": 5,
+        "m": 4,
+        "phase": "imag"
+      },
+      {
+        "l": 5,
+        "m": 5,
+        "phase": "real"
+      },
+      {
+        "l": 5,
+        "m": 5,
+        "phase": "imag"
+      },
+      {
+        "l": 6,
+        "m": 0,
+        "phase": "real"
+      },
+      {
+        "l": 6,
+        "m": 1,
+        "phase": "real"
+      },
+      {
+        "l": 6,
+        "m": 1,
+        "phase": "imag"
+      },
+      {
+        "l": 6,
+        "m": 2,
+        "phase": "real"
+      },
+      {
+        "l": 6,
+        "m": 2,
+        "phase": "imag"
+      },
+      {
+        "l": 6,
+        "m": 3,
+        "phase": "real"
+      },
+      {
+        "l": 6,
+        "m": 3,
+        "phase": "imag"
+      },
+      {
+        "l": 6,
+        "m": 4,
+        "phase": "real"
+      },
+      {
+        "l": 6,
+        "m": 4,
+        "phase": "imag"
+      },
+      {
+        "l": 6,
+        "m": 5,
+        "phase": "real"
+      },
+      {
+        "l": 6,
+        "m": 5,
+        "phase": "imag"
+      },
+      {
+        "l": 6,
+        "m": 6,
+        "phase": "real"
+      },
+      {
+        "l": 6,
+        "m": 6,
+        "phase": "imag"
+      }
+    ],
+    "vector_labels": [
+      {
+        "l": 1,
+        "m": 0,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 1,
+        "m": 1,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 1,
+        "m": 1,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 2,
+        "m": 0,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 2,
+        "m": 1,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 2,
+        "m": 1,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 2,
+        "m": 2,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 2,
+        "m": 2,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 3,
+        "m": 0,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 3,
+        "m": 1,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 3,
+        "m": 1,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 3,
+        "m": 2,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 3,
+        "m": 2,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 3,
+        "m": 3,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 3,
+        "m": 3,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 0,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 1,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 1,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 2,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 2,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 3,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 3,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 4,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 4,
+        "m": 4,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 0,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 1,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 1,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 2,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 2,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 3,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 3,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 4,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 4,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 5,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 5,
+        "m": 5,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 0,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 1,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 1,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 2,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 2,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 3,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 3,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 4,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 4,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 5,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 5,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 6,
+        "phase": "real",
+        "family": "gradient"
+      },
+      {
+        "l": 6,
+        "m": 6,
+        "phase": "imag",
+        "family": "gradient"
+      },
+      {
+        "l": 1,
+        "m": 0,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 1,
+        "m": 1,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 1,
+        "m": 1,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 2,
+        "m": 0,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 2,
+        "m": 1,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 2,
+        "m": 1,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 2,
+        "m": 2,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 2,
+        "m": 2,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 3,
+        "m": 0,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 3,
+        "m": 1,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 3,
+        "m": 1,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 3,
+        "m": 2,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 3,
+        "m": 2,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 3,
+        "m": 3,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 3,
+        "m": 3,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 0,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 1,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 1,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 2,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 2,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 3,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 3,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 4,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 4,
+        "m": 4,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 0,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 1,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 1,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 2,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 2,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 3,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 3,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 4,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 4,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 5,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 5,
+        "m": 5,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 0,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 1,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 1,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 2,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 2,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 3,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 3,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 4,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 4,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 5,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 5,
+        "phase": "imag",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 6,
+        "phase": "real",
+        "family": "rotation"
+      },
+      {
+        "l": 6,
+        "m": 6,
+        "phase": "imag",
+        "family": "rotation"
+      }
+    ],
+    "not_read": [
+      "ssr",
+      "str",
+      "sd",
+      "r850",
+      "r700"
+    ],
+    "not_read_reason": "Fine-grid flux/snow need a separate common-grid/domain path; RH absent from the downloaded mirror."
+  }
+}

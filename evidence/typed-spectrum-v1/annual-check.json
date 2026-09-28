@@ -1,0 +1,63 @@
+{
+  "scope": "Synthetic annual baseline plus periodic perturbation; no weather training or period discovery",
+  "contract_sha256": "c1c905cbdb5903cc3ef24239e4c7a966004e75c4fee20683c51e308bf586a5e8",
+  "sample_count": 384,
+  "training_samples": 288,
+  "seasonal_fit_max_error": 8.881784197001252e-16,
+  "heldout_poison_does_not_change_fit": true,
+  "cases": {
+    "additive": {
+      "anomaly_peaks": [
+        {
+          "cycles_per_year": 0.25,
+          "sinusoid_amplitude": 0.19999999999999998
+        }
+      ]
+    },
+    "amplitude": {
+      "anomaly_peaks": [
+        {
+          "cycles_per_year": 1.25,
+          "sinusoid_amplitude": 0.09999999999999995
+        },
+        {
+          "cycles_per_year": 0.75,
+          "sinusoid_amplitude": 0.09999999999999994
+        }
+      ]
+    },
+    "phase": {
+      "anomaly_peaks": [
+        {
+          "cycles_per_year": 0.75,
+          "sinusoid_amplitude": 0.09950083265905393
+        },
+        {
+          "cycles_per_year": 1.25,
+          "sinusoid_amplitude": 0.09950083263923257
+        },
+        {
+          "cycles_per_year": 1.0,
+          "sinusoid_amplitude": 0.00997502776017599
+        },
+        {
+          "cycles_per_year": 0.5,
+          "sinusoid_amplitude": 0.004983355539689403
+        },
+        {
+          "cycles_per_year": 1.5,
+          "sinusoid_amplitude": 0.004983354152783738
+        }
+      ]
+    }
+  },
+  "phase_first_order_max_error": 0.01993342215875904,
+  "phase_first_order_error_bound": 0.020000000000000004,
+  "negative_frequency_retained": true,
+  "hann_parseval_error": 2.220446049250313e-16,
+  "scalar_floquet": {
+    "annual_multiplier": 0.7788007830714049,
+    "same_phase_annual_ratio_max_error": 4.218847493575595e-15
+  },
+  "note": "A pure annual baseline can be predicted without predicting anomalies; none of these synthetic checks establishes weather forecast skill."
+}

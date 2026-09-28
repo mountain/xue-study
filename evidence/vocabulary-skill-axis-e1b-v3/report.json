@@ -1,0 +1,1500 @@
+{
+  "version": "vocabulary-skill-axis-e1b-v3",
+  "question_id": "xue.derived.vocabulary-skill-axis-e1b",
+  "generated_utc": "2026-09-27T17:52:23.561935+00:00",
+  "contract_sha256": "9b64d44844b563fa427d42ae91c1ed30d7296a2f48be497b3a3468d87b7d2527",
+  "ladder": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    20,
+    24
+  ],
+  "ranks": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "ridge_mean_loss_penalties": [
+    0.01,
+    0.1,
+    1.0
+  ],
+  "ladder_planned": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    20,
+    24
+  ],
+  "ladder_completed": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    20,
+    24
+  ],
+  "g5_tolerance": 1e-09,
+  "ladder_complete": true,
+  "stopped_reason": null,
+  "phase_caps_seconds": {
+    "per_degree": 900.0,
+    "total": 5400.0
+  },
+  "gates": {
+    "G1_domain_identity_all_degrees": true,
+    "G2_L12_reproduction_exact": true,
+    "G3_frozen_hashes_unchanged": true,
+    "G3_hashes_before": {
+      "model.npz": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+      "projection-L12.npz": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224",
+      "forecast.npz": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb",
+      "report.json": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+    },
+    "G3_hashes_after": {
+      "model.npz": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+      "projection-L12.npz": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224",
+      "forecast.npz": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb",
+      "report.json": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+    },
+    "G3_recorded_by_reforecast": {
+      "model.npz": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+      "projection-L12.npz": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224",
+      "forecast.npz": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb",
+      "report.json": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+    },
+    "G4_refuse_overwrite": true
+  },
+  "controls": {
+    "C1a_hindsight_on_its_own_criterion": {
+      "rule_ok": true,
+      "per_degree": [
+        {
+          "degree": 4,
+          "hindsight_coeff_loss_on_test": 17.125593761064117,
+          "validation_chosen_coeff_loss_on_test": 17.125593761064117
+        },
+        {
+          "degree": 6,
+          "hindsight_coeff_loss_on_test": 16.825995912234845,
+          "validation_chosen_coeff_loss_on_test": 16.931803450957116
+        },
+        {
+          "degree": 8,
+          "hindsight_coeff_loss_on_test": 16.278034371559965,
+          "validation_chosen_coeff_loss_on_test": 16.278034371559965
+        },
+        {
+          "degree": 10,
+          "hindsight_coeff_loss_on_test": 16.15253514913132,
+          "validation_chosen_coeff_loss_on_test": 16.154596788169485
+        },
+        {
+          "degree": 12,
+          "hindsight_coeff_loss_on_test": 16.108140464560545,
+          "validation_chosen_coeff_loss_on_test": 16.108140464560545
+        },
+        {
+          "degree": 16,
+          "hindsight_coeff_loss_on_test": 16.25615192982516,
+          "validation_chosen_coeff_loss_on_test": 16.279603170747126
+        },
+        {
+          "degree": 20,
+          "hindsight_coeff_loss_on_test": 16.31984793385382,
+          "validation_chosen_coeff_loss_on_test": 16.31984793385382
+        },
+        {
+          "degree": 24,
+          "hindsight_coeff_loss_on_test": 16.224950733721514,
+          "validation_chosen_coeff_loss_on_test": 16.28283973010697
+        }
+      ]
+    },
+    "C1b_false_premise_recorded": {
+      "was": "v1/v2 规定「后见之明的 PHYSICAL 技巧必须不差于验证期选参」",
+      "measured": [
+        {
+          "degree": 4,
+          "chose_same_parameters": true,
+          "validation_skill": 0.019559955582979953,
+          "hindsight_skill": 0.019559955582979953,
+          "hindsight_minus_validation": 0.0
+        },
+        {
+          "degree": 6,
+          "chose_same_parameters": false,
+          "validation_skill": 0.03043054342268686,
+          "hindsight_skill": 0.03098136499851561,
+          "hindsight_minus_validation": 0.0005508215758287527
+        },
+        {
+          "degree": 8,
+          "chose_same_parameters": true,
+          "validation_skill": 0.03526096434805681,
+          "hindsight_skill": 0.03526096434805681,
+          "hindsight_minus_validation": 0.0
+        },
+        {
+          "degree": 10,
+          "chose_same_parameters": false,
+          "validation_skill": 0.038564492224610385,
+          "hindsight_skill": 0.03941104242611781,
+          "hindsight_minus_validation": 0.0008465502015074233
+        },
+        {
+          "degree": 12,
+          "chose_same_parameters": true,
+          "validation_skill": 0.042107039108189276,
+          "hindsight_skill": 0.042107039108189276,
+          "hindsight_minus_validation": 0.0
+        },
+        {
+          "degree": 16,
+          "chose_same_parameters": false,
+          "validation_skill": 0.04301727880109684,
+          "hindsight_skill": 0.04222740501849621,
+          "hindsight_minus_validation": -0.0007898737826006336
+        },
+        {
+          "degree": 20,
+          "chose_same_parameters": true,
+          "validation_skill": 0.040340398566081494,
+          "hindsight_skill": 0.040340398566081494,
+          "hindsight_minus_validation": 0.0
+        },
+        {
+          "degree": 24,
+          "chose_same_parameters": false,
+          "validation_skill": 0.04296559749072861,
+          "hindsight_skill": 0.04225740870019234,
+          "hindsight_minus_validation": -0.0007081887905362738
+        }
+      ],
+      "chose_same_parameters_everywhere": false,
+      "diagnosis": "两条独立原因使该前提不成立：(i) `select` 最小化的是**系数空间**损失，而物理 full_mse 技巧是**另一个量**（选参判据 ≠ 评分判据）；(ii) 八个阶全部选中网格角点 rank=64/penalty=0.1 ⇒ 用哪一段选参都得到同一个模型，后见之明**没有优势可言**。⇒ 该对照**按原样记为失败**，不改写、不删除。"
+    },
+    "C2_target_axis_misalignment": {
+      "rule_ok": true,
+      "per_degree": [
+        {
+          "degree": 4,
+          "aligned_skill": 0.019559955582979953,
+          "target_rolled_skill": 0.018409305101700916
+        },
+        {
+          "degree": 6,
+          "aligned_skill": 0.03043054342268686,
+          "target_rolled_skill": 0.027556863628434337
+        },
+        {
+          "degree": 8,
+          "aligned_skill": 0.03526096434805681,
+          "target_rolled_skill": 0.030282970046533988
+        },
+        {
+          "degree": 10,
+          "aligned_skill": 0.038564492224610385,
+          "target_rolled_skill": 0.03271438083395317
+        },
+        {
+          "degree": 12,
+          "aligned_skill": 0.042107039108189276,
+          "target_rolled_skill": 0.03556307477854592
+        },
+        {
+          "degree": 16,
+          "aligned_skill": 0.04301727880109684,
+          "target_rolled_skill": 0.036456971306557014
+        },
+        {
+          "degree": 20,
+          "aligned_skill": 0.040340398566081494,
+          "target_rolled_skill": 0.03389777893101512
+        },
+        {
+          "degree": 24,
+          "aligned_skill": 0.04296559749072861,
+          "target_rolled_skill": 0.03463775080483526
+        }
+      ]
+    },
+    "C2_lead_roll_recorded_as_ill_posed": {
+      "was": "v1/v2 用**沿 lead 轴**滚动作错位对照，规定技巧必须变差",
+      "per_degree": [
+        {
+          "degree": 4,
+          "aligned_skill": 0.019559955582979953,
+          "lead_rolled_skill": 0.019559955582979956
+        },
+        {
+          "degree": 6,
+          "aligned_skill": 0.03043054342268686,
+          "lead_rolled_skill": 0.030430543422686862
+        },
+        {
+          "degree": 8,
+          "aligned_skill": 0.03526096434805681,
+          "lead_rolled_skill": 0.03526096434805681
+        },
+        {
+          "degree": 10,
+          "aligned_skill": 0.038564492224610385,
+          "lead_rolled_skill": 0.038564492224610385
+        },
+        {
+          "degree": 12,
+          "aligned_skill": 0.042107039108189276,
+          "lead_rolled_skill": 0.04210703910818927
+        },
+        {
+          "degree": 16,
+          "aligned_skill": 0.04301727880109684,
+          "lead_rolled_skill": 0.04301727880109684
+        },
+        {
+          "degree": 20,
+          "aligned_skill": 0.040340398566081494,
+          "lead_rolled_skill": 0.04034039856608149
+        },
+        {
+          "degree": 24,
+          "aligned_skill": 0.04296559749072861,
+          "lead_rolled_skill": 0.04296559749072861
+        }
+      ],
+      "diagnosis": "技巧是**对 lead 取平均**的量，而沿 lead 轴滚动只是**置换** lead 轴 ⇒ 平均值不变 ⇒ 该对照**在数学上不可能失败**。这是**对照设计错误**，不是模型的发现；按原样记为失败。"
+    }
+  },
+  "per_degree": [
+    {
+      "g5_frozen_report_match": null,
+      "target_rolled_skill_mean": 0.018409305101700916,
+      "phase_seconds": {
+        "build": 10.57,
+        "fit_and_predict": 0.63,
+        "score_and_controls": 0.24
+      },
+      "degree": 4,
+      "coefficients_total": 394,
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 14.657088003795
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.115947435381283
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.19630277086235
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 16.31335393272104
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 14.982793342115064
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 14.924188890474888
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 16.11304152072568
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.247533738732013
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 14.853968452349458
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 16.044232626770818
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 15.572434821551532
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 14.657088003795
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 15.99860882351002
+        }
+      ],
+      "valid_loss": 14.657088003795,
+      "coeff_space_test_mse": {
+        "climatology": 23.178494848412658,
+        "persistence": 23.004477278726352,
+        "independent_ar1": 16.79469627039856,
+        "independent_channels": 16.11954207584103,
+        "joint": 17.125593761064117
+      },
+      "skill_mean": 0.019559955582979953,
+      "skill_by_lead": [
+        0.02347250183752058,
+        0.02081035374023276,
+        0.019878984880635588,
+        0.018753569963175905,
+        0.017452813537367863,
+        0.01699150953894703
+      ],
+      "independent_channels_skill_mean": 0.021867018712076722,
+      "persistence_skill_mean": 0.0006905925511900404,
+      "independent_ar1_skill_mean": 0.020249671938884325,
+      "joint_gain_over_independent": -0.0023070631290967696,
+      "per_channel_skill_mean": {
+        "t850": 0.07180638809248253,
+        "t2m": 0.01321885955337454,
+        "sst": 0.053340961774409446,
+        "sp": -6.143771741482877e-05,
+        "msl": 0.000253831107315768,
+        "z500": 0.0548426814801651,
+        "q850": 0.028922719100353118,
+        "q700": 0.015385790078819942,
+        "w500": 0.00783221461779963,
+        "w700": 0.004855960336380934,
+        "wind850": 0.0036307943703053347,
+        "wind500": 0.0004668166208915229,
+        "wind250": -0.0002161568361436402
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 64,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.019559955582979953,
+        "test_selected_coeff_loss_on_test": 17.125593761064117,
+        "validation_chosen_coeff_loss_on_test": 17.125593761064117,
+        "chose_same_parameters": true
+      },
+      "shuffled_lead_skill_mean": 0.019559955582979956,
+      "wall_seconds": 11.46
+    },
+    {
+      "g5_frozen_report_match": null,
+      "target_rolled_skill_mean": 0.027556863628434337,
+      "phase_seconds": {
+        "build": 11.76,
+        "fit_and_predict": 1.3,
+        "score_and_controls": 0.52
+      },
+      "degree": 6,
+      "coefficients_total": 778,
+      "chosen": {
+        "rank": 32,
+        "penalty": 0.1,
+        "validation_loss": 15.090503450077959
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.366740897661117
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.377190889954663
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 16.003805686493035
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 15.284558022558134
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 15.19588401241116
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 15.86064764694723
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.449095752392713
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 15.090503450077959
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 15.782841578381834
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 16.227616050823297
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 15.129267027001838
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 15.769879058601889
+        }
+      ],
+      "valid_loss": 15.090503450077959,
+      "coeff_space_test_mse": {
+        "climatology": 20.36933993081387,
+        "persistence": 25.123457896313354,
+        "independent_ar1": 16.44894905766527,
+        "independent_channels": 16.066563440315125,
+        "joint": 16.931803450957116
+      },
+      "skill_mean": 0.03043054342268686,
+      "skill_by_lead": [
+        0.039990736368446564,
+        0.03314675777374279,
+        0.029544763567072738,
+        0.028385095913906026,
+        0.026342335422633936,
+        0.025173571490319093
+      ],
+      "independent_channels_skill_mean": 0.03610872883404316,
+      "persistence_skill_mean": -0.04840911132770523,
+      "independent_ar1_skill_mean": 0.03429792878475927,
+      "joint_gain_over_independent": -0.005678185411356302,
+      "per_channel_skill_mean": {
+        "t850": 0.10035969141489341,
+        "t2m": 0.02334178472501001,
+        "sst": 0.09286439684311004,
+        "sp": -6.168879893797552e-06,
+        "msl": 0.005078973015924415,
+        "z500": 0.09054274702080589,
+        "q850": 0.03807332879779651,
+        "q700": 0.012565810732949637,
+        "w500": 0.009771971221858819,
+        "w700": 0.0048970100621261725,
+        "wind850": 0.0061445560738519105,
+        "wind500": 0.0030573026359149527,
+        "wind250": 0.008905660830581178
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 64,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.03098136499851561,
+        "test_selected_coeff_loss_on_test": 16.825995912234845,
+        "validation_chosen_coeff_loss_on_test": 16.931803450957116,
+        "chose_same_parameters": false
+      },
+      "shuffled_lead_skill_mean": 0.030430543422686862,
+      "wall_seconds": 13.63
+    },
+    {
+      "g5_frozen_report_match": null,
+      "target_rolled_skill_mean": 0.030282970046533988,
+      "phase_seconds": {
+        "build": 13.92,
+        "fit_and_predict": 2.33,
+        "score_and_controls": 0.95
+      },
+      "degree": 8,
+      "coefficients_total": 1290,
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 15.089203529597661
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.333558567998537
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.333684045244366
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 15.769385265690493
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 15.265260568123374
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 15.168791285635077
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 15.635971449550992
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.425068088987029
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 15.112091006645556
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 15.57810510294229
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 16.03001221683835
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 15.089203529597661
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 15.543947637828373
+        }
+      ],
+      "valid_loss": 15.089203529597661,
+      "coeff_space_test_mse": {
+        "climatology": 18.34295563066572,
+        "persistence": 25.3345229055479,
+        "independent_ar1": 15.804294125949268,
+        "independent_channels": 15.719045352544923,
+        "joint": 16.278034371559965
+      },
+      "skill_mean": 0.03526096434805681,
+      "skill_by_lead": [
+        0.053715621359415544,
+        0.03939562915323158,
+        0.03532457464565269,
+        0.03080647509664985,
+        0.027419737088612443,
+        0.02490374874477875
+      ],
+      "independent_channels_skill_mean": 0.04326190797743651,
+      "persistence_skill_mean": -0.13710525181931288,
+      "independent_ar1_skill_mean": 0.044310759354316255,
+      "joint_gain_over_independent": -0.008000943629379698,
+      "per_channel_skill_mean": {
+        "t850": 0.11759333236577284,
+        "t2m": 0.02800883194233424,
+        "sst": 0.12299062044050403,
+        "sp": -3.5145272725726574e-05,
+        "msl": 0.0025895182685222915,
+        "z500": 0.09455891289527003,
+        "q850": 0.04393331390744396,
+        "q700": 0.015232482934239159,
+        "w500": 0.011239441001188141,
+        "w700": 0.006153045092802012,
+        "wind850": 0.005319541715598082,
+        "wind500": -0.0016541699560988314,
+        "wind250": 0.01246281118988829
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 64,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.03526096434805681,
+        "test_selected_coeff_loss_on_test": 16.278034371559965,
+        "validation_chosen_coeff_loss_on_test": 16.278034371559965,
+        "chose_same_parameters": true
+      },
+      "shuffled_lead_skill_mean": 0.03526096434805681,
+      "wall_seconds": 17.37
+    },
+    {
+      "g5_frozen_report_match": null,
+      "target_rolled_skill_mean": 0.03271438083395317,
+      "phase_seconds": {
+        "build": 16.66,
+        "fit_and_predict": 3.86,
+        "score_and_controls": 1.59
+      },
+      "degree": 10,
+      "coefficients_total": 1930,
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 14.876843723479618
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.131642134716003
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.127146816470768
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 15.492242420765125
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 15.036845615590737
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 14.94744673597474
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 15.369067720359968
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.22321662896695
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 14.907643610666572
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 15.316156358468218
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 15.689733839351362
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 14.876843723479618
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 15.284521118727065
+        }
+      ],
+      "valid_loss": 14.876843723479618,
+      "coeff_space_test_mse": {
+        "climatology": 17.795789675932,
+        "persistence": 25.51180636014542,
+        "independent_ar1": 15.67024950352641,
+        "independent_channels": 15.666287046291208,
+        "joint": 16.154596788169485
+      },
+      "skill_mean": 0.038564492224610385,
+      "skill_by_lead": [
+        0.06090847431270559,
+        0.042872078895201865,
+        0.037945127718465775,
+        0.031868656213212394,
+        0.03043324993760132,
+        0.02735936627047539
+      ],
+      "independent_channels_skill_mean": 0.0497674177860766,
+      "persistence_skill_mean": -0.21305080548121827,
+      "independent_ar1_skill_mean": 0.05236692596496525,
+      "joint_gain_over_independent": -0.011202925561466216,
+      "per_channel_skill_mean": {
+        "t850": 0.12358746339256349,
+        "t2m": 0.031855459815371,
+        "sst": 0.15824224453843647,
+        "sp": -4.223094799904459e-05,
+        "msl": 0.0008245523601816407,
+        "z500": 0.09292425078753609,
+        "q850": 0.04551323500883275,
+        "q700": 0.015275400726939059,
+        "w500": 0.011565076187141273,
+        "w700": 0.007045756394595,
+        "wind850": 0.007657937062197917,
+        "wind500": -0.006611977088594827,
+        "wind250": 0.013501230682734197
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 16,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.03941104242611781,
+        "test_selected_coeff_loss_on_test": 16.15253514913132,
+        "validation_chosen_coeff_loss_on_test": 16.154596788169485,
+        "chose_same_parameters": false
+      },
+      "shuffled_lead_skill_mean": 0.038564492224610385,
+      "wall_seconds": 22.49
+    },
+    {
+      "g5_frozen_report_match": {
+        "joint": {
+          "frozen_report": 0.042107039108189276,
+          "this_run": 0.042107039108189276,
+          "match": true
+        },
+        "independent_channels": {
+          "frozen_report": 0.05324627736715689,
+          "this_run": 0.05324627736715689,
+          "match": true
+        }
+      },
+      "target_rolled_skill_mean": 0.03556307477854592,
+      "phase_seconds": {
+        "build": 20.62,
+        "fit_and_predict": 6.39,
+        "score_and_controls": 2.7
+      },
+      "degree": 12,
+      "coefficients_total": 2698,
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 14.947033848219547
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.211422556725458
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.2025766281929
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 15.50395972985532
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 15.199673348448936
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 15.08390690945744
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 15.401191190142965
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.349951321910128
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 15.050890451031455
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 15.361755727518005
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 15.64877008781682
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 14.947033848219547
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 15.317328115660722
+        }
+      ],
+      "valid_loss": 14.947033848219547,
+      "coeff_space_test_mse": {
+        "climatology": 17.56390910297741,
+        "persistence": 25.994591608671982,
+        "independent_ar1": 15.879979590300865,
+        "independent_channels": 15.74510927757456,
+        "joint": 16.108140464560545
+      },
+      "skill_mean": 0.042107039108189276,
+      "skill_by_lead": [
+        0.06661511328756535,
+        0.04730043561900456,
+        0.041813979275864846,
+        0.03520062820080499,
+        0.03225373219815922,
+        0.02945834606773668
+      ],
+      "independent_channels_skill_mean": 0.05324627736715689,
+      "persistence_skill_mean": -0.2626406044001244,
+      "independent_ar1_skill_mean": 0.054576843528171215,
+      "joint_gain_over_independent": -0.011139238258967614,
+      "per_channel_skill_mean": {
+        "t850": 0.1248953684933069,
+        "t2m": 0.03452572346206312,
+        "sst": 0.18164119823949232,
+        "sp": 2.015807293400303e-05,
+        "msl": 0.007065273558359564,
+        "z500": 0.09812987709778931,
+        "q850": 0.04776607019868075,
+        "q700": 0.016514992453411315,
+        "w500": 0.011073338322081386,
+        "w700": 0.007115667838471229,
+        "wind850": 0.009526242300081996,
+        "wind500": -0.006125677382815757,
+        "wind250": 0.015243275752604443
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 64,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.042107039108189276,
+        "test_selected_coeff_loss_on_test": 16.108140464560545,
+        "validation_chosen_coeff_loss_on_test": 16.108140464560545,
+        "chose_same_parameters": true
+      },
+      "shuffled_lead_skill_mean": 0.04210703910818927,
+      "wall_seconds": 30.49
+    },
+    {
+      "g5_frozen_report_match": null,
+      "target_rolled_skill_mean": 0.036456971306557014,
+      "phase_seconds": {
+        "build": 32.75,
+        "fit_and_predict": 15.29,
+        "score_and_controls": 6.45
+      },
+      "degree": 16,
+      "coefficients_total": 4618,
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 14.992819037502572
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.132241272692694
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.113328486045267
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 15.359587831761127
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 15.185208054102825
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 15.065037967060405
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 15.293313935325882
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.400435361877816
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 15.077992675343985
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 15.267437543857776
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 15.723266289092992
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 14.992819037502572
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 15.228225624791008
+        }
+      ],
+      "valid_loss": 14.992819037502572,
+      "coeff_space_test_mse": {
+        "climatology": 17.17863911825259,
+        "persistence": 26.733857360963842,
+        "independent_ar1": 15.941355699829561,
+        "independent_channels": 15.937799942196362,
+        "joint": 16.279603170747126
+      },
+      "skill_mean": 0.04301727880109684,
+      "skill_by_lead": [
+        0.07053470344910519,
+        0.04908004277440166,
+        0.04185985859704582,
+        0.03683591939132488,
+        0.03177176010902874,
+        0.02802138848567472
+      ],
+      "independent_channels_skill_mean": 0.058698572849968635,
+      "persistence_skill_mean": -0.32837197078703184,
+      "independent_ar1_skill_mean": 0.06136937311452124,
+      "joint_gain_over_independent": -0.015681294048871794,
+      "per_channel_skill_mean": {
+        "t850": 0.12169454196745472,
+        "t2m": 0.038157978142525174,
+        "sst": 0.21176430793146025,
+        "sp": 5.3106993874729724e-06,
+        "msl": 0.0053717752159008385,
+        "z500": 0.08696040836408885,
+        "q850": 0.047227069953741395,
+        "q700": 0.016519186089143805,
+        "w500": 0.011348482101988891,
+        "w700": 0.006051293266586803,
+        "wind850": 0.010043226094603175,
+        "wind500": -0.009625045738592297,
+        "wind250": 0.013706090325969736
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 16,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.04222740501849621,
+        "test_selected_coeff_loss_on_test": 16.25615192982516,
+        "validation_chosen_coeff_loss_on_test": 16.279603170747126,
+        "chose_same_parameters": false
+      },
+      "shuffled_lead_skill_mean": 0.04301727880109684,
+      "wall_seconds": 56.75
+    },
+    {
+      "g5_frozen_report_match": null,
+      "target_rolled_skill_mean": 0.03389777893101512,
+      "phase_seconds": {
+        "build": 52.48,
+        "fit_and_predict": 32.14,
+        "score_and_controls": 12.89
+      },
+      "degree": 20,
+      "coefficients_total": 7050,
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 14.991200573314694
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.277458713195953
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.238230889729959
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 15.320989650730061
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 15.185959164290963
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 15.061145201972835
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 15.20833179360353
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.454396334536352
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 15.110941741020987
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 15.19294575670121
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 15.668319175808556
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 14.991200573314694
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 15.152465419132854
+        }
+      ],
+      "valid_loss": 14.991200573314694,
+      "coeff_space_test_mse": {
+        "climatology": 16.88380577120367,
+        "persistence": 26.79844790506238,
+        "independent_ar1": 15.88966356863903,
+        "independent_channels": 15.96199727819352,
+        "joint": 16.31984793385382
+      },
+      "skill_mean": 0.040340398566081494,
+      "skill_by_lead": [
+        0.06769275962731264,
+        0.04517026634297572,
+        0.04045534743381229,
+        0.03610913757976642,
+        0.029037152107168507,
+        0.023577728305453367
+      ],
+      "independent_channels_skill_mean": 0.04755518264862898,
+      "persistence_skill_mean": -0.36330552290485124,
+      "independent_ar1_skill_mean": 0.05668356782206684,
+      "joint_gain_over_independent": -0.007214784082547485,
+      "per_channel_skill_mean": {
+        "t850": 0.10936976664329662,
+        "t2m": 0.039154342017050814,
+        "sst": 0.2154511187968208,
+        "sp": -3.3534687200057846e-05,
+        "msl": 0.001661920861276293,
+        "z500": 0.07591626523332114,
+        "q850": 0.04149155027597262,
+        "q700": 0.014937161628135872,
+        "w500": 0.009297964423383542,
+        "w700": 0.005294709875509396,
+        "wind850": 0.00855342325772109,
+        "wind500": -0.008628629576308963,
+        "wind250": 0.01195912261008016
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 64,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.040340398566081494,
+        "test_selected_coeff_loss_on_test": 16.31984793385382,
+        "validation_chosen_coeff_loss_on_test": 16.31984793385382,
+        "chose_same_parameters": true
+      },
+      "shuffled_lead_skill_mean": 0.04034039856608149,
+      "wall_seconds": 102.53
+    },
+    {
+      "g5_frozen_report_match": null,
+      "target_rolled_skill_mean": 0.03463775080483526,
+      "phase_seconds": {
+        "build": 81.71,
+        "fit_and_predict": 61.45,
+        "score_and_controls": 24.67
+      },
+      "degree": 24,
+      "coefficients_total": 9994,
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 14.754051337732886
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 15.098489776434446
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 15.048077797482643
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 15.076736760382524
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 14.891912874331183
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 14.777194746800129
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 14.927127901302079
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 15.153863769960108
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 14.80704065933907
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 14.903809600364143
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 15.49733208863921
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 14.754051337732886
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 14.87737376665808
+        }
+      ],
+      "valid_loss": 14.754051337732886,
+      "coeff_space_test_mse": {
+        "climatology": 16.913427793173977,
+        "persistence": 26.56872098852704,
+        "independent_ar1": 15.905617890517407,
+        "independent_channels": 15.95205236669808,
+        "joint": 16.28283973010697
+      },
+      "skill_mean": 0.04296559749072861,
+      "skill_by_lead": [
+        0.06994441932505834,
+        0.04837289499817868,
+        0.04234996131796745,
+        0.035560111030095605,
+        0.03388435279817205,
+        0.027681845474899568
+      ],
+      "independent_channels_skill_mean": 0.04287410917456188,
+      "persistence_skill_mean": -0.38837701336489644,
+      "independent_ar1_skill_mean": 0.05465971023989181,
+      "joint_gain_over_independent": 9.148831616673236e-05,
+      "per_channel_skill_mean": {
+        "t850": 0.1068915397438009,
+        "t2m": 0.04588744309546278,
+        "sst": 0.23242790759163579,
+        "sp": 0.00011879222250802772,
+        "msl": 0.008819094052702944,
+        "z500": 0.07722926013002362,
+        "q850": 0.04017154889812765,
+        "q700": 0.011747039578075638,
+        "w500": 0.009824017805561969,
+        "w700": 0.004337999045348577,
+        "wind850": 0.014076637035772574,
+        "wind500": -0.008314617815987432,
+        "wind250": 0.015336105996438995
+      },
+      "hindsight": {
+        "chosen": {
+          "rank": 16,
+          "penalty": 0.1
+        },
+        "test_selected_skill_mean": 0.04225740870019234,
+        "test_selected_coeff_loss_on_test": 16.224950733721514,
+        "validation_chosen_coeff_loss_on_test": 16.28283973010697,
+        "chose_same_parameters": false
+      },
+      "shuffled_lead_skill_mean": 0.04296559749072861,
+      "wall_seconds": 177.91
+    }
+  ],
+  "two_axes": {
+    "degrees_with_both": [
+      4,
+      6,
+      8,
+      10,
+      12,
+      16
+    ],
+    "L_total_bits": [
+      -193646511.73520833,
+      -229557511.9246236,
+      -262776501.716539,
+      -293921778.79340005,
+      -319154240.8185686,
+      -364187441.9148369
+    ],
+    "skill_mean_overlap": [
+      0.019559955582979953,
+      0.03043054342268686,
+      0.03526096434805681,
+      0.038564492224610385,
+      0.042107039108189276,
+      0.04301727880109684
+    ],
+    "ladder_skills_full": [
+      0.019559955582979953,
+      0.03043054342268686,
+      0.03526096434805681,
+      0.038564492224610385,
+      0.042107039108189276,
+      0.04301727880109684,
+      0.040340398566081494,
+      0.04296559749072861
+    ],
+    "ladder_degrees_full": [
+      4,
+      6,
+      8,
+      10,
+      12,
+      16,
+      20,
+      24
+    ],
+    "accounting_prefers_finer": true,
+    "skill_prefers_finer_over_full_ladder": false,
+    "skill_monotone_nonincreasing_overlap": false,
+    "skill_argmax_degree": 16,
+    "skill_argmax_interior": true,
+    "plateau_from_index2_overlap": {
+      "all_steps_relative_lt_0.02": false,
+      "relative_steps": [
+        0.09368796167753213,
+        0.09186032744697137,
+        0.021617280915164964
+      ]
+    },
+    "e1_argmin_degree": 16,
+    "two_axes_agree": false
+  },
+  "predictions": [
+    {
+      "id": "P1",
+      "claim": "valid_loss(d) 单调不增",
+      "observed": {
+        "valid_loss": [
+          14.657088003795,
+          15.090503450077959,
+          15.089203529597661,
+          14.876843723479618,
+          14.947033848219547,
+          14.992819037502572,
+          14.991200573314694,
+          14.754051337732886
+        ],
+        "monotone_nonincreasing": false
+      },
+      "hit": false
+    },
+    {
+      "id": "P2",
+      "claim": "skill(d) 在 d≥8 后平台且 argmax 不在最低两阶",
+      "observed": {
+        "skill": [
+          0.019559955582979953,
+          0.03043054342268686,
+          0.03526096434805681,
+          0.038564492224610385,
+          0.042107039108189276,
+          0.04301727880109684
+        ],
+        "degrees": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          16
+        ],
+        "relative_steps_from_index2": [
+          0.09368796167753213,
+          0.09186032744697137,
+          0.021617280915164964
+        ],
+        "argmax_degree": 16
+      },
+      "hit": false
+    },
+    {
+      "id": "P3",
+      "claim": "joint 相对 independent_channels 的增益随 d 不增",
+      "observed": {
+        "gains": [
+          -0.0023070631290967696,
+          -0.005678185411356302,
+          -0.008000943629379698,
+          -0.011202925561466216,
+          -0.011139238258967614,
+          -0.015681294048871794,
+          -0.007214784082547485,
+          9.148831616673236e-05
+        ],
+        "degrees": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24
+        ],
+        "monotone_nonincreasing": false
+      },
+      "hit": false
+    },
+    {
+      "id": "P4",
+      "claim": "两轴不同向：记账轴单调偏向更细（L_total 单调递减）而 skill 非单调（平台）",
+      "observed": {
+        "L_total_bits": [
+          -193646511.73520833,
+          -229557511.9246236,
+          -262776501.716539,
+          -293921778.79340005,
+          -319154240.8185686,
+          -364187441.9148369
+        ],
+        "skill": [
+          0.019559955582979953,
+          0.03043054342268686,
+          0.03526096434805681,
+          0.038564492224610385,
+          0.042107039108189276,
+          0.04301727880109684
+        ],
+        "degrees": [
+          4,
+          6,
+          8,
+          10,
+          12,
+          16
+        ],
+        "L_total_monotone_decreasing": true,
+        "skill_monotone_nonincreasing": false,
+        "note": "v1/v2 的机械检查把这条写反了符号（把「L_total 递增」当作条件），claim 的文字未改，检查式已更正：bits 是负值且随 d 递减 ⇒ 记账轴单调偏向更细"
+      },
+      "hit": true
+    },
+    {
+      "id": "P5",
+      "claim": "d≥16 时选中 rank ≥ 32",
+      "observed": {
+        "4": 64,
+        "6": 32,
+        "8": 64,
+        "10": 64,
+        "12": 64,
+        "16": 64,
+        "20": 64,
+        "24": 64
+      },
+      "hit": true
+    }
+  ],
+  "predictions_hit": 2,
+  "predictions_total": 5,
+  "failures": [],
+  "verdict": "skill_has_interior_optimum",
+  "verdict_text": "技能轴有内部极大 ⇒ E1 的记账判据是错的代理，应改用它或并用",
+  "residuals": [
+    "本件度量的是**我们自己的呈现方式**，不是对自然的发现",
+    "高阶技巧更好不等于物理分辨率更高（输出采样步长与技巧无关）",
+    "rank 网格上界 64 在高阶可能成为限制：P5 记录的正是这件事",
+    "开发回测期（2020–2025）此前已被看过（冻结契约的 prior_exposure）⇒ 不是全新的验证样本"
+  ],
+  "wall_seconds": 433.3,
+  "peak_rss_mb": 4032.1
+}

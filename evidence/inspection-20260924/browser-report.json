@@ -1,0 +1,41 @@
+{
+  "url": "https://xue.ringsaturn.me/?lang=zh&model=cfs&type=wind500&res=half&tc=off#map=3/32/90",
+  "lastFrame": {
+    "frame": "F6552",
+    "validTime": "06/23 12:00 UTC",
+    "loadStatus": "1092 帧就绪",
+    "stats": "\n          数据集--\n          网格--\n          格式Zarr ½\n          帧缓存--\n          解码耗时--\n          解码速率--\n          视口采样--\n          网络连接--\n        ",
+    "format": "Zarr ½",
+    "bytes": "561 KB"
+  },
+  "pinnedBody": "500 hPa Wind CFSv2 / WIND 500MB\nNOAA / CFSv2 SEASONAL (0.94°)\n·\n模式周期\n09/23 12:00 UTC\n▾\n历史个例\n对比\nm/s\n80\n60\n50\n30\n20\n0\n温\nTEMP 气温\n水\nPRECIP 降水\n风\nWIND 500\n海\nSST 海表\n+\nMORE 图层\n压\nPRESSURE 等压线\n粒\nPARTICLES 粒子\n台\nTC 路径\n探\nSOUNDINGS 高空\n机\nAIRPORTS METAR\nWIND 500MB\n5 m/s\nF6552 · 06/23 20:00 · 323°\n32.00°N 90.00°E\nDEM 4667 m\nAsia/Shanghai\n对比\n1092 / 1092\n序列已完整\nTMP 2M\n--°C\nPRATE\n--mm/h\nWIND 10M\n--m/s\nTCDC\n--%\nPRMSL\n--hPa\nFORECAST HOUR\nF6552\n当前有效时间\n06/23 20:00 UTC+8\n层次\n10M\nWIND 10M 10 米风\n1000\nWIND 1000MB 1000 百帕风\n925\nWIND 925MB 925 百帕风\n850\nWIND 850MB 850 百帕风\n700\nWIND 700MB 700 百帕风\n500\nWIND 500MB 500 百帕风\n250\nWIND 250MB 250 百帕风\n200\nWIND 200MB 200 百帕风\n等压线\nMSL\nMSLP 气压\n1000\n1000MB 位势\n850\n850MB 位势\n700\n700MB 位势\n500\n500MB 位势\n200\n200MB 位势\nALONE\nALONE 只看线\n1092 帧就绪\n12 FPS\nPLAY\nF6552 · 06/23 20:00\n10月\n11月\n12月\n2027年1月\n2月\n3月\n4月\n5月\n6月\n+6H\n+6552H\n© OPENSTREETMAP · PROTOMAPS",
+  "pageErrors": [],
+  "rangeResponseCount": 212,
+  "rangeExamples": [
+    {
+      "url": "https://dataset.ringsaturn.me/xue/cfs.2026092312/wind500.half.zarr/zarr.json?v=9927c1b4",
+      "contentRange": "bytes 0-0/9313",
+      "bytes": "1"
+    },
+    {
+      "url": "https://dataset.ringsaturn.me/xue/cfs.2026092312/wind500.half.zarr/ugrd500/c/0/0/0?v=9927c1b4",
+      "contentRange": "bytes 9319911-9343210/9343211",
+      "bytes": "23300"
+    },
+    {
+      "url": "https://dataset.ringsaturn.me/xue/cfs.2026092312/wind500.half.zarr/vgrd500/c/0/0/0?v=9927c1b4",
+      "contentRange": "bytes 9605171-9628470/9628471",
+      "bytes": "23300"
+    },
+    {
+      "url": "https://dataset.ringsaturn.me/xue/cfs.2026092312/wind500.half.zarr/ugrd500/c/0/0/0?v=9927c1b4",
+      "contentRange": "bytes 0-99528/9343211",
+      "bytes": "99529"
+    },
+    {
+      "url": "https://dataset.ringsaturn.me/xue/cfs.2026092312/wind500.half.zarr/vgrd500/c/0/0/0?v=9927c1b4",
+      "contentRange": "bytes 0-50972/9628471",
+      "bytes": "50973"
+    }
+  ]
+}

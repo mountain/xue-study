@@ -1,0 +1,134 @@
+{
+  "type": "Catalog",
+  "stac_version": "1.1.0",
+  "id": "xue",
+  "title": "Xue",
+  "description": "Global and regional weather forecast runs and radar observations, packed by Xue into Zarr v3 stores (docs/zarr-profile.md) for playback in a browser and reading with xarray, beside three point products in plain JSON: radiosonde soundings, airport reports and tropical cyclone tracks. One Collection per source or product, whose Item is the newest run or issue; the showcase Collection keeps historical cases.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "./catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "child",
+      "href": "gfs/collection.json",
+      "type": "application/json",
+      "title": "NOAA GFS 0.25°"
+    },
+    {
+      "rel": "child",
+      "href": "ecmwf/collection.json",
+      "type": "application/json",
+      "title": "ECMWF IFS open data 0.25°"
+    },
+    {
+      "rel": "child",
+      "href": "aifs/collection.json",
+      "type": "application/json",
+      "title": "ECMWF AIFS Single open data 0.25°"
+    },
+    {
+      "rel": "child",
+      "href": "ifshres/collection.json",
+      "type": "application/json",
+      "title": "ECMWF IFS HRES 0.1° (via Open-Meteo)"
+    },
+    {
+      "rel": "child",
+      "href": "sflux/collection.json",
+      "type": "application/json",
+      "title": "NOAA GFS surface fluxes"
+    },
+    {
+      "rel": "child",
+      "href": "hrrr/collection.json",
+      "type": "application/json",
+      "title": "NOAA HRRR 3 km"
+    },
+    {
+      "rel": "child",
+      "href": "gefsaero/collection.json",
+      "type": "application/json",
+      "title": "NOAA GEFS-Aerosols 0.25°"
+    },
+    {
+      "rel": "child",
+      "href": "cfs/collection.json",
+      "type": "application/json",
+      "title": "NCEP CFSv2 seasonal"
+    },
+    {
+      "rel": "child",
+      "href": "cma/collection.json",
+      "type": "application/json",
+      "title": "CMA radar mosaic"
+    },
+    {
+      "rel": "child",
+      "href": "mrms/collection.json",
+      "type": "application/json",
+      "title": "NOAA MRMS radar mosaic"
+    },
+    {
+      "rel": "child",
+      "href": "jma/collection.json",
+      "type": "application/json",
+      "title": "JMA precipitation nowcast (hrpns)"
+    },
+    {
+      "rel": "child",
+      "href": "himawari/collection.json",
+      "type": "application/json",
+      "title": "Himawari-9 AHI full disk"
+    },
+    {
+      "rel": "child",
+      "href": "goeseast/collection.json",
+      "type": "application/json",
+      "title": "GOES-19 ABI full disk"
+    },
+    {
+      "rel": "child",
+      "href": "goeswest/collection.json",
+      "type": "application/json",
+      "title": "GOES-18 ABI full disk"
+    },
+    {
+      "rel": "child",
+      "href": "meteosat/collection.json",
+      "type": "application/json",
+      "title": "Meteosat-12 FCI full disk, hourly"
+    },
+    {
+      "rel": "child",
+      "href": "sounding/collection.json",
+      "type": "application/json",
+      "title": "Radiosonde soundings (WIS2)"
+    },
+    {
+      "rel": "child",
+      "href": "airport/collection.json",
+      "type": "application/json",
+      "title": "Airport observations and forecasts (METAR / TAF)"
+    },
+    {
+      "rel": "child",
+      "href": "tc/collection.json",
+      "type": "application/json",
+      "title": "Tropical cyclone tracks"
+    },
+    {
+      "rel": "child",
+      "href": "showcase/collection.json",
+      "type": "application/json",
+      "title": "Xue showcase cases"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://github.com/ringsaturn/xue/blob/main/docs/stac.md",
+      "type": "text/markdown",
+      "title": "How this catalog is derived"
+    }
+  ]
+}

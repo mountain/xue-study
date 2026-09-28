@@ -1,0 +1,372 @@
+{
+  "version": "climatetensor-wind500-spectral-ar1-v1",
+  "generated_utc": "2026-09-24T05:05:40.985668+00:00",
+  "status": "historical-origin experimental forecast; not a current operational forecast",
+  "native_adva": false,
+  "assimilation": false,
+  "initial_month": "2025-12",
+  "reference_run_time": "2026-01-01T00:00:00Z",
+  "target_months": [
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06"
+  ],
+  "training": [
+    "1979-01",
+    "2014-12"
+  ],
+  "validation": [
+    "2015-01",
+    "2019-12"
+  ],
+  "test": [
+    "2020-01",
+    "2025-12"
+  ],
+  "degree": 6,
+  "coefficients": 96,
+  "retained_even_anomaly_coefficients": 27,
+  "grid_step_degrees": 2.5,
+  "spatial_resolution_note": "degree 6 large-scale field, not 2.5 degree forecast skill; excludes exact pole rows",
+  "monthly_statistic": "Each frame is a calendar-month average, timestamped at the middle of that month; intermediate animation is display interpolation only",
+  "selected_shrinkage": {
+    "full": 1.0,
+    "even": 1.0
+  },
+  "validation_candidates": {
+    "full": [
+      {
+        "shrink": 0.0,
+        "mse_by_lead": [
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095
+        ]
+      },
+      {
+        "shrink": 0.25,
+        "mse_by_lead": [
+          4.264554567678718,
+          4.353418358238481,
+          4.358588490324821,
+          4.359096514946012,
+          4.3591362036558765,
+          4.35913918550975
+        ]
+      },
+      {
+        "shrink": 0.5,
+        "mse_by_lead": [
+          4.195085985955135,
+          4.33729177796595,
+          4.35477982943605,
+          4.358450902731698,
+          4.359027108765932,
+          4.3591050759872205
+        ]
+      },
+      {
+        "shrink": 0.75,
+        "mse_by_lead": [
+          4.150733981866856,
+          4.3138725645945755,
+          4.344883072626853,
+          4.355708914929084,
+          4.358291248375377,
+          4.358745839411286
+        ]
+      },
+      {
+        "shrink": 1.0,
+        "mse_by_lead": [
+          4.131498555413888,
+          4.2883483487486265,
+          4.32746029667405,
+          4.348776243017336,
+          4.355669004778269,
+          4.356949636696979
+        ]
+      }
+    ],
+    "even": [
+      {
+        "shrink": 0.0,
+        "mse_by_lead": [
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095,
+          4.3591397270376095
+        ]
+      },
+      {
+        "shrink": 0.25,
+        "mse_by_lead": [
+          4.316887600868926,
+          4.35771473563557,
+          4.359068953447068,
+          4.359133940114554,
+          4.359139028596658,
+          4.359139667470898
+        ]
+      },
+      {
+        "shrink": 0.5,
+        "mse_by_lead": [
+          4.284747964542768,
+          4.353647731602943,
+          4.358578722979301,
+          4.359047304725324,
+          4.359117383236962,
+          4.3591359150186175
+        ]
+      },
+      {
+        "shrink": 0.75,
+        "mse_by_lead": [
+          4.262720818059134,
+          4.34756262546017,
+          4.357293833584895,
+          4.3586755345980155,
+          4.358970379933008,
+          4.359096335887591
+        ]
+      },
+      {
+        "shrink": 1.0,
+        "mse_by_lead": [
+          4.250806161418026,
+          4.340499268074668,
+          4.354983513196448,
+          4.357704094926992,
+          4.358431186654858,
+          4.358896784214214
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "climatology": [
+      {
+        "lead_months": 1,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1735162180766525,
+        "resolved_vector_rmse_ms": 5.539013355204374,
+        "skill_vs_climatology": 0.0
+      },
+      {
+        "lead_months": 2,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1735162180766525,
+        "resolved_vector_rmse_ms": 5.539013355204374,
+        "skill_vs_climatology": 0.0
+      },
+      {
+        "lead_months": 3,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1735162180766525,
+        "resolved_vector_rmse_ms": 5.539013355204374,
+        "skill_vs_climatology": 0.0
+      },
+      {
+        "lead_months": 4,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1735162180766525,
+        "resolved_vector_rmse_ms": 5.539013355204374,
+        "skill_vs_climatology": 0.0
+      },
+      {
+        "lead_months": 5,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1735162180766525,
+        "resolved_vector_rmse_ms": 5.539013355204374,
+        "skill_vs_climatology": 0.0
+      },
+      {
+        "lead_months": 6,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1735162180766525,
+        "resolved_vector_rmse_ms": 5.539013355204374,
+        "skill_vs_climatology": 0.0
+      }
+    ],
+    "persistence": [
+      {
+        "lead_months": 1,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.5993662398950006,
+        "resolved_vector_rmse_ms": 5.7195455280988945,
+        "skill_vs_climatology": -0.4302408498417889
+      },
+      {
+        "lead_months": 2,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.7790466443871384,
+        "resolved_vector_rmse_ms": 5.803412483235152,
+        "skill_vs_climatology": -0.6348047922852542
+      },
+      {
+        "lead_months": 3,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.83733168674803,
+        "resolved_vector_rmse_ms": 5.8315475904355445,
+        "skill_vs_climatology": -0.7040975269610175
+      },
+      {
+        "lead_months": 4,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.892728114021417,
+        "resolved_vector_rmse_ms": 5.8587005505094805,
+        "skill_vs_climatology": -0.7712891513590057
+      },
+      {
+        "lead_months": 5,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.915804911946069,
+        "resolved_vector_rmse_ms": 5.870129000577331,
+        "skill_vs_climatology": -0.7996628688256335
+      },
+      {
+        "lead_months": 6,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.9413524818884818,
+        "resolved_vector_rmse_ms": 5.882860751505318,
+        "skill_vs_climatology": -0.8313374383415426
+      }
+    ],
+    "full": [
+      {
+        "lead_months": 1,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.0728358689321205,
+        "resolved_vector_rmse_ms": 5.500285877881418,
+        "skill_vs_climatology": 0.09049715861655006
+      },
+      {
+        "lead_months": 2,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.144654016752058,
+        "resolved_vector_rmse_ms": 5.5277515366069885,
+        "skill_vs_climatology": 0.026381740308947577
+      },
+      {
+        "lead_months": 3,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.166636140085047,
+        "resolved_vector_rmse_ms": 5.536317220175594,
+        "skill_vs_climatology": 0.006320807535683315
+      },
+      {
+        "lead_months": 4,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1707846065739944,
+        "resolved_vector_rmse_ms": 5.53794203716767,
+        "skill_vs_climatology": 0.00251196193090375
+      },
+      {
+        "lead_months": 5,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1726917245730095,
+        "resolved_vector_rmse_ms": 5.538689874773476,
+        "skill_vs_climatology": 0.0007585286151976511
+      },
+      {
+        "lead_months": 6,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1731537957290477,
+        "resolved_vector_rmse_ms": 5.538871150223821,
+        "skill_vs_climatology": 0.00033346163105174575
+      }
+    ],
+    "even": [
+      {
+        "lead_months": 1,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.1321778704156724,
+        "resolved_vector_rmse_ms": 5.522923018654207,
+        "skill_vs_climatology": 0.03767649672480666
+      },
+      {
+        "lead_months": 2,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.16336657964193,
+        "resolved_vector_rmse_ms": 5.535038496415522,
+        "skill_vs_climatology": 0.009317566197881932
+      },
+      {
+        "lead_months": 3,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.170645467176965,
+        "resolved_vector_rmse_ms": 5.53788749823126,
+        "skill_vs_climatology": 0.002639828542613909
+      },
+      {
+        "lead_months": 4,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.172506644248644,
+        "resolved_vector_rmse_ms": 5.538617274933761,
+        "skill_vs_climatology": 0.0009287617472295562
+      },
+      {
+        "lead_months": 5,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.173186934199953,
+        "resolved_vector_rmse_ms": 5.538884152053334,
+        "skill_vs_climatology": 0.0003029735237285447
+      },
+      {
+        "lead_months": 6,
+        "samples": 72,
+        "spectral_vector_rmse_ms": 2.173393244113131,
+        "resolved_vector_rmse_ms": 5.538965101212209,
+        "skill_vs_climatology": 0.00011315350091867238
+      }
+    ]
+  },
+  "gram_max_error": 0.0009519750789850588,
+  "projection_residual_vector_rmse_ms": 5.094751828979522,
+  "contract_sha256": "ff0928389dfe8a75e47eba3394e213dcba52e3bb8da9c0147b423d431ecf7b62",
+  "sources": [
+    {
+      "source": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/uwnd.mon.mean.nc",
+      "selection": "level=500 hPa, 1979-01 through 2025-12",
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "units": "m/s",
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "retrieved_utc": "2026-09-24T05:03:58.766821+00:00",
+      "sha256": "abe57749ceb0a13298d41198e740be13bc681a40878321d4ed8eab45c98763fb"
+    },
+    {
+      "source": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/vwnd.mon.mean.nc",
+      "selection": "level=500 hPa, 1979-01 through 2025-12",
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "units": "m/s",
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "retrieved_utc": "2026-09-24T05:04:56.639092+00:00",
+      "sha256": "2097a1f7c4284e9d45dbe55f220fc4eeefb7db2fac780747dea3a2914e72f686"
+    }
+  ],
+  "limitations": [
+    "Reanalysis verification, not independent observations or operational as-of testing",
+    "Monthly target averages, not instantaneous weather; skill not established for local weather or hazards",
+    "Only degrees 1\u20136; higher-frequency spatial structures omitted",
+    "Historical December 2025 initial state; generated September 2026, not available in real time at that origin",
+    "Even-only means even toroidal anomaly plus full seasonal climatology",
+    "No native Adva learner or assimilation is executed"
+  ]
+}

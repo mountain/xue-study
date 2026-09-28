@@ -1,0 +1,45 @@
+{
+  "bytes": 15441879,
+  "files": [
+    {
+      "key": "tcdc/zarr.json",
+      "bytes": 1859,
+      "sha256": "f5bb5c23fea2e1f5e1a5dcaa56aeab0e2dac860f84618e15d35ea1345c8741ee"
+    },
+    {
+      "key": "tcdc/c/0/0/0",
+      "bytes": 15425371,
+      "sha256": "f9c22696958ba15898d579de1072ad73d911b60ab73e111b593eefb56354d029"
+    },
+    {
+      "key": "time/zarr.json",
+      "bytes": 583,
+      "sha256": "356d4508d2dcbff1f17f45ccf6fb4ec4dda986a940681342695bd51b419955d7"
+    },
+    {
+      "key": "time/c/0",
+      "bytes": 4368,
+      "sha256": "783d086d0eeeabd771bea8fdd109dfd727b08cc94496aa99ee541ddecd79c9cc"
+    },
+    {
+      "key": "latitude/zarr.json",
+      "bytes": 533,
+      "sha256": "da264f49c11c10e177ccba4bbf5261e0697c383696849e82ef5644cef2331de5"
+    },
+    {
+      "key": "latitude/c/0",
+      "bytes": 760,
+      "sha256": "01787908cc4844ddf0d8524ae5cfa6ee8b75d845a2c04a91a6d6227e1555806a"
+    },
+    {
+      "key": "longitude/zarr.json",
+      "bytes": 536,
+      "sha256": "8f55d9f1c11a7f9eaa8e5fb63c20844f96a494e3f9efb877c4022a0623656ca6"
+    },
+    {
+      "key": "longitude/c/0",
+      "bytes": 1536,
+      "sha256": "02a7bc0447c842d63ab37c8c02b11349f3cccf40f05011a6c7e924fb41992c82"
+    }
+  ]
+}

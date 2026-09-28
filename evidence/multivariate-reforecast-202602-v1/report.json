@@ -1,0 +1,261 @@
+{
+  "question_id": "xue.derived.reforecast-winter-2026-27-from-latest-month",
+  "version": "multivariate-reforecast-202602-v1",
+  "initial_month": "2026-02",
+  "target_months": [
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08"
+  ],
+  "leads_months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "status": "historical-origin experimental monthly forecast from a NEW initial month; not operational weather",
+  "model": "frozen multivariate L12 (ctmulti12); vectors/maps/climatology/scale reused unchanged; no retraining",
+  "reachable_target_check": {
+    "rule": "direct map only, leads 1..6; a target month T needs an initial month M with 0 < T-M <= 6",
+    "latest_available_initial_month": "2026-02",
+    "months_needed_for_2026_12": [
+      "2026-06",
+      "2026-11"
+    ],
+    "2026_12_reachable": false,
+    "why": "R1-based inputs end 2026-02; 2026-12 would be lead 10 (> 6)"
+  },
+  "verification_available": false,
+  "verification_note": "no month later than 2026-02 exists in the R1 inputs, so leads 1..6 cannot be scored yet",
+  "known_representation_error": "low-order spectral truncation flattens the plateau cold background (audit 2026-09-24: L12 January plateau warm bias +10.43 K, spectral climatology truncation +9.589 K of it); plateau readouts carry this caveat",
+  "data_authenticity_reservation": "reserved by the questioner on 2026-09-24; not resolved by this round",
+  "frozen_hashes_sha256": {
+    "model.npz": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+    "projection-L12.npz": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224",
+    "forecast.npz": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb",
+    "report.json": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+  },
+  "channels": [
+    {
+      "channel": "t850",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 12.607273739539675,
+      "min_area_fraction": 0.9532645882323358
+    },
+    {
+      "channel": "t2m",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 1.0041168580524238,
+      "min_area_fraction": 1.0000000000000018
+    },
+    {
+      "channel": "sst",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 1543.5180389590555,
+      "min_area_fraction": 0.7329725871951791
+    },
+    {
+      "channel": "sp",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 1.0041168580524238,
+      "min_area_fraction": 1.0000000000000018
+    },
+    {
+      "channel": "msl",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 1.005397178198371,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "channel": "z500",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 1.005397178198371,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "channel": "q850",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 12.607273739539675,
+      "min_area_fraction": 0.9532645882323358
+    },
+    {
+      "channel": "q700",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 4.454990279147667,
+      "min_area_fraction": 0.9820712330248066
+    },
+    {
+      "channel": "w500",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 1.005397178198371,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "channel": "w700",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 169,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 228496,
+      "avoided_repeated_gram_bytes": 228480,
+      "max_gram_condition": 4.454990279147667,
+      "min_area_fraction": 0.9820712330248066
+    },
+    {
+      "channel": "wind850",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 336,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 903176,
+      "avoided_repeated_gram_bytes": 903160,
+      "max_gram_condition": 12.471035314233003,
+      "min_area_fraction": 0.9532645882323358
+    },
+    {
+      "channel": "wind500",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 336,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 903176,
+      "avoided_repeated_gram_bytes": 903160,
+      "max_gram_condition": 1.0050939074805505,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "channel": "wind250",
+      "new_months": [
+        "2026-01",
+        "2026-02"
+      ],
+      "block_size": 336,
+      "distinct_domains": 1,
+      "gram_storage_bytes": 903176,
+      "avoided_repeated_gram_bytes": 903160,
+      "max_gram_condition": 1.0050939074805505,
+      "min_area_fraction": 1.0000000000000002
+    }
+  ],
+  "readouts": {
+    "target_months": [
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08"
+    ],
+    "plateau_t2m_K": [
+      272.80334385860124,
+      278.3834419435927,
+      282.620803370375,
+      286.44276451216723,
+      287.916727266391,
+      287.26309529036115
+    ],
+    "region_500hPa_vector_mean_speed_ms": {
+      "east_asia": [
+        26.767287988673107,
+        19.851372193797413,
+        14.474672532870292,
+        8.826095102331164,
+        5.283302458270399,
+        2.3295721868663772
+      ],
+      "north_america": [
+        17.807791895835088,
+        15.477516920888162,
+        12.030765556997459,
+        11.163092685045335,
+        10.502917686492623,
+        8.91540452563748
+      ],
+      "middle_east": [
+        15.823107304866959,
+        11.317262161606013,
+        7.225137973759989,
+        2.9167679831163547,
+        1.9349951124223688,
+        1.938703545225399
+      ]
+    }
+  },
+  "outputs": {
+    "forecast.npz": null
+  }
+}

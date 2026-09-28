@@ -1,0 +1,65 @@
+{
+  "status": "local reviewable bundle; not uploaded to Observable",
+  "notebook_kit": "2.6.4",
+  "account_target": "@mountain",
+  "annual_csv": {
+    "rows": 384,
+    "synthetic": true,
+    "time_unit": "idealized equal-length year",
+    "perturbation_period_years": 4
+  },
+  "files": {
+    "README.md": {
+      "bytes": 3260,
+      "sha256": "4e993c74c0f733297461d47ace6de39b97ae2c4322724ebd4492569b543c3c00"
+    },
+    "cells.md": {
+      "bytes": 5651,
+      "sha256": "584db08bec95f5794d01bbf0e0dc27d46d08727cc82c85c0681d5c5ecf6d8068"
+    },
+    "package.json": {
+      "bytes": 288,
+      "sha256": "ad656532a20874f43b6b9c54ebd3370049bfb3e74a8a57c762d983b7193d31b9"
+    },
+    "package-lock.json": {
+      "bytes": 53918,
+      "sha256": "1a56fe8091f328a71ecd800556961fac1fdc4c2df3482eff477fd0156b1c4b69"
+    },
+    "docs/annual-spectrum.html": {
+      "bytes": 5821,
+      "sha256": "0f089ed967e9b0d28bf2b10a173c41347810872dfc188478650761bc3d31f0ca"
+    },
+    "docs/annual-check.json": {
+      "bytes": 1879,
+      "sha256": "9ee52dba19d0de4bdbd599cc4383fc2c58fbe47fd0413905ec55391516f6ce3a"
+    },
+    "docs/synthetic-annual.csv": {
+      "bytes": 38348,
+      "sha256": "04924728ee84ebca35dffe03f97db9b2087ed97da283b929805b53e64fd23606"
+    },
+    "preview.html": {
+      "bytes": 6189,
+      "sha256": "68847b0be0b850d1a1bc94c8b2091b39e2ce02b2f82663a28ade23d9037fcf9d"
+    },
+    "annual-check.json": {
+      "bytes": 1879,
+      "sha256": "9ee52dba19d0de4bdbd599cc4383fc2c58fbe47fd0413905ec55391516f6ce3a"
+    },
+    "demo.html": {
+      "bytes": 27970,
+      "sha256": "2b4e98abf4a938430c125273d9c056cdd0ced85e70c0d3e8646490930941b44d"
+    },
+    "report.json": {
+      "bytes": 25732,
+      "sha256": "c8f5590ce4b2c8753414f84e8ff8dba5314541b9dbb7accf6c78d02180d41835"
+    },
+    "synthetic.npz": {
+      "bytes": 20136,
+      "sha256": "cb3dab186e34a4f286b57cf90a69ed091c0b7bf2f90b67259dc84995a48b3471"
+    },
+    "era5-representation.npz": {
+      "bytes": 312059,
+      "sha256": "056539c400a6c78fdb8b9925bf29d3d21d36c9809303e2d8541dd81f487fdf3b"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "checked_at_utc": "2026-09-24T07:20:22.066554+00:00",
+  "url": "https://observablehq.com/@climatetensor/annual-spectrum-1",
+  "public": true,
+  "version": 43,
+  "publish_version": 43,
+  "cell_count": 9,
+  "changed_cell_ids_since_v27": [
+    11
+  ],
+  "json_attachment_read_instead_of_script_import": true,
+  "direct_table_display": true,
+  "attachment_errors_displayed": true,
+  "other_eight_cells_unchanged": true,
+  "attachment_reference_preserved": {
+    "type": "file",
+    "specifier": "annual-check.json",
+    "value": "e6ee4d6fa985c1ab87ab5937638f8d012d97436c4f1b327d0bf2ad0d3a0c03071e8d99b175ced4d3f790ef0d30085e3ea9fa2e7867655e9453e23736dd552c21.1790232653447"
+  },
+  "actual_online_attachment_values": "not observed; source review only",
+  "user_confirmed_controls_and_charts_work": true,
+  "writes_to_observable": false
+}

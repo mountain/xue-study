@@ -1,0 +1,47 @@
+{
+  "stage": "monthly-L6-multivariate",
+  "scientific_checks_passed": 4,
+  "frontend_checks_passed": 119,
+  "native_and_zarr_bundles": 11,
+  "frames_per_bundle": 6,
+  "public_https_objects": 140,
+  "source_hashes": {
+    "fields.py": "26ce7c0374a3fe85900ea3ce9ff13424a4ece4db0d493aab12ce0485d7bf7b0c",
+    "fetch.py": "c3c0a1e7ef206562a5638c726eb1b36a02a7a4bf550c870bde3c69575ebcdcdf",
+    "project.py": "284be35ea87f1fe83e7400d9f714f50b5ca40c4f3ea69022c621cc36373edcdc",
+    "model.py": "e3bbdf733a6c3b3f4a6e7c4ad6fb05f1d66061bce55b90e82488681caf48b399",
+    "train.py": "f10fc646e99e973ff1881bd05458a1dff78a81753faae3388ecb9c524ee462ab",
+    "test_model.py": "0a65dd82ebc482eef2ce0ca13205647dc7992bb01976e255905ec32c10b91f37",
+    "publish_report.py": "4c204983da57f38ffb48f6543deb247e01c5ba77d16b902800d3c05ee0999ae0",
+    "contract.json": "024dc96970f1cbf7259b7858dbf8ed668769f731389285fd12c1a1c8c45338e7",
+    "README.md": "71c1ee1a50a411535d4cff1c17ee6b7cd15cf7407a928dcf61613975e964ab84",
+    "requirements.txt": "ea3c79c0ae8fc262ae409dacf5639d7a286121bd6cf27628f964eb3890921930"
+  },
+  "release": "/var/www/climatetensor/releases/multivariate-v1-20260924",
+  "notes": [
+    "Higher time/space resolution has not been trained",
+    "SST physical bound issue disclosed; not a map layer",
+    "Joint model underperforms independent channels overall"
+  ],
+  "status": "published_and_verified",
+  "public_map_layers": [
+    "hgt500",
+    "prmsl",
+    "spfh700",
+    "spfh850",
+    "tmp2m",
+    "tmp850",
+    "vvel500",
+    "vvel700",
+    "wind250",
+    "wind500",
+    "wind850"
+  ],
+  "public_page_errors": 0,
+  "public_http_errors": 0,
+  "public_range_responses": 64,
+  "default_home_ctmulti": true,
+  "three_model_switch": true,
+  "point_series_six_frames": true,
+  "mobile_layout": true
+}

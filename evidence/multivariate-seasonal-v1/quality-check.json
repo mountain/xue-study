@@ -1,0 +1,9 @@
+{
+  "saved_model_reproduces_forecast": true,
+  "maximum_coefficient_replay_error": 0.0,
+  "positive_humidity": true,
+  "sst_below_source_floor_271_35_K": 2252,
+  "sst_minimum_K": 268.203125,
+  "sst_interpretation": "Unconstrained L6 reconstruction overshoots the ERSST lower bound; raw diagnostic output is not physically qualified. No silent clipping. SST is not an Xue map layer in this release.",
+  "caution": "Delivery and numerical checks do not establish forecast skill or conservation."
+}

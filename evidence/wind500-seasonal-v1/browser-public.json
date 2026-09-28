@@ -1,0 +1,30 @@
+{
+  "base": "https://climatetensor.io",
+  "checks": [
+    {
+      "model": "ctfull",
+      "max": "5",
+      "last": "06/15 00:00 UTC",
+      "notice": "历史起报实验 · 500 hPa 月平均风场\n\n初始资料：2025-12 · 预报月份：2026-01—06\n\n2026-09-24 生成，非实时预报；未进行同化。动画中间帧仅作显示插值。\n\n方法、检验与下载\n完整谱\n偶阶旋转异常",
+      "ready": true
+    },
+    {
+      "model": "cteven",
+      "max": "5",
+      "last": "06/15 00:00 UTC",
+      "notice": "历史起报实验 · 500 hPa 月平均风场\n\n初始资料：2025-12 · 预报月份：2026-01—06\n\n2026-09-24 生成，非实时预报；未进行同化。动画中间帧仅作显示插值。\n\n方法、检验与下载\n完整谱\n偶阶旋转异常",
+      "ready": true
+    },
+    {
+      "in_page_model_switch": true,
+      "point_ui_text": "历史起报实验 · 500 hPa 月平均风场\n\n初始资料：2025-12 · 预报月份：2026-01—06\n\n2026-09-24 生成，非实时预报；未进行同化。动画中间帧仅作显示插值。\n\n方法、检验与下载\n完整谱\n偶阶旋转异常\n500 hPa Wind ClimateTensor FULL / WIND 500MB\nCLIMATETENSOR / FULL · MONTHLY · L≤6\n·\n模式周期\n01/01 00:00 UTC\n▾\n历史个例\n对比\nm/s\n80\n60\n50\n30\n20\n0\n风\nWIND 500\n+\nMORE 图层\n粒\nPARTICLES 粒子\nWIND 500MB\n7 m/s\nF3960 · 06/15 00:00 · 270°\n35.00°N 90.00°E\n对比\n6 / 6\n序列已完整\nFORECAST HOUR\nF336\n当前有效时间\n01/15 00:00 UTC\n6 帧就绪\n3 FPS\nPAUSE\nF336 · 01/15 00:00\n1月\n2月\n3月\n4月\n5月\n+336H\n+3960H\nClimateTensor · Training data: NOAA PSL NCEP/NCAR · Map: Natural Earth · Viewer: Xue"
+    },
+    {
+      "mobile_ready": true,
+      "horizontal_overflow": false
+    }
+  ],
+  "page_errors": [],
+  "bad_responses": [],
+  "range_responses": 20
+}

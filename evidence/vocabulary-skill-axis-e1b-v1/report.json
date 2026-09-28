@@ -1,0 +1,10 @@
+{
+  "version": "vocabulary-skill-axis-e1b-v1",
+  "question_id": "xue.derived.vocabulary-skill-axis-e1b",
+  "generated_utc": "2026-09-27T17:33:19.744847+00:00",
+  "verdict": "instrument_failure",
+  "failures": [
+    "KeyError: 'climatology'"
+  ],
+  "traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/xue-study/experiments/vocabulary-skill-axis-e1b/run_skill_axis.py\", line 353, in <module>\n    code = main()\n           ^^^^^^\n  File \"/home/ubuntu/xue-study/experiments/vocabulary-skill-axis-e1b/run_skill_axis.py\", line 174, in main\n    _, _, hskill = aggregate_skill(hmetrics, channels, 'joint')\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/xue-study/experiments/vocabulary-skill-axis-e1b/run_skill_axis.py\", line 76, in aggregate_skill\n    base = metrics['climatology']\n           ~~~~~~~^^^^^^^^^^^^^^^\nKeyError: 'climatology'\n"
+}

@@ -1,0 +1,44 @@
+{
+  "base": "http://127.0.0.1:8088",
+  "scope": "vvel500,vvel700,wind850,wind500,wind250",
+  "checks": [
+    {
+      "model": "ctmulti12",
+      "field": "vvel500",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "vvel700",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "wind850",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "wind500",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "wind250",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    }
+  ],
+  "page_errors": [],
+  "http_errors": [],
+  "range_responses": 21
+}

@@ -1,0 +1,13 @@
+{
+  "source": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/vwnd.mon.mean.nc",
+  "selection": "level=500 hPa, 1979-01 through 2025-12",
+  "source_last_month": "2026-02-01T00:00:00.000000000",
+  "units": "m/s",
+  "shape": [
+    564,
+    73,
+    144
+  ],
+  "retrieved_utc": "2026-09-24T05:04:56.639092+00:00",
+  "sha256": "2097a1f7c4284e9d45dbe55f220fc4eeefb7db2fac780747dea3a2914e72f686"
+}

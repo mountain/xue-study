@@ -1,0 +1,12 @@
+{
+  "notebook_kit": "2.6.4",
+  "build": "passed",
+  "reactive_modes": true,
+  "period_control": true,
+  "zero_control": true,
+  "attachment_loaded": true,
+  "calibration_visible_without_expansion": true,
+  "mobile_no_overflow": true,
+  "browser_errors": [],
+  "observable_account_publication": false
+}

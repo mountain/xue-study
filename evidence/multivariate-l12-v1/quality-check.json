@@ -1,0 +1,19 @@
+{
+  "preserved_coarse_objects": 140,
+  "all_coarse_hashes_unchanged": true,
+  "same_observation_domains": true,
+  "nested_projection_residual_nonincreasing": true,
+  "saved_model_reproduces_forecast": true,
+  "fine_model_coarse_grid_is_exact_subsample": true,
+  "original_L6_is_not_replaced_by_subsample": true,
+  "independent_native_wind_mse": {
+    "L6_lead1": 30.372100539428395,
+    "L6_lead6": 30.627884258354115,
+    "L12_lead1": 19.489009774431032,
+    "L12_lead6": 20.201528677691822
+  },
+  "positive_specific_humidity": true,
+  "sst_minimum_K": 269.15966796875,
+  "sst_below_source_floor_271_35_K": 11769,
+  "sst_status": "Still unqualified against source physical lower bound; research download only, not a map layer."
+}

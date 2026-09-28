@@ -1,0 +1,61 @@
+{
+  "reference": "external operational CFSv2, NOT this project's model output",
+  "run": "cfs.2026092512",
+  "source": "https://dataset.ringsaturn.me/xue/cfs.2026092512",
+  "member": "01 (single member)",
+  "cadence": "6-hourly; monthly means computed from valid times within each month",
+  "grid": "91x180 (~2 deg)",
+  "caveats": [
+    "single member, raw absolute values",
+    "not anomalised against hindcast climatology; no skill mask",
+    "therefore not the official CPC seasonal product",
+    "this project's own model cannot reach these months (its inputs end 2026-02, so 2026-12 would be lead 10)"
+  ],
+  "target_months": [
+    "2026-10",
+    "2026-11",
+    "2026-12",
+    "2027-01"
+  ],
+  "six_hourly_steps_per_month": {
+    "2026-10": 124,
+    "2026-11": 120,
+    "2026-12": 124,
+    "2027-01": 124
+  },
+  "region_500hPa_vector_mean_speed_ms": {
+    "2026-10": {
+      "east_asia": 9.370035222670037,
+      "north_america": 13.697255385533184,
+      "middle_east": 4.864509111538293
+    },
+    "2026-11": {
+      "east_asia": 15.808635108315366,
+      "north_america": 19.813272096426022,
+      "middle_east": 11.066203240849264
+    },
+    "2026-12": {
+      "east_asia": 27.115756136832434,
+      "north_america": 21.705888137888532,
+      "middle_east": 14.942697246571262
+    },
+    "2027-01": {
+      "east_asia": 25.48242624687258,
+      "north_america": 18.692561532554272,
+      "middle_east": 15.920570735481002
+    }
+  },
+  "nino34_tmpsfc_proxy_degC": {
+    "2026-10": 29.883,
+    "2026-11": 30.055,
+    "2026-12": 30.236,
+    "2027-01": 30.011
+  },
+  "nino34_proxy_note": "proxy: CFSv2 surface temperature over 5S-5N/170W-120W (this service stores it in degC); not an SST analysis and not the CPC ONI",
+  "hgt500_zonal_mean_30_60N_m": {
+    "2026-10": 5710.219809444825,
+    "2026-11": 5608.890763148056,
+    "2026-12": 5535.706612223741,
+    "2027-01": 5540.364027744287
+  }
+}

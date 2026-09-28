@@ -1,0 +1,11 @@
+{
+  "coords": "35.00°N 90.00°E",
+  "value": "7 m/s",
+  "valid": "06/15 08:00 UTC+8",
+  "lead": "F3960",
+  "play_label": "PLAY",
+  "expected_quantized_u": 7,
+  "expected_quantized_v": 0,
+  "expected_speed": 7,
+  "passed": true
+}

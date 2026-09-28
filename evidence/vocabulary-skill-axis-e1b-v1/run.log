@@ -1,0 +1,8 @@
+{
+ "frozen_hashes_before": {
+  "model.npz": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+  "projection-L12.npz": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224",
+  "forecast.npz": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb",
+  "report.json": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+ }
+}

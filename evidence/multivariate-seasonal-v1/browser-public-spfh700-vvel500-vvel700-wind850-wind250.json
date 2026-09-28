@@ -1,0 +1,39 @@
+{
+  "base": "https://climatetensor.io",
+  "scope": "spfh700,vvel500,vvel700,wind850,wind250",
+  "checks": [
+    {
+      "model": "ctmulti",
+      "field": "spfh700",
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti",
+      "field": "vvel500",
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti",
+      "field": "vvel700",
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti",
+      "field": "wind850",
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti",
+      "field": "wind250",
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    }
+  ],
+  "page_errors": [],
+  "http_errors": [],
+  "range_responses": 19
+}

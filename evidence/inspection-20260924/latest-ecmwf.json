@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "model": "ECMWF",
+  "product": "ifs-0p25",
+  "run": "2026092312",
+  "runTime": "2026-09-23T12:00:00Z",
+  "manifestPath": "ecmwf.2026092312/manifest.json",
+  "manifestCrc32": "88dde483"
+}

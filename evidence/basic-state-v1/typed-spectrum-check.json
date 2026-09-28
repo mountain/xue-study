@@ -1,0 +1,19 @@
+{
+  "scope": "synthetic unit-sphere quadrature and one analytic transport example; no weather skill",
+  "grid": [
+    64,
+    128
+  ],
+  "errors": {
+    "scalar_degree0_recovery": 0.0,
+    "scalar_degree1_recovery": 3.552713678800501e-15,
+    "scalar_degree2_recovery": 2.4424906541753444e-15,
+    "even_kernel_erases_scalar_dipole": 1.3877787807814457e-17,
+    "original_even_wind_kernel_erases_solid_rotation": 6.938893903907228e-18,
+    "degree1_rotation_recovers_vorticity": 2.220446049250313e-15,
+    "degree1_gradient_recovers_divergence": 4.440892098500626e-16,
+    "passive_scalar_advection_residual": 1.1102230246251565e-16
+  },
+  "tolerance": 1e-10,
+  "passed": 8
+}

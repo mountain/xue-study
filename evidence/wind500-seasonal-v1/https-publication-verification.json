@@ -1,0 +1,22 @@
+{
+  "checked_utc": "2026-09-24T05:25:42.284862+00:00",
+  "certificate_validation": true,
+  "models": [
+    {
+      "model": "ctfull",
+      "manifest_crc_verified": true,
+      "container_crc_verified": true,
+      "prefix_and_suffix_ranges_verified": true
+    },
+    {
+      "model": "cteven",
+      "manifest_crc_verified": true,
+      "container_crc_verified": true,
+      "prefix_and_suffix_ranges_verified": true
+    }
+  ],
+  "http_redirect": 308,
+  "missing_data_status": 404,
+  "download_hashes_verified": 10,
+  "report_status": 200
+}

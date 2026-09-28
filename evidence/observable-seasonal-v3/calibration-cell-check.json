@@ -1,0 +1,22 @@
+{
+  "valid": {
+    "loading_shown": true,
+    "text": "合成实验校验：附件已读取 样本数 samples384 训练期隔离 trainingOnlyFittrue 季节拟合最大误差8.882e-16 年度传播倍率0.7788007831"
+  },
+  "missing": {
+    "loading_shown": true,
+    "text": "校验附件读取失败：Error: File not found: annual-check.json"
+  },
+  "network": {
+    "loading_shown": true,
+    "text": "校验附件读取失败：Error: Failed to fetch"
+  },
+  "invalid_json": {
+    "loading_shown": true,
+    "text": "校验附件读取失败：SyntaxError: Unexpected token"
+  },
+  "wrong_schema": {
+    "loading_shown": true,
+    "text": "校验附件读取失败：Error: 附件缺少所需校验字段，请核对 annual-check.json 的内容。"
+  }
+}

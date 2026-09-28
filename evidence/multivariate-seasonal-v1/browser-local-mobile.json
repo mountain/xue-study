@@ -1,0 +1,19 @@
+{
+  "base": "http://127.0.0.1:8088",
+  "scope": "mobile",
+  "checks": [
+    {
+      "model": "ctmulti",
+      "field": "tmp2m",
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "mobile_ready": true,
+      "legend_clear": true
+    }
+  ],
+  "page_errors": [],
+  "http_errors": [],
+  "range_responses": 3
+}

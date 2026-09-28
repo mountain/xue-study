@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "model": "CMA-RADAR",
+  "product": "l3-mst-cref",
+  "run": "2026092401",
+  "runTime": "2026-09-24T01:00:00Z",
+  "manifestPath": "cma.2026092401/0400/manifest.json",
+  "manifestCrc32": "2a5bd9d7"
+}

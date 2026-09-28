@@ -1,0 +1,44 @@
+{
+  "failure_retried_on_next_pass": false,
+  "first_pass": {
+    "at": "2026-09-24T04:25:01+00:00",
+    "collections": {
+      "gfs": {
+        "title": "GFS",
+        "state": "new",
+        "extent": [
+          null,
+          null
+        ],
+        "item": "gfs.test",
+        "assets_taken": [],
+        "assets_skipped": [
+          {
+            "asset": "manifest",
+            "error": "deliberate temporary download failure"
+          }
+        ]
+      }
+    },
+    "new": 1,
+    "bytes": 0
+  },
+  "second_pass": {
+    "at": "2026-09-24T04:25:01+00:00",
+    "collections": {
+      "gfs": {
+        "title": "GFS",
+        "state": "unchanged",
+        "extent": [
+          null,
+          null
+        ],
+        "item": "gfs.test"
+      }
+    },
+    "new": 0,
+    "bytes": 0
+  },
+  "cfs_wind500_selected_by_default": false,
+  "cfs_manifest_selected_by_default": true
+}

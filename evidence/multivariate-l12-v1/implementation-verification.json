@@ -1,0 +1,68 @@
+{
+  "completed_utc": "2026-09-24T08:38:21.672810+00:00",
+  "release": "/var/www/climatetensor/releases/multivariate-l12-v1-20260924",
+  "production": "https://climatetensor.io",
+  "default_model": "ctmulti12",
+  "preserved_model": "ctmulti",
+  "spectral_degree": 12,
+  "output_grid_step_degrees": 1.25,
+  "time_cadence": "calendar month mean, unchanged",
+  "scientific_unit_checks_passed": 6,
+  "frontend_tests_passed": 121,
+  "typescript_and_vite_build": "passed",
+  "methodology_check": "7/7; Adva card validator unavailable and explicitly skipped",
+  "native_zarr_verified_bundles": 11,
+  "frames_each": 6,
+  "clamped_cells": 0,
+  "quality_check": {
+    "preserved_coarse_objects": 140,
+    "all_coarse_hashes_unchanged": true,
+    "same_observation_domains": true,
+    "nested_projection_residual_nonincreasing": true,
+    "saved_model_reproduces_forecast": true,
+    "fine_model_coarse_grid_is_exact_subsample": true,
+    "original_L6_is_not_replaced_by_subsample": true,
+    "independent_native_wind_mse": {
+      "L6_lead1": 30.372100539428395,
+      "L6_lead6": 30.627884258354115,
+      "L12_lead1": 19.489009774431032,
+      "L12_lead6": 20.201528677691822
+    },
+    "positive_specific_humidity": true,
+    "sst_minimum_K": 269.15966796875,
+    "sst_below_source_floor_271_35_K": 11769,
+    "sst_status": "Still unqualified against source physical lower bound; research download only, not a map layer."
+  },
+  "https": {
+    "base": "https://climatetensor.io",
+    "verified_objects": 282,
+    "original_coarse_objects_preserved": 140,
+    "public_bytes_equal_local": true,
+    "pointer_crc_and_cache_control": [
+      "ctmulti12",
+      "ctmulti",
+      "ctfull",
+      "cteven"
+    ],
+    "both_suffix_ranges_match": true,
+    "catalog_cors_and_cache_control": true
+  },
+  "browser_receipts": [
+    "browser-local-tmp2m-tmp850-prmsl-hgt500-spfh850-spfh700.json",
+    "browser-local-integration.json",
+    "browser-public-report-mobile.json",
+    "browser-public-integration.json",
+    "browser-local-vvel500-vvel700-wind850-wind500-wind250.json"
+  ],
+  "local_all_11_fine_layers_checked": true,
+  "public_integration_and_mobile_report_checked": true,
+  "prior_releases_retained": true,
+  "temporary_preview_stopped": true,
+  "limitations": [
+    "Historical December 2025 initial state; target January–June 2026; generated September 2026",
+    "No assimilation or operational as-of forecast",
+    "Most total MSE gain comes from seasonal representation refinement",
+    "SST low-temperature violations remain; research download only",
+    "No temporal refinement and no change to native observation grids"
+  ]
+}

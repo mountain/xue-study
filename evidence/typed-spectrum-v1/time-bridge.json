@@ -1,0 +1,68 @@
+{
+  "scope": "finite exact algebra and synthetic Fourier calibration only",
+  "period_three": {
+    "matrix": [
+      [
+        "-1/2",
+        "-3/2"
+      ],
+      [
+        "1/2",
+        "-1/2"
+      ]
+    ],
+    "orbit": [
+      [
+        "1",
+        "0"
+      ],
+      [
+        "-1/2",
+        "1/2"
+      ],
+      [
+        "-1/2",
+        "-1/2"
+      ],
+      [
+        "1",
+        "0"
+      ]
+    ],
+    "M_cubed_is_identity": true,
+    "preserves_metric_diag_1_3": true,
+    "scalar_A_projection_fails_descent": true,
+    "power_projection_descends_to_identity": true,
+    "spatial_field": "A*(x*x-y*y)+2*sqrt(3)*B*x*y, degree l=2 only",
+    "not_a_sharkovsky_interval_witness": true
+  },
+  "spacetime": {
+    "sample_count": 128,
+    "time_units": "dimensionless",
+    "omega_driver": 1,
+    "modes": [
+      {
+        "l": 1,
+        "m": 1,
+        "angular_frequency": 1.0,
+        "peak_power_fraction": 1.0
+      },
+      {
+        "l": 2,
+        "m": 1,
+        "angular_frequency": 1.0,
+        "peak_power_fraction": 1.0
+      },
+      {
+        "l": 2,
+        "m": 2,
+        "angular_frequency": 2.0,
+        "peak_power_fraction": 1.0
+      }
+    ],
+    "parseval_error": 8.881784197001252e-16,
+    "irregular_times_refused": true,
+    "alias_pair_max_difference": 1.0704121890110478e-13,
+    "conclusion": "Time frequency tracks m*Omega for this transport law, not spatial degree l; general atmosphere may have damping, drift and broad spectra."
+  }
+}

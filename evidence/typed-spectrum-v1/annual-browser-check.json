@@ -1,0 +1,9 @@
+{
+  "additive": true,
+  "amplitude": true,
+  "phase": true,
+  "period_control": true,
+  "zero_control": true,
+  "mobile_no_overflow": true,
+  "errors": []
+}

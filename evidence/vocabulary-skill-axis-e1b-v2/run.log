@@ -1,0 +1,18 @@
+{
+ "frozen_hashes_before": {
+  "model.npz": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+  "projection-L12.npz": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224",
+  "forecast.npz": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb",
+  "report.json": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+ }
+}
+{"degree": 4, "p_total": 394, "chosen": {"rank": 64, "penalty": 0.1, "validation_loss": 14.657088003795}, "skill_mean": 0.01956, "indep": 0.02187, "hindsight": 0.01956, "shuffled": 0.01956, "secs": 11.16, "phases": {"build": 10.3, "fit_and_predict": 0.62, "score_and_controls": 0.24}}
+{"degree": 6, "p_total": 778, "chosen": {"rank": 32, "penalty": 0.1, "validation_loss": 15.090503450077959}, "skill_mean": 0.03043, "indep": 0.03611, "hindsight": 0.03098, "shuffled": 0.03043, "secs": 13.97, "phases": {"build": 12.13, "fit_and_predict": 1.32, "score_and_controls": 0.53}}
+{"degree": 8, "p_total": 1290, "chosen": {"rank": 64, "penalty": 0.1, "validation_loss": 15.089203529597661}, "skill_mean": 0.03526, "indep": 0.04326, "hindsight": 0.03526, "shuffled": 0.03526, "secs": 16.7, "phases": {"build": 13.45, "fit_and_predict": 2.31, "score_and_controls": 0.94}}
+{"degree": 10, "p_total": 1930, "chosen": {"rank": 64, "penalty": 0.1, "validation_loss": 14.876843723479618}, "skill_mean": 0.03856, "indep": 0.04977, "hindsight": 0.03941, "shuffled": 0.03856, "secs": 21.89, "phases": {"build": 16.41, "fit_and_predict": 3.89, "score_and_controls": 1.58}}
+G2 ok: all 96 arrays of the d=12 projection reproduce the frozen artifact exactly
+{"degree": 12, "p_total": 2698, "chosen": {"rank": 64, "penalty": 0.1, "validation_loss": 14.947033848219547}, "skill_mean": 0.04211, "indep": 0.05325, "hindsight": 0.04211, "shuffled": 0.04211, "secs": 29.85, "phases": {"build": 20.84, "fit_and_predict": 6.37, "score_and_controls": 2.64}}
+{"degree": 16, "p_total": 4618, "chosen": {"rank": 64, "penalty": 0.1, "validation_loss": 14.992819037502572}, "skill_mean": 0.04302, "indep": 0.0587, "hindsight": 0.04223, "shuffled": 0.04302, "secs": 54.36, "phases": {"build": 32.21, "fit_and_predict": 15.71, "score_and_controls": 6.44}}
+{"degree": 20, "p_total": 7050, "chosen": {"rank": 64, "penalty": 0.1, "validation_loss": 14.991200573314694}, "skill_mean": 0.04034, "indep": 0.04756, "hindsight": 0.04034, "shuffled": 0.04034, "secs": 97.46, "phases": {"build": 51.83, "fit_and_predict": 32.36, "score_and_controls": 13.27}}
+{"degree": 24, "p_total": 9994, "chosen": {"rank": 64, "penalty": 0.1, "validation_loss": 14.754051337732886}, "skill_mean": 0.04297, "indep": 0.04287, "hindsight": 0.04226, "shuffled": 0.04297, "secs": 168.48, "phases": {"build": 80.98, "fit_and_predict": 62.57, "score_and_controls": 24.93}}
+ladder completed: [4, 6, 8, 10, 12, 16, 20, 24] of [4, 6, 8, 10, 12, 16, 20, 24]; complete=True; stopped_reason=None

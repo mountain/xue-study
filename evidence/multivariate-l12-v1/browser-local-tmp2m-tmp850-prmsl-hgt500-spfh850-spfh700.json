@@ -1,0 +1,51 @@
+{
+  "base": "http://127.0.0.1:8088",
+  "scope": "tmp2m,tmp850,prmsl,hgt500,spfh850,spfh700",
+  "checks": [
+    {
+      "model": "ctmulti12",
+      "field": "tmp2m",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "tmp850",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "prmsl",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "hgt500",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "spfh850",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    },
+    {
+      "model": "ctmulti12",
+      "field": "spfh700",
+      "default_home": false,
+      "last": "06/15 00:00 UTC",
+      "ready": true
+    }
+  ],
+  "page_errors": [],
+  "http_errors": [],
+  "range_responses": 18
+}

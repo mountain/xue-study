@@ -1,0 +1,18 @@
+{
+  "recorded_at_utc": "2026-09-24T07:23:53.632847+00:00",
+  "url": "https://observablehq.com/@climatetensor/annual-spectrum-1",
+  "last_api_verified_version": 43,
+  "evidence_source": "User pasted the table displayed in their logged-in Observable browser; assistant did not directly observe the live page",
+  "displayed_values": {
+    "samples": "384",
+    "trainingOnlyFit": "true",
+    "seasonal_fit_max_error": "8.882e-16",
+    "annual_multiplier": "0.7788007831"
+  },
+  "matches_local_calibration_at_display_precision": true,
+  "controls_and_both_charts": "Previously confirmed functional by user",
+  "public_source": "Previously verified through unauthenticated document API, nine cells present",
+  "acceptance_scope": "Publication, code preservation, reported chart interaction, and four displayed calibration values for the synthetic annual-cycle experiment",
+  "not_established": "Byte-for-byte equality of remote attachment; real weather forecast skill; multivariate model training",
+  "writes_to_observable": false
+}

@@ -1,0 +1,23 @@
+{
+  "base": "1ecd29b47d216b4e1c482d61a1c3e68252f8a07b",
+  "matrix_status": "ExternalExactPass",
+  "matrix_mathematical_payload_matches_frozen": true,
+  "matrix_changed_resource_or_timing_keys": [
+    "construction_and_checks_ns",
+    "control_checks_ns",
+    "covering_checks_ns",
+    "installed_limits",
+    "matrix_checks_ns",
+    "period_checks_ns",
+    "rss_high_water_KiB_before_codec"
+  ],
+  "quotient_status": "Passed",
+  "interval_status": "Passed",
+  "native_observer_quotient_descent": {
+    "passed": 7,
+    "failed": 0,
+    "command": "timeout 180s /usr/bin/cargo test --locked --offline -p adva-lisp --test observer_quotient_descent -- --nocapture",
+    "initial_launcher_error": "/home/ubuntu/.cargo/bin/cargo absent; no tests executed on that failed invocation"
+  },
+  "adva_source_changed": false
+}

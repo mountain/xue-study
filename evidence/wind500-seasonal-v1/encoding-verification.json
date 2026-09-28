@@ -1,0 +1,26 @@
+[
+  {
+    "model": "ctfull",
+    "frames": 6,
+    "shape": [
+      71,
+      144
+    ],
+    "native_decoder_all_frames_equal": true,
+    "maximum_quantization_error_ms": 0.4999990463256836,
+    "clamped_cells": 0,
+    "manifest_crc32": "deeae9bf"
+  },
+  {
+    "model": "cteven",
+    "frames": 6,
+    "shape": [
+      71,
+      144
+    ],
+    "native_decoder_all_frames_equal": true,
+    "maximum_quantization_error_ms": 0.4999828338623047,
+    "clamped_cells": 0,
+    "manifest_crc32": "cee27fe3"
+  }
+]

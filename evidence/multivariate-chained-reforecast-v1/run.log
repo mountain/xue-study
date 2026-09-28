@@ -1,0 +1,41 @@
+{
+ "frozen_hashes": {
+  "model.npz": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+  "projection-L12.npz": "4852df6fb2f4320171cfc4fcdc6568285411579cfb9eadb51e56bc136c557224",
+  "forecast.npz": "73a017287267fe6c5cf392d27733270e8eb1ed8e00d9a867b5aa39d16c50a2eb",
+  "report.json": "2cb340432fbe73efb38da63e1e79b8b360cb314e5a7243412b941a12c2a6bbc1"
+ },
+ "prior_hashes": {
+  "forecast.npz": "5972cde4bc0071e985ea1d36c160441d3f18b2295d9daa6bdc611eb7c670a8f7",
+  "report.json": "11a9f63b9b4669803544dfdb70f50eca4aa9d3e019da26ceb1708436080c4244",
+  "run.log": "cfce8a61863ed563db701af47635774339f43d91b73f045883932de57c843e98"
+ }
+}
+{"G2a_single_step_vs_frozen_lead1": 0.0, "atol": 1e-12, "passed": true}
+{"projected_new_months": "t850", "distinct_domains": 1, "max_gram_condition": 12.607273739539675}
+{"projected_new_months": "t2m", "distinct_domains": 1, "max_gram_condition": 1.0041168580524238}
+{"projected_new_months": "sst", "distinct_domains": 1, "max_gram_condition": 1543.5180389590555}
+{"projected_new_months": "sp", "distinct_domains": 1, "max_gram_condition": 1.0041168580524238}
+{"projected_new_months": "msl", "distinct_domains": 1, "max_gram_condition": 1.005397178198371}
+{"projected_new_months": "z500", "distinct_domains": 1, "max_gram_condition": 1.005397178198371}
+{"projected_new_months": "q850", "distinct_domains": 1, "max_gram_condition": 12.607273739539675}
+{"projected_new_months": "q700", "distinct_domains": 1, "max_gram_condition": 4.454990279147667}
+{"projected_new_months": "w500", "distinct_domains": 1, "max_gram_condition": 1.005397178198371}
+{"projected_new_months": "w700", "distinct_domains": 1, "max_gram_condition": 4.454990279147667}
+{"projected_new_months": "wind850", "distinct_domains": 1, "max_gram_condition": 12.471035314233003}
+{"projected_new_months": "wind500", "distinct_domains": 1, "max_gram_condition": 1.0050939074805505}
+{"projected_new_months": "wind250", "distinct_domains": 1, "max_gram_condition": 1.0050939074805505}
+{"G2b_first_step_vs_prior_reforecast_2026_03": 0.0, "atol": 1e-12, "passed": true}
+{"G3_gluing_ledger": [{"step": 1, "in": "2026-02", "out": "2026-03", "gain": 0.3188, "max_abs_z": 1.434, "out_of_scope": false}, {"step": 2, "in": "2026-03", "out": "2026-04", "gain": 0.6247, "max_abs_z": 0.81, "out_of_scope": false}, {"step": 3, "in": "2026-04", "out": "2026-05", "gain": 0.7781, "max_abs_z": 0.611, "out_of_scope": false}, {"step": 4, "in": "2026-05", "out": "2026-06", "gain": 0.8128, "max_abs_z": 0.493, "out_of_scope": false}, {"step": 5, "in": "2026-06", "out": "2026-07", "gain": 0.8225, "max_abs_z": 0.409, "out_of_scope": false}, {"step": 6, "in": "2026-07", "out": "2026-08", "gain": 0.8256, "max_abs_z": 0.34, "out_of_scope": false}, {"step": 7, "in": "2026-08", "out": "2026-09", "gain": 0.8265, "max_abs_z": 0.281, "out_of_scope": false}, {"step": 8, "in": "2026-09", "out": "2026-10", "gain": 0.8267, "max_abs_z": 0.233, "out_of_scope": false}, {"step": 9, "in": "2026-10", "out": "2026-11", "gain": 0.8265, "max_abs_z": 0.192, "out_of_scope": false}, {"step": 10, "in": "2026-11", "out": "2026-12", "gain": 0.8263, "max_abs_z": 0.159, "out_of_scope": false}]}
+{"k": 1, "n_origins": 71, "chain_skill": 0.06709, "direct_skill": 0.06709, "ar1_skill": 0.10131, "identity_skill": -0.67432, "persistence_frozen_skill": -0.14559, "chain_resolved_ratio_vs_direct": 1.0, "misaligned_resolved_ratio_vs_direct": 1.1305}
+{"k": 2, "n_origins": 70, "chain_skill": 0.05237, "direct_skill": 0.05023, "ar1_skill": 0.06673, "identity_skill": -2.19078, "persistence_frozen_skill": -0.23266, "chain_resolved_ratio_vs_direct": 1.0004, "misaligned_resolved_ratio_vs_direct": 1.0546}
+{"k": 3, "n_origins": 69, "chain_skill": 0.0422, "direct_skill": 0.04492, "ar1_skill": 0.05094, "identity_skill": -4.03869, "persistence_frozen_skill": -0.26604, "chain_resolved_ratio_vs_direct": 1.0114, "misaligned_resolved_ratio_vs_direct": 1.0459}
+{"k": 4, "n_origins": 68, "chain_skill": 0.03447, "direct_skill": 0.03785, "ar1_skill": 0.04231, "identity_skill": -5.74514, "persistence_frozen_skill": -0.29564, "chain_resolved_ratio_vs_direct": 1.0136, "misaligned_resolved_ratio_vs_direct": 1.0384}
+{"k": 5, "n_origins": 67, "chain_skill": 0.02822, "direct_skill": 0.03383, "ar1_skill": 0.03639, "identity_skill": -6.87502, "persistence_frozen_skill": -0.30658, "chain_resolved_ratio_vs_direct": 1.0166, "misaligned_resolved_ratio_vs_direct": 1.0334}
+{"k": 6, "n_origins": 66, "chain_skill": 0.02338, "direct_skill": 0.03117, "ar1_skill": 0.03192, "identity_skill": -7.23468, "persistence_frozen_skill": -0.32277, "chain_resolved_ratio_vs_direct": 1.0202, "misaligned_resolved_ratio_vs_direct": 1.0317}
+{"k": 7, "n_origins": 65, "chain_skill": 0.01921, "direct_skill": NaN, "ar1_skill": 0.02836, "identity_skill": -6.77246, "persistence_frozen_skill": -0.33143, "chain_resolved_ratio_vs_direct": null, "misaligned_resolved_ratio_vs_direct": null}
+{"k": 8, "n_origins": 64, "chain_skill": 0.01583, "direct_skill": NaN, "ar1_skill": 0.02536, "identity_skill": -5.58707, "persistence_frozen_skill": -0.32085, "chain_resolved_ratio_vs_direct": null, "misaligned_resolved_ratio_vs_direct": null}
+{"k": 9, "n_origins": 63, "chain_skill": 0.0132, "direct_skill": NaN, "ar1_skill": 0.0228, "identity_skill": -3.9216, "persistence_frozen_skill": -0.30417, "chain_resolved_ratio_vs_direct": null, "misaligned_resolved_ratio_vs_direct": null}
+{"k": 10, "n_origins": 62, "chain_skill": 0.01088, "direct_skill": NaN, "ar1_skill": 0.0205, "identity_skill": -2.18115, "persistence_frozen_skill": -0.30444, "chain_resolved_ratio_vs_direct": null, "misaligned_resolved_ratio_vs_direct": null}
+{"C1_identity_worse_k2_to_k6": true, "C1_k1_chain_minus_identity": 0.74141, "C2_misaligned_worse": true, "C3_scope_fires_on_inflated": true, "C3_inflated_max_abs_z": 485.71}
+{"G6_k1_chain_vs_direct_max_abs_diff": 0.0, "atol": 1e-12, "passed": true}

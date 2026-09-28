@@ -1,0 +1,91 @@
+{
+  "checked_at_utc": "2026-09-24T06:59:58.229563+00:00",
+  "url": "https://observablehq.com/@climatetensor/annual-spectrum-1",
+  "read_method": "unauthenticated public document API, the endpoint used by Notebook Kit download",
+  "document_id": "4182f483758a85ea",
+  "version": 27,
+  "publish_level": "public",
+  "publish_version": 27,
+  "publish_time": "2026-09-24T06:54:04.490Z",
+  "owner": "climatetensor",
+  "creator": "mountain",
+  "source_comparison": [
+    {
+      "position": 1,
+      "published_cell_id": 1,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "22f541b95eeabd962093300f7a97b719ae9a708d789c712b7f34ac35fe8a2f25"
+    },
+    {
+      "position": 2,
+      "published_cell_id": 2,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "91f9cea71a89187563405e99dc2c4f416216e78b45c0f7eedd9e8dac6bf6a69f"
+    },
+    {
+      "position": 3,
+      "published_cell_id": 3,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "e30479c9eddfe5cdd03861001739efcaf8b864d52bbbc1cae1284e8d87b22982"
+    },
+    {
+      "position": 4,
+      "published_cell_id": 6,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "764bb6d9006c6f4cadf51cb05e4735b010ef303edf09b617d9998b713b5d9db6"
+    },
+    {
+      "position": 5,
+      "published_cell_id": 7,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "8c92e631de9878a190cc9de0b761d71d36b34bbcd7c480423cee979eb14dfc72"
+    },
+    {
+      "position": 6,
+      "published_cell_id": 9,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "b88c4326892620b8ecc404f071393fae17b1e39c7e501ea448fea2ac02834dd1"
+    },
+    {
+      "position": 7,
+      "published_cell_id": 10,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "96c544fd1a3cb589685704986041d384da6b4ac92438f2118d097d603ca70c37"
+    },
+    {
+      "position": 8,
+      "published_cell_id": 11,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "7fe0463e536cf9c6af1c5cb3b559c60e3ce896d852b47472b7c44c6084698d7e"
+    },
+    {
+      "position": 9,
+      "published_cell_id": 12,
+      "source_matches_ignoring_outer_whitespace": true,
+      "source_sha256": "92cca19841d32e176aaa01d10a72e5360746cfe2f8bb827b660e23f80952d7f5"
+    }
+  ],
+  "file_reference": {
+    "type": "file",
+    "specifier": "annual-check.json",
+    "value": "e6ee4d6fa985c1ab87ab5937638f8d012d97436c4f1b327d0bf2ad0d3a0c03071e8d99b175ced4d3f790ef0d30085e3ea9fa2e7867655e9453e23736dd552c21.1790232653447"
+  },
+  "file_reference_is_not_a_successful_file_download": true,
+  "ui_check": {
+    "status": "not_verified",
+    "http_status": 429,
+    "page_title": "Vercel Security Checkpoint",
+    "reason": "Public web page could not be inspected from the automated browser"
+  },
+  "attachment_check": {
+    "status": "pending_user_visible_result",
+    "note": "Modern file resolution is present. A legacy static URL constructed from it returned 403; this is not evidence that the actual notebook attachment is unavailable."
+  },
+  "legacy_js_export": {
+    "http_status": 200,
+    "cell_definitions": 5,
+    "note": "Legacy v4 module omits several modern cells; do not use it as proof that the 2.0 notebook has missing cells or as a complete self-hosting export."
+  },
+  "snapshot_sha256": "cce1f69fb2a49625d030b2c99ce9319afe0c26d1535c31caa86d11dd72808607",
+  "writes_to_observable": false
+}

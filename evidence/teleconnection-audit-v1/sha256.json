@@ -1,0 +1,14 @@
+{
+  "calibration.json": "54e79a9badcdf10e336c18c69169cf14eb833323af7db7d5dff1a28b1ab8469d",
+  "series.npz": "261cb62cc15f0a576687dd9abb638a6d46703ea58ae3220cdf77ccd7a12ae9b6",
+  "simulations.npz": "11d149290ec8ba20748065ceb817bd2ae98ad270f6728bd38f3f4c4beb567c36",
+  "regional-monthly.csv": "ba26c4f9568aed5f953405ae238bab84ccc1ac93a1d7cbb658d55db0b7e15959",
+  "three-region-audit.png": "186122c839386990b21e30d207673e066ce40414c478e599793316863beb3d5c",
+  "attempt-1.log": "dc146c3e63d5475cd55e76fdc2c3d1170cd786a41c82cf992f736cd8dd5bff97",
+  "source-point-monthly.csv": "7c96fd30e60bfa6df95efd2011535d5c73ed2850d91d626fa2d4ec506924a32e",
+  "README.md": "77a0065d80ee8fb8b0127aeab95c936913fe96f35a95a42a70e9bf08714c748a",
+  "contract.json": "2ee35cae4d4d0a2067725501e2a5b5f3c949ce290e2ca189cfd51f4ca7baf29e",
+  "audit.py": "76438d0cc8bb9882c9b22f93f32eef2f36dfd11a954c34490048c2b31caff193",
+  "result.json": "b70d0e0cf39d18478c1ffc1ba48bd3948175fca0ea28d88a77bbd7166bef2e44",
+  "preservation.json": "a96dd406b0aa15662c1e4e735939aacba058363d11023c5bb746f6742e73df67"
+}

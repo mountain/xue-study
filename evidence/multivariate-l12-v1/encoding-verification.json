@@ -1,0 +1,193 @@
+[
+  {
+    "bundle": "tmp2m",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "tmp2m": {
+        "maximum_error": 0.24999389648439774,
+        "bound": 0.25
+      }
+    },
+    "nodata_cells": {
+      "tmp2m": 0
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "tmp850",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "tmp850": {
+        "maximum_error": 0.24999389648439774,
+        "bound": 0.25
+      }
+    },
+    "nodata_cells": {
+      "tmp850": 27151
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "prmsl",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "prmsl": {
+        "maximum_error": 0.5,
+        "bound": 0.5
+      }
+    },
+    "nodata_cells": {
+      "prmsl": 0
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "hgt500",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "hgt500": {
+        "maximum_error": 3.999975781739522,
+        "bound": 4.0
+      }
+    },
+    "nodata_cells": {
+      "hgt500": 0
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "spfh850",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "spfh850": {
+        "maximum_error": 0.04999963119626072,
+        "bound": 0.05
+      }
+    },
+    "nodata_cells": {
+      "spfh850": 27151
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "spfh700",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "spfh700": {
+        "maximum_error": 0.04999965969473141,
+        "bound": 0.05
+      }
+    },
+    "nodata_cells": {
+      "spfh700": 12873
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "vvel500",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "vvel500": {
+        "maximum_error": 0.024999589845537074,
+        "bound": 0.025
+      }
+    },
+    "nodata_cells": {
+      "vvel500": 0
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "vvel700",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "vvel700": {
+        "maximum_error": 0.024999938905239993,
+        "bound": 0.025
+      }
+    },
+    "nodata_cells": {
+      "vvel700": 12873
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "wind850",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "ugrd850": {
+        "maximum_error": 0.4999971389770508,
+        "bound": 0.5
+      },
+      "vgrd850": {
+        "maximum_error": 0.49999940395355225,
+        "bound": 0.5
+      }
+    },
+    "nodata_cells": {
+      "ugrd850": 27151,
+      "vgrd850": 27151
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "wind500",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "ugrd500": {
+        "maximum_error": 0.4999966621398926,
+        "bound": 0.5
+      },
+      "vgrd500": {
+        "maximum_error": 0.49999886751174927,
+        "bound": 0.5
+      }
+    },
+    "nodata_cells": {
+      "ugrd500": 0,
+      "vgrd500": 0
+    },
+    "clamped_cells": 0
+  },
+  {
+    "bundle": "wind250",
+    "frames": 6,
+    "native_decoder_equal": true,
+    "zarr_equal": true,
+    "quantization": {
+      "ugrd250": {
+        "maximum_error": 0.49999889731407166,
+        "bound": 0.5
+      },
+      "vgrd250": {
+        "maximum_error": 0.4999980926513672,
+        "bound": 0.5
+      }
+    },
+    "nodata_cells": {
+      "ugrd250": 0,
+      "vgrd250": 0
+    },
+    "clamped_cells": 0
+  }
+]

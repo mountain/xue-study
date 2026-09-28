@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "default_motion_and_control": true,
+      "default_rms": "省略驱动的全球 RMSE：1.9824 K",
+      "real_rows": 15
+    },
+    {
+      "zero_time_and_zero_driver": true
+    },
+    {
+      "shape_and_view_controls": true
+    },
+    {
+      "playback": true
+    },
+    {
+      "mobile_no_horizontal_overflow": true
+    }
+  ],
+  "browser_errors": []
+}

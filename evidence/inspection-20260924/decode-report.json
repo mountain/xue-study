@@ -1,0 +1,45 @@
+{
+  "dims": {
+    "time": 1092,
+    "latitude": 91,
+    "longitude": 180
+  },
+  "time_start": "2026-09-23T18:00:00.000000000",
+  "time_end": "2027-06-23T12:00:00.000000000",
+  "latitude": [
+    90.0,
+    -90.0
+  ],
+  "longitude": [
+    -180.0,
+    178.0
+  ],
+  "variables": {
+    "ugrd500": {
+      "shape": [
+        1092,
+        91,
+        180
+      ],
+      "finite_fraction": 1.0,
+      "min": -51.0,
+      "max": 74.0,
+      "units": "m/s from attributes.xue.variable.unit",
+      "point_32N_90E_first": 5.0,
+      "cf_decode_verified": true
+    },
+    "vgrd500": {
+      "shape": [
+        1092,
+        91,
+        180
+      ],
+      "finite_fraction": 1.0,
+      "min": -67.0,
+      "max": 121.0,
+      "units": "m/s from attributes.xue.variable.unit",
+      "point_32N_90E_first": -2.0,
+      "cf_decode_verified": true
+    }
+  }
+}

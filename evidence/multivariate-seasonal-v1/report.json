@@ -1,0 +1,5412 @@
+{
+  "version": "climatetensor-multivariate-seasonal-v1",
+  "generated_utc": "2026-09-24T07:42:40.295411+00:00",
+  "status": "historical-origin experimental monthly forecast; not operational weather",
+  "initial_month": "2025-12",
+  "target_months": [
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06"
+  ],
+  "native_adva": false,
+  "assimilation": false,
+  "degree": 6,
+  "grid_step_degrees": 2.5,
+  "training": [
+    "1979-01",
+    "2014-12"
+  ],
+  "validation": [
+    "2015-01",
+    "2019-12"
+  ],
+  "development_backtest": [
+    "2020-01",
+    "2025-12"
+  ],
+  "prior_exposure": "500 hPa wind results for 2020\u20132025 were already inspected in v1; this interval is not a new untouched confirmatory test.",
+  "samples": {
+    "training": 432,
+    "validation": 60,
+    "development_backtest": 72
+  },
+  "physical_variables": 16,
+  "channels": [
+    {
+      "name": "t850",
+      "fields": [
+        "t850"
+      ],
+      "units": "K",
+      "level": 850,
+      "transform": "identity",
+      "start": 0,
+      "stop": 49,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 2,
+      "max_gram_condition": 2.4551822124342735,
+      "min_area_fraction": 0.9531469609883014
+    },
+    {
+      "name": "t2m",
+      "fields": [
+        "t2m"
+      ],
+      "units": "K",
+      "level": null,
+      "transform": "identity",
+      "start": 49,
+      "stop": 98,
+      "source_grid": [
+        94,
+        192
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.0012843018554005,
+      "min_area_fraction": 0.9999999999999982
+    },
+    {
+      "name": "sst",
+      "fields": [
+        "sst"
+      ],
+      "units": "K",
+      "level": null,
+      "transform": "identity",
+      "start": 98,
+      "stop": 147,
+      "source_grid": [
+        89,
+        180
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 22.87201090678785,
+      "min_area_fraction": 0.732972587195176
+    },
+    {
+      "name": "sp",
+      "fields": [
+        "sp"
+      ],
+      "units": "Pa",
+      "level": null,
+      "transform": "identity",
+      "start": 147,
+      "stop": 196,
+      "source_grid": [
+        94,
+        192
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.0012843018554005,
+      "min_area_fraction": 0.9999999999999982
+    },
+    {
+      "name": "msl",
+      "fields": [
+        "msl"
+      ],
+      "units": "Pa",
+      "level": null,
+      "transform": "identity",
+      "start": 196,
+      "stop": 245,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.0020424545766804,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "name": "z500",
+      "fields": [
+        "z500"
+      ],
+      "units": "m2 s-2",
+      "level": 500,
+      "transform": "identity",
+      "start": 245,
+      "stop": 294,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.0020424545766804,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "name": "q850",
+      "fields": [
+        "q850"
+      ],
+      "units": "kg kg-1",
+      "level": 850,
+      "transform": "log(q / 1 kg kg-1), floor=1e-7",
+      "start": 294,
+      "stop": 343,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 106,
+      "distinct_domains": 2,
+      "max_gram_condition": 2.4551822124342735,
+      "min_area_fraction": 0.9531469609883014
+    },
+    {
+      "name": "q700",
+      "fields": [
+        "q700"
+      ],
+      "units": "kg kg-1",
+      "level": 700,
+      "transform": "log(q / 1 kg kg-1), floor=1e-7",
+      "start": 343,
+      "stop": 392,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 2755,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.6632567206931805,
+      "min_area_fraction": 0.9820712330248066
+    },
+    {
+      "name": "w500",
+      "fields": [
+        "w500"
+      ],
+      "units": "Pa s-1",
+      "level": 500,
+      "transform": "identity",
+      "start": 392,
+      "stop": 441,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.0020424545766804,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "name": "w700",
+      "fields": [
+        "w700"
+      ],
+      "units": "Pa s-1",
+      "level": 700,
+      "transform": "identity",
+      "start": 441,
+      "stop": 490,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.6632567206931805,
+      "min_area_fraction": 0.9820712330248066
+    },
+    {
+      "name": "wind850",
+      "fields": [
+        "u850",
+        "v850"
+      ],
+      "units": "m s-1",
+      "level": 850,
+      "transform": "identity",
+      "start": 490,
+      "stop": 586,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 2,
+      "max_gram_condition": 2.4123931742374425,
+      "min_area_fraction": 0.9531469609883014
+    },
+    {
+      "name": "wind500",
+      "fields": [
+        "u500",
+        "v500"
+      ],
+      "units": "m s-1",
+      "level": 500,
+      "transform": "identity",
+      "start": 586,
+      "stop": 682,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.0017702577386818,
+      "min_area_fraction": 1.0000000000000002
+    },
+    {
+      "name": "wind250",
+      "fields": [
+        "u250",
+        "v250"
+      ],
+      "units": "m s-1",
+      "level": 250,
+      "transform": "identity",
+      "start": 682,
+      "stop": 778,
+      "source_grid": [
+        71,
+        144
+      ],
+      "humidity_floor_count": 0,
+      "distinct_domains": 1,
+      "max_gram_condition": 1.0017702577386818,
+      "min_area_fraction": 1.0000000000000002
+    }
+  ],
+  "spectral_coefficients": 778,
+  "selected": {
+    "rank": 32,
+    "penalty": 0.1,
+    "validation_loss": 15.090503450077959
+  },
+  "validation_candidates": [
+    {
+      "rank": 8,
+      "penalty": 0.01,
+      "validation_loss": 15.366740897661117
+    },
+    {
+      "rank": 8,
+      "penalty": 0.1,
+      "validation_loss": 15.377190889954663
+    },
+    {
+      "rank": 8,
+      "penalty": 1.0,
+      "validation_loss": 16.003805686493035
+    },
+    {
+      "rank": 16,
+      "penalty": 0.01,
+      "validation_loss": 15.284558022558134
+    },
+    {
+      "rank": 16,
+      "penalty": 0.1,
+      "validation_loss": 15.19588401241116
+    },
+    {
+      "rank": 16,
+      "penalty": 1.0,
+      "validation_loss": 15.86064764694723
+    },
+    {
+      "rank": 32,
+      "penalty": 0.01,
+      "validation_loss": 15.449095752392713
+    },
+    {
+      "rank": 32,
+      "penalty": 0.1,
+      "validation_loss": 15.090503450077959
+    },
+    {
+      "rank": 32,
+      "penalty": 1.0,
+      "validation_loss": 15.782841578381834
+    },
+    {
+      "rank": 64,
+      "penalty": 0.01,
+      "validation_loss": 16.227616050823297
+    },
+    {
+      "rank": 64,
+      "penalty": 0.1,
+      "validation_loss": 15.129267027001838
+    },
+    {
+      "rank": 64,
+      "penalty": 1.0,
+      "validation_loss": 15.769879058601889
+    }
+  ],
+  "independent_channel_selection": {
+    "t850": {
+      "chosen": {
+        "rank": 16,
+        "penalty": 0.01,
+        "validation_loss": 1.044413242615661
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.054876514632384
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.1606576294121491
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.376174042424407
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.044413242615661
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.1484019868012183
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.3740427217461615
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.0547236769228934
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.150272656218423
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.3744360090134702
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.0455068151909777
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.147744626435121
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.3741326357684658
+        }
+      ]
+    },
+    "t2m": {
+      "chosen": {
+        "rank": 49,
+        "penalty": 0.01,
+        "validation_loss": 1.0524289529732134
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.1508295223784843
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.2048955579720413
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.3480298666673962
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.0687079949734413
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.1646458315821653
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.3415473323431513
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.0601302524677723
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.1611881521277676
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.3411526743597342
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.0524289529732134
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.1595923345170431
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.3409628298053344
+        }
+      ]
+    },
+    "sst": {
+      "chosen": {
+        "rank": 32,
+        "penalty": 0.01,
+        "validation_loss": 0.8575901133913144
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 0.9623329573882143
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.1847176940025705
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.7432885564264324
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 0.9145800047486871
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.1704236473259748
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.7420627691773543
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 0.8575901133913144
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.158376333283822
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.7407278736493796
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 0.8691911435172661
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.160386625922418
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.7410392033350635
+        }
+      ]
+    },
+    "sp": {
+      "chosen": {
+        "rank": 49,
+        "penalty": 0.1,
+        "validation_loss": 1.0184737875598417
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.0314784705528186
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.0208458621419207
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.023053541388498
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.0363994809901673
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.0195211988219035
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.0227912025448243
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.0405506279838554
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.0189104160927331
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.0227226390136261
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.037255985873545
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.0184737875598417
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.0226770736277342
+        }
+      ]
+    },
+    "msl": {
+      "chosen": {
+        "rank": 16,
+        "penalty": 0.1,
+        "validation_loss": 1.0273563208419714
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.0375488929604622
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.0282608172219885
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.0325253270434356
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.0445407577031554
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.0273563208419714
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.0322964990306849
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.0536767575638988
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.0278593708109955
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.0323618340782161
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.0513859435864121
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.0274988608427091
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.0323240317459645
+        }
+      ]
+    },
+    "z500": {
+      "chosen": {
+        "rank": 16,
+        "penalty": 0.01,
+        "validation_loss": 1.0881063435014564
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.1590699476507493
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.1764050464517946
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.2059825130803812
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.0881063435014564
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.1364767635825443
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.1999070056006007
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.0957023649223314
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.135362653511664
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.1997085278744277
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.0945901151064354
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.135178060145347
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.1996911834129662
+        }
+      ]
+    },
+    "q850": {
+      "chosen": {
+        "rank": 49,
+        "penalty": 0.01,
+        "validation_loss": 1.0261899952275526
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.037776704443643
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.0756697445271757
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.1365394818280157
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.0310072949140359
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.0693718308330258
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.1355429237185728
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.028484584817447
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.0668886993483822
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.1352185130540524
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.0261899952275526
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.065659414159543
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.1350765123539122
+        }
+      ]
+    },
+    "q700": {
+      "chosen": {
+        "rank": 49,
+        "penalty": 0.01,
+        "validation_loss": 1.1504082826028161
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.1640285263220358
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.1935269321920279
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.2414239588521876
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.1519544503764194
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.1870850115023883
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.2405358764581413
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.1566824034011598
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.1847690895485783
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.2402031909669267
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.1504082826028161
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.181968284564782
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.2398685278409927
+        }
+      ]
+    },
+    "w500": {
+      "chosen": {
+        "rank": 32,
+        "penalty": 0.01,
+        "validation_loss": 1.4683370128168203
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.5056885284222001
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.5358875017776998
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.6305091323621503
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.4935153779031987
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.5260124926502365
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.6290279818540776
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.4683370128168203
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.5156013467805414
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.6276922014836601
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.4722740279134128
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.5149145632000716
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 1.627591218906554
+        }
+      ]
+    },
+    "w700": {
+      "chosen": {
+        "rank": 32,
+        "penalty": 0.01,
+        "validation_loss": 1.8392599032070132
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.8733972387309135
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.9106993144673037
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 2.0110069743451295
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.8718414708012259
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.8982514650414721
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 2.0086588379898336
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.8392599032070132
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.8852836953555339
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 2.007059414150269
+        },
+        {
+          "rank": 49,
+          "penalty": 0.01,
+          "validation_loss": 1.8424318866788674
+        },
+        {
+          "rank": 49,
+          "penalty": 0.1,
+          "validation_loss": 1.8833984154887626
+        },
+        {
+          "rank": 49,
+          "penalty": 1.0,
+          "validation_loss": 2.006832061024953
+        }
+      ]
+    },
+    "wind850": {
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 1.0470328722323765
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.061937513281036
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.051889051241938
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.060493089970441
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.0667987926812283
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.0504469638373235
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.0601742465360178
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.066309105157512
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.0479647244393258
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.0598682302730338
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 1.061813859382691
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 1.0470328722323765
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 1.059766545763636
+        }
+      ]
+    },
+    "wind500": {
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 1.087850518563678
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 1.100220196790861
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 1.0889669930388461
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 1.092858633026569
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 1.106898035463246
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 1.0883816938190105
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 1.092676746145953
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 1.1142585773583291
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 1.0880041095239947
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 1.0925965182225519
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 1.1163155176856678
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 1.087850518563678
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 1.092575964645124
+        }
+      ]
+    },
+    "wind250": {
+      "chosen": {
+        "rank": 64,
+        "penalty": 0.1,
+        "validation_loss": 0.9775526143218188
+      },
+      "candidates": [
+        {
+          "rank": 8,
+          "penalty": 0.01,
+          "validation_loss": 0.9927218450501931
+        },
+        {
+          "rank": 8,
+          "penalty": 0.1,
+          "validation_loss": 0.9847798955292486
+        },
+        {
+          "rank": 8,
+          "penalty": 1.0,
+          "validation_loss": 0.9968817291190125
+        },
+        {
+          "rank": 16,
+          "penalty": 0.01,
+          "validation_loss": 0.9922293398899875
+        },
+        {
+          "rank": 16,
+          "penalty": 0.1,
+          "validation_loss": 0.9817955595849336
+        },
+        {
+          "rank": 16,
+          "penalty": 1.0,
+          "validation_loss": 0.9963734713557906
+        },
+        {
+          "rank": 32,
+          "penalty": 0.01,
+          "validation_loss": 0.9875976182106191
+        },
+        {
+          "rank": 32,
+          "penalty": 0.1,
+          "validation_loss": 0.9784050197073579
+        },
+        {
+          "rank": 32,
+          "penalty": 1.0,
+          "validation_loss": 0.9959168683125138
+        },
+        {
+          "rank": 64,
+          "penalty": 0.01,
+          "validation_loss": 0.9832545600080699
+        },
+        {
+          "rank": 64,
+          "penalty": 0.1,
+          "validation_loss": 0.9775526143218188
+        },
+        {
+          "rank": 64,
+          "penalty": 1.0,
+          "validation_loss": 0.9958272608927858
+        }
+      ]
+    }
+  },
+  "metrics": {
+    "climatology": {
+      "t850": {
+        "resolved_mse": [
+          1.5464630069466143,
+          1.5464630069466143,
+          1.5464630069466143,
+          1.5464630069466143,
+          1.5464630069466143,
+          1.5464630069466143
+        ],
+        "full_mse": [
+          4.472078695299988,
+          4.472078695299988,
+          4.472078695299988,
+          4.472078695299988,
+          4.472078695299988,
+          4.472078695299988
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "t2m": {
+        "resolved_mse": [
+          1.211408353073453,
+          1.211408353073453,
+          1.211408353073453,
+          1.211408353073453,
+          1.211408353073453,
+          1.211408353073453
+        ],
+        "full_mse": [
+          15.299686861987356,
+          15.299686861987356,
+          15.299686861987356,
+          15.299686861987356,
+          15.299686861987356,
+          15.299686861987356
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "sst": {
+        "resolved_mse": [
+          0.4126799995398281,
+          0.4126799995398281,
+          0.4126799995398281,
+          0.4126799995398281,
+          0.4126799995398281,
+          0.4126799995398281
+        ],
+        "full_mse": [
+          2.021320965846372,
+          2.021320965846372,
+          2.021320965846372,
+          2.021320965846372,
+          2.021320965846372,
+          2.021320965846372
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "sp": {
+        "resolved_mse": [
+          57755.56961108052,
+          57755.56961108052,
+          57755.56961108052,
+          57755.56961108052,
+          57755.56961108052,
+          57755.56961108052
+        ],
+        "full_mse": [
+          19673229.07457825,
+          19673229.07457825,
+          19673229.07457825,
+          19673229.07457825,
+          19673229.07457825,
+          19673229.07457825
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "msl": {
+        "resolved_mse": [
+          59013.59968353798,
+          59013.59968353798,
+          59013.59968353798,
+          59013.59968353798,
+          59013.59968353798,
+          59013.59968353798
+        ],
+        "full_mse": [
+          289311.3481130564,
+          289311.3481130564,
+          289311.3481130564,
+          289311.3481130564,
+          289311.3481130564,
+          289311.3481130564
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "z500": {
+        "resolved_mse": [
+          99383.93419253382,
+          99383.93419253382,
+          99383.93419253382,
+          99383.93419253382,
+          99383.93419253382,
+          99383.93419253382
+        ],
+        "full_mse": [
+          204850.04128808467,
+          204850.04128808467,
+          204850.04128808467,
+          204850.04128808467,
+          204850.04128808467,
+          204850.04128808467
+        ],
+        "units": "m2 s-2",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "q850": {
+        "resolved_mse": [
+          0.009835160382451084,
+          0.009835160382451084,
+          0.009835160382451084,
+          0.009835160382451084,
+          0.009835160382451084,
+          0.009835160382451084
+        ],
+        "full_mse": [
+          0.049300522541889436,
+          0.049300522541889436,
+          0.049300522541889436,
+          0.049300522541889436,
+          0.049300522541889436,
+          0.049300522541889436
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "q700": {
+        "resolved_mse": [
+          0.018093137608195444,
+          0.018093137608195444,
+          0.018093137608195444,
+          0.018093137608195444,
+          0.018093137608195444,
+          0.018093137608195444
+        ],
+        "full_mse": [
+          0.09961320330393167,
+          0.09961320330393167,
+          0.09961320330393167,
+          0.09961320330393167,
+          0.09961320330393167,
+          0.09961320330393167
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "w500": {
+        "resolved_mse": [
+          0.00010658658694577924,
+          0.00010658658694577924,
+          0.00010658658694577924,
+          0.00010658658694577924,
+          0.00010658658694577924,
+          0.00010658658694577924
+        ],
+        "full_mse": [
+          0.0008702400665201535,
+          0.0008702400665201535,
+          0.0008702400665201535,
+          0.0008702400665201535,
+          0.0008702400665201535,
+          0.0008702400665201535
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "w700": {
+        "resolved_mse": [
+          0.00010262253073064907,
+          0.00010262253073064907,
+          0.00010262253073064907,
+          0.00010262253073064907,
+          0.00010262253073064907,
+          0.00010262253073064907
+        ],
+        "full_mse": [
+          0.001066887875375443,
+          0.001066887875375443,
+          0.001066887875375443,
+          0.001066887875375443,
+          0.001066887875375443,
+          0.001066887875375443
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "wind850": {
+        "resolved_mse": [
+          2.7054940995594396,
+          2.7054940995594396,
+          2.7054940995594396,
+          2.7054940995594396,
+          2.7054940995594396,
+          2.7054940995594396
+        ],
+        "full_mse": [
+          19.264634131173594,
+          19.264634131173594,
+          19.264634131173594,
+          19.264634131173594,
+          19.264634131173594,
+          19.264634131173594
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "wind500": {
+        "resolved_mse": [
+          4.722913285972847,
+          4.722913285972847,
+          4.722913285972847,
+          4.722913285972847,
+          4.722913285972847,
+          4.722913285972847
+        ],
+        "full_mse": [
+          30.683853276001024,
+          30.683853276001024,
+          30.683853276001024,
+          30.683853276001024,
+          30.683853276001024,
+          30.683853276001024
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "wind250": {
+        "resolved_mse": [
+          10.58506110297695,
+          10.58506110297695,
+          10.58506110297695,
+          10.58506110297695,
+          10.58506110297695,
+          10.58506110297695
+        ],
+        "full_mse": [
+          69.73387147570902,
+          69.73387147570902,
+          69.73387147570902,
+          69.73387147570902,
+          69.73387147570902,
+          69.73387147570902
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "full_skill_vs_climatology": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "persistence": {
+      "t850": {
+        "resolved_mse": [
+          1.2792697198287308,
+          1.4969949552844781,
+          1.6247629346951848,
+          1.6847339921061892,
+          1.6747055474615558,
+          1.672518777916799
+        ],
+        "full_mse": [
+          4.204885408182105,
+          4.422610643637852,
+          4.550378623048559,
+          4.610349680459564,
+          4.6003212358149295,
+          4.598134466270173
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.17277703114634368,
+          0.03198786614353455,
+          -0.050631620282445944,
+          -0.08941111720000428,
+          -0.08292635513354285,
+          -0.08151230931742304
+        ],
+        "full_skill_vs_climatology": [
+          0.05974700029288271,
+          0.011061534251202931,
+          -0.017508620282299825,
+          -0.030918728086089864,
+          -0.0286762709810362,
+          -0.028187288184947423
+        ]
+      },
+      "t2m": {
+        "resolved_mse": [
+          0.9504700719028748,
+          1.2937160332880717,
+          1.5843240793503601,
+          1.6753420262774361,
+          1.6223360065976555,
+          1.6093740391603193
+        ],
+        "full_mse": [
+          15.038748580816776,
+          15.381994542201973,
+          15.672602588264262,
+          15.763620535191338,
+          15.710614515511558,
+          15.69765254807422
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.21540076103037764,
+          -0.06794379451470411,
+          -0.30783651551583424,
+          -0.3829705086868036,
+          -0.3392148093428957,
+          -0.32851489349333884
+        ],
+        "full_skill_vs_climatology": [
+          0.017055138678615078,
+          -0.0053796970458992455,
+          -0.024374075733760936,
+          -0.03032308290940544,
+          -0.02685856627204375,
+          -0.02601136151849137
+        ]
+      },
+      "sst": {
+        "resolved_mse": [
+          0.04551864572379004,
+          0.09711187503004919,
+          0.139859389810996,
+          0.17701165328859425,
+          0.20751084045535537,
+          0.23014242138471394
+        ],
+        "full_mse": [
+          1.654159612030334,
+          1.7057528413365932,
+          1.7485003561175398,
+          1.785652619595138,
+          1.8161518067618994,
+          1.8387833876912578
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.8896998987725427,
+          0.7646799575013645,
+          0.6610948193104811,
+          0.5710680103567494,
+          0.4971628363701974,
+          0.4423223280960028
+        ],
+        "full_skill_vs_climatology": [
+          0.1816442613616781,
+          0.15611975032260317,
+          0.1349714440895814,
+          0.11659125405279425,
+          0.1015025137279788,
+          0.09030608262586426
+        ]
+      },
+      "sp": {
+        "resolved_mse": [
+          88335.77619557075,
+          101247.9971879914,
+          103615.32925767744,
+          104269.79197080339,
+          106087.77366225154,
+          111412.62263619997
+        ],
+        "full_mse": [
+          19703809.281162743,
+          19716721.502155162,
+          19719088.83422485,
+          19719743.296937976,
+          19721561.278629422,
+          19726886.12760337
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          -0.5294763222043153,
+          -0.7530430029481825,
+          -0.7940318129560726,
+          -0.8053634077707896,
+          -0.8368405744525527,
+          -0.9290368597598462
+        ],
+        "full_skill_vs_climatology": [
+          -0.0015544070812456567,
+          -0.0022107416841452565,
+          -0.0023310743484330487,
+          -0.0023643410130282927,
+          -0.0024567499248826508,
+          -0.0027274146415778855
+        ]
+      },
+      "msl": {
+        "resolved_mse": [
+          88842.15428353111,
+          101474.85491700441,
+          103090.19293769139,
+          103817.4109702757,
+          106050.59161522349,
+          110868.6010191103
+        ],
+        "full_mse": [
+          319139.9027130495,
+          331772.6033465228,
+          333387.9413672098,
+          334115.15939979407,
+          336348.34004474187,
+          341166.3494486287
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          -0.5054522137261506,
+          -0.7195164413146473,
+          -0.7468887424342072,
+          -0.759211631335817,
+          -0.7970534280898411,
+          -0.8786957856095234
+        ],
+        "full_skill_vs_climatology": [
+          -0.10310191699890314,
+          -0.14676664261670602,
+          -0.15235003238424394,
+          -0.15486364976333156,
+          -0.16258260257839763,
+          -0.17923597423253712
+        ]
+      },
+      "z500": {
+        "resolved_mse": [
+          113297.51446971347,
+          131575.42520683666,
+          136160.30470844219,
+          139607.92888733948,
+          139142.13451114597,
+          141827.17450339784
+        ],
+        "full_mse": [
+          218763.6215652643,
+          237041.53230238752,
+          241626.41180399305,
+          245074.03598289035,
+          244608.2416066968,
+          247293.2815989487
+        ],
+        "units": "m2 s-2",
+        "resolved_skill_vs_climatology": [
+          -0.13999828433260886,
+          -0.3239104114347007,
+          -0.37004341611856995,
+          -0.40473337085731376,
+          -0.4000465532144224,
+          -0.42706339465934073
+        ],
+        "full_skill_vs_climatology": [
+          -0.06792080777573628,
+          -0.157146617163876,
+          -0.17952825532599737,
+          -0.1963582454847439,
+          -0.194084414475169,
+          -0.20719175863467498
+        ]
+      },
+      "q850": {
+        "resolved_mse": [
+          0.009091013468172041,
+          0.0103893504015374,
+          0.011576436603121092,
+          0.01212898302586548,
+          0.012125527129025168,
+          0.012456238962984765
+        ],
+        "full_mse": [
+          0.04855637562761039,
+          0.049854712560975754,
+          0.051041798762559445,
+          0.051594345185303835,
+          0.051590889288463525,
+          0.05192160112242312
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.07566189928197076,
+          -0.056347837507068954,
+          -0.1770460422564104,
+          -0.23322676542288745,
+          -0.23287538357389614,
+          -0.26650084783675543
+        ],
+        "full_skill_vs_climatology": [
+          0.015094097910356985,
+          -0.011241057711212532,
+          -0.03531963011528916,
+          -0.046527349511668925,
+          -0.046457250927270044,
+          -0.0531653306170663
+        ]
+      },
+      "q700": {
+        "resolved_mse": [
+          0.01677944666604364,
+          0.018968042718838556,
+          0.020819805349058584,
+          0.022275931032078315,
+          0.022664547824882208,
+          0.02323274482822122
+        ],
+        "full_mse": [
+          0.09829951236177986,
+          0.10048810841457478,
+          0.1023398710447948,
+          0.10379599672781453,
+          0.10418461352061843,
+          0.10475281052395743
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.07260713816473463,
+          -0.04835563237228779,
+          -0.15070176328223317,
+          -0.23118120883512416,
+          -0.2526598932523514,
+          -0.2840638993259934
+        ],
+        "full_skill_vs_climatology": [
+          0.013187919859815933,
+          -0.008783023551342639,
+          -0.027372553541358924,
+          -0.04199035153121877,
+          -0.04589160939578307,
+          -0.05159564244053283
+        ]
+      },
+      "w500": {
+        "resolved_mse": [
+          0.00010753845795497284,
+          0.00012505749423592132,
+          0.00014311044376204472,
+          0.0001590438294749029,
+          0.00016488135195730547,
+          0.0001706238794539475
+        ],
+        "full_mse": [
+          0.0008711919375293472,
+          0.0008887109738102957,
+          0.000906763923336419,
+          0.0009226973090492773,
+          0.0009285348315316798,
+          0.0009342773590283219
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          -0.008930495257136073,
+          -0.17329485650514598,
+          -0.3426684150684478,
+          -0.4921561336400493,
+          -0.546924023762773,
+          -0.6008006667925687
+        ],
+        "full_skill_vs_climatology": [
+          -0.0010938027859370703,
+          -0.02122507110480698,
+          -0.04196986351400045,
+          -0.0602790477561963,
+          -0.06698699273251196,
+          -0.07358577819133938
+        ]
+      },
+      "w700": {
+        "resolved_mse": [
+          8.37871516029801e-05,
+          0.00010552937608078519,
+          0.00012610086034566732,
+          0.0001492731468421904,
+          0.00015920442281031123,
+          0.0001658715670133721
+        ],
+        "full_mse": [
+          0.001048052496247774,
+          0.0010697947207255793,
+          0.0010903662049904614,
+          0.0011135384914869844,
+          0.0011234697674551053,
+          0.0011301369116581662
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.1835403881931711,
+          -0.02832560578500698,
+          -0.22878338165954282,
+          -0.45458454180967434,
+          -0.5513593523450646,
+          -0.6163269979058623
+        ],
+        "full_skill_vs_climatology": [
+          0.017654506684726123,
+          -0.002724602479068583,
+          -0.02200637026337593,
+          -0.04372588459225368,
+          -0.05303452535698838,
+          -0.059283677078498576
+        ]
+      },
+      "wind850": {
+        "resolved_mse": [
+          3.7719624741418523,
+          4.225591551466972,
+          4.3355370190708395,
+          4.579672765458286,
+          4.664653650584017,
+          4.846455093495346
+        ],
+        "full_mse": [
+          20.331102505756004,
+          20.784731583081125,
+          20.89467705068499,
+          21.13881279707244,
+          21.22379368219817,
+          21.4055951251095
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          -0.394186176475519,
+          -0.5618557631136818,
+          -0.6024936146698063,
+          -0.6927306425114863,
+          -0.7241411287289836,
+          -0.7913382602773145
+        ],
+        "full_skill_vs_climatology": [
+          -0.055358869902266905,
+          -0.0789061158160147,
+          -0.0846132300469542,
+          -0.0972859724787658,
+          -0.1016972104263485,
+          -0.11113426703865881
+        ]
+      },
+      "wind500": {
+        "resolved_mse": [
+          6.755191803805356,
+          7.720670763396356,
+          8.047450374429774,
+          8.365418152986289,
+          8.499615560947953,
+          8.64870590219546
+        ],
+        "full_mse": [
+          32.71613179383353,
+          33.681610753424536,
+          34.00839036445795,
+          34.32635814301447,
+          34.46055555097613,
+          34.60964589222364
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          -0.43030189096810645,
+          -0.6347263428119487,
+          -0.7039166055262696,
+          -0.7712411061688891,
+          -0.7996552225915288,
+          -0.8312226751827732
+        ],
+        "full_skill_vs_climatology": [
+          -0.06623283260913082,
+          -0.09769820792905981,
+          -0.10834809626264152,
+          -0.11871080317876448,
+          -0.12308435453017252,
+          -0.12794327299476183
+        ]
+      },
+      "wind250": {
+        "resolved_mse": [
+          14.776990628512017,
+          16.53777308573852,
+          17.296269827656904,
+          18.065618007476537,
+          17.83141135967838,
+          18.92914323784599
+        ],
+        "full_mse": [
+          73.92580100124408,
+          75.6865834584706,
+          76.44508020038897,
+          77.2144283802086,
+          76.98022173241046,
+          78.07795361057806
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          -0.3960231768861615,
+          -0.5623691658319694,
+          -0.6340264509944575,
+          -0.7067089015098602,
+          -0.6845827516917653,
+          -0.7882885184784003
+        ],
+        "full_skill_vs_climatology": [
+          -0.06011324822249775,
+          -0.08536327980635816,
+          -0.09624030019640761,
+          -0.10727293273979988,
+          -0.10391435472251986,
+          -0.11965608617865997
+        ]
+      }
+    },
+    "independent_ar1": {
+      "t850": {
+        "resolved_mse": [
+          0.9267032255755725,
+          1.0495952346635313,
+          1.1095320174645737,
+          1.1421185442382615,
+          1.168979556545784,
+          1.1933553501900904
+        ],
+        "full_mse": [
+          3.852318913928946,
+          3.9752109230169053,
+          4.0351477058179475,
+          4.0677342325916355,
+          4.094595244899158,
+          4.118971038543465
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.40075952582578434,
+          0.32129302159261763,
+          0.28253568790160133,
+          0.2614640381904145,
+          0.2440947172387562,
+          0.2283324303073443
+        ],
+        "full_skill_vs_climatology": [
+          0.1385842744722694,
+          0.11110443400856851,
+          0.09770199033868543,
+          0.09041532814109587,
+          0.08440894629102869,
+          0.07895828334318633
+        ]
+      },
+      "t2m": {
+        "resolved_mse": [
+          0.7355419156086582,
+          0.9228251892233238,
+          1.0166056554915925,
+          1.0528504382025554,
+          1.0737881171594361,
+          1.092451916426957
+        ],
+        "full_mse": [
+          14.82382042452256,
+          15.011103698137227,
+          15.104884164405494,
+          15.141128947116457,
+          15.162066626073338,
+          15.180730425340858
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.39282083226310793,
+          0.23822121014599862,
+          0.16080679738391124,
+          0.13088725570417414,
+          0.11360350584083545,
+          0.09819681063341901
+        ],
+        "full_skill_vs_climatology": [
+          0.03110301810471061,
+          0.018862030736532587,
+          0.012732463045754039,
+          0.010363474514294979,
+          0.008994970756946663,
+          0.007775089628928922
+        ]
+      },
+      "sst": {
+        "resolved_mse": [
+          0.04312273740458719,
+          0.08565244233571784,
+          0.11801786649560296,
+          0.1447230179012056,
+          0.16560882433434748,
+          0.18090363066166867
+        ],
+        "full_mse": [
+          1.6517637037111312,
+          1.6942934086422619,
+          1.7266588328021468,
+          1.7533639842077495,
+          1.7742497906408914,
+          1.7895445969682127
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.8955056279619256,
+          0.7924482833400521,
+          0.7140208717960586,
+          0.6493093484962111,
+          0.5986991748594193,
+          0.5616370290215397
+        ],
+        "full_skill_vs_climatology": [
+          0.18282957945795553,
+          0.1617890294167984,
+          0.14577701316269853,
+          0.1325652809060054,
+          0.12223252980608468,
+          0.11466579172452673
+        ]
+      },
+      "sp": {
+        "resolved_mse": [
+          54641.838618339796,
+          56961.03323769392,
+          57558.340907965234,
+          57681.27165966965,
+          57728.53004296323,
+          57749.09555415306
+        ],
+        "full_mse": [
+          19670115.34358551,
+          19672434.538204867,
+          19673031.845875137,
+          19673154.77662684,
+          19673202.035010137,
+          19673222.600521326
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.05391222030547427,
+          0.013756878838472542,
+          0.0034148862948353287,
+          0.0012864205462985723,
+          0.0004681724775527085,
+          0.00011209407111834047
+        ],
+        "full_skill_vs_climatology": [
+          0.00015827249207223115,
+          4.0386678280990296e-05,
+          1.0025232887178603e-05,
+          3.776601753102682e-06,
+          1.3744346701871635e-06,
+          3.290795274057956e-07
+        ]
+      },
+      "msl": {
+        "resolved_mse": [
+          55234.726226492574,
+          57966.50556339282,
+          58714.77074990187,
+          58891.08772369429,
+          58974.23152274911,
+          58999.20206406508
+        ],
+        "full_mse": [
+          285532.474656011,
+          288264.2539929112,
+          289012.51917942025,
+          289188.8361532127,
+          289271.9799522675,
+          289296.95049358346
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.06403394263881057,
+          0.017743268090071207,
+          0.005063729974761455,
+          0.0020759953722643276,
+          0.0006671031931618776,
+          0.00024397121256969356
+        ],
+        "full_skill_vs_climatology": [
+          0.013061615044456243,
+          0.0036192639071178645,
+          0.0010328973805734387,
+          0.00042346060962605847,
+          0.00013607541164795123,
+          4.9765139068513875e-05
+        ]
+      },
+      "z500": {
+        "resolved_mse": [
+          71617.36244571173,
+          75895.77278282202,
+          77985.28205763889,
+          79330.67932211554,
+          80560.51924906648,
+          81862.83260380414
+        ],
+        "full_mse": [
+          177083.46954126257,
+          181361.87987837289,
+          183451.38915318972,
+          184796.7864176664,
+          186026.62634461734,
+          187328.939699355
+        ],
+        "units": "m2 s-2",
+        "resolved_skill_vs_climatology": [
+          0.2793869247823362,
+          0.23633760929818715,
+          0.21531299106593926,
+          0.20177561930250876,
+          0.18940098413694562,
+          0.17629712217657356
+        ],
+        "full_skill_vs_climatology": [
+          0.13554584403414116,
+          0.11466027178720417,
+          0.1044600821183218,
+          0.09789236430866521,
+          0.09188875347599068,
+          0.08553135492947939
+        ]
+      },
+      "q850": {
+        "resolved_mse": [
+          0.006668663121514553,
+          0.007762445344165255,
+          0.008438507273030964,
+          0.00885397184952789,
+          0.009132782025587177,
+          0.00933697172624686
+        ],
+        "full_mse": [
+          0.04613402528095291,
+          0.047227807503603614,
+          0.04790386943246932,
+          0.04831933400896624,
+          0.04859814418502553,
+          0.048802333885685216
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.32195685050408784,
+          0.21074542332671897,
+          0.14200613463428347,
+          0.09976334851376023,
+          0.07141503844890651,
+          0.05065384160823072
+        ],
+        "full_skill_vs_climatology": [
+          0.0642284725936938,
+          0.042042455767577036,
+          0.028329377406363543,
+          0.019902193371064136,
+          0.0142468744883405,
+          0.01010513946948377
+        ]
+      },
+      "q700": {
+        "resolved_mse": [
+          0.012948696328987312,
+          0.015392170734677142,
+          0.016627268484623373,
+          0.017246613909007297,
+          0.017590355763361862,
+          0.01778405581322227
+        ],
+        "full_mse": [
+          0.09446876202472354,
+          0.09691223643041336,
+          0.09814733418035959,
+          0.09876667960474352,
+          0.09911042145909808,
+          0.0993041215089585
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.2843310757155747,
+          0.14928128730391543,
+          0.0810179613572437,
+          0.04678700386408974,
+          0.027788538158569187,
+          0.017082819003884198
+        ],
+        "full_skill_vs_climatology": [
+          0.051644170738208595,
+          0.027114546906772397,
+          0.014715610731837803,
+          0.008498107390496279,
+          0.0050473413981030335,
+          0.003102819553248648
+        ]
+      },
+      "w500": {
+        "resolved_mse": [
+          8.12881846288703e-05,
+          9.427312664831049e-05,
+          0.00010050540477750618,
+          0.00010326937311343253,
+          0.00010452266502909962,
+          0.00010514490732895799
+        ],
+        "full_mse": [
+          0.0008449416642032446,
+          0.0008579266062226849,
+          0.0008641588843518805,
+          0.0008669228526878069,
+          0.000868176144603474,
+          0.0008687983869033323
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.2373507121470948,
+          0.11552542069606397,
+          0.057053915905634245,
+          0.031122244621963335,
+          0.01936380529502779,
+          0.013525900942438773
+        ],
+        "full_skill_vs_climatology": [
+          0.029070601653714,
+          0.014149498249036885,
+          0.006987936320364985,
+          0.0038118376295994683,
+          0.0023716696071379717,
+          0.0016566458754146973
+        ]
+      },
+      "w700": {
+        "resolved_mse": [
+          6.989120964452786e-05,
+          8.707680641431991e-05,
+          9.465499837221622e-05,
+          9.837082482961864e-05,
+          0.00010006584905702502,
+          0.0001009490366404409
+        ],
+        "full_mse": [
+          0.001034156554289322,
+          0.0010513421510591138,
+          0.0010589203430170103,
+          0.0010626361694744126,
+          0.001064331193701819,
+          0.0010652143812852348
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.31894868361832085,
+          0.15148451519999684,
+          0.07763921140616814,
+          0.041430530613104644,
+          0.024913453755438075,
+          0.016307277537332854
+        ],
+        "full_skill_vs_climatology": [
+          0.03067925115804948,
+          0.014571094746820168,
+          0.007468012845894378,
+          0.003985147829648206,
+          0.002396392097645861,
+          0.0015685754134372454
+        ]
+      },
+      "wind850": {
+        "resolved_mse": [
+          2.433289753367729,
+          2.6031426950875316,
+          2.6662311740663904,
+          2.6878166019418916,
+          2.697562359381495,
+          2.701828018642258
+        ],
+        "full_mse": [
+          18.99242978498188,
+          19.162282726701683,
+          19.225371205680542,
+          19.246956633556046,
+          19.25670239099565,
+          19.26096805025641
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.10061169463871178,
+          0.03783094721536262,
+          0.014512293890954209,
+          0.006533925769945936,
+          0.0029317159402552084,
+          0.001355050420468018
+        ],
+        "full_skill_vs_climatology": [
+          0.014129743878771084,
+          0.005312917119266181,
+          0.0020380831125942356,
+          0.0009176139809965456,
+          0.00041172545110057523,
+          0.0001903010922617021
+        ]
+      },
+      "wind500": {
+        "resolved_mse": [
+          4.295558714452466,
+          4.598293359847375,
+          4.693054587348901,
+          4.711048726243293,
+          4.719332728318764,
+          4.72133977735137
+        ],
+        "full_mse": [
+          30.25649870448064,
+          30.55923334987555,
+          30.653994577377077,
+          30.67198871627147,
+          30.68027271834694,
+          30.682279767379548
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.09048537325248673,
+          0.02638624056376304,
+          0.006322093338581358,
+          0.0025121273695183355,
+          0.000758124792322068,
+          0.0003331648341184934
+        ],
+        "full_skill_vs_climatology": [
+          0.013927669633808093,
+          0.004061417091410169,
+          0.000973107854328692,
+          0.0003866711140492196,
+          0.00011669191681618063,
+          5.1281324002006023e-05
+        ]
+      },
+      "wind250": {
+        "resolved_mse": [
+          9.485973133107516,
+          10.15413315183616,
+          10.430580367821923,
+          10.520239897361165,
+          10.557086841508736,
+          10.573818341232144
+        ],
+        "full_mse": [
+          68.6347835058396,
+          69.30294352456824,
+          69.57939074055399,
+          69.66905027009324,
+          69.7058972142408,
+          69.72262871396421
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.1038338805205693,
+          0.04071095546341208,
+          0.014594222333924933,
+          0.006123838585830543,
+          0.0026428058559194723,
+          0.0010621347987913587
+        ],
+        "full_skill_vs_climatology": [
+          0.015761178127795206,
+          0.006179607442143742,
+          0.00221528981377217,
+          0.0009295512244485993,
+          0.0004011574415162533,
+          0.00016122382863437146
+        ]
+      }
+    },
+    "independent_channels": {
+      "t850": {
+        "resolved_mse": [
+          0.9891840344568928,
+          1.0321322284130798,
+          1.0715707070131268,
+          1.0942895072239507,
+          1.1156573726623962,
+          1.1185701943725332
+        ],
+        "full_mse": [
+          3.9147997228102667,
+          3.9577479167664538,
+          3.9971863953665006,
+          4.019905195577325,
+          4.0412730610157706,
+          4.044185882725907
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.36035713107035827,
+          0.33258524531346245,
+          0.30708287091272224,
+          0.292392057030481,
+          0.27857480738243745,
+          0.2766912694658802
+        ],
+        "full_skill_vs_climatology": [
+          0.12461296199358118,
+          0.1150093309122846,
+          0.10619050609117953,
+          0.10111036288289899,
+          0.09633230174079455,
+          0.09568096666630277
+        ]
+      },
+      "t2m": {
+        "resolved_mse": [
+          0.7175904834881788,
+          0.8187259648767332,
+          0.8479297593023054,
+          0.8838109955089779,
+          0.8851488421524094,
+          0.8964141320491916
+        ],
+        "full_mse": [
+          14.80586899240208,
+          14.907004473790636,
+          14.936208268216207,
+          14.972089504422879,
+          14.973427351066311,
+          14.984692640963093
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.40763947873763084,
+          0.3241536078238596,
+          0.30004629970477703,
+          0.27042686038389185,
+          0.26932248741169196,
+          0.2600231542279632
+        ],
+        "full_skill_vs_climatology": [
+          0.032276338335537,
+          0.0256660408633822,
+          0.023757257063490966,
+          0.021412030227782264,
+          0.021324587481045043,
+          0.020588278954053463
+        ]
+      },
+      "sst": {
+        "resolved_mse": [
+          0.09323022652476506,
+          0.12103739467413928,
+          0.14054035033837164,
+          0.1549346388563482,
+          0.16826508385311856,
+          0.18009492937076108
+        ],
+        "full_mse": [
+          1.701871192831309,
+          1.7296783609806832,
+          1.7491813166449157,
+          1.7635756051628921,
+          1.7769060501596625,
+          1.788735895677305
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.7740859100786944,
+          0.7067039962946935,
+          0.6594447259496811,
+          0.6245647013930576,
+          0.5922625665388488,
+          0.5635966618891596
+        ],
+        "full_skill_vs_climatology": [
+          0.15804010269160906,
+          0.14428317411904523,
+          0.13463455522389312,
+          0.12751332669997617,
+          0.12091840920690566,
+          0.11506587726490958
+        ]
+      },
+      "sp": {
+        "resolved_mse": [
+          54663.7119481909,
+          56760.81575687592,
+          56999.890267747905,
+          56830.329224821,
+          57316.02201971315,
+          57492.426535952225
+        ],
+        "full_mse": [
+          19670137.21691536,
+          19672234.320724048,
+          19672473.39523492,
+          19672303.834191993,
+          19672789.526986886,
+          19672965.931503125
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.05353349787232364,
+          0.017223513868933504,
+          0.013084094718851857,
+          0.016019933531778663,
+          0.007610479722167662,
+          0.004556150634480338
+        ],
+        "full_skill_vs_climatology": [
+          0.00015716065985760252,
+          5.05638322225721e-05,
+          3.8411556154138715e-05,
+          4.7030428139249736e-05,
+          2.2342422268284423e-05,
+          1.3375693137640532e-05
+        ]
+      },
+      "msl": {
+        "resolved_mse": [
+          55188.95007667909,
+          57374.70111276901,
+          57634.5070887348,
+          57452.868366716575,
+          58129.46503136438,
+          58539.2414338923
+        ],
+        "full_mse": [
+          285486.6985061975,
+          287672.4495422874,
+          287932.2555182532,
+          287750.616796235,
+          288427.2134608828,
+          288836.9898634107
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.06480963078627089,
+          0.027771540450974075,
+          0.02336906411740003,
+          0.026446977055981424,
+          0.01498187971780729,
+          0.00803811752188377
+        ],
+        "full_skill_vs_climatology": [
+          0.01321983956662609,
+          0.005664826428199987,
+          0.004766811270273008,
+          0.005394642577972841,
+          0.0030559971392070118,
+          0.0016396116251212733
+        ]
+      },
+      "z500": {
+        "resolved_mse": [
+          74615.24094888674,
+          78691.9503265165,
+          79999.02012400713,
+          80075.88780155359,
+          81625.71283657107,
+          82645.42965473571
+        ],
+        "full_mse": [
+          180081.3480444376,
+          184158.05742206733,
+          185465.127219558,
+          185541.99489710445,
+          187091.8199321219,
+          188111.53675028656
+        ],
+        "units": "m2 s-2",
+        "resolved_skill_vs_climatology": [
+          0.24922230584737526,
+          0.20820250309201183,
+          0.19505078185949876,
+          0.19427734017427079,
+          0.17868301854060464,
+          0.16842263967303872
+        ],
+        "full_skill_vs_climatology": [
+          0.12091134123236214,
+          0.10101039636559206,
+          0.09462977867436839,
+          0.09425453990427535,
+          0.08668888345982328,
+          0.0817110137374023
+        ]
+      },
+      "q850": {
+        "resolved_mse": [
+          0.006963419139419012,
+          0.0074761329512097185,
+          0.007732010493285779,
+          0.008026655021261684,
+          0.008067962149997216,
+          0.008458650212364631
+        ],
+        "full_mse": [
+          0.046428781298857365,
+          0.046941495110648074,
+          0.04719737265272413,
+          0.047492017180700036,
+          0.04753332430943557,
+          0.047924012371802986
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.2919872306460941,
+          0.2398565289744118,
+          0.2138399179456152,
+          0.18388163394023782,
+          0.17968168934053041,
+          0.13995808065749138
+        ],
+        "full_skill_vs_climatology": [
+          0.058249712071348214,
+          0.04784994782229646,
+          0.04265978899875367,
+          0.03668328991143566,
+          0.0358454259983213,
+          0.027920802845788573
+        ]
+      },
+      "q700": {
+        "resolved_mse": [
+          0.013540832627471473,
+          0.014927153459903114,
+          0.015668652993902295,
+          0.015984740285586368,
+          0.016568859404338068,
+          0.017268692338915453
+        ],
+        "full_mse": [
+          0.09506089832320769,
+          0.09644721915563934,
+          0.09718871868963852,
+          0.09750480598132259,
+          0.09808892510007429,
+          0.09878875803465167
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.2516039550078901,
+          0.17498259377954817,
+          0.13400023073913714,
+          0.11653022091945286,
+          0.08424620631674962,
+          0.045566738458151734
+        ],
+        "full_skill_vs_climatology": [
+          0.04569981518247501,
+          0.03178277621122716,
+          0.02433898854648575,
+          0.0211658420036559,
+          0.01530196955123131,
+          0.00827646578902308
+        ]
+      },
+      "w500": {
+        "resolved_mse": [
+          8.705444602616436e-05,
+          9.270029287662613e-05,
+          9.789694849708144e-05,
+          9.858816726461772e-05,
+          0.00010056429350356945,
+          0.00010260388544354584
+        ],
+        "full_mse": [
+          0.0008507079256005387,
+          0.0008563537724510004,
+          0.0008615504280714558,
+          0.000862241646838992,
+          0.0008642177730779438,
+          0.0008662573650179202
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.18325139662789747,
+          0.13028181563048913,
+          0.08152656631287225,
+          0.07504152173697354,
+          0.05650141931342012,
+          0.03736587891926213
+        ],
+        "full_skill_vs_climatology": [
+          0.022444543374931403,
+          0.01595685443981054,
+          0.009985334832312676,
+          0.009191049675688845,
+          0.006920266802114994,
+          0.004576554970812774
+        ]
+      },
+      "w700": {
+        "resolved_mse": [
+          8.445060809934547e-05,
+          8.957898480406909e-05,
+          9.439813537335046e-05,
+          9.745117493274093e-05,
+          9.89704680720508e-05,
+          0.00010017487428454104
+        ],
+        "full_mse": [
+          0.0010487159527441394,
+          0.0010538443294488631,
+          0.0010586634800181444,
+          0.001061716519577535,
+          0.0010632358127168448,
+          0.001064440218929335
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.17707537031023923,
+          0.12710216590560475,
+          0.08014219975616255,
+          0.05039201197913623,
+          0.035587337718105516,
+          0.023851063004208473
+        ],
+        "full_skill_vs_climatology": [
+          0.017032645182989636,
+          0.012225788883381772,
+          0.0077087719779403985,
+          0.004847140845131714,
+          0.0034230988493640924,
+          0.0022942021393266288
+        ]
+      },
+      "wind850": {
+        "resolved_mse": [
+          2.4679801330034388,
+          2.530803121299504,
+          2.5755611306034143,
+          2.5854077341567976,
+          2.5888102010186023,
+          2.6156702268590797
+        ],
+        "full_mse": [
+          19.027120164617592,
+          19.089943152913655,
+          19.134701162217567,
+          19.14454776577095,
+          19.147950232632756,
+          19.174810258473233
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.08778949715494755,
+          0.06456897403264794,
+          0.0480255968686768,
+          0.04438611247468505,
+          0.043128498620580324,
+          0.0332005428195119
+        ],
+        "full_skill_vs_climatology": [
+          0.012329015175619795,
+          0.009067962416024145,
+          0.0067446372493403794,
+          0.0062335139398428385,
+          0.006056896681573831,
+          0.004662630605323015
+        ]
+      },
+      "wind500": {
+        "resolved_mse": [
+          4.433125693381404,
+          4.613795898379141,
+          4.638485209932956,
+          4.657910384830063,
+          4.645507695633197,
+          4.688735064223421
+        ],
+        "full_mse": [
+          30.39406568340958,
+          30.574735888407318,
+          30.599425199961132,
+          30.61885037485824,
+          30.606447685661372,
+          30.649675054251595
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.06135780503362587,
+          0.023103830408613857,
+          0.017876270625303392,
+          0.013763306079712323,
+          0.016389373603268753,
+          0.007236682039227116
+        ],
+        "full_skill_vs_climatology": [
+          0.009444302512621516,
+          0.00355618268058433,
+          0.002751547378370689,
+          0.002118472558126361,
+          0.00252268154339641,
+          0.001113882974279501
+        ]
+      },
+      "wind250": {
+        "resolved_mse": [
+          9.717207646662466,
+          10.048630579925822,
+          10.084819563828018,
+          10.213919103803667,
+          10.285544004415978,
+          10.384483983156164
+        ],
+        "full_mse": [
+          68.86601801939455,
+          69.1974409526579,
+          69.23362993656009,
+          69.36272947653573,
+          69.43435437714805,
+          69.53329435588823
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.08198851644516325,
+          0.05067807524514534,
+          0.04725920183949084,
+          0.03506281121692367,
+          0.028296208746186102,
+          0.01894907529294987
+        ],
+        "full_skill_vs_climatology": [
+          0.012445221209563595,
+          0.0076925389584598935,
+          0.007173580479081565,
+          0.005322262930756327,
+          0.004295145131377076,
+          0.002876322733503467
+        ]
+      }
+    },
+    "joint": {
+      "t850": {
+        "resolved_mse": [
+          1.0164102848737204,
+          1.0567825337873964,
+          1.0998701159725097,
+          1.119218131579766,
+          1.139305194748354,
+          1.1542931536573826
+        ],
+        "full_mse": [
+          3.9420259732270946,
+          3.9823982221407705,
+          4.025485804325884,
+          4.04483381993314,
+          4.064920883101728,
+          4.079908842010757
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.3427516336905121,
+          0.31664544897589153,
+          0.2887834296507822,
+          0.2762722893775611,
+          0.26328325370172656,
+          0.25359148684942956
+        ],
+        "full_skill_vs_climatology": [
+          0.11852490937379123,
+          0.10949728448961693,
+          0.09986248485373461,
+          0.09553608164719218,
+          0.09104442026616621,
+          0.08769296785885927
+        ]
+      },
+      "t2m": {
+        "resolved_mse": [
+          0.788464211870429,
+          0.8284235453220007,
+          0.8393938740479028,
+          0.8708035564782282,
+          0.8825408183651495,
+          0.916092129801571
+        ],
+        "full_mse": [
+          14.876742720784332,
+          14.916702054235902,
+          14.927672382961806,
+          14.95908206539213,
+          14.970819327279052,
+          15.004370638715473
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.3491342453847014,
+          0.3161483960216924,
+          0.3070925490002737,
+          0.2811643123733458,
+          0.2714753731670553,
+          0.24377925290232472
+        ],
+        "full_skill_vs_climatology": [
+          0.02764397369817051,
+          0.025032199103564245,
+          0.02431516947904555,
+          0.022262207041731763,
+          0.02149505004088592,
+          0.01930210898666207
+        ]
+      },
+      "sst": {
+        "resolved_mse": [
+          0.19166801309398013,
+          0.20455073163786888,
+          0.2188476206364397,
+          0.23271750956924325,
+          0.24610934353595315,
+          0.25593426484754683
+        ],
+        "full_mse": [
+          1.800308979400524,
+          1.813191697944413,
+          1.8274885869429838,
+          1.8413584758757873,
+          1.8547503098424971,
+          1.8645752311540909
+        ],
+        "units": "K",
+        "resolved_skill_vs_climatology": [
+          0.535552938577819,
+          0.5043357277649518,
+          0.4696917202663743,
+          0.4360824129380094,
+          0.40363152125039936,
+          0.3798239189373499
+        ],
+        "full_skill_vs_climatology": [
+          0.1093403720538293,
+          0.10296695646987997,
+          0.0958939140188586,
+          0.08903211959473756,
+          0.08240683138322269,
+          0.07754618753813214
+        ]
+      },
+      "sp": {
+        "resolved_mse": [
+          54529.13179315123,
+          57943.87330049481,
+          58940.5412533819,
+          58561.82072156872,
+          59382.16359711997,
+          57904.057724462305
+        ],
+        "full_mse": [
+          19670002.636760324,
+          19673417.37826767,
+          19674414.046220552,
+          19674035.325688742,
+          19674855.66856429,
+          19673377.562691633
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.05586366543790944,
+          -0.003260355506530477,
+          -0.020517010745125575,
+          -0.013959711867052915,
+          -0.02816341345073292,
+          -0.0025709747887812107
+        ],
+        "full_skill_vs_climatology": [
+          0.00016400143594608174,
+          -9.571570010358244e-06,
+          -6.023269681909582e-05,
+          -4.098214418357671e-05,
+          -8.268057978044752e-05,
+          -7.547724515388765e-06
+        ]
+      },
+      "msl": {
+        "resolved_mse": [
+          53987.08253268309,
+          57406.96830422827,
+          58498.18361856527,
+          58421.40847174011,
+          59163.00783952276,
+          57788.5201528869
+        ],
+        "full_mse": [
+          284284.83096220146,
+          287704.7167337467,
+          288795.9320480837,
+          288719.1569012585,
+          289460.75626904116,
+          288086.2685824053
+        ],
+        "units": "Pa",
+        "resolved_skill_vs_climatology": [
+          0.08517557271221754,
+          0.027224764934274615,
+          0.008733852327881042,
+          0.010034826124376561,
+          -0.0025317580487547175,
+          0.020759274764132307
+        ],
+        "full_skill_vs_climatology": [
+          0.017374075312423187,
+          0.005553295402300873,
+          0.0017815273003783938,
+          0.0020468993548309333,
+          -0.0005164268769932701,
+          0.004234467602606373
+        ]
+      },
+      "z500": {
+        "resolved_mse": [
+          76028.03888279243,
+          80157.92781909379,
+          82246.64397539049,
+          82003.55257524624,
+          82642.20297448403,
+          81939.12613490384
+        ],
+        "full_mse": [
+          181494.14597834327,
+          185624.03491464464,
+          187712.75107094133,
+          187469.6596707971,
+          188108.31007003487,
+          187405.23323045467
+        ],
+        "units": "m2 s-2",
+        "resolved_skill_vs_climatology": [
+          0.23500674932524446,
+          0.1934518544636602,
+          0.17243521658081806,
+          0.1748811994463515,
+          0.16845510649252915,
+          0.17552945754627325
+        ],
+        "full_skill_vs_climatology": [
+          0.11401459898607269,
+          0.09385405173730044,
+          0.08365773377142172,
+          0.08484441354271055,
+          0.08172676516333022,
+          0.08515891892399974
+        ]
+      },
+      "q850": {
+        "resolved_mse": [
+          0.007237819498061586,
+          0.007751517304919862,
+          0.007941518152512414,
+          0.008141999836649413,
+          0.008237195855329664,
+          0.008438701619390341
+        ],
+        "full_mse": [
+          0.04670318165749994,
+          0.047216879464358215,
+          0.04740688031195077,
+          0.04760736199608777,
+          0.04770255801476802,
+          0.04790406377882869
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.2640872932813524,
+          0.21185654290387312,
+          0.19253801222372569,
+          0.1721538317588378,
+          0.16247467910870816,
+          0.1419863742692442
+        ],
+        "full_skill_vs_climatology": [
+          0.05268384086969058,
+          0.04226411750019077,
+          0.03841018578108757,
+          0.034343663281926284,
+          0.0324127300225604,
+          0.02832543533132348
+        ]
+      },
+      "q700": {
+        "resolved_mse": [
+          0.01558736766418609,
+          0.01642854738070661,
+          0.016890419370003462,
+          0.017019106768870425,
+          0.01735732161903206,
+          0.01776573889105382
+        ],
+        "full_mse": [
+          0.09710743335992231,
+          0.09794861307644283,
+          0.09841048506573968,
+          0.09853917246460664,
+          0.09887738731476828,
+          0.09928580458679004
+        ],
+        "units": "log(kg kg-1)",
+        "resolved_skill_vs_climatology": [
+          0.13849283624938247,
+          0.09200119202845414,
+          0.06647372413987507,
+          0.059361226481720264,
+          0.040668235941017206,
+          0.018095187481099173
+        ],
+        "full_skill_vs_climatology": [
+          0.02515499814180211,
+          0.016710538084092952,
+          0.01207388376541163,
+          0.010782012862773138,
+          0.007386731525120482,
+          0.0032867000184975126
+        ]
+      },
+      "w500": {
+        "resolved_mse": [
+          9.447086721123108e-05,
+          9.626581607570484e-05,
+          9.826115444170541e-05,
+          9.882111466816003e-05,
+          0.00010000362559466843,
+          0.00010067317836634467
+        ],
+        "full_mse": [
+          0.0008581243467856055,
+          0.0008599192956500792,
+          0.0008619146340160797,
+          0.0008624745942425343,
+          0.0008636571051690427,
+          0.0008643266579407191
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.11367021012420109,
+          0.09682992171730376,
+          0.07810957028119292,
+          0.07285599905332851,
+          0.06176163004881252,
+          0.05547985678951073
+        ],
+        "full_skill_vs_climatology": [
+          0.013922272945895764,
+          0.011859682479737121,
+          0.009566822793352747,
+          0.00892336790314785,
+          0.0075645348960249326,
+          0.006795146312994493
+        ]
+      },
+      "w700": {
+        "resolved_mse": [
+          9.489239006491055e-05,
+          9.592936920701584e-05,
+          9.747874877777059e-05,
+          9.768202980134762e-05,
+          9.909421581999336e-05,
+          9.931106674761259e-05
+        ],
+        "full_mse": [
+          0.0010591577347097046,
+          0.00106019471385181,
+          0.0010617440934225645,
+          0.0010619473744461416,
+          0.0010633595604647873,
+          0.0010635764113924066
+        ],
+        "units": "Pa s-1",
+        "resolved_skill_vs_climatology": [
+          0.0753259602029075,
+          0.06522117000993288,
+          0.050123320057066656,
+          0.04814245852373944,
+          0.03438148411986053,
+          0.032268391350901315
+        ],
+        "full_skill_vs_climatology": [
+          0.0072455042785243284,
+          0.006273537902263371,
+          0.004821295725259245,
+          0.004630759279706798,
+          0.003307109389929175,
+          0.0031038537970741187
+        ]
+      },
+      "wind850": {
+        "resolved_mse": [
+          2.4949577823164883,
+          2.5780188812396005,
+          2.6070536616099695,
+          2.599881075850007,
+          2.617917784255243,
+          2.6248996641179145
+        ],
+        "full_mse": [
+          19.05409781393064,
+          19.137158912853753,
+          19.166193693224123,
+          19.15902110746416,
+          19.177057815869397,
+          19.184039695732068
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.07781806557154747,
+          0.04711716737456462,
+          0.03638538260552848,
+          0.03903650121677604,
+          0.03236980458336902,
+          0.02978917435253292
+        ],
+        "full_skill_vs_climatology": [
+          0.010928643430724194,
+          0.006617058878557347,
+          0.005109904360455886,
+          0.0054822231759145135,
+          0.004545963069315873,
+          0.004183543528143652
+        ]
+      },
+      "wind500": {
+        "resolved_mse": [
+          4.4111605494002175,
+          4.671473165057612,
+          4.724871694970645,
+          4.658617055030856,
+          4.64155403004735,
+          4.666944268325933
+        ],
+        "full_mse": [
+          30.372100539428395,
+          30.63241315508579,
+          30.68581168499882,
+          30.619557045059032,
+          30.602494020075525,
+          30.627884258354108
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.06600856668246313,
+          0.010891608166513245,
+          -0.00041466122268518646,
+          0.013613680169177078,
+          0.017226497926001838,
+          0.011850528319701237
+        ],
+        "full_skill_vs_climatology": [
+          0.010160156019793698,
+          0.0016764557062808327,
+          -6.382539312066449e-05,
+          0.002095441871776904,
+          0.002651533208481771,
+          0.0018240544022771754
+        ]
+      },
+      "wind250": {
+        "resolved_mse": [
+          9.697891013252814,
+          9.984495925754613,
+          9.977465514570603,
+          9.952711604142971,
+          9.991779341947645,
+          10.179865971597009
+        ],
+        "full_mse": [
+          68.84670138598489,
+          69.13330629848669,
+          69.12627588730268,
+          69.10152197687505,
+          69.14058971467972,
+          69.32867634432908
+        ],
+        "units": "m s-1",
+        "resolved_skill_vs_climatology": [
+          0.08381341223194516,
+          0.05673705341704949,
+          0.05740123580727041,
+          0.059739806193101264,
+          0.0560489689438306,
+          0.03827990480527155
+        ],
+        "full_skill_vs_climatology": [
+          0.012722226243141677,
+          0.00861224487488177,
+          0.008713062612879408,
+          0.009068039468513422,
+          0.0085077989859772,
+          0.0058105927980935945
+        ]
+      }
+    }
+  },
+  "normalized_total_coefficient_mse": {
+    "climatology": [
+      20.369339930813872,
+      20.369339930813872,
+      20.369339930813872,
+      20.369339930813872,
+      20.369339930813872,
+      20.369339930813872
+    ],
+    "persistence": [
+      19.378673119951628,
+      22.951840529382803,
+      25.23764668191024,
+      27.05054576632395,
+      27.602271832781724,
+      28.5197694475298
+    ],
+    "independent_ar1": [
+      13.607504277919181,
+      15.646914622850804,
+      16.691879698037276,
+      17.260494121704888,
+      17.61991999129873,
+      17.86698163418074
+    ],
+    "independent_channels": [
+      14.500074219617927,
+      15.541425578274792,
+      16.125884604628027,
+      16.45142373910217,
+      16.717341478099506,
+      17.063231022168324
+    ],
+    "joint": [
+      15.782085419824764,
+      16.53584458752547,
+      16.99528540855949,
+      17.20115682842012,
+      17.452272033364782,
+      17.62417642804807
+    ]
+  },
+  "physical_humidity": {
+    "q850": {
+      "climatology": {
+        "full_rmse_kg_kg": [
+          0.0012696409431976153,
+          0.0012696409431976153,
+          0.0012696409431976153,
+          0.0012696409431976153,
+          0.0012696409431976153,
+          0.0012696409431976153
+        ]
+      },
+      "persistence": {
+        "full_rmse_kg_kg": [
+          0.0012006685213708,
+          0.001219252988053225,
+          0.0012385395068987258,
+          0.0012558230212891895,
+          0.0012697635684555636,
+          0.0012771542824738034
+        ]
+      },
+      "independent_ar1": {
+        "full_rmse_kg_kg": [
+          0.0011961351111903315,
+          0.0012208627673210115,
+          0.0012361788299741462,
+          0.0012462873888826318,
+          0.0012532955011797956,
+          0.0012580642716007208
+        ]
+      },
+      "independent_channels": {
+        "full_rmse_kg_kg": [
+          0.001199042243460737,
+          0.0012077674167761696,
+          0.0012115005009019266,
+          0.0012181643477358185,
+          0.001217613363675947,
+          0.0012298648226871586
+        ]
+      },
+      "joint": {
+        "full_rmse_kg_kg": [
+          0.001203755939643987,
+          0.0012118148558321969,
+          0.001215886105312322,
+          0.0012174028182466387,
+          0.0012190634496181075,
+          0.0012260132167006897
+        ]
+      }
+    },
+    "q700": {
+      "climatology": {
+        "full_rmse_kg_kg": [
+          0.0009742594571771547,
+          0.0009742594571771547,
+          0.0009742594571771547,
+          0.0009742594571771547,
+          0.0009742594571771547,
+          0.0009742594571771547
+        ]
+      },
+      "persistence": {
+        "full_rmse_kg_kg": [
+          0.00092568313902712,
+          0.0009445514317268495,
+          0.0009649860175660012,
+          0.0009825739315674313,
+          0.000995205457489415,
+          0.0010052503472065847
+        ]
+      },
+      "independent_ar1": {
+        "full_rmse_kg_kg": [
+          0.0009170122067515257,
+          0.0009434566245286448,
+          0.000957102273745848,
+          0.0009642450831648503,
+          0.0009683351851276296,
+          0.000970587774457978
+        ]
+      },
+      "independent_channels": {
+        "full_rmse_kg_kg": [
+          0.0009242901779887793,
+          0.0009388678122501346,
+          0.0009454609923493964,
+          0.0009471071774490713,
+          0.000951593818673583,
+          0.0009602730363764438
+        ]
+      },
+      "joint": {
+        "full_rmse_kg_kg": [
+          0.000946602537370989,
+          0.0009539285375689413,
+          0.000957523357004707,
+          0.0009558154119074471,
+          0.0009587030309218007,
+          0.0009626401911868906
+        ]
+      }
+    }
+  },
+  "coupling": {
+    "axes": [
+      "lead",
+      "input_channel",
+      "output_channel"
+    ],
+    "channel_order": [
+      "t850",
+      "t2m",
+      "sst",
+      "sp",
+      "msl",
+      "z500",
+      "q850",
+      "q700",
+      "w500",
+      "w700",
+      "wind850",
+      "wind500",
+      "wind250"
+    ],
+    "block_frobenius_norms": [
+      [
+        [
+          0.20106532517171266,
+          0.21030724870585607,
+          0.2504456385344411,
+          0.141410921818374,
+          0.14068100918809348,
+          0.15982926208332415,
+          0.18269391851688999,
+          0.17195597587503375,
+          0.16962123062824516,
+          0.17896484908502702,
+          0.1463613157145144,
+          0.14173853430985586,
+          0.1478164014915347
+        ],
+        [
+          0.19906155842919793,
+          0.22961166316483042,
+          0.238095630164357,
+          0.13740836112376356,
+          0.13424389134302567,
+          0.15752357252448676,
+          0.18912788586672738,
+          0.17898913829120555,
+          0.16092607685830373,
+          0.1691859114540243,
+          0.13904523445958006,
+          0.13721437533800857,
+          0.1440753310392711
+        ],
+        [
+          0.22924377468068682,
+          0.23610191582492626,
+          0.42919732465119015,
+          0.13696492175389405,
+          0.1371434393513479,
+          0.17116946056566718,
+          0.19784003984932472,
+          0.20344057606198407,
+          0.23119410659508355,
+          0.23455620762660218,
+          0.1808050581777053,
+          0.15585018984645327,
+          0.19686294493093534
+        ],
+        [
+          0.14212363111382323,
+          0.15144833392781493,
+          0.16851480167146218,
+          0.15510914039611867,
+          0.1561588118579052,
+          0.1482984758799101,
+          0.1416200073399358,
+          0.13953816465769087,
+          0.14311464143590935,
+          0.1422267397745378,
+          0.1415970211282277,
+          0.14098682926781736,
+          0.14481982819927092
+        ],
+        [
+          0.14464154138182123,
+          0.15362302275128703,
+          0.17036689846369815,
+          0.15423362954406825,
+          0.1566710485661764,
+          0.14587506865113664,
+          0.14430595836056,
+          0.1434508316538988,
+          0.14296409325986478,
+          0.1423059210056185,
+          0.14108414519783505,
+          0.14017095222859852,
+          0.14469247961268356
+        ],
+        [
+          0.15754652867231186,
+          0.16408788531199212,
+          0.1944464314247799,
+          0.15392688308275396,
+          0.15353037391592755,
+          0.1606460967529565,
+          0.15098816165303736,
+          0.144732949819797,
+          0.14688090514994792,
+          0.1490096101139094,
+          0.1421829970908842,
+          0.1421414804186789,
+          0.14510900879619548
+        ],
+        [
+          0.181866433591941,
+          0.19735242496297903,
+          0.21608837047084098,
+          0.14166760442638768,
+          0.14153060257146913,
+          0.1513590186238621,
+          0.2008243869403154,
+          0.19327525305131502,
+          0.1687240677825583,
+          0.173371935090624,
+          0.14909709772564853,
+          0.14262597294929377,
+          0.15348273608328875
+        ],
+        [
+          0.17516493522945806,
+          0.1826137999711628,
+          0.2218235125142191,
+          0.14768329795578916,
+          0.146838724851144,
+          0.15498246724871056,
+          0.19510865099832886,
+          0.21520367337534183,
+          0.19385689985410862,
+          0.1911216671962313,
+          0.16231197784555473,
+          0.15222438097077054,
+          0.16880277653753242
+        ],
+        [
+          0.18192075714588513,
+          0.18025312039452157,
+          0.269007454041087,
+          0.1716636242511236,
+          0.17191667485115114,
+          0.17253192306356022,
+          0.18096054854820545,
+          0.2025636890245861,
+          0.23942862069564155,
+          0.23409217136417546,
+          0.18823224272966754,
+          0.175252337180018,
+          0.1962569431031344
+        ],
+        [
+          0.19144082004668825,
+          0.18910463048558718,
+          0.27121333717187635,
+          0.17001207663472512,
+          0.17011724728203015,
+          0.1731424798955601,
+          0.18388210612696435,
+          0.20328127467176205,
+          0.23265363136937028,
+          0.24367064799011995,
+          0.18589140880743563,
+          0.17148856076720287,
+          0.18827598572140242
+        ],
+        [
+          0.1546665533574721,
+          0.1572148792420461,
+          0.21382310043248642,
+          0.154992390663902,
+          0.15625276800049273,
+          0.15560776195380996,
+          0.1530990185030988,
+          0.16054276450530644,
+          0.17288671633242703,
+          0.17159809777476584,
+          0.15858951024444795,
+          0.15526396214967844,
+          0.16189177650001485
+        ],
+        [
+          0.14571622008701735,
+          0.15047210938512492,
+          0.183633965899384,
+          0.14950099359289218,
+          0.15014576212575087,
+          0.15061669744576187,
+          0.1458639000788769,
+          0.14335235042584665,
+          0.14829166802021346,
+          0.14890372606618515,
+          0.1442506662018822,
+          0.15303092267890236,
+          0.154151863041625
+        ],
+        [
+          0.15014750758924497,
+          0.1515727050052395,
+          0.20533527788751724,
+          0.15123490903532433,
+          0.15132202087173371,
+          0.15400720454155067,
+          0.15308305993626967,
+          0.1570355342665779,
+          0.16595872966639494,
+          0.16328048666892372,
+          0.1528466007421869,
+          0.16103073979681976,
+          0.17638466860418278
+        ]
+      ],
+      [
+        [
+          0.17733582400777925,
+          0.17943749747517548,
+          0.2324377019483354,
+          0.12082015510244994,
+          0.11955497663195105,
+          0.1400431955215802,
+          0.15429900393405896,
+          0.15186228291469914,
+          0.16299927462808003,
+          0.17454840909342564,
+          0.13409506486737036,
+          0.12247109890001392,
+          0.12613266255247213
+        ],
+        [
+          0.1700924436525383,
+          0.18198866910581177,
+          0.21889173608805595,
+          0.11983507293663366,
+          0.11716904606580827,
+          0.13778383161850372,
+          0.15429416672919705,
+          0.15321552704165806,
+          0.15656090456456526,
+          0.16889164187054967,
+          0.12991317209947403,
+          0.1206673551282237,
+          0.12581874822201547
+        ],
+        [
+          0.2240773044906163,
+          0.23735382075667769,
+          0.3854808468634712,
+          0.13522930651737586,
+          0.13471251046262134,
+          0.16908705486606723,
+          0.1896128786172603,
+          0.19361718061612662,
+          0.22643340147153318,
+          0.23142129527860678,
+          0.1691823353579247,
+          0.14537320602163853,
+          0.18070687514022943
+        ],
+        [
+          0.124157275248424,
+          0.12252531491965879,
+          0.15822973947718036,
+          0.12534195730528377,
+          0.12575982711151817,
+          0.12455153951009637,
+          0.11801824873055448,
+          0.12384601592382144,
+          0.13389843319864328,
+          0.132009602280331,
+          0.12927360420987358,
+          0.12411865278469268,
+          0.1231927553248468
+        ],
+        [
+          0.12777596083634807,
+          0.12469208598641651,
+          0.1611774629991681,
+          0.12497882603275852,
+          0.12575281402409458,
+          0.12435602811047528,
+          0.12146428221515897,
+          0.1285071448429675,
+          0.13453253420350791,
+          0.13298402649834687,
+          0.1294626483495171,
+          0.12461416275586176,
+          0.12410961772520784
+        ],
+        [
+          0.13969082987085948,
+          0.14009229621729916,
+          0.1765217613933546,
+          0.12256416028873619,
+          0.12247462884502217,
+          0.13237140331288735,
+          0.1293804748023532,
+          0.13085297276195657,
+          0.13628939066916593,
+          0.1413167004180363,
+          0.1260283111219095,
+          0.12094834545287321,
+          0.11867460722362141
+        ],
+        [
+          0.15433075916113065,
+          0.15953589991248016,
+          0.19710774590646055,
+          0.12523084818399124,
+          0.1253462500090242,
+          0.13433480301888812,
+          0.15855286130113894,
+          0.1638146049078434,
+          0.1611227550416845,
+          0.16885786265581657,
+          0.1382546851691317,
+          0.12807937850771195,
+          0.1368174569731363
+        ],
+        [
+          0.1514359398360087,
+          0.15143693346404888,
+          0.20822804777349543,
+          0.13047654811569762,
+          0.1299818362618321,
+          0.13676024709216691,
+          0.15693111321845757,
+          0.1778125139149059,
+          0.1821656685771568,
+          0.18268546029528,
+          0.14986289578764206,
+          0.13623742052879334,
+          0.14989792641441455
+        ],
+        [
+          0.1674958688439757,
+          0.16662779450232218,
+          0.25958095724616986,
+          0.14612413225266913,
+          0.14489421939922972,
+          0.1528114516449829,
+          0.15900149104323433,
+          0.1765817077707394,
+          0.2233597378108941,
+          0.21944638788235132,
+          0.16825678563297827,
+          0.1518509202463763,
+          0.1754096348867145
+        ],
+        [
+          0.18192567403980572,
+          0.17446948332672896,
+          0.26550088185006365,
+          0.14368627339424,
+          0.14226065639636643,
+          0.15576971938094789,
+          0.16282774176995105,
+          0.17483981544311472,
+          0.21717056178016497,
+          0.22849258216099622,
+          0.16795452363404936,
+          0.15154952988586148,
+          0.16817636029371072
+        ],
+        [
+          0.1394876749983332,
+          0.13349188611199245,
+          0.20589119260078817,
+          0.12981554285443633,
+          0.13017012628616553,
+          0.1320745014392333,
+          0.1320244931923224,
+          0.15085800738314425,
+          0.1668367646239432,
+          0.16173560006449172,
+          0.1431699562102513,
+          0.13221137667612176,
+          0.14395367312972462
+        ],
+        [
+          0.12748260691284244,
+          0.12448182270414535,
+          0.16490615412610032,
+          0.1221887270388153,
+          0.12274438337548742,
+          0.1232541909008422,
+          0.12349295238069029,
+          0.13332813651938788,
+          0.13578407520024235,
+          0.13551935438363152,
+          0.12541501496849597,
+          0.12437589352750553,
+          0.12614828421557225
+        ],
+        [
+          0.13396353415578494,
+          0.1309488376589931,
+          0.19038800756087035,
+          0.1280438669859625,
+          0.12800998663060706,
+          0.12981190087812042,
+          0.13246587969142817,
+          0.14816939788212066,
+          0.15662297464879377,
+          0.1518576005234965,
+          0.13607687519041872,
+          0.1276832021867852,
+          0.14403815070662662
+        ]
+      ],
+      [
+        [
+          0.17156173047394443,
+          0.16947720512253792,
+          0.22476953027911847,
+          0.11541200438886978,
+          0.1135496254420615,
+          0.13868007880012648,
+          0.14761580011954753,
+          0.14798073370176573,
+          0.16041667402739856,
+          0.17160015513020638,
+          0.1309166726785376,
+          0.1206686909219047,
+          0.12560464819452596
+        ],
+        [
+          0.16301667733882824,
+          0.16477317671697783,
+          0.20880512491838427,
+          0.11316422412020208,
+          0.11202858567050795,
+          0.13553126431890028,
+          0.1410146888795572,
+          0.14283731059284124,
+          0.1536009249491791,
+          0.16557585087548066,
+          0.12672552746947188,
+          0.12052596599197854,
+          0.12726328502885428
+        ],
+        [
+          0.21712417989389549,
+          0.22811502570343323,
+          0.3553739136949295,
+          0.13334724402296008,
+          0.13155235188969217,
+          0.1682160742167402,
+          0.18507355566957912,
+          0.19770090948188407,
+          0.22452731754943775,
+          0.2328132538851062,
+          0.16695598107476362,
+          0.14347574226434917,
+          0.18107074698691816
+        ],
+        [
+          0.1264678810714113,
+          0.12105399272262918,
+          0.15109519841823116,
+          0.11842499128135141,
+          0.11855077692660891,
+          0.12213857064004671,
+          0.12208827569770031,
+          0.12464477948944722,
+          0.13308165696875526,
+          0.1310895568231314,
+          0.12121420306333804,
+          0.12353185976049537,
+          0.12603176831680868
+        ],
+        [
+          0.12845886788410038,
+          0.1227636643987607,
+          0.15360691985053646,
+          0.11896490309422231,
+          0.11935887181096903,
+          0.12226851782946518,
+          0.125755958029925,
+          0.1300294088999922,
+          0.13514229959288318,
+          0.13299661441303454,
+          0.12244197717246347,
+          0.12459521873980767,
+          0.12730820549988595
+        ],
+        [
+          0.14161969491339196,
+          0.137810744692366,
+          0.16567715719157547,
+          0.11953102117637456,
+          0.1186845995503523,
+          0.13212203210449264,
+          0.129395377961643,
+          0.1305059693911666,
+          0.13429993537903148,
+          0.1384446365356178,
+          0.12304569520647092,
+          0.12410601148285498,
+          0.12419127419298065
+        ],
+        [
+          0.1468770822757713,
+          0.14769279573195646,
+          0.18871251409273093,
+          0.12065863480830423,
+          0.11961419301023536,
+          0.13158286295479096,
+          0.14398102706281554,
+          0.1545264063360219,
+          0.15743888080597498,
+          0.16630353909790968,
+          0.13409242694071352,
+          0.12596309593133811,
+          0.13343114877584797
+        ],
+        [
+          0.14423018360126436,
+          0.14176044543337227,
+          0.20521551427495296,
+          0.12264972226669105,
+          0.12181261818935175,
+          0.12953744136206524,
+          0.14525900050444737,
+          0.1671145025524319,
+          0.17396491787385038,
+          0.17526399701462106,
+          0.14183243608663548,
+          0.13053989993223028,
+          0.14563594031036506
+        ],
+        [
+          0.16447245109018166,
+          0.15792137650370383,
+          0.258394474575751,
+          0.13508950982880547,
+          0.13420648529128718,
+          0.1461199286859939,
+          0.15213680856315667,
+          0.1747139502087036,
+          0.21381635561319204,
+          0.2104122438021733,
+          0.16096170684495545,
+          0.14793053628467456,
+          0.17185598973020386
+        ],
+        [
+          0.18003593306909066,
+          0.1665708244444975,
+          0.2696770367655419,
+          0.13267707131034734,
+          0.1314753099594546,
+          0.14718682792493373,
+          0.1554921005646817,
+          0.17457473922836317,
+          0.2113856953449322,
+          0.2203075099159765,
+          0.15980362093065006,
+          0.14583632842585398,
+          0.1647754529917683
+        ],
+        [
+          0.14124122846613432,
+          0.13420633778065166,
+          0.19969846720057746,
+          0.12408994627856773,
+          0.12478957976541068,
+          0.12957887762691322,
+          0.135392916390096,
+          0.151731511402353,
+          0.1669950583612331,
+          0.16198959290822124,
+          0.13930418346333812,
+          0.13360999786222513,
+          0.1495307221611778
+        ],
+        [
+          0.13153149970174657,
+          0.1258517489803883,
+          0.1567929997202503,
+          0.11862853133898504,
+          0.1185293909224062,
+          0.12318673302243502,
+          0.12534046024707104,
+          0.13260162799312145,
+          0.13634152146504,
+          0.13550471764957955,
+          0.12245824801872465,
+          0.12717183988307507,
+          0.13241253062712438
+        ],
+        [
+          0.13539027826570507,
+          0.13383815820308556,
+          0.18327968272476988,
+          0.12035644741832778,
+          0.11939275577163681,
+          0.1286165983252818,
+          0.13297808328401048,
+          0.14242587531283846,
+          0.1487574299181416,
+          0.14605657863458366,
+          0.12728113217513123,
+          0.12970989631602164,
+          0.14283092536061798
+        ]
+      ],
+      [
+        [
+          0.17347117701902962,
+          0.17520038264402546,
+          0.22230857901282042,
+          0.11556225389228424,
+          0.11226517603832437,
+          0.136726101251855,
+          0.15148513251472928,
+          0.15126441703627036,
+          0.1574884240579483,
+          0.17172552141122002,
+          0.12938621853124868,
+          0.1202122012629767,
+          0.126943378981743
+        ],
+        [
+          0.16260281420530528,
+          0.169982690949947,
+          0.20200492909422424,
+          0.10771163828980751,
+          0.10624833303426472,
+          0.12940684003628874,
+          0.14878354861503112,
+          0.14889680445319164,
+          0.14621196798694688,
+          0.16025286438925823,
+          0.11986791358232896,
+          0.11511506421590786,
+          0.12068574096534447
+        ],
+        [
+          0.22219598310033997,
+          0.2262207565976006,
+          0.334707481510597,
+          0.1397955899886114,
+          0.13751274462121635,
+          0.17264800674428143,
+          0.18636430741669102,
+          0.1982836099366854,
+          0.2213030633989003,
+          0.23519656103118317,
+          0.1690313462824175,
+          0.14678692224237716,
+          0.17874235590035878
+        ],
+        [
+          0.12230685651426121,
+          0.11947809018530403,
+          0.1512642949638697,
+          0.11719387324231734,
+          0.11744562452047903,
+          0.11611903991230765,
+          0.11869490608958715,
+          0.12242649070970532,
+          0.1257359177783061,
+          0.12449386748668742,
+          0.11793623536357319,
+          0.11429102488928121,
+          0.12175393409696066
+        ],
+        [
+          0.1236081985831013,
+          0.12200131700336994,
+          0.1534686552672852,
+          0.11663078911759185,
+          0.11712643897466811,
+          0.11570606417498103,
+          0.12093519284095691,
+          0.12600605889930733,
+          0.1264970968364723,
+          0.12511046932321482,
+          0.11844490767186144,
+          0.11455805049196201,
+          0.12229891618276194
+        ],
+        [
+          0.1412192799736778,
+          0.13936327114544234,
+          0.16384246257925755,
+          0.1222841089392398,
+          0.12028493307418357,
+          0.12969262022383748,
+          0.12822979868790682,
+          0.1311521407460984,
+          0.12961330547808878,
+          0.13610785958173854,
+          0.12359763486477073,
+          0.1195763431980064,
+          0.12194826460954783
+        ],
+        [
+          0.14430992837118886,
+          0.14835220231121748,
+          0.1871041477293344,
+          0.12051922776363239,
+          0.11929716879357043,
+          0.12877285521900889,
+          0.14338347642465302,
+          0.15492955805908562,
+          0.1539809737409485,
+          0.16257153772826147,
+          0.13093124793127991,
+          0.12273572055194903,
+          0.13144680889195914
+        ],
+        [
+          0.14256178815048418,
+          0.14344730424489135,
+          0.20432169802818378,
+          0.12221409768209499,
+          0.12198957591951454,
+          0.12605761963671946,
+          0.1416028443030425,
+          0.16051819916222093,
+          0.1725648216812169,
+          0.1729997782085214,
+          0.13656770663613885,
+          0.12414337234906643,
+          0.14161713544685423
+        ],
+        [
+          0.16782589248837823,
+          0.16066346072629284,
+          0.2533099664273288,
+          0.14334086843175406,
+          0.14408330868297087,
+          0.14925014657257632,
+          0.1523389686402806,
+          0.1677852267036532,
+          0.20354533728279736,
+          0.20212023176645946,
+          0.1584953311768734,
+          0.1445499297944768,
+          0.16772144964058472
+        ],
+        [
+          0.1854038220351257,
+          0.17307210879986523,
+          0.2714863123032051,
+          0.14171198629994758,
+          0.1422386756188353,
+          0.15215017129714076,
+          0.1579422763887434,
+          0.16724600997083552,
+          0.20331438814937794,
+          0.21438626352226783,
+          0.16072375595360033,
+          0.14476181526434515,
+          0.1620924280992037
+        ],
+        [
+          0.14075483372588726,
+          0.13564601668221182,
+          0.1948750795753804,
+          0.12838795865743816,
+          0.1288692699717968,
+          0.12983810223390016,
+          0.13467295916819802,
+          0.14845918820642737,
+          0.15778152926669295,
+          0.1542661473048011,
+          0.13773931310332718,
+          0.1295864405796607,
+          0.1481765760215799
+        ],
+        [
+          0.13048613172176704,
+          0.1270451820390448,
+          0.1562412968240334,
+          0.12270178917568503,
+          0.12267968700575374,
+          0.12290865807879929,
+          0.12710777237264906,
+          0.13751317584144127,
+          0.1343110841755544,
+          0.13520342313533767,
+          0.12477723397172982,
+          0.1229309529687288,
+          0.1291621381917189
+        ],
+        [
+          0.1308654321446988,
+          0.12923817639139493,
+          0.17782258413385157,
+          0.1233154713079564,
+          0.12240785683526723,
+          0.12671561255994376,
+          0.1320731491740879,
+          0.14612274331652647,
+          0.15093378877506972,
+          0.14799162807017657,
+          0.1306377740270431,
+          0.12533890207168794,
+          0.13705272056542503
+        ]
+      ],
+      [
+        [
+          0.17306149402446555,
+          0.1749427506901142,
+          0.2187580405500625,
+          0.11811823141644415,
+          0.1162173476372677,
+          0.13804238845359743,
+          0.15125639971115384,
+          0.15146631626486254,
+          0.15450422241387507,
+          0.16971654409931722,
+          0.13214604397099264,
+          0.12058354980686074,
+          0.1242041413074767
+        ],
+        [
+          0.16548171561876635,
+          0.1739001740246836,
+          0.20029202611236382,
+          0.10941523727256941,
+          0.10809128745801792,
+          0.12991353756126212,
+          0.15482594890480036,
+          0.1566519556188011,
+          0.143741468784584,
+          0.1578803101037017,
+          0.12148837404125425,
+          0.11381659349846186,
+          0.11663209731557228
+        ],
+        [
+          0.21682222353820585,
+          0.2157414659944752,
+          0.32269332475572754,
+          0.13651662912553503,
+          0.13802265059149374,
+          0.16657420355407887,
+          0.18558823747346997,
+          0.19386183156144396,
+          0.21024679142351496,
+          0.2291731669114037,
+          0.1650768328128391,
+          0.14114421009856518,
+          0.1719163107468807
+        ],
+        [
+          0.12698813719911117,
+          0.12523344594962274,
+          0.14727225559535362,
+          0.12176128345466213,
+          0.12063044404460295,
+          0.1216054358292247,
+          0.12110270412546965,
+          0.12167660330058794,
+          0.1310098232796652,
+          0.12875620115455524,
+          0.12443862308944886,
+          0.12207112154991098,
+          0.12610506546257086
+        ],
+        [
+          0.12949387553134525,
+          0.13015346425846927,
+          0.14935813473367857,
+          0.1234287190989561,
+          0.12236022894748025,
+          0.1235259271670108,
+          0.12363057330268945,
+          0.12402314268644703,
+          0.13189731028986496,
+          0.12921274690588136,
+          0.12621249262654569,
+          0.12355476799605099,
+          0.12712169394221481
+        ],
+        [
+          0.13942606548962996,
+          0.13776936320789884,
+          0.16092518693576502,
+          0.12170855200387468,
+          0.12088008881292861,
+          0.12884747585289696,
+          0.1277359079606022,
+          0.12910917619157158,
+          0.13296205560769087,
+          0.13813244975382577,
+          0.12543416477617425,
+          0.12035198639989396,
+          0.1216627356238387
+        ],
+        [
+          0.14870289295346376,
+          0.15297863923089747,
+          0.1903585691175768,
+          0.12144976482871192,
+          0.12144920671612759,
+          0.12996672004689436,
+          0.14767250154495995,
+          0.15655711227115132,
+          0.15368035574815744,
+          0.16019251428593745,
+          0.13189892985221466,
+          0.12326801296284662,
+          0.12921057592369664
+        ],
+        [
+          0.1446559754930116,
+          0.14664142136981043,
+          0.2050669970576593,
+          0.1250597363907826,
+          0.12548385050100727,
+          0.12912883344674833,
+          0.1422549920389037,
+          0.15821894852605642,
+          0.1682523991595332,
+          0.17031847721498894,
+          0.13726513298408907,
+          0.12818571870889875,
+          0.14366824501103923
+        ],
+        [
+          0.16391926752688218,
+          0.16002498884680494,
+          0.2481675840529302,
+          0.14705347257235074,
+          0.14603139873698778,
+          0.15171180312301638,
+          0.1528496202568843,
+          0.16184806636676963,
+          0.19851670181827094,
+          0.19796900802597092,
+          0.15673492260419275,
+          0.14557255759828538,
+          0.16563097332536061
+        ],
+        [
+          0.18350918535861938,
+          0.1751949474933533,
+          0.2713844489276695,
+          0.147847206175155,
+          0.1460948714992835,
+          0.15749106145895572,
+          0.1600370367625515,
+          0.16511989958073492,
+          0.201667222458396,
+          0.21089838952723777,
+          0.16101231929838936,
+          0.1470843159900356,
+          0.16146216877299807
+        ],
+        [
+          0.1367957702161486,
+          0.13336691206497647,
+          0.18939797145691623,
+          0.1307578870865369,
+          0.13091436656360714,
+          0.13168393039084078,
+          0.13188182549343686,
+          0.14019118789505713,
+          0.15552340141085366,
+          0.15266024033322292,
+          0.1391680275550874,
+          0.13166141082952873,
+          0.14587002140418576
+        ],
+        [
+          0.1278485739774531,
+          0.12549651668532233,
+          0.15592128595109125,
+          0.12486555822448274,
+          0.1250253075330878,
+          0.12562407303026304,
+          0.12554697588447472,
+          0.13004169969585902,
+          0.13638448126694336,
+          0.13653769135878602,
+          0.12797283750519034,
+          0.12345010293442134,
+          0.12659270890989396
+        ],
+        [
+          0.12713696764688548,
+          0.12548549003970988,
+          0.17554902574204184,
+          0.12461465704862004,
+          0.12422172625002872,
+          0.12614245399292542,
+          0.1281375319290899,
+          0.13379534776024354,
+          0.14702768483219328,
+          0.14476520762012926,
+          0.13087946948355972,
+          0.12400292121576617,
+          0.13415150815386137
+        ]
+      ],
+      [
+        [
+          0.17312054370402288,
+          0.17109123085847347,
+          0.21834273975973145,
+          0.12091171849538748,
+          0.12263850640635592,
+          0.1371483726846209,
+          0.1502114461997764,
+          0.1532583738650518,
+          0.15568358062851562,
+          0.17215567488239897,
+          0.13500669230095041,
+          0.12193928142837777,
+          0.1312678413595115
+        ],
+        [
+          0.16361772113832815,
+          0.16609659780116212,
+          0.20415454960505794,
+          0.11555652918456465,
+          0.11666196254103355,
+          0.12882896057262497,
+          0.14577329397141245,
+          0.1565499210328756,
+          0.14407468080227973,
+          0.15902665897043988,
+          0.1272674500404865,
+          0.11718564017822805,
+          0.12455431614745291
+        ],
+        [
+          0.218019372169074,
+          0.20815626498248618,
+          0.3100881235952567,
+          0.15565398242914275,
+          0.16164888312568748,
+          0.17951252610111954,
+          0.18271552520367668,
+          0.18358401720030446,
+          0.20066248196898376,
+          0.22171660849585584,
+          0.17179390609357392,
+          0.1457870017229084,
+          0.1724870556350152
+        ],
+        [
+          0.12222892617595732,
+          0.12240612664704428,
+          0.14657223509379205,
+          0.12069107281274145,
+          0.1213350340467584,
+          0.11769287209895757,
+          0.12303303603697002,
+          0.12340246493155739,
+          0.1293662077792206,
+          0.13105195605671516,
+          0.12589379992482513,
+          0.12009417929437931,
+          0.12371781521695174
+        ],
+        [
+          0.12290277370145203,
+          0.12521497560133704,
+          0.1475099781928656,
+          0.12104830915535642,
+          0.12235083533149999,
+          0.11723206662353479,
+          0.12491950328351438,
+          0.1265004509268372,
+          0.12968506137010952,
+          0.13049081235148882,
+          0.12638560775226912,
+          0.12064284663353081,
+          0.124163975946916
+        ],
+        [
+          0.13588764015584992,
+          0.1334643141039424,
+          0.1609849696080394,
+          0.12077075795356473,
+          0.12056708168774033,
+          0.12505292072891866,
+          0.1262496163983364,
+          0.12604409984371662,
+          0.13269281589683005,
+          0.1401574123310999,
+          0.12626347140431413,
+          0.11990045287814917,
+          0.12238396396053908
+        ],
+        [
+          0.15319303013392577,
+          0.15079629992562232,
+          0.19275498783830802,
+          0.12581509384467954,
+          0.12623417181463473,
+          0.13149486765362753,
+          0.14689278161969208,
+          0.15934174371514395,
+          0.1533648300072105,
+          0.161251252577675,
+          0.13627123941598515,
+          0.1282960922479632,
+          0.13918565850050627
+        ],
+        [
+          0.15039222839611946,
+          0.14985848072564495,
+          0.20632502431279737,
+          0.12556159182821966,
+          0.12550719734306467,
+          0.12977811792749544,
+          0.14602086896068336,
+          0.15989229125715923,
+          0.16807263798961608,
+          0.17035836929672685,
+          0.13849368799096992,
+          0.13008202178153358,
+          0.1478670858973916
+        ],
+        [
+          0.1711669261127986,
+          0.17041048356430016,
+          0.24607403437184572,
+          0.14373974045489088,
+          0.14240899789404837,
+          0.15163061482130022,
+          0.15756197801786614,
+          0.1635120648132025,
+          0.19412213196829722,
+          0.19658224326885246,
+          0.15448832969291804,
+          0.14668345548152903,
+          0.16720632168121183
+        ],
+        [
+          0.19145092579269066,
+          0.18858844386934254,
+          0.2715764779315155,
+          0.14368572090345608,
+          0.14103665028363876,
+          0.1566914053668997,
+          0.16699125269838225,
+          0.16740012117660188,
+          0.1975753700240598,
+          0.20966160550819501,
+          0.1565268200818252,
+          0.14613787495466227,
+          0.16127517419515594
+        ],
+        [
+          0.13709602853540462,
+          0.13732781384766926,
+          0.18236177229328382,
+          0.12663764937932365,
+          0.12639761628589155,
+          0.128764457047158,
+          0.1353436301696661,
+          0.14153476586847255,
+          0.15655355024400452,
+          0.15417417085199914,
+          0.13583178403722826,
+          0.12928688894937962,
+          0.14230030938300522
+        ],
+        [
+          0.12883658692147396,
+          0.12794069766121258,
+          0.15265823140745718,
+          0.11956226262533658,
+          0.11936370864184344,
+          0.12164815043031812,
+          0.12893991269880328,
+          0.13069474527699268,
+          0.1420911428635013,
+          0.14035556025648166,
+          0.12382276826776993,
+          0.11963074939271244,
+          0.125922694197099
+        ],
+        [
+          0.1295659925446424,
+          0.12813961921767664,
+          0.16996926605160556,
+          0.12251840790430213,
+          0.12191143140281628,
+          0.12559072510176578,
+          0.13141622060141755,
+          0.133833168547903,
+          0.15314377056531786,
+          0.14818713526885768,
+          0.1295930006112159,
+          0.12340440194694263,
+          0.13617029864199545
+        ]
+      ]
+    ],
+    "interpretation": "Statistical prediction coefficients, not causal influence"
+  },
+  "forecast_ranges": {
+    "t850": {
+      "min": 248.4747772216797,
+      "max": 299.7008972167969,
+      "finite_fraction": 0.8820911580594679
+    },
+    "t2m": {
+      "min": 222.4158172607422,
+      "max": 306.0911865234375,
+      "finite_fraction": 1.0
+    },
+    "sst": {
+      "min": 268.203125,
+      "max": 303.8895263671875,
+      "finite_fraction": 0.6846635367762128
+    },
+    "sp": {
+      "min": 75131.375,
+      "max": 104458.7421875,
+      "finite_fraction": 1.0
+    },
+    "msl": {
+      "min": 98667.90625,
+      "max": 103208.8125,
+      "finite_fraction": 1.0
+    },
+    "z500": {
+      "min": 47713.90625,
+      "max": 58183.625,
+      "finite_fraction": 1.0
+    },
+    "q850": {
+      "min": 0.000417435250710696,
+      "max": 0.013777895830571651,
+      "finite_fraction": 0.8820911580594679
+    },
+    "q700": {
+      "min": 0.00011132573854411021,
+      "max": 0.009652120992541313,
+      "finite_fraction": 0.9484546165884195
+    },
+    "w500": {
+      "min": -0.062402695417404175,
+      "max": 0.061681319028139114,
+      "finite_fraction": 1.0
+    },
+    "w700": {
+      "min": -0.05122273415327072,
+      "max": 0.052517857402563095,
+      "finite_fraction": 0.9484546165884195
+    },
+    "u850": {
+      "min": -11.802725791931152,
+      "max": 13.104987144470215,
+      "finite_fraction": 0.8820911580594679
+    },
+    "v850": {
+      "min": -4.173798084259033,
+      "max": 5.1600775718688965,
+      "finite_fraction": 0.8820911580594679
+    },
+    "u500": {
+      "min": -10.620052337646484,
+      "max": 25.988370895385742,
+      "finite_fraction": 1.0
+    },
+    "v500": {
+      "min": -6.482316493988037,
+      "max": 7.749306678771973,
+      "finite_fraction": 1.0
+    },
+    "u250": {
+      "min": -16.12584114074707,
+      "max": 48.61143493652344,
+      "finite_fraction": 1.0
+    },
+    "v250": {
+      "min": -9.821023941040039,
+      "max": 13.28940486907959,
+      "finite_fraction": 1.0
+    }
+  },
+  "sources": [
+    {
+      "code": "t850",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/air.mon.mean.nc",
+      "source_key": "air",
+      "source_units": "degC",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 273.15
+      },
+      "level_hpa": 850,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "4e1e1f593e538cc940590cccac8488dfad97de7a29e86a140300c8a791c640d8",
+      "sha256": "73aaa7c6b08e3e0276edc4d01790cd2f848d5da846532e7afbec1b637440aeaa",
+      "retrieved_utc": "2026-09-24T07:37:28.669010+00:00"
+    },
+    {
+      "code": "t2m",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/surface_gauss/air.2m.mon.mean.nc",
+      "source_key": "air",
+      "source_units": "degK",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": null,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        94,
+        192
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "1b9d2f0a002177a78b37ce1e3d8edda40f356f73900d3dbc1e3a8d11aa6d9aba",
+      "sha256": "a2205689951eaf98ed86822c6910af76e757baf81f4e9c77a8120766f89e7460",
+      "retrieved_utc": "2026-09-24T07:37:30.621180+00:00"
+    },
+    {
+      "code": "sst",
+      "url": "https://downloads.psl.noaa.gov/Datasets/noaa.ersst.v5/sst.mnmean.nc",
+      "source_key": "sst",
+      "source_units": "degC",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 273.15
+      },
+      "level_hpa": null,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        89,
+        180
+      ],
+      "source_last_month": "2026-08-01T00:00:00.000000000",
+      "source_sha256": "651c3ced3154619d634ef2c80c809314a9deb4aa77daf7162b536b5be201a971",
+      "sha256": "31331e05c3293371b5a3a0450d8f517b5738748a74fcf38ca61022d354b803e7",
+      "retrieved_utc": "2026-09-24T07:37:35.337343+00:00"
+    },
+    {
+      "code": "sp",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/surface_gauss/pres.sfc.mon.mean.nc",
+      "source_key": "pres",
+      "source_units": "Pascals",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": null,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        94,
+        192
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "e589a784c6b610ec2c26116678ed66d98a98ca75e57b2b3876e72092ab92908b",
+      "sha256": "5aba7361ecdcd2d40a93bf01560f5c385507cb001a92eb8014baeb3ac6c0a492",
+      "retrieved_utc": "2026-09-24T07:37:37.703963+00:00"
+    },
+    {
+      "code": "msl",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/surface/slp.mon.mean.nc",
+      "source_key": "slp",
+      "source_units": "millibars",
+      "conversion": {
+        "scale": 100.0,
+        "offset": 0.0
+      },
+      "level_hpa": null,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "27bb132ffcab71edeb7fe2eaef2219737379c6b5a51bb74b5cc0b308416a27c9",
+      "sha256": "b05e826e5d74a850f21dbb91af8903cd6f23f80a15315560871c5de1ee7426e0",
+      "retrieved_utc": "2026-09-24T07:37:37.307337+00:00"
+    },
+    {
+      "code": "z500",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/hgt.mon.mean.nc",
+      "source_key": "hgt",
+      "source_units": "m",
+      "conversion": {
+        "scale": 9.80665,
+        "offset": 0.0
+      },
+      "level_hpa": 500,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "8c767d849657f0f6fdc35bcc41877de1e4c604501ecf0ee2c16014612072cf7d",
+      "sha256": "c4574d3c8b6272bc6c8632591562b43e27a635470baaa5e4723cbec957418465",
+      "retrieved_utc": "2026-09-24T07:37:59.894293+00:00"
+    },
+    {
+      "code": "q850",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/shum.mon.mean.nc",
+      "source_key": "shum",
+      "source_units": "grams/kg",
+      "conversion": {
+        "scale": 0.001,
+        "offset": 0.0
+      },
+      "level_hpa": 850,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "c213f6f7659c6b867c42474a7f6ff17e684ee32254b1dfbd4e17588bc6cf14e6",
+      "sha256": "0ed410969140a898ec77c8d6fc89308874b496c8bb091ad10f5e6b881892fb51",
+      "retrieved_utc": "2026-09-24T07:37:56.003372+00:00"
+    },
+    {
+      "code": "q700",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/shum.mon.mean.nc",
+      "source_key": "shum",
+      "source_units": "grams/kg",
+      "conversion": {
+        "scale": 0.001,
+        "offset": 0.0
+      },
+      "level_hpa": 700,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "c213f6f7659c6b867c42474a7f6ff17e684ee32254b1dfbd4e17588bc6cf14e6",
+      "sha256": "46a22e3ac84cd00f50b9e9605aed5af131ea1b03723ef7d066fba4d62267484f",
+      "retrieved_utc": "2026-09-24T07:37:57.672279+00:00"
+    },
+    {
+      "code": "w500",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/omega.mon.mean.nc",
+      "source_key": "omega",
+      "source_units": "Pascal/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 500,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "876a042bdaf8e8633865302751665e5f9222399c016fd9f235c94d746935080b",
+      "sha256": "8d58078cc2f5c27cacb5d4df8b671cf6ccbe0c034611ae2eed43758abfd2f0a4",
+      "retrieved_utc": "2026-09-24T07:38:14.785788+00:00"
+    },
+    {
+      "code": "w700",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/omega.mon.mean.nc",
+      "source_key": "omega",
+      "source_units": "Pascal/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 700,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "876a042bdaf8e8633865302751665e5f9222399c016fd9f235c94d746935080b",
+      "sha256": "b720746ab6c57631d8218dc80d771623941ecd55c11b46c3ad58cb953d904b3d",
+      "retrieved_utc": "2026-09-24T07:38:17.400150+00:00"
+    },
+    {
+      "code": "u850",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/uwnd.mon.mean.nc",
+      "source_key": "uwnd",
+      "source_units": "m/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 850,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "15227518f03dffbe95e87071d0473713b36be81b7b5f889b2639b746981bfcb5",
+      "sha256": "501bac7093129cb6a4f73a75cd9471a5e68752428bf623fb7d458fb95f44ee80",
+      "retrieved_utc": "2026-09-24T07:38:11.397791+00:00"
+    },
+    {
+      "code": "v850",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/vwnd.mon.mean.nc",
+      "source_key": "vwnd",
+      "source_units": "m/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 850,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "eab89e125aef1a84537980a3e80ea9b2dc1ee0bd2fb8db497a4fb2bbbbe23748",
+      "sha256": "dcf871306496612d166d0d71f5ff7d582101a7d0dbe21fa255c78f1fb647a60d",
+      "retrieved_utc": "2026-09-24T07:38:35.398372+00:00"
+    },
+    {
+      "code": "u500",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/uwnd.mon.mean.nc",
+      "source_key": "uwnd",
+      "source_units": "m/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 500,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "15227518f03dffbe95e87071d0473713b36be81b7b5f889b2639b746981bfcb5",
+      "sha256": "abe57749ceb0a13298d41198e740be13bc681a40878321d4ed8eab45c98763fb",
+      "retrieved_utc": "2026-09-24T07:38:14.176020+00:00"
+    },
+    {
+      "code": "v500",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/vwnd.mon.mean.nc",
+      "source_key": "vwnd",
+      "source_units": "m/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 500,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "eab89e125aef1a84537980a3e80ea9b2dc1ee0bd2fb8db497a4fb2bbbbe23748",
+      "sha256": "2097a1f7c4284e9d45dbe55f220fc4eeefb7db2fac780747dea3a2914e72f686",
+      "retrieved_utc": "2026-09-24T07:38:37.979854+00:00"
+    },
+    {
+      "code": "u250",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/uwnd.mon.mean.nc",
+      "source_key": "uwnd",
+      "source_units": "m/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 250,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "15227518f03dffbe95e87071d0473713b36be81b7b5f889b2639b746981bfcb5",
+      "sha256": "413e7e0b6a96e52d2e751181000c75289d18d8018d72e7f454af6a17a7957839",
+      "retrieved_utc": "2026-09-24T07:38:16.785844+00:00"
+    },
+    {
+      "code": "v250",
+      "url": "https://downloads.psl.noaa.gov/Datasets/ncep.reanalysis.derived/pressure/vwnd.mon.mean.nc",
+      "source_key": "vwnd",
+      "source_units": "m/s",
+      "conversion": {
+        "scale": 1.0,
+        "offset": 0.0
+      },
+      "level_hpa": 250,
+      "months": [
+        "1979-01",
+        "2025-12"
+      ],
+      "shape": [
+        564,
+        73,
+        144
+      ],
+      "source_last_month": "2026-02-01T00:00:00.000000000",
+      "source_sha256": "eab89e125aef1a84537980a3e80ea9b2dc1ee0bd2fb8db497a4fb2bbbbe23748",
+      "sha256": "378b4b668579b4bf3d362504b6d68894603e94ce4ca109f9efa737c65d627902",
+      "retrieved_utc": "2026-09-24T07:38:40.475358+00:00"
+    }
+  ],
+  "contract_sha256": "024dc96970f1cbf7259b7858dbf8ed668769f731389285fd12c1a1c8c45338e7",
+  "projection_sha256": "93d48eb5cbfed3b61e7a211c0a1cc245208367223a91512479a1f5a768294079",
+  "resolution_ladder": [
+    {
+      "stage": 1,
+      "cadence": "monthly",
+      "degree": 6,
+      "status": "this experiment"
+    },
+    {
+      "stage": 2,
+      "cadence": "monthly",
+      "degree": 12,
+      "status": "next controlled spatial comparison; same data and split"
+    },
+    {
+      "stage": 3,
+      "cadence": "daily then weekly targets",
+      "degree": 12,
+      "status": "requires daily data ingestion, anti-alias aggregation and a separately frozen protocol"
+    },
+    {
+      "stage": 4,
+      "cadence": "daily",
+      "degree": 24,
+      "status": "conditional on stage 3 skill and memory/runtime measurements"
+    }
+  ],
+  "deferred_fields": [
+    "z1000",
+    "r850",
+    "r700",
+    "ssr",
+    "str",
+    "sd",
+    "tisr"
+  ],
+  "limitations": [
+    "Only large scales L6, not local weather or typhoon lifecycle",
+    "Frames are calendar-month means; animation interpolation has no submonthly forecast meaning",
+    "Monthly pressure masking cannot guarantee every underlying hourly sample was above ground",
+    "Observed-domain SST harmonic extension is not a land sea-temperature observation",
+    "No energy, mass, humidity conservation or causal identification imposed",
+    "No new untouched confirmatory test; no independent observations or historical as-of archive",
+    "Native resolution was not increased in this stage; output grid spacing is not forecast information resolution"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "scope": "Read and replay existing Adva evidence without modifying source, frozen reports or claims",
+  "base": "1ecd29b47d216b4e1c482d61a1c3e68252f8a07b",
+  "sources": {
+    "docs/research/0167-li-yorke-period-three-and-homotopy-continuation.md": "8e100382dc4bdb36df6d7d16ef2ea31eae9b1d8d332d139032cc018b5772fdd4",
+    "docs/research/0168-triadic-cycle-and-continuation-discipline.md": "6ffa2b436ac4c4423566acd03a1ba17ab3fdc075393114f8fdb60415e2a00bf1",
+    "docs/research/triadic-period-bridge-correction.md": "998962438e9ed0c6d167ea1b039dc78e37899531270224a61817bbc03964b79a",
+    "docs/research/sharkovsky-interval-extension.md": "9947d8b182b90e1c7f225c250a92a29225d2dca213945f54c96655216bfaddf9",
+    "docs/research/observer-quotient-descent-reproduction.md": "514e8c564503f433ca40a8ae516c20e6cb5e72eec5b32e65e2554327acf6200f",
+    "crates/adva-lisp/tests/observer_quotient_descent.rs": "7928f14bcc563d9666c74d83bb57aa6b5a42e3df572a3ecba37c3d06a6cd42b3"
+  },
+  "planned_runs": {
+    "matrix": {
+      "outer_seconds": 35,
+      "replays": 1,
+      "contract": "experiments/li_yorke_period_three/contract.json"
+    },
+    "quotient_correction": {
+      "outer_seconds": 14,
+      "sessions": 1,
+      "contract": "experiments/triadic_period_bridge/contract.json"
+    },
+    "interval_extension": {
+      "outer_seconds": 14,
+      "sessions": 1,
+      "contract": "experiments/sharkovsky_interval_extension/contract.json"
+    },
+    "native_quotient": {
+      "outer_seconds": 180,
+      "invocations": 1,
+      "offline": true,
+      "test": "observer_quotient_descent"
+    }
+  },
+  "limits_note": "Existing Python checkers install their own contract CPU, address-space and alarm limits. Native Rust replay has an outer timeout; it is a fixed existing test suite, not a new search."
+}

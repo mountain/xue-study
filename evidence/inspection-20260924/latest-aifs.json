@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "model": "AIFS",
+  "product": "aifs-single-0p25",
+  "run": "2026092318",
+  "runTime": "2026-09-23T18:00:00Z",
+  "manifestPath": "aifs.2026092318/manifest.json",
+  "manifestCrc32": "91aae45e"
+}

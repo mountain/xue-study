@@ -1,0 +1,2051 @@
+{
+  "checked_at": "2026-09-24T05:40:11.517508+00:00",
+  "scope": "array metadata; pressure coordinate values require a data read",
+  "training_performed": false,
+  "sources": {
+    "arco_1p5deg_6h": {
+      "url": "https://storage.googleapis.com/gcp-public-data-arco-era5/ar/1959-2022-6h-240x121_equiangular_with_poles_conservative.zarr",
+      "metadata_sha256": "b50a8e860472cf1905aa96b679421bf1ef94b6d72443b86853ca6f96d6edf765",
+      "metadata_bytes": 36678,
+      "attributes": {}
+    },
+    "arco_0p25deg_1h": {
+      "url": "https://storage.googleapis.com/gcp-public-data-arco-era5/ar/full_37-1h-0p25deg-chunk-1.zarr-v3",
+      "metadata_sha256": "d290da657c48ef9f59c10282121afdcbdb626f43772afcab4c1e37fa48d0e9ed",
+      "metadata_bytes": 132785,
+      "attributes": {
+        "valid_time_start": "1940-01-01",
+        "last_updated": "2026-09-24 04:24:50.595668+00:00",
+        "valid_time_stop": "2026-06-30",
+        "valid_time_stop_era5t": "2026-09-18"
+      }
+    }
+  },
+  "fields": {
+    "t850": {
+      "code": "t850",
+      "cds_variable": "temperature",
+      "units": "K",
+      "level_hpa": 850,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "temperature_850hPa",
+      "arco_name": "temperature",
+      "training_units": "K",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "K",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "K",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "t2m": {
+      "code": "t2m",
+      "cds_variable": "2m_temperature",
+      "units": "K",
+      "level_hpa": null,
+      "role": "state",
+      "domain": "global",
+      "arco_variable": null,
+      "name": "2m_temperature",
+      "arco_name": "2m_temperature",
+      "training_units": "K",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "K",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 929280,
+          "pressure_level_coordinate_read": null
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "K",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "sst": {
+      "code": "sst",
+      "cds_variable": "sea_surface_temperature",
+      "units": "K",
+      "level_hpa": null,
+      "role": "state",
+      "domain": "ocean",
+      "arco_variable": null,
+      "name": "sea_surface_temperature",
+      "arco_name": "sea_surface_temperature",
+      "training_units": "K",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "K",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 929280,
+          "pressure_level_coordinate_read": null
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "K",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "sp": {
+      "code": "sp",
+      "cds_variable": "surface_pressure",
+      "units": "Pa",
+      "level_hpa": null,
+      "role": "state",
+      "domain": "global",
+      "arco_variable": null,
+      "name": "surface_pressure",
+      "arco_name": "surface_pressure",
+      "training_units": "Pa",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "Pa",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 929280,
+          "pressure_level_coordinate_read": null
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "Pa",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "msl": {
+      "code": "msl",
+      "cds_variable": "mean_sea_level_pressure",
+      "units": "Pa",
+      "level_hpa": null,
+      "role": "state",
+      "domain": "global",
+      "arco_variable": null,
+      "name": "mean_sea_level_pressure",
+      "arco_name": "mean_sea_level_pressure",
+      "training_units": "Pa",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "Pa",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 929280,
+          "pressure_level_coordinate_read": null
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "Pa",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "z500": {
+      "code": "z500",
+      "cds_variable": "geopotential",
+      "units": "m2 s-2",
+      "level_hpa": 500,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "geopotential_500hPa",
+      "arco_name": "geopotential",
+      "training_units": "m2 s-2",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m**2 s**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m**2 s**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "q850": {
+      "code": "q850",
+      "cds_variable": "specific_humidity",
+      "units": "kg kg-1",
+      "level_hpa": 850,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "specific_humidity_850hPa",
+      "arco_name": "specific_humidity",
+      "training_units": "kg kg-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "kg kg**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "kg kg**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "q700": {
+      "code": "q700",
+      "cds_variable": "specific_humidity",
+      "units": "kg kg-1",
+      "level_hpa": 700,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "specific_humidity_700hPa",
+      "arco_name": "specific_humidity",
+      "training_units": "kg kg-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "kg kg**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "kg kg**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "u850": {
+      "code": "u850",
+      "cds_variable": "u_component_of_wind",
+      "units": "m s-1",
+      "level_hpa": 850,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "u_component_of_wind_850hPa",
+      "arco_name": "u_component_of_wind",
+      "training_units": "m s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "v850": {
+      "code": "v850",
+      "cds_variable": "v_component_of_wind",
+      "units": "m s-1",
+      "level_hpa": 850,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "v_component_of_wind_850hPa",
+      "arco_name": "v_component_of_wind",
+      "training_units": "m s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "u500": {
+      "code": "u500",
+      "cds_variable": "u_component_of_wind",
+      "units": "m s-1",
+      "level_hpa": 500,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "u_component_of_wind_500hPa",
+      "arco_name": "u_component_of_wind",
+      "training_units": "m s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "v500": {
+      "code": "v500",
+      "cds_variable": "v_component_of_wind",
+      "units": "m s-1",
+      "level_hpa": 500,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "v_component_of_wind_500hPa",
+      "arco_name": "v_component_of_wind",
+      "training_units": "m s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "u250": {
+      "code": "u250",
+      "cds_variable": "u_component_of_wind",
+      "units": "m s-1",
+      "level_hpa": 250,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "u_component_of_wind_250hPa",
+      "arco_name": "u_component_of_wind",
+      "training_units": "m s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "v250": {
+      "code": "v250",
+      "cds_variable": "v_component_of_wind",
+      "units": "m s-1",
+      "level_hpa": 250,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "v_component_of_wind_250hPa",
+      "arco_name": "v_component_of_wind",
+      "training_units": "m s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "w500": {
+      "code": "w500",
+      "cds_variable": "vertical_velocity",
+      "units": "Pa s-1",
+      "level_hpa": 500,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "vertical_velocity_500hPa",
+      "arco_name": "vertical_velocity",
+      "training_units": "Pa s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "Pa s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "Pa s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "w700": {
+      "code": "w700",
+      "cds_variable": "vertical_velocity",
+      "units": "Pa s-1",
+      "level_hpa": 700,
+      "role": "state",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "vertical_velocity_700hPa",
+      "arco_name": "vertical_velocity",
+      "training_units": "Pa s-1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "Pa s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "Pa s**-1",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "ssr": {
+      "code": "ssr",
+      "cds_variable": "surface_net_solar_radiation",
+      "units": "J m-2",
+      "level_hpa": null,
+      "role": "state",
+      "domain": "global",
+      "arco_variable": null,
+      "name": "surface_net_solar_radiation",
+      "arco_name": "surface_net_solar_radiation",
+      "training_units": "W m-2",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "J m**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "str": {
+      "code": "str",
+      "cds_variable": "surface_net_thermal_radiation",
+      "units": "J m-2",
+      "level_hpa": null,
+      "role": "state",
+      "domain": "global",
+      "arco_variable": null,
+      "name": "surface_net_thermal_radiation",
+      "arco_name": "surface_net_thermal_radiation",
+      "training_units": "W m-2",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "J m**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "sd": {
+      "code": "sd",
+      "cds_variable": "snow_depth",
+      "units": "m water equivalent",
+      "level_hpa": null,
+      "role": "state",
+      "domain": "land",
+      "arco_variable": null,
+      "name": "snow_depth",
+      "arco_name": "snow_depth",
+      "training_units": "m water equivalent",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m of water equivalent",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "tisr": {
+      "code": "tisr",
+      "cds_variable": "toa_incident_solar_radiation",
+      "units": "J m-2",
+      "level_hpa": null,
+      "role": "forcing",
+      "domain": "global",
+      "arco_variable": null,
+      "name": "toa_incident_solar_radiation",
+      "arco_name": "toa_incident_solar_radiation",
+      "training_units": "W m-2",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "J m**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 929280,
+          "pressure_level_coordinate_read": null
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "J m**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "z1000": {
+      "code": "z1000",
+      "cds_variable": "geopotential",
+      "units": "m2 s-2",
+      "level_hpa": 1000,
+      "role": "diagnostic",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "geopotential_1000hPa",
+      "arco_name": "geopotential",
+      "training_units": "m2 s-2",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m**2 s**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            92040,
+            13,
+            240,
+            121
+          ],
+          "chunks": [
+            8,
+            13,
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 12080640,
+          "pressure_level_coordinate_read": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m**2 s**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "level",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            37,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            37,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 153659520,
+          "pressure_level_coordinate_read": false
+        }
+      }
+    },
+    "r850": {
+      "code": "r850",
+      "cds_variable": "relative_humidity",
+      "units": "%",
+      "level_hpa": 850,
+      "role": "diagnostic",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "relative_humidity_850hPa",
+      "arco_name": "relative_humidity",
+      "training_units": "%",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": false
+        }
+      }
+    },
+    "r700": {
+      "code": "r700",
+      "cds_variable": "relative_humidity",
+      "units": "%",
+      "level_hpa": 700,
+      "role": "diagnostic",
+      "domain": "above_ground",
+      "arco_variable": null,
+      "name": "relative_humidity_700hPa",
+      "arco_name": "relative_humidity",
+      "training_units": "%",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": false
+        },
+        "arco_0p25deg_1h": {
+          "array_present": false
+        }
+      }
+    },
+    "lsm": {
+      "code": "lsm",
+      "cds_variable": "land_sea_mask",
+      "units": "1",
+      "level_hpa": null,
+      "role": "static",
+      "domain": "global",
+      "arco_variable": null,
+      "name": "land_sea_mask",
+      "arco_name": "land_sea_mask",
+      "training_units": "1",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "(0 - 1)",
+          "units_match": true,
+          "dimensions": [
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            240,
+            121
+          ],
+          "chunks": [
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 116160,
+          "pressure_level_coordinate_read": null
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "(0 - 1)",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    },
+    "zs": {
+      "code": "zs",
+      "cds_variable": "geopotential",
+      "units": "m2 s-2",
+      "level_hpa": null,
+      "role": "static",
+      "domain": "global",
+      "arco_variable": "geopotential_at_surface",
+      "name": "geopotential",
+      "arco_name": "geopotential_at_surface",
+      "training_units": "m2 s-2",
+      "sources": {
+        "arco_1p5deg_6h": {
+          "array_present": true,
+          "units": "m**2 s**-2",
+          "units_match": true,
+          "dimensions": [
+            "longitude",
+            "latitude"
+          ],
+          "shape": [
+            240,
+            121
+          ],
+          "chunks": [
+            240,
+            121
+          ],
+          "uncompressed_chunk_bytes": 116160,
+          "pressure_level_coordinate_read": null
+        },
+        "arco_0p25deg_1h": {
+          "array_present": true,
+          "units": "m**2 s**-2",
+          "units_match": true,
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "shape": [
+            1323648,
+            721,
+            1440
+          ],
+          "chunks": [
+            1,
+            721,
+            1440
+          ],
+          "uncompressed_chunk_bytes": 4152960,
+          "pressure_level_coordinate_read": null
+        }
+      }
+    }
+  },
+  "missing_from_both_arco_stores": [
+    "r850",
+    "r700"
+  ],
+  "unit_errors": [],
+  "cds_monthly_plan": {
+    "submitted": false,
+    "requests": [
+      {
+        "dataset": "reanalysis-era5-single-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "2m_temperature",
+            "mean_sea_level_pressure",
+            "sea_surface_temperature",
+            "snow_depth",
+            "surface_net_solar_radiation",
+            "surface_net_thermal_radiation",
+            "surface_pressure",
+            "toa_incident_solar_radiation"
+          ]
+        }
+      },
+      {
+        "dataset": "reanalysis-era5-pressure-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "geopotential"
+          ],
+          "pressure_level": [
+            "500",
+            "1000"
+          ]
+        }
+      },
+      {
+        "dataset": "reanalysis-era5-pressure-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "relative_humidity"
+          ],
+          "pressure_level": [
+            "700",
+            "850"
+          ]
+        }
+      },
+      {
+        "dataset": "reanalysis-era5-pressure-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "specific_humidity"
+          ],
+          "pressure_level": [
+            "700",
+            "850"
+          ]
+        }
+      },
+      {
+        "dataset": "reanalysis-era5-pressure-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "temperature"
+          ],
+          "pressure_level": [
+            "850"
+          ]
+        }
+      },
+      {
+        "dataset": "reanalysis-era5-pressure-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "u_component_of_wind"
+          ],
+          "pressure_level": [
+            "250",
+            "500",
+            "850"
+          ]
+        }
+      },
+      {
+        "dataset": "reanalysis-era5-pressure-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "v_component_of_wind"
+          ],
+          "pressure_level": [
+            "250",
+            "500",
+            "850"
+          ]
+        }
+      },
+      {
+        "dataset": "reanalysis-era5-pressure-levels-monthly-means",
+        "request": {
+          "product_type": [
+            "monthly_averaged_reanalysis"
+          ],
+          "year": [
+            "2020"
+          ],
+          "month": [
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+          ],
+          "time": [
+            "00:00"
+          ],
+          "data_format": "netcdf",
+          "download_format": "unarchived",
+          "variable": [
+            "vertical_velocity"
+          ],
+          "pressure_level": [
+            "500",
+            "700"
+          ]
+        }
+      }
+    ],
+    "note": "Static masks requested separately. Credentials/licence access not tested."
+  },
+  "sample": {
+    "date": "2020-01-01T00:00",
+    "purpose": "source read smoke check, not monthly training",
+    "files": [
+      {
+        "source": "https://storage.googleapis.com/gcp-public-data-arco-era5/ar/1959-2022-6h-240x121_equiangular_with_poles_conservative.zarr",
+        "path": "/home/ubuntu/climatetensor-inputs/era5/basic-state-smoke-20200101/arco_1p5deg_6h.npz",
+        "bytes": 1912812,
+        "sha256": "3f8b43a73937c22ddcce8e201a1ca54c99fe65da58ef53ef0ec34b8d24eb7126",
+        "fields": {
+          "t850": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 230.08834838867188,
+            "maximum": 301.55828857421875,
+            "source_units": "K",
+            "level_hpa": 850,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "t2m": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 226.36868286132812,
+            "maximum": 311.949951171875,
+            "source_units": "K",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "sst": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 0.7209366391184573,
+            "minimum": 270.7967834472656,
+            "maximum": 305.3763122558594,
+            "source_units": "K",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "sp": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 52314.37890625,
+            "maximum": 103489.578125,
+            "source_units": "Pa",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "msl": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 96211.7734375,
+            "maximum": 103792.78125,
+            "source_units": "Pa",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "z500": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 45606.08203125,
+            "maximum": 58279.0703125,
+            "source_units": "m**2 s**-2",
+            "level_hpa": 500,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "q850": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 4.8040226829471067e-05,
+            "maximum": 0.015627406537532806,
+            "source_units": "kg kg**-1",
+            "level_hpa": 850,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "q700": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 3.0180273824953474e-05,
+            "maximum": 0.011960001662373543,
+            "source_units": "kg kg**-1",
+            "level_hpa": 700,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "u850": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -36.54771423339844,
+            "maximum": 35.56148147583008,
+            "source_units": "m s**-1",
+            "level_hpa": 850,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "v850": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -33.202720642089844,
+            "maximum": 42.80778121948242,
+            "source_units": "m s**-1",
+            "level_hpa": 850,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "u500": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -26.367420196533203,
+            "maximum": 63.68341064453125,
+            "source_units": "m s**-1",
+            "level_hpa": 500,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "v500": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -41.52048873901367,
+            "maximum": 59.104949951171875,
+            "source_units": "m s**-1",
+            "level_hpa": 500,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "u250": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -29.672819137573242,
+            "maximum": 83.24798583984375,
+            "source_units": "m s**-1",
+            "level_hpa": 250,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "v250": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -75.67784118652344,
+            "maximum": 59.741310119628906,
+            "source_units": "m s**-1",
+            "level_hpa": 250,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "w500": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -2.5520167350769043,
+            "maximum": 1.7249680757522583,
+            "source_units": "Pa s**-1",
+            "level_hpa": 500,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "w700": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -2.7284882068634033,
+            "maximum": 2.6506505012512207,
+            "source_units": "Pa s**-1",
+            "level_hpa": 700,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "tisr": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 0.0,
+            "maximum": 5053250.5,
+            "source_units": "J m**-2",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "z1000": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -3039.1015625,
+            "maximum": 2916.242919921875,
+            "source_units": "m**2 s**-2",
+            "level_hpa": 1000,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "lsm": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "source_units": "(0 - 1)",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "zs": {
+            "shape": [
+              121,
+              240
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -285.3377685546875,
+            "maximum": 52057.91015625,
+            "source_units": "m**2 s**-2",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          }
+        }
+      },
+      {
+        "source": "https://storage.googleapis.com/gcp-public-data-arco-era5/ar/full_37-1h-0p25deg-chunk-1.zarr-v3",
+        "path": "/home/ubuntu/climatetensor-inputs/era5/basic-state-smoke-20200101/arco_0p25deg_1h.npz",
+        "bytes": 4921122,
+        "sha256": "73a36ab66c8ae7872b3ee1e3ca68349e4af889d2564da7c043f9d615787ed55f",
+        "fields": {
+          "ssr": {
+            "shape": [
+              721,
+              1440
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 0.0,
+            "maximum": 3878312.25,
+            "source_units": "J m**-2",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "str": {
+            "shape": [
+              721,
+              1440
+            ],
+            "finite_fraction": 1.0,
+            "minimum": -760207.25,
+            "maximum": 135222.4375,
+            "source_units": "J m**-2",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          },
+          "sd": {
+            "shape": [
+              721,
+              1440
+            ],
+            "finite_fraction": 1.0,
+            "minimum": 0.0,
+            "maximum": 10.0,
+            "source_units": "m of water equivalent",
+            "level_hpa": null,
+            "masked": false,
+            "radiation_converted": false
+          }
+        }
+      }
+    ],
+    "unavailable": [
+      "r850",
+      "r700"
+    ]
+  }
+}

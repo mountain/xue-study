@@ -1,0 +1,20 @@
+{
+  "raw_files": [
+    {
+      "path": "raw/partial/wind500/cfs.2026092312/pgb/cfs.2026092312.f006.grib2",
+      "bytes": 110028
+    }
+  ],
+  "built_store": "/home/ubuntu/xue-study/archive/inspection-20260924/built/cfs.2026092312/wind500.zarr",
+  "dims": {
+    "time": 1,
+    "latitude": 181,
+    "longitude": 360
+  },
+  "time": "2026-09-23T18:00:00.000000000",
+  "variables": [
+    "ugrd500",
+    "vgrd500"
+  ],
+  "store_bytes": 68253
+}
