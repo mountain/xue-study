@@ -275,7 +275,11 @@ def aggregate_month(month: str, dry_run: bool = False) -> dict:
         for code in VARIABLES:
             with np.load(ERA5_ROOT / day / f'{code}.npz') as z:
                 arr = np.asarray(z['values'], dtype=np.float64)
-            day_mean = np.nanmean(arr, axis=0)
+            good_h = np.isfinite(arr)
+            with np.errstate(invalid='ignore', divide='ignore'):
+                day_mean = np.where(good_h.any(axis=0),
+                                    np.nansum(arr, axis=0) / np.maximum(good_h.sum(axis=0), 1),
+                                    np.nan)
             acc[code] = acc.get(code, np.zeros_like(day_mean)) + np.nan_to_num(day_mean, nan=0.0)
             seen[code] = seen.get(code, np.zeros_like(day_mean)) + np.isfinite(day_mean)
     with np.errstate(invalid='ignore', divide='ignore'):
@@ -299,7 +303,8 @@ def aggregate_month(month: str, dry_run: bool = False) -> dict:
            'caliber': 'monthly mean of daily means; daily mean = mean of the 00/06/12/18Z fields',
            'frozen_utc': cas.utcnow()}
     cas.write_json_atomic(outdir / 'manifest.json', man)
-    rec.update({'status': 'written', 'n_days': len(days), 'complete': man['complete'],
+    rec.update({'status': 'written', 'n_days': len(days), 'days_expected': expected,
+                'complete': man['complete'],
                 'files': {k: v['bytes'] for k, v in files.items()}})
     cas.append_jsonl('era5_months.jsonl', rec)
     return rec
