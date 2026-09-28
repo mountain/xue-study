@@ -72,6 +72,21 @@ SOURCES = [
 ]
 
 
+def show(path: Path) -> str:
+    """Repo-relative when the file is inside the repo, absolute otherwise.
+
+    The live PLAN/MANIFEST deliberately live outside the repo when the scheduled units
+    run, so a bare `path.relative_to(REPO)` raises ValueError and killed the whole
+    service on its first real run -- the write succeeded, the *print* crashed, and
+    systemd aborted the remaining ExecStart steps. (Same class of half-fix as before:
+    the write location was changed, the line that reports it was not.)
+    """
+    try:
+        return path.relative_to(REPO).as_posix()
+    except ValueError:
+        return str(path)
+
+
 def utcnow() -> str:
     return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
@@ -113,8 +128,7 @@ def build_plan(recheck: bool) -> dict:
                     'the local files are still byte-identical to this list'}
     PLAN.parent.mkdir(parents=True, exist_ok=True)
     PLAN.write_text(json.dumps(plan, ensure_ascii=False, indent=2) + '\n')
-    print(f'plan -> {PLAN.relative_to(REPO)}  ({len(entries)} files, '
-          f'{total / 1e6:.1f} MB)')
+    print(f'plan -> {show(PLAN)}  ({len(entries)} files, {total / 1e6:.1f} MB)')
     return plan
 
 
