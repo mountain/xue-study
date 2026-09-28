@@ -1,0 +1,174 @@
+{
+  "version": "three-face-receipts-v1",
+  "question_id": "xue.derived.three-face-receipts",
+  "checked_at_utc": "2026-09-27T17:17:28Z",
+  "contract_sha256": "5f2972d0aee8e232547e0b624af4266c8d0c4f0c0fa86503640ac3e8fa5b2a29",
+  "receipt_sha256": {
+    "t": "7095c08795ed1dfa2ce5dc5a65a75f1b36c3d71cbea7254df964f86cf004d4d9",
+    "x": "ede62dad5af22b2f72f3dde3f51a10138c0bfe5707e4a3f8b93ad461588486f5",
+    "k": "71ac78bbf6d6e22b641a5952b7b495bc2cd9a85ca8b82ffc57b30f3d8f82d71e"
+  },
+  "tool_status": "ok",
+  "failures": [],
+  "distinguishing_fields": 11,
+  "distinguishing": {
+    "object_type": true,
+    "arithmetic_domain": true,
+    "embedding": true,
+    "expression_or_word": true,
+    "evaluation_order": true,
+    "frame": true,
+    "assumptions": true,
+    "fuel_used": true,
+    "claim_scope": true,
+    "witness": true,
+    "residual": true
+  },
+  "slot_state": {
+    "t": {
+      "局部单元": "present",
+      "重叠": "absent",
+      "相容条件": "absent",
+      "粘合产物": "absent"
+    },
+    "x": {
+      "局部单元": "present",
+      "重叠": "degenerate",
+      "相容条件": "present",
+      "粘合产物": "absent"
+    },
+    "k": {
+      "局部单元": "present",
+      "重叠": "present",
+      "相容条件": "present",
+      "粘合产物": "present"
+    }
+  },
+  "n_present_slots": 7,
+  "condition_1": true,
+  "condition_2": false,
+  "verdict": "partial_frontier",
+  "controls": {
+    "C1_permute_labels": {
+      "permutation_counts": {
+        "txk": 11,
+        "tkx": 11,
+        "xtk": 11,
+        "xkt": 11,
+        "ktx": 11,
+        "kxt": 11
+      },
+      "invariant": true,
+      "face_label_tokens_in_values": [],
+      "passed": true
+    },
+    "C2_copy_one_receipt": {
+      "distinguishing_fields": 0,
+      "verdict": "relabel_risk",
+      "passed": true
+    }
+  },
+  "predictions": [
+    {
+      "face": "t",
+      "slot": "局部单元",
+      "predicted": "present",
+      "observed": "present",
+      "hit": true
+    },
+    {
+      "face": "t",
+      "slot": "重叠",
+      "predicted": "absent",
+      "observed": "absent",
+      "hit": true
+    },
+    {
+      "face": "t",
+      "slot": "相容条件",
+      "predicted": "absent",
+      "observed": "absent",
+      "hit": true
+    },
+    {
+      "face": "t",
+      "slot": "粘合产物",
+      "predicted": "absent",
+      "observed": "absent",
+      "hit": true
+    },
+    {
+      "face": "x",
+      "slot": "局部单元",
+      "predicted": "present",
+      "observed": "present",
+      "hit": true
+    },
+    {
+      "face": "x",
+      "slot": "重叠",
+      "predicted": "degenerate",
+      "observed": "degenerate",
+      "hit": true
+    },
+    {
+      "face": "x",
+      "slot": "相容条件",
+      "predicted": "present",
+      "observed": "present",
+      "hit": true
+    },
+    {
+      "face": "x",
+      "slot": "粘合产物",
+      "predicted": "absent",
+      "observed": "absent",
+      "hit": true
+    },
+    {
+      "face": "k",
+      "slot": "局部单元",
+      "predicted": "present",
+      "observed": "present",
+      "hit": true
+    },
+    {
+      "face": "k",
+      "slot": "重叠",
+      "predicted": "present",
+      "observed": "present",
+      "hit": true
+    },
+    {
+      "face": "k",
+      "slot": "相容条件",
+      "predicted": "present",
+      "observed": "present",
+      "hit": true
+    },
+    {
+      "face": "k",
+      "slot": "粘合产物",
+      "predicted": "present",
+      "observed": "present",
+      "hit": true
+    },
+    {
+      "face": "all",
+      "slot": "verdict",
+      "predicted": "partial_frontier",
+      "observed": "partial_frontier",
+      "hit": true
+    }
+  ],
+  "predictions_hit": 13,
+  "predictions_total": 13,
+  "verdict_text": "不是三面：若干面完整、若干面退化或指不出实例（见 slot_state）",
+  "slots_not_present": [
+    "t/重叠",
+    "t/相容条件",
+    "t/粘合产物",
+    "x/重叠",
+    "x/粘合产物"
+  ]
+}

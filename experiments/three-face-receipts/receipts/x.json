@@ -1,0 +1,100 @@
+{
+  "face": "x",
+  "face_zh": "空（覆盖与截断）",
+  "contract": "experiments/three-face-receipts/contract.json",
+  "contract_sha256": "5f2972d0aee8e232547e0b624af4266c8d0c4f0c0fa86503640ac3e8fa5b2a29",
+  "filled_after_contract": true,
+  "fields": {
+    "question_id": {
+      "value": "advance_carrier_one_circuit",
+      "witness": [{"kind": "file_contains", "ref": "docs/problem-cards/vocabulary-accounting-e1.json", "needle": "多年尺度（年际）地球系统演化过程"}]
+    },
+    "object_type": {
+      "value": "observation_domain",
+      "instance": "每通道一个**观测域**（训练期有限格掩码），存为 `<channel>_domain`",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "arrays[name+'_domain']=fixed.reshape(len(lat),len(lon))"}]
+    },
+    "arithmetic_domain": {
+      "value": "float64_with_boolean_mask",
+      "instance": "浮点 ＋ 布尔有效掩码；无效格在算术**之前**排除（`valid=masks & isfinite & weight>0`），不做零填充",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "valid=masks & np.isfinite(values).all(axis=2) & (weights[None,:]>0)"}]
+    },
+    "embedding": {
+      "value": "spherical_harmonic_L12_on_latlon",
+      "instance": "截断阶数 L12 于原生经纬网格；同一批观测域与冻结的 L6 逐格相同",
+      "witness": [
+        {"kind": "file_contains", "ref": "experiments/multivariate-refinement/fields.py", "needle": "DEGREE = 12"},
+        {"kind": "file_contains", "ref": "experiments/multivariate-refinement/contract.json", "needle": "L12 complete real scalar and gradient/rotation vector harmonics"}
+      ]
+    },
+    "expression_or_word": {
+      "value": "mask_then_gram_solve",
+      "instance": "先掩码再用观测域上的精确 Gram 解 `c=np.linalg.solve(g,·)`；条件数 > 1e8 即拒绝",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "c=np.linalg.solve(g,(y@(w[:,None]*b)).T).T"}]
+    },
+    "evaluation_order": {
+      "value": "restrict_then_project_per_month",
+      "instance": "逐月先定域再投影：按域的 packbits 键把同域的月份分到一组（同一组共享一次 Gram 解）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "for t,row in enumerate(valid): groups.setdefault(np.packbits(row).tobytes(),[]).append(t)"}]
+    },
+    "frame": {
+      "value": "observation_domain_and_degree",
+      "instance": "坐标框架＝原生经纬网格 ＋ 截断阶数 ＋ 观测域掩码（不是「某个初始月」）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "raise ValueError('L12 and frozen L6"}]
+    },
+    "assumptions": {
+      "value": "truncation_degree_is_assumed",
+      "instance": "**截断阶数 12 是假设的呈现**，不是由可分辨性导出的商；E1 实测把它暴露为「判据退化：越细越好、无内部极小」",
+      "witness": [{"kind": "file_contains", "ref": "experiments/vocabulary-accounting-e1/contract.json", "needle": "现用的 d=12 是否落在最小处"}]
+    },
+    "fuel_used": {
+      "value": "sixteen_channel_reads_and_one_projection",
+      "instance": "16 个物理量各读一次 ＋ 一次投影构建；投影件已存在则直接返回（不重算）",
+      "witness": [
+        {"kind": "file_contains", "ref": "experiments/multivariate-refinement/fields.py", "needle": "identical sixteen physical variables"},
+        {"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "if artifact.exists(): return artifact"}
+      ]
+    },
+    "claim_scope": {
+      "value": "inside_observation_domain_and_degree_12",
+      "instance": "声明范围＝观测域之内、截断 12 以内；域内格数不足解的自由度即 raise（不外推、不插补）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "if mask.sum()<p: raise ValueError('Insufficient domain')"}]
+    },
+    "witness": {
+      "value": "json_report",
+      "instance": "每通道一份诊断记录（`distinct_domains`、`max_gram_condition`、`min_area_fraction`、`gram_storage_bytes`）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "'max_gram_condition':max(conditions)"}]
+    },
+    "residual": {
+      "value": "per_channel_monthly_residual",
+      "instance": "每通道逐月的加权平方残差 `residual[times]`，与观测域一起落盘",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "residual[times]=np.sum((y-c@b.T)**2*w,axis=1)"}]
+    }
+  },
+  "template_slots": {
+    "局部单元": {
+      "status": "present",
+      "value": "observation_domain",
+      "instance": "一个**观测域**（训练期有限格集合）＝一个局部单元；按 `np.packbits` 键分组，域不同的月份各自成组",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "for t,row in enumerate(valid): groups.setdefault(np.packbits(row).tobytes(),[]).append(t)"}]
+    },
+    "重叠": {
+      "status": "degenerate",
+      "value": "whole_domain_identity",
+      "instance": "同一域被**两种截断各读一次**（L6 与 L12），交集＝域本身 ⇒ 这是**平凡的、退化的**「覆盖」：所谓重叠就是整个局部单元，不是两个开集的真交集。另外，同域的多个月共享同一个 Gram（代码原文：Identical domains share a Gram solve）。",
+      "why_degenerate": "按 `0036` §2.4，覆盖要有 `U=∪U_i` 且重叠 `U_i∩U_j` 是**真子集**才有相容条件可谈；这里交集＝整体，相容条件退化为「域是否相同」。",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "Identical domains share a Gram solve"}]
+    },
+    "相容条件": {
+      "status": "present",
+      "value": "domain_equality_assertion",
+      "instance": "`np.array_equal(fixed, coarse[name+'_domain'])`：L12 与冻结 L6 必须用**逐格相同**的观测域，否则 raise。这是本面真实做过的相容检验（虽然对象是「域」而不是「限制在交集上的取值」）。",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "raise ValueError('L12 and frozen L6"}]
+    },
+    "粘合产物": {
+      "status": "absent",
+      "why": "**不同域之间没有并集粘合**。系数只是沿通道／时间 `np.concatenate` 成一个大向量——那是**并列**（笛卡尔式拼接），不是把覆盖上的局部项粘成整体项。同域复用 Gram 也只算「同一个局部单元被读多次」，不产生新的整体项。",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": "arrays['coefficients']=np.concatenate("}]
+    }
+  }
+}

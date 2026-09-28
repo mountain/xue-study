@@ -1,0 +1,104 @@
+{
+  "face": "k",
+  "face_zh": "构（作用域、规范形与追加史）",
+  "contract": "experiments/three-face-receipts/contract.json",
+  "contract_sha256": "5f2972d0aee8e232547e0b624af4266c8d0c4f0c0fa86503640ac3e8fa5b2a29",
+  "filled_after_contract": true,
+  "fields": {
+    "question_id": {
+      "value": "advance_carrier_one_circuit",
+      "witness": [{"kind": "file_contains", "ref": "docs/problem-cards/vocabulary-accounting-e1.json", "needle": "多年尺度（年际）地球系统演化过程"}]
+    },
+    "object_type": {
+      "value": "digest_record",
+      "instance": "本面的对象不是场，而是**摘要记录**：`frozen_hashes_sha256` 一类的逐件摘要，以及「谁读了什么」的追加史",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/reforecast.py", "needle": "hashes = {name: sha256(FROZEN / name) for name in FROZEN_FILES}"}]
+    },
+    "arithmetic_domain": {
+      "value": "exact_integer_and_digest",
+      "instance": "**精确**：sha256 逐字节相等 ＋ 整数计数；本面没有容差、没有近似",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/check_artifacts.py", "needle": "hashlib.sha256((public/name).read_bytes()).hexdigest()==sha"}]
+    },
+    "embedding": {
+      "value": "repo_path_and_digest",
+      "instance": "对象被嵌进**仓库路径空间**：`archive/multivariate-l12-v1/<file>` 与它们的摘要",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "archive/multivariate-l12-v1/model.npz"}]
+    },
+    "expression_or_word": {
+      "value": "verify_then_append",
+      "instance": "每次写入前先核对，再追加：结果目录已存在即 `raise FileExistsError`（拒绝覆盖）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/reforecast.py", "needle": "raise FileExistsError(f'completed reforecast already exists: {OUT}')"}]
+    },
+    "evaluation_order": {
+      "value": "verify_then_append_per_write",
+      "instance": "顺序是「先查存在 → 再算 → 再落盘」；不是「先写再改」（`if (OUT/'report.json').exists(): raise`）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/reforecast.py", "needle": "if (OUT / 'report.json').exists():"}]
+    },
+    "frame": {
+      "value": "readonly_archive_dir",
+      "instance": "框架＝只读的冻结目录（`archive/multivariate-l12-v1/` 全件只读且被摘要固定）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "archive/multivariate-l12-v1/{model,projection-L12,forecast,report}.npz/json (read-only, hashed)"}]
+    },
+    "assumptions": {
+      "value": "declared_constants_only_in_appendix",
+      "instance": "两条项目级假设：**声明只由人作出**（本件只记录不代作）；**声明常数只进附录 D**，不得混进正文读数",
+      "witness": [{"kind": "file_contains", "ref": "docs/problem-cards/vocabulary-accounting-e1.json", "needle": "声明只能由人作出"}]
+    },
+    "fuel_used": {
+      "value": "zero_fits_read_only",
+      "instance": "本面**零次拟合**：不重训、不重拟合，只用只读件与摘要",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "\"no_retraining\": true"}]
+    },
+    "claim_scope": {
+      "value": "repo_frozen_artifacts_only",
+      "instance": "声明范围＝本仓库的冻结件与台账本身（凡冻结件摘要不变，即「没有被动过」）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/check_artifacts.py", "needle": "'all_coarse_hashes_unchanged':True"}]
+    },
+    "witness": {
+      "value": "sha256_manifest",
+      "instance": "本面的见证物是一份**摘要清单**（`frozen_hashes_sha256`），可逐件重算",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/reforecast.py", "needle": "'frozen_hashes_sha256': hashes"}]
+    },
+    "residual": {
+      "value": "unregistered_gaps",
+      "instance": "本面的残差是**未登记项**：卡里的 `remaining_questions`、维护记录里的挂账、以及被显式降级的能力",
+      "witness": [{"kind": "file_contains", "ref": "docs/problem-cards/vocabulary-accounting-e1.json", "needle": "\"remaining_questions\""}]
+    }
+  },
+  "template_slots": {
+    "局部单元": {
+      "status": "present",
+      "value": "declared_scope",
+      "instance": "一个**已声明的作用域**：`experiments/multivariate-reforecast/contract.json` 的 `reads`／`writes`／`prohibited` 三栏就是作用域声明",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "\"prohibited\""}]
+    },
+    "重叠": {
+      "status": "present",
+      "value": "shared_frozen_inputs",
+      "instance": "**真实的共享**：`archive/multivariate-l12-v1/` 的冻结件同时落在两个作用域的读集里（multivariate-reforecast 与 vocabulary-accounting-e1）⇒ 两个作用域有非空共享，且这个共享是**可指名的具体文件**，不是修辞。",
+      "witness": [
+        {"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "archive/multivariate-l12-v1/model.npz"},
+        {"kind": "file_contains", "ref": "experiments/vocabulary-accounting-e1/contract.json", "needle": "archive/multivariate-l12-v1"}
+      ]
+    },
+    "相容条件": {
+      "status": "present",
+      "value": "sha256_equality_and_refuse_overwrite",
+      "instance": "共享件上真的做了相容检验：`frozen_hashes_sha256` 逐件全等 ＋ `check_artifacts.py` 重算比对；并且结果目录**拒绝覆盖**，使「同一件事被写两次」不可能悄悄发生。",
+      "witness": [
+        {"kind": "file_contains", "ref": "experiments/multivariate-reforecast/reforecast.py", "needle": "'frozen_hashes_sha256': hashes"},
+        {"kind": "file_contains", "ref": "experiments/multivariate-refinement/check_artifacts.py", "needle": "hashlib.sha256((public/name).read_bytes()).hexdigest()==sha"}
+      ]
+    },
+    "粘合产物": {
+      "status": "present",
+      "value": "append_only_ledger",
+      "instance": "粘合出的是**追加台账**：问题卡里 C1–C10 的逐条更正（原话一字不动、只追加）＋ 维护记录的逐节附记 ＋ 本次读法记录的 §7 附记。按项目纪律「更正取代而不重写」，台账是可粘的：新条目只在末尾追加，旧条目不被改写。",
+      "witness": [
+        {"kind": "file_contains", "ref": "docs/problem-cards/vocabulary-accounting-e1.json", "needle": "\"corrections_to_the_question\""},
+        {"kind": "file_contains", "ref": "docs/maintenance/2026-09-26-vocabulary-accounting-e1.md", "needle": "## 12. 附记：C10"},
+        {"kind": "file_contains", "ref": "docs/adva-triangle-one-rule-three-localities.md", "needle": "填名 ≠ 有实例"}
+      ]
+    }
+  }
+}

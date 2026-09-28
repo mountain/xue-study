@@ -1,0 +1,53 @@
+{
+  "question_id": "xue.derived.three-face-receipts",
+  "round": 1,
+  "predecessor": "docs/problem-cards/vocabulary-accounting-e1.json",
+  "change_reason": "载体已声明（多年尺度地球系统演化过程），三面（时 T／空 X／构 K）不再是无从定义的并列机制。提问方 2026-09-28 两句话（「时空明显是一致语言的两个说法」「逐次应用实际上还是开孔与粘合」）已记为 C10。本件把「三面是否只是同一个计算的三个名字」（`0036` §4.1 红队句）做成一次有限、可复核的检验。判据按读法记录（`docs/adva-triangle-one-rule-three-localities.md`）§7 的**对照 A′**：模板格要**实例**，不要名字。",
+  "raw_question": "「时空明显是一致语言的两个说法。」「逐次应用表面上看似乎不一样，但你想一下每次应用实际上还是开孔与粘合。」（并要求把这两句记入问题卡，以便考虑下一个该问什么）",
+  "objects_and_versions": "**契约（冻结件，写下即冻结）**：`experiments/three-face-receipts/contract.json`，sha256 `5f2972d0aee8e232547e0b624af4266c8d0c4f0c0fa86503640ac3e8fa5b2a29`。\n**三张收据**：`experiments/three-face-receipts/receipts/{t,x,k}.json`，sha256 依次为 `7095c08795ed1dfa2ce5dc5a65a75f1b36c3d71cbea7254df964f86cf004d4d9`／`ede62dad5af22b2f72f3dde3f51a10138c0bfe5707e4a3f8b93ad461588486f5`／`71ac78bbf6d6e22b641a5952b7b495bc2cd9a85ca8b82ffc57b30f3d8f82d71e`。\n**检查器**：`experiments/three-face-receipts/check_receipts.py`（规则全部从契约读出，检查器不自行决定判据）。\n**结果**：`experiments/three-face-receipts/report.json` ＋ `run.log`（另存 `archive/three-face-receipts-v1/`）。\n**只读、未改动**：`archive/multivariate-l12-v1/`、`experiments/multivariate-refinement/{model,project,fields,train,check_artifacts}.py`、`experiments/multivariate-reforecast/`、上游 `adva` 文档。",
+  "success_condition": "判定「三面收据是否可区分、模板格是否都有实例」，且三个机械闸门同时成立：**条件一**（11 个受计字段中 ≥4 个三面取值两两不同）／**条件二**（12 个模板格全部为 `present`）／**负对照 C1**（6 种面标号置换下计数不变，且取值不内嵌面标号）＋**C2**（把三张收据换成同一份的副本后，区分度必须归零、判定必须降级）。任一闸门不成立即**工具失败**，不得报出判定。",
+  "interpretation_and_assumptions": "- 「重叠」要的是**实例**（可指名的对象 ＋ 在哪里做过相容检验），不是名字；指不出实例记 `absent`，且缺席也要有证据（对照 A′）。\n- 每个受计字段的取值必须取自**契约里先冻结的闭词表**；每张收据记录契约摘要，故**填收据之后再改契约会使收据失效**（contract-first 由机械核对强制）。\n- 模板格的三种状态：`present`（有实例）／`degenerate`（有实例但退化，如交集＝整体）／`absent`（指不出实例）。**退化不得记成 present。**\n- `question_id` 是同一性标号，**预先声明**排除在区分度计数之外（故受计字段为 11 而非 12）；这条排除是先声明的，不是事后剔除。\n- 检查器只保证 (a) 见证物存在且含指定子串、(b) 取值属于闭词表、(c) 计数与判定按写死的规则算出；它**不保证** `value` 的措辞与见证物的含义相符——这一层由填写者负责，**是未消除的残差**。",
+  "candidates": "E2-a 三张收据 ＋ 三个对照（本件）／E2-b 另把「逐 lead 依次应用」做成显式的开孔－替换记录（工作量大，属 E3）／E2-c 不做，只把「也许只是改名」写进报告层披露（本件结果使这条不再必要）",
+  "check_scope": "本轮**做**：① 写下并冻结契约（含闭词表、判据、**预测**、负对照、失败语义）；② 为三面各出一张 12 字段收据 ＋ 四个模板格，逐项给见证；③ 跑检查器（含 C1／C2）；④ 与契约里先写死的预测逐条比对。\n本轮**不做**：不声称三面相互独立（三面由同一条流水线执行）；不跑三计算校准（`0155` §6.2：多数票不构成三计算）；不改冻结模型与上游文档；不把本件读成对自然的发现。",
+  "budget": {"wall_seconds": 300, "launches": 1, "output_bytes": 400000},
+  "round_result": "**工具状态 `ok`；判定 `partial_frontier`（不是三面）。**\n**条件一成立**：11/11 个受计字段三面取值两两不同（`distinguishing_fields = 11`）；**但按契约自己的 self_disclosure，条件一证明力很低**——闭词表由填写者设计，只要给三面各留一个不同元素，计数就自动达标。⇒ **不得把 11 当成功劳。**\n**条件二不成立**：12 个模板格只有 **7 个 `present`**（3 面 × 4 格）。不成立的是：\n| 面 | 格 | 状态 | 理由（收据原文要点） |\n|---|---|---|---|\n| 时 T | 重叠 | **absent** | 6 支箭头**共源**（都从同一初始月 `x[-1]` 出发）⇒ 不存在「上一支的输出＝下一支的输入」的相邻对 |\n| 时 T | 相容条件 | **absent** | 无重叠 ⇒ 无界面可验；lead 之间从不做相容检验 |\n| 时 T | 粘合产物 | **absent** | 6 个 lead 由 `np.stack` **并列**，不是依次复合 `f₁;…;f₆` |\n| 空 X | 重叠 | **degenerate** | 交集＝域本身（平凡覆盖）；同域月份共享同一 Gram |\n| 空 X | 粘合产物 | **absent** | 不同域之间无并集粘合；系数是 `np.concatenate` 的**并列** |\n| 构 K | 四格 | **全 present** | 作用域（契约 reads／writes／prohibited）＋真实共享（冻结件同被两个实验读）＋sha256 全等与拒绝覆盖＋append-only 台账（C1–C10） |\n**⇒ 本载体上完整的三段式只有「构 K」一面**：它有局部单元、有真实的重叠、在重叠上真的做了相容检验、也真的粘出了整体项。空 X 是**退化且缺粘合**；时 T 在重叠／相容／粘合三格都**指不出实例**。\n**负对照**：C1（6 种面标号置换）计数不变且取值不内嵌面标号 ⇒ 通过；C2（复制同一张）区分度归零、判定降级为 `relabel_risk` ⇒ 通过（检查器有判别力）。\n**预测**：契约里先写死的 **13 条全中**（12 个模板格 ＋ 整体判定），⇒ 「冻结模型是共源并列直映、球谐是全局基」这条读法在本轮未被否证。\n**一个工具自身的失败（保留在记录里）**：首轮 C1 用裸子串 `t_`／`x_`／`k_` 查找面标号，**误报**了 8 处正常取值（`digest_record`／`six_matrix_products`／`mask_then_gram_solve` …）。这不是收据的问题，是**检查器的假阳性**；按契约的失败语义，首轮 `tool_status = failure` 且**不报出判定**（fail-closed 生效）。改为「面标号只算取值前缀或非字母数字边界」后通过。",
+  "remaining_questions": "- **T 面的缺失正是「无法自产 2026-12」在框架语言里的名字**：`reachability_rule`（`0 < T−M ≤ 6`）与「没有相邻界面」是**同一件事的两种说法**，不是两个原因。⇒ 要不要把 T 面的重叠与粘合当作**下一件工程**（有界递推 ＋ 逐界面相容检验），而不是继续换数据源？\n- **X 面的退化要不要修**：截断阶数 12 是**假设的呈现**（E1 已把判据暴露为退化）；按 `0036` §2.13，缺的是「由可分辨性导出的观测商」。修它属于 E1 v2（P1 假设阶梯 vs P2 导出商）。\n- **K 面已经是完整三段式**——它能不能当作模板，把 T／X 两面也补成同样形状？还是 K 的完整只是因为「台账不需要物理载体」？\n- 本件**不构成**三面独立的证据；报告层能否写「三面已建立」？（建议：不能。若写，只能写「三面读法已定义，其中一面在本载体上完整」。）",
+  "next_step": "1) 提问方就 Q-b／Q-c 之二选一（E1 v2 的判据粗细，或 E3 的逐回路提升记账）；2) 若选 E3：把 T 面的重叠与粘合显式做出来（有界递推 ＋ 逐界面相容检验 ＋ 逐回路记生日／覆盖层／构造深度／精确残差），并**同时**把 E2 的收据重跑一遍，看 T 面是否从 1/4 变到 4/4——那是一句可证伪的话；3) 若选 E1 v2：按「单位归一 ＋ 留出项」改判据，并加置换商必败对照；4) 无论哪条：把本件结果**只**写成「三面读法已定义、一面完整」，不得写成三面独立。",
+  "stop_conditions": [
+    "任一见证无法核对 ⇒ 工具失败，不产出判定（首轮已触发过一次，原因是检查器假阳性）",
+    "任一受计字段闭词表 < 4 个元素或无非空未用元素 ⇒ 停止",
+    "C1／C2 任一不成立 ⇒ 停止（检查器无判别力）",
+    "需要改动冻结模型或上游文档才能通过 ⇒ 停止并登记阻塞",
+    "预算耗尽（wall 300 s 或 launch 1 次；实测一次通过，wall 秒级）"
+  ],
+  "attempts": [
+    {
+      "command": "python3 check_receipts.py",
+      "tool_and_version": "python 3.14.6（本机）；仅标准库",
+      "input": "contract.json ＋ receipts/{t,x,k}.json",
+      "output_dir": "experiments/three-face-receipts/（report.json ＋ run.log）",
+      "stop_condition": "三闸门全过",
+      "budget": {"wall_seconds": 300, "launches": 1},
+      "outcome": "failed-then-corrected",
+      "reason": "首轮 `tool_status = failure`：C1 的裸子串匹配把 8 处正常取值误报为「内嵌面标号」⇒ 判定被**扣下不发**（fail-closed 按设计生效）。改为「面标号只算取值前缀或非字母数字边界」（`(?<![0-9A-Za-z_])(?:t_|x_|k_|时_|空_|构_)`）后通过。",
+      "first_failure": "假阳性在**检查器**一侧，不在收据一侧；这正是负对照该做的事——它先咬了我自己的工具。"
+    }
+  ],
+  "handoff": {
+    "question": "在同一载体上，时／空／构三面的收据与模板格是否可区分、是否都有实例——还是同一个计算的三个名字？",
+    "candidates": "E2-a 三张收据＋三对照（已跑）／E2-b 把逐 lead 依次应用显式化（属 E3）／E2-c 只写披露",
+    "checks": "契约先冻结（sha256 `5f2972d0…`）＋ 收据记录契约摘要（改契约即失效）＋ 11 字段闭词表（≥4 元素、≥1 未用元素）＋ 见证逐条核对（file_contains／file_sha256）＋ 模板格三态 ＋ C1 置换不变与标号检查 ＋ C2 复制必败",
+    "evidence": "判定 `partial_frontier`；`distinguishing_fields = 11`（低证明力，见 self_disclosure）；`present` 模板格 7/12；不成立的五格：`t/重叠`／`t/相容条件`／`t/粘合产物`／`x/重叠`(degenerate)／`x/粘合产物`；预测 13/13 命中；C1、C2 通过；首轮工具失败（检查器假阳性）已保留",
+    "residuals": "① 检查器不保证 `value` 措辞与见证含义相符（schema 自述的未消除残差）；② 三面由同一条流水线执行 ⇒ **不支持**独立性，也不支持三计算校准（`0155` §6.2）；③ 闭词表由填写者设计 ⇒ 条件一几乎不可能失败，证明力低；④ 未做：把 T 面的重叠与粘合真的做出来再看收据是否变 4/4（那是 E3 的可证伪句）；⑤ 本件的「实例」判据仍由填写者指认，第三方只能复核见证物存在与取值合法",
+    "receiver_constraints": "不得把本件读成三面相互独立的证明；不得把「条件一通过（11/11）」当作三面不同的证据；不得把 `degenerate` 记成 `present`；报告层只能写「三面读法已定义，其中构面在本载体上完整」，**不得**写「三面已建立」；不得在填收据后修改契约（改则另立 v2）；不得改动 `archive/multivariate-l12-v1/` 与上游 `adva` 文档"
+  },
+  "self_disclosure": "**本件是自审，不是对自然的发现。** 三处须自己先说清：① 条件一的证明力低（闭词表由我设计）；② 「实例」的指认仍由我作出，检查器只核对见证物存在与取值合法，**不核对措辞与含义相符**；③ 三面同源 ⇒ 本件**不能**支撑「三种独立计算」。把这三条写在结果旁边，是为了让读者不必替我打折。",
+  "artifacts": {
+    "contract": "experiments/three-face-receipts/contract.json",
+    "receipts": ["experiments/three-face-receipts/receipts/t.json", "experiments/three-face-receipts/receipts/x.json", "experiments/three-face-receipts/receipts/k.json"],
+    "checker": "experiments/three-face-receipts/check_receipts.py",
+    "result": ["experiments/three-face-receipts/report.json", "experiments/three-face-receipts/run.log"],
+    "archive_copy": "archive/three-face-receipts-v1/",
+    "reading": "docs/adva-triangle-one-rule-three-localities.md"
+  }
+}

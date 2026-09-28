@@ -1,0 +1,130 @@
+{
+  "version": "three-face-receipts-v1",
+  "question_id": "xue.derived.three-face-receipts",
+  "round": 1,
+  "frozen_before_run": true,
+  "purpose": "载体已声明（多年尺度地球系统演化过程）。本件把「三面是否只是同一个计算的三个名字」（0036 §4.1 红队句）变成一次有限、可复核的检验：为时／空／构三面各出一张收据（atlas §13 的 12 字段）＋ 四个模板格（局部单元／重叠／相容条件／粘合产物），并要求**每个取值都有见证、每个模板格都有实例**。",
+
+  "carrier": "多年尺度（年际）地球系统演化过程——载体声明见 docs/problem-cards/vocabulary-accounting-e1.json 的 carrier_declaration（声明只能由人作出；本件只使用，不改动）",
+
+  "upstream": {
+    "readings_frozen": "docs/adva-triangle-one-rule-three-localities.md（含 §7 附记：对照 A′「填名 ≠ 有实例」）",
+    "framework": [
+      "adva/docs/research/0036-triangular-symbolic-interpretation-learning-calculus.md §1.11（三种局部性：局部单元／相容条件表）、§1.12（闭于类型不闭于历史）、§2.4–§2.6（三套文法）、§4.1（红队：三角形也许只是改名）",
+      "adva/docs/research/0079-typed-hole-open-close-calibration-v0.md §3（三型孔不是同一幺半单位的三个副本）",
+      "adva/adva-library/golden-ratio/atlas/golden_ratio_atlas.md §13（12 字段收据）"
+    ],
+    "note": "本件不改动上游任何一句；上游是读法的来源，不是被检验的对象。"
+  },
+
+  "receipt_schema": {
+    "receipt_fields": [
+      "question_id", "object_type", "arithmetic_domain", "embedding",
+      "expression_or_word", "evaluation_order", "frame", "assumptions",
+      "fuel_used", "claim_scope", "witness", "residual"
+    ],
+    "template_slots": ["局部单元", "重叠", "相容条件", "粘合产物"],
+    "witness_kinds": {
+      "file_contains": "本仓库相对路径 ＋ 必须出现的子串（检查器逐字核对）",
+      "file_sha256": "本仓库相对路径 ＋ 64 位十六进制摘要（检查器重算）"
+    },
+    "witness_rule": "每个受计字段的取值必须至少给一条见证；见证核对失败 ⇒ 该字段不计入，且**工具失败**（fail-closed）。",
+    "value_rule": "每个受计字段的 `value` 必须取自本契约 `closed_vocabularies` 中该字段的**闭词表元素**（闭词表在填收据之前冻结）。",
+    "slot_rule": "每个模板格必须给 `status` ∈ {present, degenerate, absent}：present／degenerate 需给 `instance`（可指名对象）＋见证；absent 需给 `why` ＋见证（缺席同样要有证据）。",
+    "residual_of_the_schema": "检查器只保证 (a) 见证物存在且含指定子串、(b) 取值属于闭词表、(c) 计数与判定按写死的规则算出。它**不能**保证 `value`／`instance` 的措辞与见证物的含义相符——这一层由填写者负责，**是本件未消除的残差**。"
+  },
+
+  "identity_fields": {
+    "fields": ["question_id"],
+    "domain": ["advance_carrier_one_circuit"],
+    "rule": "`question_id` 是**同一性问题**的标号：三面**必须**相同，故其闭词表只有一个元素，并**按本契约预先声明排除**在区分度计数之外（`counted_fields` 因此为 11 而非 12）。这条排除是**先声明**的，不是事后剔除。"
+  },
+
+  "closed_vocabularies": {
+    "object_type": ["arrow", "observation_domain", "declared_scope", "digest_record", "quotient"],
+    "arithmetic_domain": ["float64", "float64_with_boolean_mask", "exact_integer_and_digest", "exact_rational", "interval_bounds"],
+    "embedding": ["eof_coefficient_vector", "spherical_harmonic_L12_on_latlon", "repo_path_and_digest", "native_grid_cell_set", "calendar_month_index"],
+    "expression_or_word": ["single_matrix_product", "mask_then_gram_solve", "verify_then_append", "successive_application", "glue_of_compatible_locals"],
+    "evaluation_order": ["single_shot_per_lead", "restrict_then_project_per_month", "verify_then_append_per_write", "chain_then_evaluate", "evaluate_then_glue"],
+    "frame": ["frozen_initial_month", "observation_domain_and_degree", "readonly_archive_dir", "declared_cover", "adjacent_interface"],
+    "assumptions": ["calendar_month_mean_state", "truncation_degree_is_assumed", "declared_constants_only_in_appendix", "cover_declared", "interface_types_declared"],
+    "fuel_used": ["six_matrix_products", "sixteen_channel_reads_and_one_projection", "zero_fits_read_only", "one_gram_solve_per_distinct_domain", "unbounded"],
+    "claim_scope": ["leads_one_to_six", "inside_observation_domain_and_degree_12", "repo_frozen_artifacts_only", "global_atmosphere", "all_months_1979_to_2026"],
+    "witness": ["json_report", "npz_artifact", "sha256_manifest", "command_exit_code", "none"],
+    "residual": ["unexplained_share_per_lead", "per_channel_monthly_residual", "unregistered_gaps", "holonomy_record", "covering_layer_index"]
+  },
+
+  "vocabulary_rule": {
+    "min_size": 4,
+    "unused_element_required": true,
+    "statement": "每个受计字段的闭词表**至少 4 个元素**，且**至少有一个元素三面都没有选**。检查器逐字段核对。用意：若词表恰好只有三面各一个元素，那么「三面可区分」就是**设计出来的**，不构成证据；留下未被选中的元素，才使「某一面本可以落到与另一面相同的元素上」成为可能。"
+  },
+
+  "criteria": {
+    "counted_fields": "11 个（12 个 §13 字段减去 identity 的 `question_id`）",
+    "distinguishing_field": "该字段三面的取值**两两不同**（取值取自同一闭词表，故这是「落在不同元素上」，不是「措辞不同」）",
+    "condition_1": "distinguishing_fields >= 4",
+    "condition_2": "12 个模板格（3 面 × 4 格）**全部 status == present**（degenerate 与 absent 都不算满足）",
+    "verdict_three_faces": "condition_1 ∧ condition_2 ⇒ 三面在本载体上都有完整的三段式，且收据可区分",
+    "verdict_partial_frontier": "condition_1 ∧ ¬condition_2 ⇒ **不是三面，而是「若干面完整 ＋ 若干面退化」**；必须指名哪一面的哪一格不成立",
+    "verdict_relabel_risk": "¬condition_1 ⇒ 收据不可区分，`0036` §4.1 的红队句成立（三面也许只是改名），报告层必须降级"
+  },
+
+  "self_disclosure": {
+    "weak_point_of_condition_1": "**条件一在本设计下几乎不可能失败**：闭词表由填写者设计，只要给三面各留一个不同的元素，计数就自动 ≥ 4。⇒ **条件一的证明力很低**，它只能排除最粗的一种改名（三面共用同一条取值），不能支持「三面确实不同」。写在填收据之前，以免事后把它当成功劳。",
+    "why_condition_2_is_primary": "**条件二才是主判据**：模板格要的是**实例**（可指名对象 ＋ 在哪里做过相容检验），不是名字（读法记录 §7 的对照 A′）。实例必须落在本仓库真实存在的文件上，由检查器逐字核对，因此不容易自证。",
+    "what_this_is_not": "本件**不是**对自然的发现，而是**对我们自己呈现方式的自审**；它也**不**证明三面相互独立（三面由同一条流水线执行，故只能支持弱版本，见 carrier_declaration 的「我们做不到的一条」）。"
+  },
+
+  "predictions": {
+    "note": "**在填收据之前写死**，以便被实测否证。`slot` 为 \"verdict\" 的行预测整体判定。",
+    "items": [
+      {"face": "t", "slot": "局部单元", "predict": "present"},
+      {"face": "t", "slot": "重叠", "predict": "absent"},
+      {"face": "t", "slot": "相容条件", "predict": "absent"},
+      {"face": "t", "slot": "粘合产物", "predict": "absent"},
+      {"face": "x", "slot": "局部单元", "predict": "present"},
+      {"face": "x", "slot": "重叠", "predict": "degenerate"},
+      {"face": "x", "slot": "相容条件", "predict": "present"},
+      {"face": "x", "slot": "粘合产物", "predict": "absent"},
+      {"face": "k", "slot": "局部单元", "predict": "present"},
+      {"face": "k", "slot": "重叠", "predict": "present"},
+      {"face": "k", "slot": "相容条件", "predict": "present"},
+      {"face": "k", "slot": "粘合产物", "predict": "present"},
+      {"face": "all", "slot": "verdict", "predict": "partial_frontier"}
+    ],
+    "basis_of_prediction": "冻结模型是**同一初始月的并列直映**（`forecast=(x[-1]@vectors)@maps`；契约写明 no autoregressive rollout），6 条箭头**共源**，故相邻 lead 之间不存在输入/输出界面；球谐是**全局基**，故空面的「重叠」只能是「同一域被两种截断各读一次」的退化情形，且不同域之间没有并集粘合。"
+  },
+
+  "negative_controls": {
+    "C1_permute_labels": {
+      "rule": "对三张收据的面标号取全部 6 种置换后重算：`distinguishing_fields` 与 verdict **必须不变**；且**任何受计字段的 `value` 不得内嵌面标号**（如 `t_`／`时_`），否则判定可能来自名字而不是结构。",
+      "on_failure": "工具失败（检查器在比标号）"
+    },
+    "C2_copy_one_receipt": {
+      "rule": "把三张收据换成**同一张**的副本后重算：`distinguishing_fields` **必须等于 0**，verdict **必须为 relabel_risk**。",
+      "on_failure": "工具失败（检查器没有判别力）"
+    }
+  },
+
+  "failure_semantics": "**工具失败**（非零退出）⇔ 见证无法核对 ／ schema 违规（缺字段、取值不在闭词表、词表 < 4 或无非空未用元素）／ C1 或 C2 不成立。**判定结果本身不是工具失败**：`partial_frontier` 与 `relabel_risk` 都是合法发现，正常退出。",
+
+  "prohibited": [
+    "把本件读成三面相互独立的证明（同一条流水线 ⇒ 不支持）",
+    "把 condition_1 通过当作三面不同的证据（self_disclosure 已声明其证明力很低）",
+    "在填收据之后修改本契约（改契约必须另立 v2；收据里记录的 contract_sha256 会使旧收据失效）",
+    "为了让判定好看而增删闭词表元素或改写 predictions",
+    "把 `degenerate` 记成 `present`（退化实例必须显式标为退化）",
+    "改动 archive/multivariate-l12-v1/ 或上游 adva 文档"
+  ],
+
+  "stop_conditions": [
+    "任一见证无法核对 ⇒ 停止并登记为工具失败（不产出判定）",
+    "任一受计字段的闭词表 < 4 个元素或无非空未用元素 ⇒ 停止",
+    "C1／C2 任一不成立 ⇒ 停止（检查器无判别力，不得报出判定）",
+    "需要改动冻结模型或上游文档才能通过 ⇒ 停止并登记阻塞",
+    "预算耗尽（wall 300 s 或 launch 1 次）"
+  ],
+
+  "budget": {"wall_seconds": 300, "launches": 1, "output_bytes": 400000}
+}

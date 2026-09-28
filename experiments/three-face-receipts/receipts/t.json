@@ -1,0 +1,92 @@
+{
+  "face": "t",
+  "face_zh": "时（提前期／依次应用）",
+  "contract": "experiments/three-face-receipts/contract.json",
+  "contract_sha256": "5f2972d0aee8e232547e0b624af4266c8d0c4f0c0fa86503640ac3e8fa5b2a29",
+  "filled_after_contract": true,
+  "fields": {
+    "question_id": {
+      "value": "advance_carrier_one_circuit",
+      "witness": [{"kind": "file_contains", "ref": "docs/problem-cards/vocabulary-accounting-e1.json", "needle": "多年尺度（年际）地球系统演化过程"}]
+    },
+    "object_type": {
+      "value": "arrow",
+      "instance": "冻结模型 `model.npz` 的 `maps`：lead=1..6 各一个线性算子，每个 lead 是一支从初始态出发的箭头",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/model.py", "needle": "for lead in range(1,7)"}]
+    },
+    "arithmetic_domain": {
+      "value": "float64",
+      "instance": "投影与映射全程 float64；原生格取值由 `astype(float)` 提升，无精确有理、无区间界",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/project.py", "needle": ".astype(float), f['lat'][order], f['lon'].copy(), f['time'].copy()"}]
+    },
+    "embedding": {
+      "value": "eof_coefficient_vector",
+      "instance": "状态＝训练期 EOF 系数向量；预测＝系数向量 → 系数向量",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/contract.json", "needle": "Joint training-only EOF coordinates"}]
+    },
+    "expression_or_word": {
+      "value": "single_matrix_product",
+      "instance": "`forecast=(x[-1]@vectors)@maps`——一次矩阵乘法给出 6 个 lead",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/train.py", "needle": "forecast=(x[-1]@vectors)@maps"}]
+    },
+    "evaluation_order": {
+      "value": "single_shot_per_lead",
+      "instance": "每个 lead 一次从**同一初始月**取值的单发映射；无链式求值",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/contract.json", "needle": "No autoregressive rollout or Floquet claim."}]
+    },
+    "frame": {
+      "value": "frozen_initial_month",
+      "instance": "冻结初始月 2026-02（可换月重起报，但仍是单一初始月）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "\"initial_month\": \"2026-02\""}]
+    },
+    "assumptions": {
+      "value": "calendar_month_mean_state",
+      "instance": "状态是**日历月平均**；模型不做次月内插值（帧是月平均）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/train.py", "needle": "Frames are calendar-month means"}]
+    },
+    "fuel_used": {
+      "value": "six_matrix_products",
+      "instance": "6 个 lead 各一次矩阵乘法（系数规模 2,698）；无迭代、无预烧",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/model.py", "needle": "for lead in range(1,7)"}]
+    },
+    "claim_scope": {
+      "value": "leads_one_to_six",
+      "instance": "只对提前 1–6 个月作声明（目标月 2026-03..08 即此口径）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "\"target_months\": [\"2026-03\", \"2026-04\", \"2026-05\", \"2026-06\", \"2026-07\", \"2026-08\"]"}]
+    },
+    "witness": {
+      "value": "npz_artifact",
+      "instance": "本面的产出落在 `archive/multivariate-reforecast-202602-v1/`（`forecast.npz`＋`report.json`＋`run.log`）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "archive/multivariate-reforecast-202602-v1/"}]
+    },
+    "residual": {
+      "value": "unexplained_share_per_lead",
+      "instance": "本该是「逐 lead 未解释份额」",
+      "caveat": "**今天量不出来**：没有任何晚于 2026-02 的月份 ⇒ 1–6 月无法评分。这一条是本面最要紧的残差，不是缺一项填表。",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/reforecast.py", "needle": "so leads 1..6 cannot be scored yet"}]
+    }
+  },
+  "template_slots": {
+    "局部单元": {
+      "status": "present",
+      "value": "typed_arrow",
+      "instance": "`model.py` 的 `fit_maps`：对 lead=1..6 各解一个算子，收进 `maps`；预测时 `(x[-1]@vectors)@maps` 一次给出 6 支箭头",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/model.py", "needle": "maps.append(np.linalg.solve(a.T@a/n+penalty*np.eye(a.shape[1]),a.T@b/n))"}]
+    },
+    "重叠": {
+      "status": "absent",
+      "why": "6 支箭头**共源**（都从同一个初始月 `x[-1]` 出发），不存在「上一支的输出＝下一支的输入」这样的相邻对 ⇒ 按 `0036` §1.11 的时间行，本面**没有重叠可指**。（能写下「重叠＝相邻界面」这句话，但指不出一个真实的相邻对；这正是读法记录 §7 的对照 A′。）",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "\"no_rollout\": true"}]
+    },
+    "相容条件": {
+      "status": "absent",
+      "why": "没有重叠 ⇒ 没有界面可验。6 个 lead 之间**从不**做相容检验；每个 lead 只与观测评分口径比对（而该评分今天还做不了，见 `residual`）。",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-reforecast/contract.json", "needle": "target T needs initial M with 0 < T-M <= 6 (direct map, leads 1..6)"}]
+    },
+    "粘合产物": {
+      "status": "absent",
+      "why": "6 个 lead 由 `np.stack` **并列**成数组，不是依次复合 `f₁;…;f₆`；代码里不存在 `f_n@(⋯f_1@a_0)` 这种项。并列不是粘合：并列不需要重叠，粘合需要。",
+      "witness": [{"kind": "file_contains", "ref": "experiments/multivariate-refinement/model.py", "needle": "return np.stack([(x[targets-lead]@vectors)@maps[lead-1] for lead in range(1,7)])"}]
+    }
+  }
+}
