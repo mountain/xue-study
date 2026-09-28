@@ -96,3 +96,40 @@ journalctl --user -u xue-assim-freeze -n 50   # 每次运行的输出
 - 没有**逐回路的提升记账**（生日／覆盖层／构造深度／精确残差），没有**和乐**记录。
 - 没有集合、没有成员扰动、没有起点敏感性扫描。
 - 只冻结 `gfs` 一个集合；`ecmwf`／`aifs`／`ifs` 等未接（同一套适配器，加一行即可，但**每次起报各自占存储**）。
+
+---
+
+## 7. 定时任务：三个（都已安装并实测）
+
+安装位置 `~/.config/systemd/user/`，单元文件在 `deploy/`。**`loginctl enable-linger ubuntu` 已开**，
+所以注销后仍继续跑。2026-09-28 全部实测过一遍。
+
+| 定时器 | 何时 | 做什么 | 实测 |
+|---|---|---|---|
+| `xue-assim-freeze.timer` | 每 3 小时 | `orchestrate.py freeze`：探测最新起报并冻结其分析场 | 09:40 触发，2.7 秒，正确判定 `already_frozen`（exit 0） |
+| `xue-backup-sync.timer` | 每日 03:20（随机延迟 ≤10 分钟） | `plan` → `sync` → `verify` | 4 分 28 秒；`copied 0, already present 114`（**增量跳过生效**）；`digest_ok=114 mismatched=0` |
+| `xue-backup-deep.timer` | 每周日 04:40（随机延迟 ≤20 分钟） | `deep`：逐件下载回来重算 sha256 | 2 分 39 秒；**`ok=114 mismatched=0`** |
+
+三个定时器都 `Persistent=true`（机器若关机，开机后补跑）。
+
+**怎么查**：
+
+```bash
+systemctl --user list-timers --all | grep xue-          # 下次何时
+systemctl --user status xue-backup-sync.service        # 上次结果
+journalctl --user -u xue-backup-deep.service -n 30     # 上次输出
+```
+
+**退出码**：「没有新东西要传」是 **0**，不是失败；尺寸/摘要不符或 API 失败才非 0，
+systemd 会把单元标成 `failed`。若是 `failed`，先 `journalctl`，再
+`systemctl --user reset-failed <unit>` 之后手动 `start` 一次复现。
+
+**一个刻意的分离**：定时作业**不写仓库内的文件**。活计划与活账本在
+`~/xue-assimilation/backup/{BACKUP_PLAN.json,BACKUP_MANIFEST.jsonl}`（单元里用
+`XUE_BACKUP_PLAN`／`XUE_BACKUP_MANIFEST` 指定）；`evidence/` 下那两份是**有意提交的快照**。
+理由：受调度的作业若反复改写受跟踪文件，工作树会一直脏，而这个仓库已经被
+「服务器侧脏工作树挡住 `git pull`」绊过三次。
+
+**代价（如实）**：每日作业约 4.5 分钟，绝大部分花在 `verify` 的 114 次逐件
+`head-object`（每次约 1.5 秒的 CLI 开销）加上 `plan` 对 2.9 GB 重新哈希。可以优化
+（批量列举、或只校验变动过的件），但当前量级不值得。

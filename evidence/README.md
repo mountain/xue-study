@@ -100,3 +100,10 @@ python scripts/backup_to_s3.py deep   --bucket $B       # 决定性校验（免�
 ```
 
 每次校验都会往 `evidence/BACKUP_MANIFEST.jsonl` 追加一条记录（只追加）。
+
+**定时维护**：这两件事已挂成 systemd user 定时器（单元在
+`experiments/continuous-assimilation/deploy/`，说明见该目录的 README §7）——
+每日 03:20 增量 `sync` ＋ 廉价 `verify`；每周日 04:40 `deep`。
+**定时作业写的是仓库外的活账本**（`~/xue-assimilation/backup/`）；
+本目录下的 `BACKUP_PLAN.json` 与 `BACKUP_MANIFEST.jsonl` 是**有意提交的快照**，
+需要刷新时手动跑一次并提交，以免受调度的作业把工作树弄脏。
