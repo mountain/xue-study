@@ -1,0 +1,81 @@
+{
+  "version": "continuous-assimilation-era5-source-v1",
+  "question_id": "xue.derived.continuous-assimilation",
+  "round": 2,
+  "frozen_before_run": true,
+  "supersedes_scope": "本件是 `contract.json` 的**增补**（新增一个数据源），不改动原契约任何一条。",
+  "why": "2026-09-28 的可行性探针（`experiments/era5-sp-sst-feasibility/`，判定 feasible_pending_declaration）表明：无需凭据的 ARCO-ERA5 同时提供 `surface_pressure` 与 `sea_surface_temperature`，滞后 6 天。而模型的 13 个通道里恰好缺这两块，xue 服务的五个大气集合又都没有 `sp`。提问方 2026-09-28 指示：把 sst 与 sp 的采集交到远端仓库下，并开启采集与处理。",
+
+  "what_this_declares_and_what_it_does_not": {
+    "declared_by_this": "**采集与处理** ERA5 的 `sp`／`sst`：冻结进只追加档案、聚合成月、与 R1 做重叠比较。",
+    "NOT_declared": "**替换**尚未声明。本采集器**不**把 ERA5 的值写进任何分析态、预报或 S3 备份；「是否允许用 ERA5 的 sp/sst 替代 R1/ERSST 进入模型状态」仍是一个**未作出的声明**。"
+  },
+
+  "source": {
+    "bucket": "gs://gcp-public-data-arco-era5（HTTPS 可读，**无需任何凭据**）",
+    "path": "raw/date-variable-single_level/YYYY/MM/DD/<variable>/surface.nc",
+    "variables": {"sp": "surface_pressure", "sst": "sea_surface_temperature"},
+    "channels_filled": {"sp": "模型通道 `sp`", "sst": "模型通道 `sst`"},
+    "units_declared": {"sp": "Pa", "sst": "K"},
+    "lag": "约 6 天",
+    "formats": "**桶内混着两种格式**：早于 2026 的为 NetCDF-3 classic（签名 CDF\\x02）、近期为 HDF5 ⇒ 按签名选引擎"
+  },
+
+  "no_retention_urgency": "ARCO-ERA5 是**永久档案**（1940 起），与 gfs 服务「只留最新一次起报」根本不同 ⇒ **这里漏采不会丢数据**，缺口随时可补。本采集器的用途是一致性与便利，不是抢救。这一点必须与 gfs 采集层分开记，否则会误判紧迫性。",
+
+  "design": {
+    "kept": "每日 **四个定时次（00/06/12/18Z）** 的 `sp` 与 `sst`，**原生 0.25°**、float32，逐日一个目录",
+    "discarded": "其余 20 个整点时次（如实登记在每日 manifest 的 `discarded` 字段）",
+    "why_four_hours": "R1 月平均就是每日四个定时次的月平均 ⇒ 只留这四点，比较才同口径；且下载侧无法更省：HDF5/NetCDF 的块形状为 (12,361,720)，取四个时次仍会拉到整块",
+    "storage_estimate": "约 **33 MB/日**（两变量合计）⇒ 约 12 GB/年；**上限 20 GB，到顶大声失败且不删除任何东西**",
+    "monthly": "月平均 ＝ 日均的月平均（日均 ＝ 四时次平均）；**保留在原生 0.25°**，重网格留给分析层去做",
+    "processing": "月聚合后可做与 R1 的重叠比较（偏差／中位绝对差／分位），**只写比较报告，不写分析态**",
+    "write_root": "~/xue-assimilation/raw/era5/<YYYY-MM-DD>/ 与 ~/xue-assimilation/monthly/era5/<YYYY-MM>/",
+    "ledgers": ["era5_frozen.jsonl", "era5_months.jsonl", "era5_status.json"],
+    "reuse": "读文件与保守重网格**从 `probe_era5.py` 导入**，不另写一份——那个模块是已冻结的证据件，且它的重网格正是通过「恒等重网格必须为 0」对照验证过的那一份；两份分叉的重网格正是本项目被坑过的地方。",
+    "backfill": "首次从 **2026-09-01** 起补（当月的 1–22 日），使 2026-09 尽快成为一个完整月"
+  },
+
+  "gates": [
+    {"id": "G-A", "rule": "逐日量级闸门：`sp` ∈ [4.5e4, 1.11e5] Pa、`sst` ∈ [264, 316] K。守护的是**单位混用**（hPa 约 1000、degC 约 −10..40），不是物理审查。"},
+    {"id": "G-B", "rule": "文件格式必须二选一（HDF5 或 CDF），并把实际用到的引擎记进 manifest"},
+    {"id": "G-C", "rule": "GRIB 缺测值 3.4028235e38 必须转 NaN；有效格数 `sp` ≥ 20000、`sst` ≥ 5000，不足即拒绝"},
+    {"id": "G-D", "rule": "只追加：已冻结的日／月不得改写，重复即跳过并登记"},
+    {"id": "G-E", "rule": "era5 档案树上限 20 GB；到顶**大声失败并停止采集**，不删任何已冻结件"},
+    {"id": "G-F", "rule": "处理只在**有重叠月**时做比较，且比较报告必须写明所用的 R1 月份与格数"}
+  ],
+
+  "negative_controls": {
+    "C1_unit_injection": {"rule": "把 `sp` 的 Pa 值当 hPa 送进量级闸门，必须被拒。", "on_failure": "工具失败"},
+    "C2_duplicate_freeze": {"rule": "对同一天再冻结一次，必须去重。", "on_failure": "工具失败"},
+    "C3_missing_value_handling": {"rule": "全为缺测值的数组必须变成全 NaN 并被 G-C 拒绝。", "on_failure": "工具失败"}
+  },
+
+  "predictions": {
+    "note": "**跑之前写死**。",
+    "items": [
+      {"id": "P1", "claim": "首次运行可补到 2026-09-22，共 22 天"},
+      {"id": "P2", "claim": "两变量每日落盘合计 < 40 MB"},
+      {"id": "P3", "claim": "2026-09 到月内最后一天时才会 complete（首轮必为 partial）"},
+      {"id": "P4", "claim": "首轮处理时 2026-09 与 R1 **没有重叠**（R1 止于 2026-02）⇒ 比较状态为 `no_overlap`，这是**预期**而非失败"},
+      {"id": "P5", "claim": "在 R1 追上之前，ERA5 月与 R1 的比较**只能靠回溯补采**做（例如补 2026-02）⇒ 首轮不会有任何 `compared`"}
+    ]
+  },
+
+  "prohibited": [
+    "把 ERA5 的值写进分析态、预报或 S3 备份",
+    "声称「替换已获准」——**声明尚未作出**",
+    "改写任何已冻结的日／月或账本条目",
+    "在到顶时自动删除数据",
+    "改动 `archive/` 下任何文件"
+  ],
+
+  "stop_conditions": [
+    "任一闸门失败 ⇒ 拒绝该日／该月并登记，继续下一日",
+    "到顶（20 GB）⇒ 大声失败并停止采集",
+    "网络不可达 ⇒ 登记失败、继续下一周期",
+    "预算耗尽（wall 3600 s / 单次最多 40 天）"
+  ],
+
+  "budget": {"per_run_wall_seconds": 3600, "max_days_per_run": 40, "storage_cap_bytes": 21474836480}
+}

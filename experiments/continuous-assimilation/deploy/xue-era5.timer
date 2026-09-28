@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily ERA5 sp/sst collection and processing
+
+[Timer]
+OnCalendar=*-*-* 05:10:00
+RandomizedDelaySec=15min
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

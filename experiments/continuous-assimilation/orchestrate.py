@@ -189,7 +189,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('command', choices=['cycle', 'probe', 'freeze', 'aggregate', 'analyze',
-                                        'verify', 'status', 'selftest'])
+                                        'verify', 'status', 'selftest', 'era5'])
     ap.add_argument('--month', action='append', help='month YYYY-MM (aggregate/analyze)')
     ap.add_argument('--dry-run', action='store_true', help='record the intent, write no data')
     args = ap.parse_args(argv)
@@ -198,6 +198,17 @@ def main(argv=None) -> int:
     if args.command == 'selftest':
         import selftest
         return selftest.main()
+    if args.command == 'era5':
+        # Delegates to the ERA5 source adapter. Separate from `cycle` on purpose: the gfs
+        # job is a rescue (its upstream keeps only the newest run) while ERA5 is a permanent
+        # archive, so the two have different urgency and different timers.
+        import cas_era5
+        passthrough = []
+        if args.dry_run:
+            passthrough.append('--dry-run')
+        if args.month:
+            passthrough = ['--from'] + list(args.month)
+        return cas_era5.main(passthrough)
     if args.command == 'status':
         step('status', cas.status())
         return 0

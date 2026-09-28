@@ -1,0 +1,21 @@
+[Unit]
+Description=Xue data layer — collect ERA5 sp/sst (freeze daily fields, aggregate months, compare vs R1)
+Documentation=file:///home/ubuntu/xue-study/experiments/continuous-assimilation/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/xue-study/experiments/continuous-assimilation
+# Backfill starts at 2026-09-01; every later run only fills the days that are missing, so the
+# steady-state cost is ~57 MB/day of egress and ~33 MB/day of storage.
+# ARCO-ERA5 is a permanent archive (1940 ->), so a missed day is NOT lost. This timer has no
+# rescue urgency; it exists for consistency with the gfs collector.
+ExecStart=/home/ubuntu/climatetensor-env/bin/python orchestrate.py era5 --from 2026-09-01
+# Non-zero = a gate refused a day, or the storage cap was reached. "No new day yet" exits 0.
+TimeoutStartSec=3600
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=default.target
