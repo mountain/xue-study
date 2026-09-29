@@ -1,0 +1,4574 @@
+{
+  "version": "caliber-invariance-v1",
+  "wall_seconds": 1193.0,
+  "peak_rss_mb": 1920.4,
+  "failures_total": 15,
+  "failure_kinds": [
+    [
+      "A-native",
+      "q850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "A-native",
+      "t850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "A-native",
+      "wind850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "B-2p5",
+      "q850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "B-2p5",
+      "t850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "B-2p5",
+      "wind850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "C-5",
+      "q850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "C-5",
+      "t850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "C-5",
+      "wind850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "D-10",
+      "q850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "D-10",
+      "t850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "D-10",
+      "wind850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "M-2p5-uniform",
+      "q850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "M-2p5-uniform",
+      "t850",
+      200,
+      "ValueError: Insufficient domain"
+    ],
+    [
+      "M-2p5-uniform",
+      "wind850",
+      200,
+      "ValueError: Insufficient domain"
+    ]
+  ],
+  "channel_coverage": {
+    "P1": {
+      "A-native": 13,
+      "B-2p5": 13,
+      "C-5": 13,
+      "D-10": 13
+    },
+    "P2": {
+      "A-native": 10,
+      "B-2p5": 10,
+      "C-5": 10,
+      "D-10": 10
+    }
+  },
+  "global_channels": {
+    "P1": [
+      "msl",
+      "q700",
+      "q850",
+      "sp",
+      "sst",
+      "t2m",
+      "t850",
+      "w500",
+      "w700",
+      "wind250",
+      "wind500",
+      "wind850",
+      "z500"
+    ],
+    "P2": [
+      "msl",
+      "q700",
+      "sp",
+      "sst",
+      "t2m",
+      "w500",
+      "w700",
+      "wind250",
+      "wind500",
+      "z500"
+    ]
+  },
+  "G3_recomputed": {
+    "checked": 78,
+    "mismatch": [],
+    "max_relative_difference": 1.6730762683918219e-15,
+    "max_relative_where": [
+      16,
+      "z500",
+      1766.7202844274502,
+      1766.7202844274473
+    ],
+    "masks_all_identical": true,
+    "holds_recomputed": true,
+    "tolerance_relative": 1e-06,
+    "original_gate_verdict": {
+      "holds": false,
+      "checked": 78,
+      "mismatch_count": 78,
+      "mismatches": [
+        [
+          [
+            4,
+            "t850"
+          ],
+          "residual_mean_rescaled",
+          625.4913632050357,
+          0.04523523179376492
+        ],
+        [
+          [
+            6,
+            "t850"
+          ],
+          "residual_mean_rescaled",
+          339.6507888349977,
+          0.02456338019306888
+        ],
+        [
+          [
+            8,
+            "t850"
+          ],
+          "residual_mean_rescaled",
+          164.99315693827123,
+          0.011932225027448064
+        ],
+        [
+          [
+            10,
+            "t850"
+          ],
+          "residual_mean_rescaled",
+          104.08576024701601,
+          0.0075274316612116325
+        ],
+        [
+          [
+            12,
+            "t850"
+          ],
+          "residual_mean_rescaled",
+          70.39755974309102,
+          0.005091117351927806
+        ],
+        [
+          [
+            16,
+            "t850"
+          ],
+          "residual_mean_rescaled",
+          35.27614316584684,
+          0.0025511535518581412
+        ],
+        [
+          [
+            4,
+            "t2m"
+          ],
+          "residual_mean_rescaled",
+          5655.685155963108,
+          0.096431553091325
+        ],
+        [
+          [
+            6,
+            "t2m"
+          ],
+          "residual_mean_rescaled",
+          3346.233827132316,
+          0.05705454176791916
+        ],
+        [
+          [
+            8,
+            "t2m"
+          ],
+          "residual_mean_rescaled",
+          2464.121246207426,
+          0.0420141914241068
+        ],
+        [
+          [
+            10,
+            "t2m"
+          ],
+          "residual_mean_rescaled",
+          2002.567429246406,
+          0.0341445257377394
+        ],
+        [
+          [
+            12,
+            "t2m"
+          ],
+          "residual_mean_rescaled",
+          1694.9701495779382,
+          0.028899876754083974
+        ],
+        [
+          [
+            16,
+            "t2m"
+          ],
+          "residual_mean_rescaled",
+          1217.9325445936015,
+          0.020766206674676598
+        ],
+        [
+          [
+            4,
+            "sst"
+          ],
+          "residual_mean_rescaled",
+          342.5030269199185,
+          0.031882952815871037
+        ],
+        [
+          [
+            6,
+            "sst"
+          ],
+          "residual_mean_rescaled",
+          170.19775322343364,
+          0.015843383879520462
+        ],
+        [
+          [
+            8,
+            "sst"
+          ],
+          "residual_mean_rescaled",
+          113.15715853758724,
+          0.010533583830999189
+        ],
+        [
+          [
+            10,
+            "sst"
+          ],
+          "residual_mean_rescaled",
+          72.57419967895599,
+          0.0067557936781527245
+        ],
+        [
+          [
+            12,
+            "sst"
+          ],
+          "residual_mean_rescaled",
+          52.58212037794927,
+          0.004894769188012429
+        ],
+        [
+          [
+            16,
+            "sst"
+          ],
+          "residual_mean_rescaled",
+          26.776384612605497,
+          0.0024925625179450565
+        ],
+        [
+          [
+            4,
+            "sp"
+          ],
+          "residual_mean_rescaled",
+          1217739752598174.0,
+          0.6450660908476604
+        ],
+        [
+          [
+            6,
+            "sp"
+          ],
+          "residual_mean_rescaled",
+          858194856072520.4,
+          0.45460649519827573
+        ]
+      ]
+    }
+  },
+  "predictions_recomputed": [
+    {
+      "id": "P1",
+      "hit_recomputed": true,
+      "hit_as_recorded": false,
+      "note": "矩阵阶梯：四口径都无内部最优且 argmin 落在 d=16 端点"
+    },
+    {
+      "id": "P2",
+      "hit_recomputed": false,
+      "hit_as_recorded": false,
+      "note": "原生 θ 阶梯：≥3 个口径有内部最优"
+    },
+    {
+      "id": "P3",
+      "hit_recomputed": true,
+      "hit_as_recorded": true,
+      "note": "θ* 的位置随口径变"
+    },
+    {
+      "id": "P4",
+      "hit_recomputed": false,
+      "hit_as_recorded": false,
+      "note": "副账（不含被排除格点计费）应单调偏向小域 ⇒ argmin 落在 θ=200"
+    },
+    {
+      "id": "P5",
+      "hit_recomputed": true,
+      "hit_as_recorded": true,
+      "note": "最粗口径有失败记录"
+    },
+    {
+      "id": "P6",
+      "hit_recomputed": true,
+      "hit_as_recorded": true,
+      "note": "§D 的筛选翻转比例 < 2%"
+    },
+    {
+      "id": "P7",
+      "hit_recomputed": false,
+      "hit_as_recorded": false,
+      "note": "A 与 B 的 2.5° 通道 N_Q 相同、T62/ERSST 通道不同"
+    }
+  ],
+  "predictions_hit_recomputed": 4,
+  "predictions_hit_as_recorded": 3,
+  "C4_table": {
+    "object": {
+      "nq_at_d12": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "differing_channels": [
+          "q850",
+          "t850",
+          "wind850"
+        ]
+      },
+      "area_fraction_at_d12": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "differing_channels": [
+          "msl",
+          "q700",
+          "q850",
+          "sp",
+          "sst",
+          "t2m",
+          "t850",
+          "w500",
+          "w700",
+          "wind250",
+          "wind500",
+          "wind850",
+          "z500"
+        ]
+      },
+      "gram_condition_at_d12": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "differing_channels": [
+          "msl",
+          "q700",
+          "q850",
+          "sp",
+          "sst",
+          "t2m",
+          "t850",
+          "w500",
+          "w700",
+          "wind250",
+          "wind500",
+          "wind850",
+          "z500"
+        ]
+      },
+      "month_partition_at_d12": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "differing_channels": [
+          "q850",
+          "t850",
+          "wind850"
+        ]
+      }
+    },
+    "matrix": {
+      "argmin_degree": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": true,
+        "incomplete": false,
+        "curves": {
+          "A-native": [
+            16,
+            0
+          ],
+          "B-2p5": [
+            16,
+            0
+          ],
+          "C-5": [
+            16,
+            0
+          ],
+          "D-10": [
+            16,
+            0
+          ]
+        }
+      },
+      "interior": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": true,
+        "degenerate_corrected": true,
+        "incomplete": false,
+        "values": {
+          "A-native": false,
+          "B-2p5": false,
+          "C-5": false,
+          "D-10": false
+        }
+      },
+      "monotone_decreasing": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": true,
+        "degenerate_corrected": true,
+        "incomplete": false,
+        "values": {
+          "A-native": true,
+          "B-2p5": true,
+          "C-5": true,
+          "D-10": true
+        }
+      },
+      "endpoint_optimum": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": true,
+        "degenerate_corrected": true,
+        "incomplete": false,
+        "values": {
+          "A-native": true,
+          "B-2p5": true,
+          "C-5": true,
+          "D-10": true
+        }
+      },
+      "L_sel_at_d12": {
+        "invariant": false,
+        "kind": "float",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "values": {
+          "A-native": -598013408.6400205,
+          "B-2p5": -527143067.1695846,
+          "C-5": -122713159.50827883,
+          "D-10": -32049366.90638036
+        }
+      },
+      "refine_monotone": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "values": {
+          "A-native": false,
+          "B-2p5": false,
+          "C-5": false,
+          "D-10": false
+        }
+      },
+      "argmin_degree_without_null": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": true,
+        "incomplete": false,
+        "curves": {
+          "A-native": [
+            16,
+            0
+          ],
+          "B-2p5": [
+            16,
+            0
+          ],
+          "C-5": [
+            16,
+            0
+          ],
+          "D-10": [
+            16,
+            0
+          ]
+        }
+      }
+    },
+    "native": {
+      "argmin_theta": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "curves": {
+          "A-native": [
+            12,
+            0
+          ],
+          "B-2p5": [
+            12,
+            0
+          ],
+          "C-5": [
+            12,
+            10
+          ],
+          "D-10": [
+            12,
+            50
+          ]
+        }
+      },
+      "interior": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "values": {
+          "A-native": false,
+          "B-2p5": false,
+          "C-5": true,
+          "D-10": true
+        }
+      },
+      "endpoint_optimum": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "values": {
+          "A-native": true,
+          "B-2p5": true,
+          "C-5": false,
+          "D-10": false
+        }
+      },
+      "theta_curve_direction": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "values": {
+          "A-native": "mixed",
+          "B-2p5": "mixed",
+          "C-5": "mixed",
+          "D-10": "mixed"
+        }
+      },
+      "nq_theta_curve": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "curves": {
+          "A-native": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            12,
+            12
+          ],
+          "B-2p5": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            16
+          ],
+          "C-5": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "D-10": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            12
+          ]
+        }
+      },
+      "L_sel_at_theta0": {
+        "invariant": false,
+        "kind": "float",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "values": {
+          "A-native": -598013408.6400205,
+          "B-2p5": -527143067.1695846,
+          "C-5": -122713159.50827883,
+          "D-10": -32049366.90638036
+        }
+      },
+      "argmin_theta_without_null": {
+        "invariant": false,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "curves": {
+          "A-native": [
+            12,
+            50
+          ],
+          "B-2p5": [
+            12,
+            50
+          ],
+          "C-5": [
+            12,
+            10
+          ],
+          "D-10": [
+            12,
+            50
+          ]
+        }
+      },
+      "interior_without_null": {
+        "invariant": true,
+        "kind": "exact",
+        "degenerate_recorded": false,
+        "degenerate_corrected": false,
+        "incomplete": false,
+        "values": {
+          "A-native": true,
+          "B-2p5": true,
+          "C-5": true,
+          "D-10": true
+        }
+      }
+    }
+  },
+  "C4_counts_as_recorded": {
+    "object": {
+      "readings": 4,
+      "invariant_total": 0,
+      "degenerate": 0,
+      "invariant_non_degenerate": 0
+    },
+    "matrix": {
+      "readings": 7,
+      "invariant_total": 6,
+      "degenerate": 3,
+      "invariant_non_degenerate": 3
+    },
+    "native": {
+      "readings": 8,
+      "invariant_total": 2,
+      "degenerate": 0,
+      "invariant_non_degenerate": 2
+    }
+  },
+  "C4_counts_corrected": {
+    "object": {
+      "readings": 4,
+      "invariant_total": 0,
+      "degenerate_recorded": 0,
+      "degenerate_corrected": 0,
+      "invariant_non_degenerate_corrected": 0
+    },
+    "matrix": {
+      "readings": 7,
+      "invariant_total": 6,
+      "degenerate_recorded": 3,
+      "degenerate_corrected": 5,
+      "invariant_non_degenerate_corrected": 1
+    },
+    "native": {
+      "readings": 8,
+      "invariant_total": 2,
+      "degenerate_recorded": 0,
+      "degenerate_corrected": 0,
+      "invariant_non_degenerate_corrected": 2
+    }
+  },
+  "C4_verdict_as_recorded": {
+    "rule": "原生非退化不变数 ≥ 矩阵非退化不变数 ＋ 1",
+    "native_non_degenerate_invariant": 2,
+    "matrix_non_degenerate_invariant": 3,
+    "holds": false
+  },
+  "C4_verdict_corrected": {
+    "rule": "原生非退化不变数 ≥ 矩阵非退化不变数 ＋ 1",
+    "native_non_degenerate_invariant": 2,
+    "matrix_non_degenerate_invariant": 1,
+    "holds": true
+  },
+  "C4_decision_readings": {
+    "matrix_decision_reading": {
+      "name": "argmin_degree",
+      "values": {
+        "A-native": [
+          16,
+          0
+        ],
+        "B-2p5": [
+          16,
+          0
+        ],
+        "C-5": [
+          16,
+          0
+        ],
+        "D-10": [
+          16,
+          0
+        ]
+      },
+      "invariant": true,
+      "degenerate": true,
+      "note": "四口径都取端点 d=16 ⇒ 不变，但没有判别力"
+    },
+    "native_decision_reading": {
+      "name": "argmin_theta",
+      "values": {
+        "A-native": [
+          12,
+          0
+        ],
+        "B-2p5": [
+          12,
+          0
+        ],
+        "C-5": [
+          12,
+          10
+        ],
+        "D-10": [
+          12,
+          50
+        ]
+      },
+      "invariant": false,
+      "degenerate": false,
+      "note": "θ* 随口径移动 ⇒ 有判别力，但对口径不稳"
+    },
+    "reading": "在**决策读数**上：矩阵方法不变但退化（永远取端点），原生方法有判别力但不稳（0/0/10/50）。⇒ C-4 在本轮数据上判的不是「谁更强」，而是「谁更不需要做选择」。"
+  },
+  "refine_monotonicity_detail": {
+    "A-native": {
+      "resid_bits_sel": [
+        -487810234.1,
+        -519213786.2,
+        -548319440.7,
+        -575587216.4,
+        -597761994.1,
+        -637172295.0
+      ],
+      "coeff_bits_sel": [
+        -593515.0,
+        -1286980.8,
+        -2345132.9,
+        -3852625.5,
+        -5832264.8,
+        -11296928.4
+      ],
+      "resid_strictly_decreasing": true,
+      "coeff_strictly_increasing": false,
+      "channels": 13
+    },
+    "B-2p5": {
+      "resid_bits_sel": [
+        -424537815.0,
+        -452913873.2,
+        -480222186.4,
+        -505844961.9,
+        -526824226.2,
+        -564000708.9
+      ],
+      "coeff_bits_sel": [
+        -593367.6,
+        -1285935.3,
+        -2346655.3,
+        -3856855.5,
+        -5837519.2,
+        -11317023.2
+      ],
+      "resid_strictly_decreasing": true,
+      "coeff_strictly_increasing": false,
+      "channels": 13
+    },
+    "C-5": {
+      "resid_bits_sel": [
+        -89369983.6,
+        -97199266.1,
+        -104866481.6,
+        -112170831.1,
+        -118300345.3,
+        -129585528.1
+      ],
+      "coeff_bits_sel": [
+        -586356.4,
+        -1276424.9,
+        -2336814.9,
+        -3855603.4,
+        -5849576.7,
+        -11421863.4
+      ],
+      "resid_strictly_decreasing": true,
+      "coeff_strictly_increasing": false,
+      "channels": 13
+    },
+    "D-10": {
+      "resid_bits_sel": [
+        -17948149.9,
+        -20153099.1,
+        -22377590.5,
+        -24564956.7,
+        -26488702.8,
+        -30656003.4
+      ],
+      "coeff_bits_sel": [
+        -580697.2,
+        -1268657.0,
+        -2330611.3,
+        -3863656.8,
+        -5882739.4,
+        -11321722.9
+      ],
+      "resid_strictly_decreasing": true,
+      "coeff_strictly_increasing": false,
+      "channels": 13
+    },
+    "M-2p5-uniform": {
+      "resid_bits_sel": [
+        -414247608.4,
+        -443365573.2,
+        -469813221.7,
+        -493146908.9,
+        -512874718.6,
+        -547783873.2
+      ],
+      "coeff_bits_sel": [
+        -573285.3,
+        -1261614.4,
+        -2330813.9,
+        -3834192.2,
+        -5803212.5,
+        -11266593.7
+      ],
+      "resid_strictly_decreasing": true,
+      "coeff_strictly_increasing": false,
+      "channels": 13
+    }
+  },
+  "theta_local_minima": {
+    "A-native": {
+      "global_argmin_theta": 0,
+      "local_min_theta": [
+        50
+      ]
+    },
+    "B-2p5": {
+      "global_argmin_theta": 0,
+      "local_min_theta": [
+        50
+      ]
+    },
+    "C-5": {
+      "global_argmin_theta": 10,
+      "local_min_theta": [
+        10
+      ]
+    },
+    "D-10": {
+      "global_argmin_theta": 50,
+      "local_min_theta": [
+        50
+      ]
+    },
+    "M-2p5-uniform": {
+      "global_argmin_theta": 50,
+      "local_min_theta": [
+        10,
+        50
+      ]
+    }
+  },
+  "accounts": {
+    "A-native": {
+      "A": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -643063175.1014429,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            0
+          ],
+          "argmin_index": 0,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -473593823.80702835,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -482997700.8
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -515094718.7
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -545258525.3
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -574033793.5
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -598188210.6
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -643063175.1
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -473593823.8
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -473499998.3
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -473337111.8
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -473236232.7
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -473535489.1
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -471824457.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -460138624.9
+          ]
+        ]
+      },
+      "B": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -648294421.4204016,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -475003944.46273655,
+          "margin_to_best_endpoint": 348562.3922922611
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -488228947.1
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -520325965.0
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -550489771.6
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -579265039.8
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -603419457.0
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -648294421.4
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -474655382.1
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -474611915.1
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -474507444.5
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -474481096.1
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -475003944.5
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -473879086.6
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -465081820.3
+          ]
+        ]
+      },
+      "C": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -631470694.6830641,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            0
+          ],
+          "argmin_index": 0,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -469086319.80175793,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -482378969.7
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -513757945.8
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -542830832.4
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -570057648.0
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -592183273.8
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -631470694.7
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -469086319.8
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -468991205.0
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -468827630.8
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -468724732.7
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -469019022.5
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -467306678.5
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -455637978.8
+          ]
+        ]
+      },
+      "D": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -642767623.1014429,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            0
+          ],
+          "argmin_index": 0,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -473464287.80702835,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -482972484.8
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -515044926.7
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -545175965.3
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -573910273.5
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -598015538.6
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -642767623.1
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -473464287.8
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -473370462.3
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -473207575.8
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -473106696.7
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -473405953.1
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -471694921.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -460009088.9
+          ]
+        ]
+      },
+      "coefficients_total_by_degree": {
+        "4": 394,
+        "6": 778,
+        "8": 1290,
+        "10": 1930,
+        "12": 2698,
+        "16": 4618
+      }
+    },
+    "B-2p5": {
+      "A": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -569954855.8792142,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            0
+          ],
+          "argmin_index": 0,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -402662533.2318029,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -419768306.4
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -448836932.3
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -477205965.5
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -504338941.3
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -527298869.2
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -569954855.9
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -402662533.2
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -402608104.4
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -402568613.5
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -402285777.0
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -402587931.3
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -400939953.6
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -389276675.6
+          ]
+        ]
+      },
+      "B": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -575161930.093503,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -404050343.6378459,
+          "margin_to_best_endpoint": 334309.5108503103
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -424975380.6
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -454044006.6
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -482413039.7
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -509546015.5
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -532505943.4
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -575161930.1
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -403716034.1
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -403693834.8
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -403676501.6
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -403508482.6
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -404050343.6
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -402974439.1
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -394201741.9
+          ]
+        ]
+      },
+      "C": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -558342280.7242342,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            0
+          ],
+          "argmin_index": 0,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -398149236.27678216,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -419149722.8
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -447501205.0
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -474776750.2
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -500358565.7
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -521288678.0
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -558342280.7
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -398149236.3
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -398094330.0
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -398054214.4
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -397769473.4
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -398065184.4
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -396416822.9
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -384771510.1
+          ]
+        ]
+      },
+      "D": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -569659303.8792142,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            0
+          ],
+          "argmin_index": 0,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -402532997.2318029,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -419743090.4
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -448787140.3
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -477123405.5
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -504215421.3
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -527126197.2
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -569659303.9
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -402532997.2
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -402478568.4
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -402439077.5
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -402156241.0
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -402458395.3
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -400810417.6
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -389147139.6
+          ]
+        ]
+      },
+      "coefficients_total_by_degree": {
+        "4": 394,
+        "6": 778,
+        "8": 1290,
+        "10": 1930,
+        "12": 2698,
+        "16": 4618
+      }
+    },
+    "C-5": {
+      "A": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -139610176.94600967,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            10
+          ],
+          "argmin_index": 2,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -93629424.66401558,
+          "margin_to_best_endpoint": 14462.143063232303
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -88559125.4
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -97078476.5
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -105806082.0
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -114629220.0
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -122752707.5
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -139610176.9
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -93614962.5
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -93620138.9
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -93629424.7
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -93608730.0
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -93492555.4
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -93018017.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -90287194.3
+          ]
+        ]
+      },
+      "B": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -140967843.49163082,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            10
+          ],
+          "argmin_index": 2,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -93909418.20977424,
+          "margin_to_best_endpoint": 24533.853342324495
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -89916792.0
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -98436143.1
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -107163748.5
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -115986886.6
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -124110374.1
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -140967843.5
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -93884884.4
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -93892075.1
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -93909418.2
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -93896780.9
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -93855137.0
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -93541746.6
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -91550186.7
+          ]
+        ]
+      },
+      "C": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -127892761.54412735,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            10
+          ],
+          "argmin_index": 2,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -89110831.62403868,
+          "margin_to_best_endpoint": 13299.44648604095
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -87947553.0
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -95752259.6
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -103386707.0
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -110650096.6
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -116730458.8
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -127892761.5
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -89097532.2
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -89102431.2
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -89110831.6
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -89089880.3
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -88968445.1
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -88491101.5
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -85778592.3
+          ]
+        ]
+      },
+      "D": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -139314624.94600967,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            10
+          ],
+          "argmin_index": 2,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -93499888.66401558,
+          "margin_to_best_endpoint": 14462.143063232303
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -88533909.4
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -97028684.5
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -105723522.0
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -114505700.0
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -122580035.5
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -139314624.9
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -93485426.5
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -93490602.9
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -93499888.7
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -93479194.0
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -93363019.4
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -92888481.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -90157658.3
+          ]
+        ]
+      },
+      "coefficients_total_by_degree": {
+        "4": 394,
+        "6": 778,
+        "8": 1290,
+        "10": 1930,
+        "12": 2698,
+        "16": 4618
+      }
+    },
+    "D-10": {
+      "A": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -41665612.96999772,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -24217491.83086768,
+          "margin_to_best_endpoint": 19598.749981209636
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -18216733.8
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -21109642.8
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -24396088.5
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -28116500.2
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -32059328.9
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -41665613.0
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -24197893.1
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -24197893.1
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -24197893.1
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -24200260.8
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -24217491.8
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -24111334.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -23506899.6
+          ]
+        ]
+      },
+      "B": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -41967764.27837038,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -24296051.171044573,
+          "margin_to_best_endpoint": 33699.144371934235
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -18518885.1
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -21411794.1
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -24698239.8
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -28418651.5
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -32361480.2
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -41967764.3
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -24262352.0
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -24262352.0
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -24262352.0
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -24270762.8
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -24296051.2
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -24226152.2
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -23809050.9
+          ]
+        ]
+      },
+      "C": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -30048338.073347744,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -19685018.975037765,
+          "margin_to_best_endpoint": 15097.721100375056
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -17610820.6
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -19791193.8
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -21982917.2
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -24129323.3
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -26003917.5
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -30048338.1
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -19669921.3
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -19669921.3
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -19669921.3
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -19670196.8
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -19685019.0
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -19579786.4
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -19003006.0
+          ]
+        ]
+      },
+      "D": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -41370060.96999772,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -24087955.83086768,
+          "margin_to_best_endpoint": 19598.749981209636
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -18191517.8
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -21059850.8
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -24313528.5
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -27992980.2
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -31886656.9
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -41370061.0
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -24068357.1
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -24068357.1
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -24068357.1
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -24070724.8
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -24087955.8
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -23981798.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -23377363.6
+          ]
+        ]
+      },
+      "coefficients_total_by_degree": {
+        "4": 394,
+        "6": 778,
+        "8": 1290,
+        "10": 1930,
+        "12": 2698,
+        "16": 4618
+      }
+    },
+    "M-2p5-uniform": {
+      "A": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -553687590.6910602,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -393172052.88430464,
+          "margin_to_best_endpoint": 1079189.1296512485
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -409458017.6
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -439264311.4
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -466781159.4
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -491618224.9
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -513315054.9
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -553687590.7
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -392092863.8
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -392075598.5
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -392090574.2
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -391998955.3
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -393172052.9
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -392458117.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -381775418.2
+          ]
+        ]
+      },
+      "B": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -558894664.905349,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -394634465.21682835,
+          "margin_to_best_endpoint": 1488100.5669822693
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -414665091.8
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -444471385.6
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -471988233.6
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -496825299.2
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -518522129.1
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -558894664.9
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -393146364.6
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -393161328.9
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -393198462.4
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -393221660.9
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -394634465.2
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -394492603.2
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -386700484.5
+          ]
+        ]
+      },
+      "C": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -542125444.9675599,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -388682385.4469135,
+          "margin_to_best_endpoint": 1066171.7585713267
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -408859516.2
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -437952905.0
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -464367785.5
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -487660512.7
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -507339170.4
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -542125445.0
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -387616213.7
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -387598175.7
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -387612384.2
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -387517459.2
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -388682385.4
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -387965959.5
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -377291578.5
+          ]
+        ]
+      },
+      "D": {
+        "P1": {
+          "argmin_rung": [
+            16,
+            0
+          ],
+          "argmin_index": 5,
+          "interior": false,
+          "endpoint_optimum": true,
+          "value_at_argmin": -553392038.6910602,
+          "margin_to_best_endpoint": 0.0
+        },
+        "P2": {
+          "argmin_rung": [
+            12,
+            50
+          ],
+          "argmin_index": 4,
+          "interior": true,
+          "endpoint_optimum": false,
+          "value_at_argmin": -393042516.88430464,
+          "margin_to_best_endpoint": 1079189.1296512485
+        },
+        "P1_curve": [
+          [
+            [
+              4,
+              0
+            ],
+            -409432801.6
+          ],
+          [
+            [
+              6,
+              0
+            ],
+            -439214519.4
+          ],
+          [
+            [
+              8,
+              0
+            ],
+            -466698599.4
+          ],
+          [
+            [
+              10,
+              0
+            ],
+            -491494704.9
+          ],
+          [
+            [
+              12,
+              0
+            ],
+            -513142382.9
+          ],
+          [
+            [
+              16,
+              0
+            ],
+            -553392038.7
+          ]
+        ],
+        "P2_curve": [
+          [
+            [
+              12,
+              0
+            ],
+            -391963327.8
+          ],
+          [
+            [
+              12,
+              5
+            ],
+            -391946062.5
+          ],
+          [
+            [
+              12,
+              10
+            ],
+            -391961038.2
+          ],
+          [
+            [
+              12,
+              20
+            ],
+            -391869419.3
+          ],
+          [
+            [
+              12,
+              50
+            ],
+            -393042516.9
+          ],
+          [
+            [
+              12,
+              100
+            ],
+            -392328581.7
+          ],
+          [
+            [
+              12,
+              200
+            ],
+            -381645882.2
+          ]
+        ]
+      },
+      "coefficients_total_by_degree": {
+        "4": 394,
+        "6": 778,
+        "8": 1290,
+        "10": 1930,
+        "12": 2698,
+        "16": 4618
+      }
+    }
+  },
+  "C1": {
+    "rule": "选阶判据必须有内部最优，且该最优对口径扰动稳健",
+    "matrix": {
+      "interior_count": 0,
+      "argmin_per_caliber": {
+        "A-native": [
+          16,
+          0
+        ],
+        "B-2p5": [
+          16,
+          0
+        ],
+        "C-5": [
+          16,
+          0
+        ],
+        "D-10": [
+          16,
+          0
+        ]
+      }
+    },
+    "native": {
+      "interior_count": 2,
+      "argmin_per_caliber": {
+        "A-native": [
+          12,
+          0
+        ],
+        "B-2p5": [
+          12,
+          0
+        ],
+        "C-5": [
+          12,
+          10
+        ],
+        "D-10": [
+          12,
+          50
+        ]
+      },
+      "robust_location": false
+    },
+    "native_without_null": {
+      "interior_count": 4,
+      "argmin_per_caliber": {
+        "A-native": [
+          12,
+          50
+        ],
+        "B-2p5": [
+          12,
+          50
+        ],
+        "C-5": [
+          12,
+          10
+        ],
+        "D-10": [
+          12,
+          50
+        ]
+      }
+    }
+  },
+  "curves": {
+    "A-native": {
+      "P1": [
+        [
+          [
+            4,
+            0
+          ],
+          -482822898.8
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -514919916.7
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -545083723.3
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -573858991.5
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -598013408.6
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -642888373.1
+        ]
+      ],
+      "P2": [
+        [
+          [
+            12,
+            0
+          ],
+          -473455777.8
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -473362002.3
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -473199173.8
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -473098368.7
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -473397847.1
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -471687397.7
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -460004432.9
+        ]
+      ],
+      "P1_without_null": [
+        [
+          [
+            4,
+            0
+          ],
+          -488054145.1
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -520151163.0
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -550314969.6
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -579090237.8
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -603244655.0
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -648119619.4
+        ]
+      ],
+      "P2_without_null": [
+        [
+          [
+            12,
+            0
+          ],
+          -474517336.1
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -474473919.1
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -474369506.5
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -474343232.1
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -474866302.5
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -473742026.6
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -464947628.3
+        ]
+      ]
+    },
+    "B-2p5": {
+      "P1": [
+        [
+          [
+            4,
+            0
+          ],
+          -419612504.4
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -448681130.3
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -477050163.5
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -504183139.3
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -527143067.2
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -569799053.9
+        ]
+      ],
+      "P2": [
+        [
+          [
+            12,
+            0
+          ],
+          -402543503.2
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -402489106.4
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -402449637.5
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -402166915.0
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -402469307.3
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -400821897.6
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -389161489.6
+        ]
+      ],
+      "P1_without_null": [
+        [
+          [
+            4,
+            0
+          ],
+          -424819578.6
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -453888204.6
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -482257237.7
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -509390213.5
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -532350141.4
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -575006128.1
+        ]
+      ],
+      "P2_without_null": [
+        [
+          [
+            12,
+            0
+          ],
+          -403597004.1
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -403574836.8
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -403557525.6
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -403389620.6
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -403931719.6
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -402856383.1
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -394086555.9
+        ]
+      ]
+    },
+    "C-5": {
+      "P1": [
+        [
+          [
+            4,
+            0
+          ],
+          -88519577.4
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -97038928.5
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -105766534.0
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -114589672.0
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -122713159.5
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -139570628.9
+        ]
+      ],
+      "P2": [
+        [
+          [
+            12,
+            0
+          ],
+          -93584702.5
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -93589880.9
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -93599174.7
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -93578488.0
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -93462387.4
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -92988009.7
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -90257920.3
+        ]
+      ],
+      "P1_without_null": [
+        [
+          [
+            4,
+            0
+          ],
+          -89877244.0
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -98396595.1
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -107124200.5
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -115947338.6
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -124070826.1
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -140928295.5
+        ]
+      ],
+      "P2_without_null": [
+        [
+          [
+            12,
+            0
+          ],
+          -93854624.4
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -93861817.1
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -93879168.2
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -93866538.9
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -93824969.0
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -93511738.6
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -91520912.7
+        ]
+      ]
+    },
+    "D-10": {
+      "P1": [
+        [
+          [
+            4,
+            0
+          ],
+          -18206771.8
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -21099680.8
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -24386126.5
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -28106538.2
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -32049366.9
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -41655651.0
+        ]
+      ],
+      "P2": [
+        [
+          [
+            12,
+            0
+          ],
+          -24190287.1
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -24190287.1
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -24190287.1
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -24192660.8
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -24209899.8
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -24103778.7
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -23499529.6
+        ]
+      ],
+      "P1_without_null": [
+        [
+          [
+            4,
+            0
+          ],
+          -18508923.1
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -21401832.1
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -24688277.8
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -28408689.5
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -32351518.2
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -41957802.3
+        ]
+      ],
+      "P2_without_null": [
+        [
+          [
+            12,
+            0
+          ],
+          -24254746.0
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -24254746.0
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -24254746.0
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -24263162.8
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -24288459.2
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -24218596.2
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -23801680.9
+        ]
+      ]
+    },
+    "M-2p5-uniform": {
+      "P1": [
+        [
+          [
+            4,
+            0
+          ],
+          -409302215.6
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -439108509.4
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -466625357.4
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -491462422.9
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -513159252.9
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -553531788.7
+        ]
+      ],
+      "P2": [
+        [
+          [
+            12,
+            0
+          ],
+          -391973833.8
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -391956600.5
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -391971598.2
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -391880093.3
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -393053428.9
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -392340061.7
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -381660232.2
+        ]
+      ],
+      "P1_without_null": [
+        [
+          [
+            4,
+            0
+          ],
+          -414509289.8
+        ],
+        [
+          [
+            6,
+            0
+          ],
+          -444315583.6
+        ],
+        [
+          [
+            8,
+            0
+          ],
+          -471832431.6
+        ],
+        [
+          [
+            10,
+            0
+          ],
+          -496669497.2
+        ],
+        [
+          [
+            12,
+            0
+          ],
+          -518366327.1
+        ],
+        [
+          [
+            16,
+            0
+          ],
+          -558738862.9
+        ]
+      ],
+      "P2_without_null": [
+        [
+          [
+            12,
+            0
+          ],
+          -393027334.6
+        ],
+        [
+          [
+            12,
+            5
+          ],
+          -393042330.9
+        ],
+        [
+          [
+            12,
+            10
+          ],
+          -393079486.4
+        ],
+        [
+          [
+            12,
+            20
+          ],
+          -393102798.9
+        ],
+        [
+          [
+            12,
+            50
+          ],
+          -394515841.2
+        ],
+        [
+          [
+            12,
+            100
+          ],
+          -394374547.2
+        ],
+        [
+          [
+            12,
+            200
+          ],
+          -386585298.5
+        ]
+      ]
+    }
+  },
+  "nq_theta_curve": {
+    "A-native": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      12,
+      12
+    ],
+    "B-2p5": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      16
+    ],
+    "C-5": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+    ],
+    "D-10": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      12
+    ]
+  },
+  "cross_source": {
+    "A-native": {
+      "grid": [
+        94,
+        192
+      ],
+      "flips": {
+        "850": 164,
+        "700": 148,
+        "500": 1
+      },
+      "flip_fraction_max": 0.009086879432624113,
+      "sst_mean_diff_K": -0.09283900619672311,
+      "sst_median_abs_diff_K": 0.22421741828890163
+    },
+    "B-2p5": {
+      "grid": [
+        71,
+        144
+      ],
+      "flips": {
+        "850": 80,
+        "700": 78,
+        "500": 0
+      },
+      "flip_fraction_max": 0.00782472613458529,
+      "sst_mean_diff_K": -0.0968014321593516,
+      "sst_median_abs_diff_K": 0.21863589599249167
+    },
+    "C-5": {
+      "grid": [
+        36,
+        72
+      ],
+      "flips": {
+        "850": 10,
+        "700": 20,
+        "500": 0
+      },
+      "flip_fraction_max": 0.007716049382716049,
+      "sst_mean_diff_K": -0.10968529896262218,
+      "sst_median_abs_diff_K": 0.18930162531097494
+    },
+    "D-10": {
+      "grid": [
+        18,
+        36
+      ],
+      "flips": {
+        "850": 1,
+        "700": 4,
+        "500": 0
+      },
+      "flip_fraction_max": 0.006172839506172839,
+      "sst_mean_diff_K": -0.12179238412965118,
+      "sst_median_abs_diff_K": 0.16277840107198926
+    },
+    "M-2p5-uniform": {
+      "grid": [
+        71,
+        144
+      ],
+      "flips": {
+        "850": 80,
+        "700": 78,
+        "500": 0
+      },
+      "flip_fraction_max": 0.00782472613458529,
+      "sst_mean_diff_K": -0.0968014321593516,
+      "sst_median_abs_diff_K": 0.21863589599249167
+    }
+  },
+  "cross_source_units": {
+    "era5_sp": "Pa",
+    "era5_sst": "K",
+    "r1_sp": null,
+    "r1_sst": null
+  },
+  "gate_verdicts_as_recorded": {
+    "G2": true,
+    "N2": true,
+    "G3": false,
+    "G6": false,
+    "N1": true,
+    "N4": false,
+    "N3": true,
+    "G5": true,
+    "G1": true,
+    "G4": true
+  }
+}

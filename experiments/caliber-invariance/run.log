@@ -1,0 +1,17 @@
+[09:23:36] 读 15 条通道（只读）
+[09:23:39] 月份 1979-01…2025-12（564）训练 432／验证 60／尾部 72
+[09:23:44] G2 恒等 0.0；序列版 vs 单月版 0.0
+[09:23:44] 口径 A-native：P1 [4, 6, 8, 10, 12, 16] ＋ P2 θ [0, 5, 10, 20, 50, 100, 200]
+[09:30:30]   166 行；失败累计 3
+[09:30:30] 口径 B-2p5：P1 [4, 6, 8, 10, 12, 16] ＋ P2 θ [0, 5, 10, 20, 50, 100, 200]
+[09:36:34]   166 行；失败累计 6
+[09:36:34] 口径 C-5：P1 [4, 6, 8, 10, 12, 16] ＋ P2 θ [0, 5, 10, 20, 50, 100, 200]
+[09:38:16]   166 行；失败累计 9
+[09:38:16] 口径 D-10：P1 [4, 6, 8, 10, 12, 16] ＋ P2 θ [0, 5, 10, 20, 50, 100, 200]
+[09:38:47]   166 行；失败累计 12
+[09:38:47] 口径 M-2p5-uniform：P1 [4, 6, 8, 10, 12, 16] ＋ P2 θ [0, 5, 10, 20, 50, 100, 200]
+[09:43:17]   166 行；失败累计 15
+[09:43:17] 全局共同通道集：P1 13 条、P2 10 条
+[09:43:27] §D 跨来源：2026-02 的 ERA5 vs R1-ext（只比当月筛选读数）
+[09:43:29] 写出 /home/ubuntu/xue-study/archive/caliber-invariance-v1/report.json；wall 1193.0 s；peak 1920.4 MB
+[09:43:29] {"C1": {"rule": "选阶判据必须有内部最优，且该最优对口径扰动稳健", "matrix": {"interior_count": 0, "argmin_per_caliber": {"A-native": [16, 0], "B-2p5": [16, 0], "C-5": [16, 0], "D-10": [16, 0]}}, "native": {"interior_count": 2, "argmin_per_caliber": {"A-native": [12, 0], "B-2p5": [12, 0], "C-5": [12, 10], "D-10": [12, 50]}, "robust_location": false}, "native_without_null": {"interior_count": 4, "argmin_per_caliber": {"A-native": [12, 50], "B-2p5": [12, 50], "C-5": [12, 10], "D-10": [12, 50]}}}, "C4_verdict": {"rule": "原生非退化不变数 ≥ 矩阵非退化不变数 ＋ 1", "native_non_degenerate_invariant": 2, "matrix_non_degenerate_invariant": 3, "holds": false}, "predictions": [{"id": "P1", "hit": false}, {"id": "P2", "hit": false}, {"id": "P3", "hit": true}, {"id": "P4", "hit": false}, {"id": "P5", "hit": true}, {"id": "P6", "hit": true}, {"id": "P7", "hit": false}], "failures": 15}
