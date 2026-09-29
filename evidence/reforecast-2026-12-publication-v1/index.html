@@ -1,0 +1,106 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>十步月均外推 · 目标月 2026-03…2026-12 · ClimateTensor</title>
+<style>body{margin:0;background:#f1f5f6;color:#16323d;font:17px/1.75 system-ui,sans-serif}
+main{max-width:1100px;background:white;margin:auto;padding:32px 26px}
+h1{font-size:clamp(24px,3.6vw,34px);line-height:1.32}h2{font-size:23px;margin-top:34px}
+a{color:#006d80}table{border-collapse:collapse;width:100%;font-size:15px}
+td,th{padding:9px;border-bottom:1px solid #d7e3e7;text-align:left}
+th{background:#edf4f5}.scroll{overflow:auto}.notice{background:#fff5e7;border-left:5px solid #b87929;padding:18px}
+.stop{background:#fdeeee;border-left:5px solid #a33;padding:18px}
+img{width:100%;height:auto}code{font-size:13px}ul{padding-left:22px}
+footer{border-top:1px solid #ccd9df;margin-top:30px;padding-top:20px;font-size:14px;color:#45616c}
+@media(max-width:600px){main{padding:20px 14px}}</style><main>
+<p>ClimateTensor · 实验性月均外推 · 2026-09-29</p>
+<h1>从 2026-02 分析场出发的十步月均外推 · 目标月 2026-03…2026-12</h1>
+<div class="notice"><strong>这是本项目目前最新的可看预报产物：从 2026-02 的分析场出发，
+用冻结模型的「提前 1 个月」算子连续套用十步，得到 2026-03 到 2026-12 的十个月场均场。</strong>
+<p>「链落到气候态附近」这句话的**正当口径是取框平均**（三个区域离观测 12 月气候态 +0.9%／+0.9%／−3.1%）；
+**逐点差并不小**，因为预报场只有 L12 的分辨率，见下文第二节。</p>
+<p>站点首页仍在展示 2026-09-24 发布的另一次运行（起报月 2025-12、目标月 2026-01…2026-06），
+本页是**新增**的一页，不改动首页所展示的产品。两次运行不是同一起报，不可以直接比较。</p></div>
+<div class="stop"><strong>先说清楚它是什么、不是什么</strong><ul><li><strong>不是业务预报，也不是有技巧的季节预报。</strong> 这是把冻结模型的「提前 1 个月」算子（`x @ vectors @ maps[0]`）连续套用十次得到的<strong>结构性外推</strong>；模型<strong>从未为迭代应用训练过</strong>（输入由观测状态变成预测状态，属分布外输入）。</li>
+<li><strong>与 CFSv2「接近」是平凡的。</strong> 两者都落在季节气候态附近：链式离观测 12 月气候态只有+0.9%／+0.9%／−3.1%（东亚近海／北美东岸／中东），外部参考离气候态 −6.0%／−5.3%／−6.0%。「接近」不构成一致，也不构成评分。</li>
+<li><strong>高原 2 m 气温带已知表示误差</strong>（1 月偏差 +10.43 K，其中谱截断贡献 +9.59 K）。高原面板的<strong>绝对值不得当作信号</strong>读。</li>
+<li><strong>本页展示的是矩阵代次（`matrix-l12-v1`）的产物。</strong> 该代次已于 2026-09-28 由提问方从主要方法<strong>降为参考方法</strong>（`reference`）；原生方法的预报尚未产出。本页是「目前最新的可看产物」，不是项目的现行主张。</li>
+<li><strong>链在收缩</strong>：十步后没有任何分量还带一个训练标准差量级的异常（末步 `max|z| = 0.159`，阈值 6）。所以它给出的是<strong>季节气候态本身</strong>，不是异常信号。</li>
+<li><strong>数据真实性保留意见不因本页消解</strong>；回测期 2020–2025 此前已被看过（冻结契约的 prior_exposure），不是全新验证样本。</li></ul></div>
+<h2>图：2026-12 的四个场</h2>
+<a href="fig1-2026-12-fields.png"><img src="fig1-2026-12-fields.png"
+ alt="2026-12 的 2 米气温、海平面气压、500 hPa 风速与 500 hPa 位势高度全球图，附三个关注框与高原框"></a>
+<p>格网 1.25°，13 个通道的月平均场。灰色细线是海陆分界（由该月海温的有效掩膜得到）。
+三个关注框（东亚近海、北美东岸、中东）与高原框是后文读数的取框位置。</p>
+<h2>图：它离观测的 12 月气候态有多远</h2>
+<a href="fig2-anomaly-vs-december-climatology.png"><img src="fig2-anomaly-vs-december-climatology.png"
+ alt="2026-12 预报减去观测 12 月气候态：2 米气温与 500 hPa 风速的差值全球图"></a>
+<p>气候态的定义：<strong>R1 的 47 个 12 月（1979-12…2025-12）平均</strong>，保守重网格到 1.25°，
+取框与平均算法与链式读数完全一致。</p>
+<p><strong>这张图要看两件事，不能只看一件。</strong>逐点差<strong>并不小</strong>：2 米气温的
+面积加权均方根 <strong>2.40 K</strong>（局地最大 22.6 K），500 hPa 风速
+<strong>1.18 m/s</strong>，图上那些带状结构就是它们。把差拆开看：纬向平均（大尺度）部分只有
+<strong>0.54 K</strong> ／ <strong>0.68 m/s</strong>，剩下的
+<strong>2.34 K</strong> ／ <strong>0.97 m/s</strong> 是偏离纬向平均的涡动部分。</p>
+<p>原因是表示的粗细：预报场由 <strong>L12 球谐系数</strong>解码（能表示的波长约 15° 以上），
+而气候态是 2.5° 的观测场；气候态里那些<strong>模型表示不了的小尺度</strong>会整块落进差值里。
+所以「离气候态近不近」这个问题，只有<strong>取框平均</strong>之后才有意义（见最后一节），
+逐点差里混着「模型的分辨率」这一项。高原框内的 2 米气温差另有<strong>已知表示误差</strong>
+（1 月 +10.43 K，其中谱截断 +9.59 K），也不是信号。</p>
+<h2>图：十步的账</h2>
+<a href="fig3-chain-ledger.png"><img src="fig3-chain-ledger.png"
+ alt="十步的每步增益、状态幅度 max|z|，以及回测期上链式与 AR(1)、持续性、直接映射的技巧对照"></a>
+<p>左：每步增益从 0.319 升到 0.826 并稳定，与幂迭代估出的最大奇异值 0.824 吻合。
+中：状态幅度从 1.434 降到 0.159，十步后没有分量还带一个训练标准差量级的异常。
+右：回测期（2020–2025）对同一阶气候态的逐月技巧——链式在长提前期低于逐通道 AR(1)，
+但这**不是**「联合模型无用」的证明（比较协议不对等）。</p>
+<h2>图：三个区域的 500 hPa 矢量风速</h2>
+<a href="fig4-region-comparison.png"><img src="fig4-region-comparison.png"
+ alt="东亚近海、北美东岸、中东三个区域的 500 hPa 风速逐月曲线，与观测 12 月气候态及 CFSv2 参考"></a>
+<div class="scroll"><table><tr><th>区域</th><th>链式 2026-12</th><th>观测 12 月气候态</th>
+<th>链式 − 气候态</th><th>CFSv2 2026-12</th><th>CFSv2 − 气候态</th></tr>
+<tr><td>east asia</td><td>29.12</td><td>29.21</td><td>-0.3%</td><td>27.12</td><td>-7.2%</td></tr><tr><td>north america</td><td>23.12</td><td>23.00</td><td>+0.5%</td><td>21.71</td><td>-5.6%</td></tr><tr><td>middle east</td><td>15.40</td><td>15.99</td><td>-3.7%</td><td>14.94</td><td>-6.5%</td></tr></table></div>
+<p>外部参考为 CFSv2 run <code>cfs.2026092512</code>：单成员、原始值、无异常化与技巧遮罩，
+<strong>不是官方季节产品</strong>；它与本项目的可达月份<b>无重叠</b>，因此<b>不是对照、不是评分</b>。</p>
+<h2>十步的接口账（逐字节相接）</h2>
+<div class="scroll"><table><tr><th>步</th><th>输出月</th><th>步增益</th><th>max|z|</th>
+<th>输入指纹</th><th>输出指纹</th></tr>
+<tr><td>1</td><td>2026-03</td><td>0.3188</td><td>1.4341</td><td><code>41f4bef9243e</code></td><td><code>43b4c53a4aad</code></td></tr>
+<tr><td>2</td><td>2026-04</td><td>0.6247</td><td>0.8104</td><td><code>43b4c53a4aad</code></td><td><code>b1f7693f2059</code></td></tr>
+<tr><td>3</td><td>2026-05</td><td>0.7781</td><td>0.6110</td><td><code>b1f7693f2059</code></td><td><code>e3d5bb4c62e3</code></td></tr>
+<tr><td>4</td><td>2026-06</td><td>0.8128</td><td>0.4929</td><td><code>e3d5bb4c62e3</code></td><td><code>6663870e5ebe</code></td></tr>
+<tr><td>5</td><td>2026-07</td><td>0.8225</td><td>0.4089</td><td><code>6663870e5ebe</code></td><td><code>404bede81263</code></td></tr>
+<tr><td>6</td><td>2026-08</td><td>0.8256</td><td>0.3397</td><td><code>404bede81263</code></td><td><code>262af51ae60a</code></td></tr>
+<tr><td>7</td><td>2026-09</td><td>0.8265</td><td>0.2814</td><td><code>262af51ae60a</code></td><td><code>dfa5c7d2c0ce</code></td></tr>
+<tr><td>8</td><td>2026-10</td><td>0.8267</td><td>0.2327</td><td><code>dfa5c7d2c0ce</code></td><td><code>337e42054b3e</code></td></tr>
+<tr><td>9</td><td>2026-11</td><td>0.8265</td><td>0.1922</td><td><code>337e42054b3e</code></td><td><code>6cda4aca507b</code></td></tr>
+<tr><td>10</td><td>2026-12</td><td>0.8263</td><td>0.1586</td><td><code>6cda4aca507b</code></td><td><code>b6c8c461552f</code></td></tr></table></div>
+<p>第 k 步的输出就是第 k+1 步的输入（逐字节核对的指纹）；这一步只证明<strong>粘合的机械定义成立</strong>，
+不证明粘合承载了信息。事实上把界面故意错位 12 个月，评分只变差 3–13%。</p>
+<h2>口径与来源</h2>
+<ul>
+<li>初始月 <strong>2026-02</strong>（R1 大气 ＋ ERSST 海温，13 通道月平均，2698 维联合状态）。</li>
+<li>目标月：2026-03, 2026-04, 2026-05, 2026-06, 2026-07, 2026-08, 2026-09, 2026-10, 2026-11, 2026-12。算子 <code>(x @ vectors) @ maps[0]</code>，<strong>没有重训</strong>。</li>
+<li>冻结模型：<code>archive/multivariate-l12-v1/model.npz</code>，sha256
+<code>807c46c89691f34d</code>（<code>matrix-l12-v1</code> 代次，状态 <code>reference</code>）。</li>
+<li>链式数据：<code>archive/multivariate-chained-reforecast-v1/chain.npz</code>，sha256
+<code>92e2e8512eb96621</code>（21,223,310 B，未随本页发布；页面只发布画出来的四个场）。</li>
+<li>气候态：R1 的 47 个 12 月；两条路径（1.25° 重网格与 2.5° 原生）的读数并列在
+<a href="data.json">data.json</a> 中，相对差见其中 <code>climatology_paths</code>。</li>
+</ul>
+<h2>本页文件</h2>
+<ul><li><a href="README.md">README.md</a> · <code>fb2d8048032347bd</code></li>
+<li><a href="data.json">data.json</a> · <code>8e7612e1d8115451</code></li>
+<li><a href="fig1-2026-12-fields.png">fig1-2026-12-fields.png</a> · <code>c31e658b4ce4d242</code></li>
+<li><a href="fig1-2026-12-fields.svg">fig1-2026-12-fields.svg</a> · <code>26575036ea830382</code></li>
+<li><a href="fig2-anomaly-vs-december-climatology.png">fig2-anomaly-vs-december-climatology.png</a> · <code>d32bbce41d781465</code></li>
+<li><a href="fig2-anomaly-vs-december-climatology.svg">fig2-anomaly-vs-december-climatology.svg</a> · <code>e0fd5d7fe1981cc6</code></li>
+<li><a href="fig3-chain-ledger.png">fig3-chain-ledger.png</a> · <code>3c9462b1a9948fdf</code></li>
+<li><a href="fig3-chain-ledger.svg">fig3-chain-ledger.svg</a> · <code>a42cab832d800b36</code></li>
+<li><a href="fig4-region-comparison.png">fig4-region-comparison.png</a> · <code>eb97e5e21a573842</code></li>
+<li><a href="fig4-region-comparison.svg">fig4-region-comparison.svg</a> · <code>6c8b8fc8c4d0214c</code></li>
+<li><a href="forecast-2026-12-fields.npz">forecast-2026-12-fields.npz</a> · <code>06efbd46cae73e25</code></li></ul>
+<p>逐文件发布审查见 <a href="publication-record.json">publication-record.json</a>；
+复现步骤见 <a href="README.md">README.md</a>。</p>
+<footer>本页由图、数与文由 DeepSeek Harness 代理（deepseek-v4-flash-vision-exp）生成，
+经 Mingli Yuan 授权账号代理提交；账号不表示个人核验或背书。
+所有读数来自本仓库冻结的链式外推件与 R1／ERSST 输入，未做任何重训或参数改动。
+不构成业务预报，也不构成对任何天气事件的预测或预警。</footer></main></html>
