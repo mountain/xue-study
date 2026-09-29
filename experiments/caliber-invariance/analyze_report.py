@@ -203,11 +203,13 @@ def main():
     # 「共享词汇表要不要再计一次」是一个**未声明的自由选择**，必须让它可见。
     accounts = {}
     for cal in d['per_caliber']:
-        chans = d['per_caliber'][cal]['curve_scope']['P1_channels']
+        chans_of = {'P1': d['per_caliber'][cal]['curve_scope']['P1_channels'],
+                    'P2': d['per_caliber'][cal]['curve_scope']['P2_channels']}
         curves = {k: [] for k in ('A', 'B', 'C', 'D')}
         p1_rungs, p2_rungs = [], []
         for ladder, rungs in (('P1', [(deg, 0) for deg in D_LADDER]),
                               ('P2', [(12, t) for t in THETA])):
+            chans = chans_of[ladder]      # P1 与 P2 的共同通道集不同（θ=200 掉 3 条）
             for rung in rungs:
                 rr = [r for r in rows if r['caliber'] == cal and r['ladder'] == ladder
                       and r['degree'] == rung[0] and r['theta_hpa'] == rung[1]
@@ -238,7 +240,8 @@ def main():
         entry['coefficients_total_by_degree'] = {
             str(deg): sum(r['coefficients'] for r in rows
                           if r['caliber'] == cal and r['ladder'] == 'P1' and r['degree'] == deg
-                          and r['theta_hpa'] == 0 and r['channel'] in chans)
+                          and r['theta_hpa'] == 0
+                          and r['channel'] in chans_of['P1'])
             for deg in D_LADDER}
         accounts[cal] = entry
 
