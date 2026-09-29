@@ -23,6 +23,8 @@ Reads only.  Refuses to overwrite an existing page directory.
 """
 import hashlib
 import json
+import re
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -269,7 +271,13 @@ def bold_to_html(text):
 
 
 def plain(text):
-    return text.replace('**', '')
+    """Text as a reader would see it: markdown emphasis and HTML tags removed.
+
+    The first version only stripped ``**`` and then compared against the rendered page,
+    where emphasis had already become <strong> tags -- so G5 failed on a page that did
+    contain every sentence.  Strip tags too, and keep this in sync with bold_to_html.
+    """
+    return re.sub(r'<[^>]+>', '', text.replace('**', ''))
 
 
 def html(data, hash_map):
@@ -368,6 +376,9 @@ footer{{border-top:1px solid #ccd9df;margin-top:30px;padding-top:20px;font-size:
 def main():
     if PUBLIC.exists():
         raise FileExistsError(f'page already exists: {PUBLIC}')
+    staging = PUBLIC.with_name(PUBLIC.name + '.staging')
+    if staging.exists():
+        shutil.rmtree(staging)
     started = time.perf_counter()
     before = {'chain': hash_dir(CHAIN), 'frozen': hash_dir(FROZEN)}
     d = np.load(CHAIN / 'chain.npz', allow_pickle=True)
@@ -456,19 +467,19 @@ def main():
               'wind500': float(np.nanpercentile(np.abs(anomaly['wind500']), 99))}
     land = land_mask(d['sst'][last].astype(float))
 
-    PUBLIC.mkdir(parents=True)
-    figure_fields(lat, lon, fields, land, PUBLIC / 'fig1-2026-12-fields')
-    figure_anomaly(lat, lon, anomaly, land, PUBLIC / 'fig2-anomaly-vs-december-climatology',
+    staging.mkdir(parents=True)
+    figure_fields(lat, lon, fields, land, staging / 'fig1-2026-12-fields')
+    figure_anomaly(lat, lon, anomaly, land, staging / 'fig2-anomaly-vs-december-climatology',
                    limits)
     figure_ledger(report['gluing_ledger'], report['calibration'],
                   report['spectral']['largest_singular_value_estimate'],
-                  PUBLIC / 'fig3-chain-ledger')
+                  staging / 'fig3-chain-ledger')
     figure_regions(months, wind_series, clim_regions,
                    cfs['region_500hPa_vector_mean_speed_ms'],
-                   PUBLIC / 'fig4-region-comparison')
+                   staging / 'fig4-region-comparison')
 
     np.savez_compressed(
-        PUBLIC / 'forecast-2026-12-fields.npz',
+        staging / 'forecast-2026-12-fields.npz',
         lat=lat, lon=lon, months=np.array(months),
         t2m_degC=fields['t2m'].astype('float32'), msl_hPa=fields['msl'].astype('float32'),
         wind500_speed_ms=fields['wind500'].astype('float32'),
@@ -516,20 +527,20 @@ def main():
         'gates': {'G2_readouts_reproduced': g2, 'G3_climatology_two_paths': g3},
         'wall_seconds': None,
     }
-    (PUBLIC / 'data.json').write_text(json.dumps(data, indent=1, ensure_ascii=False) + '\n')
-    (PUBLIC / 'README.md').write_text(README_TEXT.format(chain_sha=data['chain_sha256']))
+    (staging / 'data.json').write_text(json.dumps(data, indent=1, ensure_ascii=False) + '\n')
+    (staging / 'README.md').write_text(README_TEXT.format(chain_sha=data['chain_sha256']))
     page = html(data, {})                                       # first pass: no hashes yet
-    (PUBLIC / 'index.html').write_text(page)
+    (staging / 'index.html').write_text(page)
 
     after = {'chain': hash_dir(CHAIN), 'frozen': hash_dir(FROZEN)}
     gates = {'G1_read_only': before == after,
              'G2_readouts_reproduced': g2['holds'],
              'G3_climatology_both_paths': True,
              'G5_not_claimed_on_page': all(plain(item) in plain(page) for item in NOT_CLAIMED)}
-    hashes = {p.name: sha256(p) for p in sorted(PUBLIC.iterdir())
+    hashes = {p.name: sha256(p) for p in sorted(staging.iterdir())
               if p.is_file() and p.name not in ('sha256.json', 'index.html')}
-    (PUBLIC / 'index.html').write_text(html(data, hashes))
-    hashes['index.html'] = sha256(PUBLIC / 'index.html')
+    (staging / 'index.html').write_text(html(data, hashes))
+    hashes['index.html'] = sha256(staging / 'index.html')
     (PUBLIC / 'sha256.json').write_text(json.dumps(hashes, indent=2) + '\n')
     record = {'page': ROUND, 'question_id': report['question_id'],
               'published_utc': data['generated_utc'],
@@ -544,8 +555,12 @@ def main():
                                 'no change to the homepage product or picker default'],
               'publish_target': '/var/www/climatetensor/releases/<new> + current symlink',
               'wall_seconds': round(time.perf_counter() - started, 1)}
-    (PUBLIC / 'publication-record.json').write_text(
+    (staging / 'publication-record.json').write_text(
         json.dumps(record, indent=2, ensure_ascii=False) + '\n')
+    if not all(gates.values()):
+        shutil.rmtree(staging)
+        raise SystemExit(f'gates failed, nothing published: {json.dumps(gates, ensure_ascii=False)}')
+    staging.rename(PUBLIC)                      # publish only a gated page
     print(json.dumps({'gates': gates, 'G3_max_relative': g3['max_relative_difference'],
                       'anomaly_limits': limits, 'wall_s': record['wall_seconds'],
                       'files': sorted(hashes)}, ensure_ascii=False, indent=1))
