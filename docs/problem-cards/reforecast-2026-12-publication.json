@@ -1,0 +1,37 @@
+{
+  "question_id": "xue.derived.reforecast-2026-12-publication",
+  "round": 1,
+  "predecessor": "docs/problem-cards/multivariate-chained-reforecast.json",
+  "change_reason": "提问方 2026-09-29 问「在哪里能看到现在预报的可视化？」，并说「请推进」。查站点：线上只有 run `2026010100`（起报月 2025-12、目标月 2026-01…2026-06，2026-09-24 发布），按当天算目标月已全部过去；而项目里**最新的预报产物**（2026-02 起报、链式十步到 2026-12）从来没有图、也没上站。",
+  "raw_question": "在哪里能看到现在预报的可视化？（随后）请推进。",
+  "objects_and_versions": "**契约（冻结件）**：`experiments/multivariate-chained-reforecast/contract-publication-2026-12.json`，sha256 `d7dec3ffa80d6e960c3d7d6937c5aab2bb8e1a7ed763965279bc2446ba380e59`（跑前冻结，含一次跑后更正记在 change_log）。\n**渲染器**：同目录 `render_public_page.py`（只读 archive，写站点源目录）。\n**来源件（只读）**：`archive/multivariate-chained-reforecast-v1/{chain.npz（21,223,310 B）,report.json}`；`archive/cfs-reference-2026-12-v1/report.json`（run cfs.2026092512）；R1 输入 `/home/ubuntu/climatetensor-inputs/ncep-multivariate/*.npz`；冻结模型 `archive/multivariate-l12-v1/model.npz`。\n**发布件**：`~/climatetensor-xue/web/public/research/reforecast-2026-12/`（12 个文件，逐文件 sha256 在页面 `sha256.json`；线上字节已逐条比对一致）。\n**release**：`/var/www/climatetensor/releases/reforecast-2026-12-20260929`，`current` 已原子切换；上一版 release 保留。",
+  "success_condition": "把「目前最新的预报产物」做成**能看的图与网页**并发到站点：① 图与读数由脚本从冻结件算出，不由手写；② 与现实一致的**限制必须写在页面上**（实验性、非业务；矩阵代次已降为参考；与外部参考的接近是平凡的；高原表示误差；链在收缩；真实性保留意见）；③ 发布为**新增**，不动首页所展示的产品；④ 线上可访问且字节与发布件一致。",
+  "interpretation_and_assumptions": "- 「最新的预报产物」＝链式外推（2026-02 分析场出发、十步到 2026-12），不是站点首页那一次（2025-12 起报、六个目标月）。两次运行**不是同一起报**，不可直接比较。\n- 气候态用**观测**（R1 的 47 个 12 月）而不是模型内部气候态：前者是读者能对照的量，后者会把「模型自己的偏差」算进差值里。\n- 「离气候态近不近」只在**取框平均**口径下有定义（逐点差混着模型分辨率这一项，见 round_result ④）。\n- 站点发布是**人工**步骤（无定时器）：构建 → 新 release 目录 → 原子切换 symlink；首页产品不由本次改动。",
+  "candidates": "（i）只把度数写成文档不出图；（ii）出图但不上站；（iii）出图 ＋ 新增研究页（本件）；（iv）连首页产品一起换。",
+  "check_scope": "本轮**做**：四张图（2026-12 四个场／相对 12 月气候态的差／十步的账／三区对照）、一页自包含网页、逐文件哈希与发布记录、构建与原子切换、HTTPS 逐文件验收。\n本轮**不做**：不换首页产品与 picker 默认；不改任何冻结件；不重训；不产出新的预报（只把已有的链式结果可视化）；不修站点浏览器回归脚本（另立）。",
+  "budget": {"wall_seconds": 1800, "actual_render_seconds": 9.9, "build_seconds": 15.8, "runs": 1},
+  "round_result": "**已发布：https://climatetensor.io/research/reforecast-2026-12/ ；四道闸门全过；12 个文件线上字节与发布件逐条一致。**\n\n**① 页面内容**：2026-12 的四个场（2 m 气温／海平面气压／500 hPa 风速／500 hPa 位势高度，1.25°，附三区框与高原框）；2026-12 相对观测 12 月气候态的差；十步的账（每步增益 0.319→0.826，与幂迭代估出的最大奇异值 0.824 吻合；`max|z|` 1.434→0.159，阈值 6；回测期链式／AR(1)／持续性／直接映射对照）；三区 500 hPa 风速逐月曲线 ＋ 12 月气候态 ＋ CFSv2。\n\n**② 三区读数（m/s）**：链式 2026-12 东亚近海 29.12、北美东岸 23.12、中东 15.40；观测 12 月气候态 29.21／23.00／15.99（−0.3%／+0.5%／−3.7%）；CFSv2 27.12／21.71／14.94（−7.2%／−5.6%／−6.5%）。⇒ **链与外部参考的「接近」都是朝气候态去**，不是彼此一致。\n\n**③ 闸门**：G1 只读 ✓（archive 跑前后哈希相同）；**G2 读数复刻 ✓ 最大相对差 2.20e-9**（plateau_t2m 为 0.0）；G3 气候态两条路径最大 1.86% ✓；G5 六条限制都在页面上 ✓。\n\n**④ 看图时发现的实质错误（已改）**：初版图 2 的标题写「差值在大部分地方很小」，而画出来是 ±8 K 的带状结构。改成**测量**：2 m 气温逐点差面积加权 RMS **2.40 K**（局地最大 22.6 K），其中纬向平均（大尺度）部分 0.54 K、涡动部分 2.34 K；500 hPa 风速 1.18 m/s（0.68／0.97）。原因可交代：预报场由 **L12 球谐**解码（波长约 15° 以上），气候态是 2.5° 观测 ⇒ 模型表示不了的小尺度整块落进差值。⇒ **「链落到气候态附近」的正当口径是取框平均**，逐点差里混着「模型的分辨率」这一项。页面正文与图题都按这个口径改写。\n\n**⑤ 三处更正（都是检查器／流程，不是读数）**：\n- **G2 首跑按约停止**（fail-closed，未写出任何页面）：契约写 < 1e-12、实测 2.20e-9。诊断：`chain.npz` 是 float32、冻结 readouts 是 float64 ⇒ 1e-12 在存储精度之下，是一条注定失败的闸门。改**闸门容差**（< 1e-6）并要求写出实测值；不改数据。\n- **原生路径网格混用**：用 `t2m`（T62 高斯 94×192）的网格索引去切 `u500/v500`（2.5° 71×144）的场 ⇒ IndexError。「原生网格」不是一个网格，各通道各有各的。\n- **G5 假失败 ＋ 闸门顺序**：G5 在已渲染 `<strong>` 的页面上比对 ⇒ 六条都在却判假（改为去标签再比）；且首版先写页面再判闸门 ⇒ 改成先渲到 `*.staging`、闸门全过才 rename 上线。\n\n**⑥ 站点未被改动（逐字节证明）**：新版与上一版 release 的 `index.html`／`multivariate.html`／`resolution.html`／`data/latest-ctmulti12.json` **逐字节相同**（如首页 sha256 前 16 位 `721f99fb105acfa1` 两版一致）⇒ 纯新增一页，首页仍展示 run `2026010100`，picker 默认值未动。\n\n**⑦ 站点自带的浏览器回归检查在两版上都失败且失败相同**：`browser-check.mjs` 断言 picker 里只有 2 个可见模型，而 2026-09-24 的发布已提供 5 个（CAL L12／MULTI L12／MULTI L6／FULL／EVEN）。用**旧 release** 在本地 8090 端口起同一服务跑同一脚本，**报同样的错** ⇒ 检查脚本落后于发布，**不是本次改动引起的**（这是实测，不是推断）。",
+  "remaining_questions": "- **首页要不要换产品**：线上首页仍是 2025-12 起报、目标月 2026-01…06（已全部过去）。是否把默认换成 2026-02 起报这一条，或另发一次以 2026-02 为起报的正式运行？**这是决定，不是声明。**\n- **要不要把「最近一次分析场」也接上**：采集层每天在冻结 GFS／ERA5，但站点展示的是月均实验预报，两者还没接起来——「现在」的定义要先定（最近一次分析场？最近一个完整月？）。\n- **站点浏览器回归脚本**要不要修（断言 2 → 当前 5 个模型，或按代次标注）？\n- **原生方法的预报**何时能有一条完整运行（本页展示的仍是矩阵代次，已降为 `reference`）。\n- 页面是否需要 K9 式外部复核（交给非本项目读者读一遍）。",
+  "next_step": "1) 提问方裁定首页产品是否更换（或另发一次正式运行）；\n2) 修 `browser-check.mjs` 的模型数断言，让站点回归检查重新有意义；\n3) 若要把首页指向新运行，需要先在采集层之上明确「现在」的口径（最近分析场 vs 最近完整月），再决定发布节奏。",
+  "stop_conditions": [
+    "G1／G2 失败 ⇒ 停止，不发布（本轮首跑即在 G2 处停止，未写出页面）",
+    "G5 无法满足 ⇒ 停止，不发布",
+    "构建或切换 symlink 后首页非 200 ⇒ 立即切回上一个 release 并登记",
+    "发布目录合计 > 40 MB ⇒ 停止并缩减（实际 12 个文件、约 2.9 MB）"
+  ],
+  "attempts": [
+    {"command": "python render_public_page.py（首跑）", "tool_and_version": "python 3.11.15 / matplotlib / numpy 2.4.6", "input": "chain.npz ＋ report.json ＋ R1 输入 ＋ CFS 参考", "output_dir": "(未写出)", "stop_condition": "G2：重算读数必须与冻结 readouts 一致", "budget": {"wall_seconds": 30, "launches": 1}, "outcome": "stopped", "reason": "G2 按约 fail-closed：实测最大相对差 2.20e-9 而契约写 < 1e-12（float32 存储 vs float64 读数）⇒ 闸门容差写错，改闸门不改数据", "first_failure": "闸门本身是一条注定失败的规则"},
+    {"command": "python render_public_page.py（第二次）", "tool_and_version": "同上", "input": "同上", "output_dir": "(未写出)", "stop_condition": "跑通原生路径", "budget": {"wall_seconds": 30, "launches": 1}, "outcome": "failed", "reason": "原生路径网格混用（t2m 的网格索引切 u500/v500 的场）⇒ IndexError；改为按通道各自网格取值", "first_failure": "「原生网格」不是一个网格"},
+    {"command": "python render_public_page.py（第三次）", "tool_and_version": "同上", "input": "同上", "output_dir": "reforecast-2026-12/（未部署）", "stop_condition": "四道闸门全过", "budget": {"wall_seconds": 10, "launches": 1}, "outcome": "completed_with_g5_false", "reason": "G5 假失败：在已渲染 <strong> 的页面上比对纯文本；同时发现流程是「先写页面再判闸门」", "first_failure": "检查器与实际渲染不一致"},
+    {"command": "看图（人工）", "tool_and_version": "read_image 查看 fig1／fig2／fig4", "input": "渲染出的 PNG", "output_dir": "(review)", "stop_condition": "图上说法与图面一致", "budget": {"wall_seconds": 60, "launches": 3}, "outcome": "found_error", "reason": "图 2 标题「差值在大部分地方很小」与图面 ±8 K 带状结构矛盾 ⇒ 加 anomaly_stats 分解并改写页面口径", "first_failure": "标题跑在读数前面"},
+    {"command": "npm run build ＋ rsync ＋ 原子切换 symlink", "tool_and_version": "vite build（15.8 s）／Caddy", "input": "dist/", "output_dir": "/var/www/climatetensor/releases/reforecast-2026-12-20260929", "stop_condition": "首页与新页都 200 且逐文件哈希一致", "budget": {"wall_seconds": 120, "launches": 1}, "outcome": "completed", "reason": "12 个文件线上 200，字节与发布件逐条一致；首页与产品页与上一版逐字节相同", "first_failure": "无"}
+  ],
+  "handoff": {
+    "question": "「现在能看的预报」应该指向哪一次运行，以及它该怎样随采集层更新？",
+    "candidates": "（i）保持现状（首页仍是 2025-12 起报，只加研究页）／（ii）把首页默认换成 2026-02 起报这一条／（iii）另发一次以最近完整月为起报的正式运行／（iv）先定「现在」的口径再定发布节奏",
+    "checks": "四道闸门（只读／读数复刻／气候态两路径／限制上页面）；线上逐文件 sha256 比对；新旧 release 首页逐字节比对；浏览器回归脚本在旧 release 上复现同一失败",
+    "evidence": "线上 https://climatetensor.io/research/reforecast-2026-12/ ；release dir；`sha256.json`（12 个文件）；`publication-record.json`（来源件哈希与闸门）；G2 实测 2.20e-9；G3 最大 1.86%；三区读数与气候态、CFSv2 对照；差值分解 2.40 K（0.54 大尺度／2.34 涡动）",
+    "residuals": "首页产品未换；浏览器回归脚本断言未修（stale）；本页展示的是已降为 reference 的矩阵代次；链无异常信号（max|z| 0.159）；未做 K9 式外部复核；chain.npz 21 MB 未随页面发布（只发画出来的四个场）",
+    "receiver_constraints": "不得把本页读成「2026-12 会怎样」的预测；不得用逐点差论证「离气候态近」（要用取框平均）；不得在删掉六条限制后转发或镜像本页；不得把本页当作原生方法的产物；不得据本页改动首页产品或 picker 默认值"
+  }
+}
