@@ -322,7 +322,7 @@ def html(data, hash_map):
     files = '\n'.join(f'<li><a href="{name}">{name}</a> · '
                       f'<code>{digest[:16]}</code></li>'
                       for name, digest in sorted(hash_map.items()))
-    return f"""<!doctype html><html lang="zh-CN"><meta charset="utf-8">
+    markup = f"""<!doctype html><html lang="zh-CN"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>十步月均外推 · 目标月 2026-03…2026-12 · ClimateTensor</title>
 <style>body{{margin:0;background:#f1f5f6;color:#16323d;font:17px/1.75 system-ui,sans-serif}}
@@ -405,6 +405,9 @@ footer{{border-top:1px solid #ccd9df;margin-top:30px;padding-top:20px;font-size:
 所有读数来自本仓库冻结的链式外推件与 R1／ERSST 输入，未做任何重训或参数改动。
 不构成业务预报，也不构成对任何天气事件的预测或预警。</footer></main></html>
 """
+    # the notice paragraphs are written in markdown emphasis inside an HTML template; the
+    # screenshot of the live page showed them as literal **, so convert here as well.
+    return re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', markup, flags=re.S)
 
 
 def main():
