@@ -142,16 +142,18 @@ def main():
                          'native_non_degenerate_invariant': nat,
                          'matrix_non_degenerate_invariant': mat,
                          'holds': bool(nat >= mat + 1)}
+    def vals_of(grp, nm):
+        e = table[grp][nm]
+        return e.get('values') or e.get('curves')
+
     decision = {
         'matrix_decision_reading': {'name': 'argmin_degree',
-                                    'values': {c: table['matrix']['argmin_degree']['values'][c]
-                                               for c in GRID},
+                                    'values': vals_of('matrix', 'argmin_degree'),
                                     'invariant': table['matrix']['argmin_degree']['invariant'],
                                     'degenerate': True,
                                     'note': '四口径都取端点 d=16 ⇒ 不变，但没有判别力'},
         'native_decision_reading': {'name': 'argmin_theta',
-                                    'values': {c: table['native']['argmin_theta']['values'][c]
-                                               for c in GRID},
+                                    'values': vals_of('native', 'argmin_theta'),
                                     'invariant': table['native']['argmin_theta']['invariant'],
                                     'degenerate': False,
                                     'note': 'θ* 随口径移动 ⇒ 有判别力，但对口径不稳'},
