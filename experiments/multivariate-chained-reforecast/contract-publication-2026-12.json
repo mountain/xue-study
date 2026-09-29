@@ -1,0 +1,70 @@
+{
+  "version": "reforecast-2026-12-publication-v1",
+  "question_id": "xue.derived.reforecast-2026-12-publication",
+  "round": 1,
+  "frozen_before_run": true,
+  "purpose": "把**目前最新的预报产物**（从 2026-02 分析场出发、用冻结模型 ctmulti12 的 lead-1 算子迭代十步得到的 2026-03…2026-12）做成**能看的图与网页**，发布到 https://climatetensor.io/research/reforecast-2026-12/。提问方 2026-09-29 问「在哪里能看到现在预报的可视化」，并说「请推进」。",
+  "why": "站点当前展示的预报是 run `2026010100`：起报月 **2025-12**、目标月 **2026-01…2026-06**，2026-09-24 发布，按今天（2026-09-29）目标月已全部过去；而**最新的预报产物（2026-02 起报、链式到 2026-12）从来没有图，也没有上站**，只有 `archive/multivariate-chained-reforecast-v1/{chain.npz,report.json}` 与工作层记录。",
+  "source_artifacts_readonly": {
+    "chain": "archive/multivariate-chained-reforecast-v1/chain.npz（21,223,310 B，13 通道 × 10 个目标月，1.25° 141×288）",
+    "chain_report": "archive/multivariate-chained-reforecast-v1/report.json（读数、粘合账、校准、闸门）",
+    "cfs_reference": "archive/cfs-reference-2026-12-v1/report.json（run cfs.2026092512，单成员原始值）",
+    "r1_inputs": "/home/ubuntu/climatetensor-inputs/ncep-multivariate/{t2m,msl,u500,v500,z500}.npz（564 个月，1979-01…2025-12）",
+    "frozen_model": "archive/multivariate-l12-v1/model.npz（只读，本件不重新解码模型内部气候态）"
+  },
+  "design": {
+    "what_is_shown": [
+      "图 1：2026-12 的四个场（2 m 气温、海平面气压、500 hPa 风速、500 hPa 位势高度），1.25°，附三个关注框与高原框",
+      "图 2：2026-12 相对**观测 12 月气候态**的差（2 m 气温、500 hPa 风速）——用来直接看「它离气候态有多远」",
+      "图 3：链的十步账（每步增益 ＋ 每步 max|z|，阈值 6）与十步的收缩",
+      "图 4：三个区域的 500 hPa 矢量风速 2026-03…2026-12 ＋ 观测 12 月气候态 ＋ CFSv2 参考（2026-10…2027-01）"
+    ],
+    "climatology_definition": "**观测 12 月气候态 ＝ R1 的 47 个 12 月（1979-12…2025-12）平均**，同框同算法（格点矢量速度 sqrt(u²+v²) 后再做面积加权框平均）。R1 原生 2.5° 场先做**保守重网格**到链的 1.25° 网格，再取框平均 ⇒ 与链式读数同格同算法。**同时**在 R1 原生 2.5° 网格上独立算一遍，两个读数并列写出（若两者不同，必须写出来，不得只报好看的那个）。",
+    "not_claimed": [
+      "不是业务预报，也不是有技巧的季节预报：链式结果是**结构性外推**，模型**从未为迭代应用训练过**（输入由观测变成预测属分布外输入）",
+      "与 CFSv2「接近」是平凡的：两者都落在季节气候态附近（链式离气候态 +0.9%／+0.9%／−3.1%）",
+      "高原 2 m 气温带已知表示误差（1 月 +10.43 K，其中谱截断 +9.59 K）⇒ 高原面板的绝对值不得当作信号读",
+      "本页展示的是**矩阵代次**（`matrix-l12-v1`）的产物；该代次已于 2026-09-28 由提问方降为**参考方法**（`reference`），原生方法的预报尚未产出。页面必须显式写出这一条状态",
+      "不消解数据真实性保留意见"
+    ],
+    "what_is_published": {
+      "page": "/research/reforecast-2026-12/index.html（自包含 HTML，站点既有研究页样式）",
+      "figures": "fig1-2026-12-fields.png、fig2-anomaly-vs-december-climatology.png、fig3-chain-ledger.png、fig4-region-comparison.png（另出 SVG）",
+      "data": "data.json（全部读数、定义、来源哈希）、forecast-2026-12-fields.npz（**只含画出来的四个场 ＋ 区域序列**，不是 21 MB 的全量件）、README.md、publication-record.json、sha256.json",
+      "not_published": "chain.npz 全量件（21 MB）留在服务器 archive/；页面记它的 sha256 与获取方式"
+    },
+    "figure_discipline": "图上不写行话；单位、时间段、格网、「实验性、非业务」的字样必须在图内可读；不得把拟合误差写成预报技巧。"
+  },
+  "gates": [
+    {"id": "G1", "name": "只读", "rule": "source_artifacts_readonly 全部只读；跑前后对 archive/multivariate-chained-reforecast-v1/ 与 archive/multivariate-l12-v1/ 记 sha256 并比对"},
+    {"id": "G2", "name": "读数复刻", "rule": "本件从 chain.npz 重算的三个区域 2026-12 风速与高原 t2m，必须与 report.json 的 readouts **逐位一致**（相对差 < 1e-12）；不一致即停（说明我从 npz 重算的路径与冻结件不同）"},
+    {"id": "G3", "name": "气候态两条路径", "rule": "1.25° 保守重网格路径与 R1 原生 2.5° 路径的 2026-12 气候态读数必须都写出；两者相对差 > 2% 时必须显式登记"},
+    {"id": "G4", "name": "站点不被破坏", "rule": "发布为**新增**目录 ＋ 新 release ＋ 原子切换 symlink；旧 release 目录保留；发布后首页与既有研究页仍 200，且首页所展示的产品（run 2026010100）不变"},
+    {"id": "G5", "name": "页面自带限制", "rule": "not_claimed 六条必须在页面上逐条出现（不是只写在 JSON 里）"}
+  ],
+  "predictions": {
+    "note": "跑之前写死。",
+    "items": [
+      {"id": "P1", "text": "2026-12 的三个区域风速与 report.json 逐位一致（G2 过）"},
+      {"id": "P2", "text": "2026-12 相对 12 月气候态的差，在三个区域上都在 ±10% 内（链已落到气候态附近）"},
+      {"id": "P3", "text": "图 2 的 2 m 气温异常场在高原框内会出现 10 K 量级的正差（表示误差，不是信号）"},
+      {"id": "P4", "text": "两条气候态路径（1.25° 重网格 vs 2.5° 原生）的区域读数相对差 < 2%"}
+    ]
+  },
+  "prohibited": [
+    "不得改动 chain.npz／report.json 或任何冻结件",
+    "不得改动站点首页所展示的产品与 picker 的默认值",
+    "不得把本页说成「原生方法的预报」或「业务预报」",
+    "不得在图上省略「实验性／非业务」与「矩阵代次已降为参考」两条"
+  ],
+  "stop_conditions": [
+    "G1／G2 失败 ⇒ 停止，不发布",
+    "G5 无法满足 ⇒ 停止，不发布",
+    "构建或切换 symlink 后首页非 200 ⇒ 立即切回上一个 release 并登记",
+    "输出（页面目录）合计 > 40 MB ⇒ 停止并缩减"
+  ],
+  "budget": {
+    "wall_seconds": 1800,
+    "runs": 1
+  }
+}
