@@ -9,7 +9,7 @@
 | 渲染器 | `experiments/multivariate-chained-reforecast/render_public_page.py` |
 | 发布件（站点源） | `~/climatetensor-xue/web/public/research/reforecast-2026-12/`（12 个文件，逐文件 sha256 在页面上的 `sha256.json`） |
 | 发布记录 | `publication-record.json`（来源件哈希、四道闸门、未发布项） |
-| release | `/var/www/climatetensor/releases/reforecast-2026-12-20260929`（197 MB，`current` 已原子切换） |
+| release | `/var/www/climatetensor/releases/reforecast-2026-12-20260929-2`（197 MB，`current` 已原子切换；`-20260929` 是同日第一版，因 §5④ 的排版更正被取代，目录保留） |
 | 运行 | 渲染 wall **9.9 s**；构建 `npm run build` 15.8 s |
 
 ## §1 为什么要发这一页
@@ -83,6 +83,11 @@
 3. **G5 假失败 ＋ 闸门顺序**：G5 原先在「`**粗体**` 已渲染成 `<strong>`」的页面上比对 ⇒ 那句话不再是被比对的
    连续子串，六条都在页面上却判假；改为去标签再比。同时把流程改成**先渲到 `*.staging`、闸门全过才 rename
    上线**（首版是先写页面再判闸门，失败会留下半成品目录）。
+4. **排版更正（由截图发现，不是猜的）**：四道闸门都过、线上 200、逐文件哈希一致——但**真实浏览器截图**
+   里 notice 段落显示成字面量 `**`：列表项走了 `bold_to_html`，而 notice 段落里的强调是直接写在 HTML
+   模板里的。改成在 `html()` 末尾统一把 `**x**` 转成 `<strong>x</strong>`，重新渲染、重新构建、
+   发成新 release（`-2`），线上 `**` 残留计数 **0**。
+   教训与「图题跑在读数前面」同一类：**闸门查的是内容在不在，不查它长什么样**；页面必须用眼看一遍。
 
 ## §6 站点没被动到（逐字节证明）
 
@@ -120,6 +125,10 @@ data.json / README.md / sha256.json / publication-record.json  200
 
 `chain.npz`（21,223,310 B）**未随页面发布**，其 sha256 写在页面与 `data.json` 里；
 页面发布的 `forecast-2026-12-fields.npz` 只含画出来的四个场 ＋ 12 月气候态 ＋ 三条区域序列。
+
+**真实浏览器核对**（chromium，2026-09-29）：页面标题与六条限制全部渲染；四张图 `naturalWidth`
+分别为 2025／2025／2250／2250 ⇒ 全部加载成功；`requestfailed` **空**（没有失败请求）；
+修正后的截图里已无 `**` 残留。截图存在 `/tmp/page-top-2.png`（本机临时件，未入档）。
 
 ## §8 限制与未做
 
