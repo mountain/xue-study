@@ -368,17 +368,20 @@ def rung_total(per_channel, key, channels, ledger, field):
     return float(tot)
 
 
-def curve_for(per_channel, caliber, ladder, ledger='L_null'):
-    """曲线 ＝ 逐档合计，只在共同通道集上求和；返回 (曲线, 逐档缺失通道, 共同集)。"""
+def curve_for(per_channel, caliber, ladder, ledger='L_null', channels=None):
+    """曲线 ＝ 逐档合计。默认只在**本口径**的共同通道集上求和；给了 channels 就用它
+    （C-4 要求跨口径可比，故主流程改用**全局**共同通道集）。"""
     keys = ladder_keys(per_channel, caliber, ladder)
-    common = common_channels(per_channel, caliber, ladder)
-    curve, missing = [], []
+    common = set(channels) if channels is not None else common_channels(per_channel, caliber, ladder)
+    curve, dropped = [], []
     for k in keys:
         present = set(per_channel[k])
         if present != common:
-            missing.append({'rung': [k[2], k[3]], 'missing': sorted(common - present)})
+            dropped.append({'rung': [k[2], k[3]],
+                            'excluded_from_sum': sorted(present - common),
+                            'absent': sorted(common - present)})
         curve.append(((k[2], k[3]), rung_total(per_channel, k, common, ledger, 'sel')))
-    return curve, missing, sorted(common)
+    return curve, dropped, sorted(common)
 
 
 def judge(curve):
@@ -395,12 +398,13 @@ def judge(curve):
             'value_at_argmin': float(vals[idx]), 'curve': [[r[0], r[1]] for r in curve]}
 
 
-def readings(per_channel, caliber, rows):
+def readings(per_channel, caliber, rows, channels=None):
     """一个口径上的读数：对象共有组、矩阵专属组、原生专属组。"""
-    c1, m1, ch1 = curve_for(per_channel, caliber, 'P1')
-    c2, m2, ch2 = curve_for(per_channel, caliber, 'P2')
-    c1n, _, _ = curve_for(per_channel, caliber, 'P1', 'L_none')
-    c2n, _, _ = curve_for(per_channel, caliber, 'P2', 'L_none')
+    chans = channels or {}
+    c1, m1, ch1 = curve_for(per_channel, caliber, 'P1', channels=chans.get('P1'))
+    c2, m2, ch2 = curve_for(per_channel, caliber, 'P2', channels=chans.get('P2'))
+    c1n, _, _ = curve_for(per_channel, caliber, 'P1', 'L_none', channels=chans.get('P1'))
+    c2n, _, _ = curve_for(per_channel, caliber, 'P2', 'L_none', channels=chans.get('P2'))
     j = {'P1': judge(c1), 'P2': judge(c2),
          'P1_without_null': judge(c1n), 'P2_without_null': judge(c2n)}
     d12 = {r['channel']: r for r in rows
@@ -577,7 +581,7 @@ def cross_source(cache):
         entry = {'levels': {}}
         sp_era = regrid_conservative(era['sp'][0], era['sp'][1], era['sp'][2], tlat, tlon)
         sp_r1 = regrid_conservative(r1['sp'][0], r1['sp'][1], r1['sp'][2], tlat, tlon)
-        w = area_weights(tlat, tlon)
+        w = area_weights(tlat, tlon).reshape(sp_era.shape)
         for level in (850, 700, 500):
             m_era, m_r1 = sp_era >= level * 100.0, sp_r1 >= level * 100.0
             flips = int((m_era != m_r1).sum())
@@ -777,16 +781,29 @@ def main():
     log(f"G2 恒等 {gates['G2']['identity_max_abs_change']}；"
         f"序列版 vs 单月版 {gates['G2']['stack_vs_single_max_abs']}")
 
-    per_caliber, all_rows = {}, []
+    per_caliber, all_rows, per_channel_by_caliber = {}, [], {}
     for cal_name, cal in CALIBERS:
         cal = None if cal is None else make_grid(*cal)
         log(f'口径 {cal_name}：P1 {D_LADDER} ＋ P2 θ {THETA_LADDER}')
         rows = run_caliber(cal_name, cal, cache, failures)
-        per_channel = aggregate(rows, {'train': splits[0], 'valid': splits[1],
-                                       'tail': splits[2]})
-        per_caliber[cal_name] = readings(per_channel, cal_name, rows)
+        per_channel_by_caliber[cal_name] = aggregate(
+            rows, {'train': splits[0], 'valid': splits[1], 'tail': splits[2]})
         all_rows.extend(rows)
         log(f'  {len(rows)} 行；失败累计 {len(failures)}')
+
+    # C-4 的可比性：全部读数改用**全局共同通道集**（4 个网格口径上、逐档都成功的通道），
+    # 以免「最粗口径在某档少一条通道」被读成「那档更省」。
+    coverage = {}
+    global_channels = {}
+    for ladder in ('P1', 'P2'):
+        sets = {c: common_channels(per_channel_by_caliber[c], c, ladder) for c in GRID_CALIBERS}
+        coverage[ladder] = {c: sorted(v) for c, v in sets.items()}
+        global_channels[ladder] = set.intersection(*sets.values()) if sets else set()
+    log(f'全局共同通道集：P1 {len(global_channels["P1"])} 条、P2 {len(global_channels["P2"])} 条')
+    for cal_name, per_channel in per_channel_by_caliber.items():
+        per_caliber[cal_name] = readings(per_channel, cal_name,
+                                         [r for r in all_rows if r['caliber'] == cal_name],
+                                         channels=global_channels)
 
     gates['G3'] = _gate_e1(all_rows)
     gates['G6'] = _gate_area(per_caliber)
@@ -834,6 +851,9 @@ def main():
                    'tail': [str(dates[splits[2][0]]), str(dates[splits[2][-1]]),
                             int(splits[2].size)]},
         'gates': gates, 'predictions': predictions, 'failures': failures,
+        'channel_coverage': {k: {c: len(v) for c, v in cov.items()}
+                             for k, cov in coverage.items()},
+        'global_channels': {k: sorted(v) for k, v in global_channels.items()},
         'C1': c1, 'C4': cmp, 'cross_source_2026_02': cross,
         'per_caliber': {k: {kk: vv for kk, vv in v.items() if kk not in ('judge', 'object')}
                         for k, v in per_caliber.items()},
