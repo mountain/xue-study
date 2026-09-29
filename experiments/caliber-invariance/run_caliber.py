@@ -336,7 +336,7 @@ def aggregate(rows, splits):
             pc['coeff'][split] = cb
             pc['resid'][split] = rb
             pc['null'][split] = nb
-        for ledger in ('L_null', 'L_none'):
+        for ledger in ('L_null', 'L_none', 'coeff', 'resid', 'null'):
             pc[ledger]['sel'] = pc[ledger]['train'] + pc[ledger]['valid']
             pc[ledger]['all'] = pc[ledger]['sel'] + pc[ledger]['tail']
         pc['n_distinct_domains'] = r['n_distinct_domains']
