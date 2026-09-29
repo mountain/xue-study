@@ -98,7 +98,8 @@ def main():
                     'note': n} for i, v, n in preds]
     predictions_fixed = sum(1 for p in predictions if p['hit_recomputed'])
 
-    # ---- ③ C-4 逐条摊开
+    # ---- ③ C-4 逐条摊开（**并修正退化标记**：run_caliber.py 里把 [16,0] 与 16 相比，
+    #      端点最优因此漏标；那正是 P1 检查式同型的 bug）
     c4 = d['C4']
     table = {}
     for grp in ('object', 'matrix', 'native'):
@@ -106,6 +107,11 @@ def main():
         for nm, v in c4[grp].items():
             vals = v['values']
             first = list(vals.values())[0]
+            deg_corrected = v.get('degenerate', False)
+            if isinstance(first, list) and len(first) == 2:        # 档位 [rung, theta]
+                deg_corrected = all(list(vals[c])[0] in (D_LADDER[-1], D_LADDER[0])
+                                    for c in GRID) if nm.startswith('argmin_degree') else \
+                    all(list(vals[c])[1] in (THETA[0], THETA[-1]) for c in GRID)
             if isinstance(first, dict):
                 diff_keys = sorted({k for c in GRID for k in vals[c]
                                     if vals[c][k] != vals[GRID[0]][k]})
@@ -115,10 +121,74 @@ def main():
             else:
                 show = {'values': vals}
             table[grp][nm] = {'invariant': v['invariant'], 'kind': v['kind'],
-                              'degenerate': v.get('degenerate', False),
+                              'degenerate_recorded': v.get('degenerate', False),
+                              'degenerate_corrected': bool(deg_corrected),
                               'incomplete': v.get('incomplete', False), **show}
     counts = c4['counts']
-    verdict = c4['C4_verdict']
+    counts_corrected = {}
+    for grp in ('object', 'matrix', 'native'):
+        items = table[grp]
+        counts_corrected[grp] = {
+            'readings': len(items),
+            'invariant_total': sum(1 for v in items.values() if v['invariant']),
+            'degenerate_recorded': sum(1 for v in items.values() if v['degenerate_recorded']),
+            'degenerate_corrected': sum(1 for v in items.values() if v['degenerate_corrected']),
+            'invariant_non_degenerate_corrected':
+                sum(1 for v in items.values()
+                    if v['invariant'] and not v['degenerate_corrected'])}
+    nat = counts_corrected['native']['invariant_non_degenerate_corrected']
+    mat = counts_corrected['matrix']['invariant_non_degenerate_corrected']
+    verdict_corrected = {'rule': '原生非退化不变数 ≥ 矩阵非退化不变数 ＋ 1',
+                         'native_non_degenerate_invariant': nat,
+                         'matrix_non_degenerate_invariant': mat,
+                         'holds': bool(nat >= mat + 1)}
+    decision = {
+        'matrix_decision_reading': {'name': 'argmin_degree',
+                                    'values': {c: table['matrix']['argmin_degree']['values'][c]
+                                               for c in GRID},
+                                    'invariant': table['matrix']['argmin_degree']['invariant'],
+                                    'degenerate': True,
+                                    'note': '四口径都取端点 d=16 ⇒ 不变，但没有判别力'},
+        'native_decision_reading': {'name': 'argmin_theta',
+                                    'values': {c: table['native']['argmin_theta']['values'][c]
+                                               for c in GRID},
+                                    'invariant': table['native']['argmin_theta']['invariant'],
+                                    'degenerate': False,
+                                    'note': 'θ* 随口径移动 ⇒ 有判别力，但对口径不稳'},
+        'reading': ('在**决策读数**上：矩阵方法不变但退化（永远取端点），原生方法有判别力但不稳'
+                    '（0/0/10/50）。⇒ C-4 在本轮数据上判的不是「谁更强」，而是'
+                    '「谁更不需要做选择」。'),
+    }
+
+    # ---- ④ 精化单调性为什么是 false：把残差与系数两条分账分开看
+    refine = {}
+    for cal in d['per_caliber']:
+        cs = d['per_caliber'][cal]['curve_scope']['P1_channels']
+        resid, coeff = [], []
+        for deg in D_LADDER:
+            rr = [r for r in rows if r['caliber'] == cal and r['ladder'] == 'P1'
+                  and r['degree'] == deg and r['theta_hpa'] == 0 and r['channel'] in cs]
+            resid.append(sum(r['bits']['train']['resid_bits'] + r['bits']['valid']['resid_bits']
+                             for r in rr))
+            coeff.append(sum(r['bits']['train']['coeff_bits'] + r['bits']['valid']['coeff_bits']
+                             for r in rr))
+        refine[cal] = {
+            'resid_bits_sel': [round(v, 1) for v in resid],
+            'coeff_bits_sel': [round(v, 1) for v in coeff],
+            'resid_strictly_decreasing': bool(all(b < a for a, b in zip(resid, resid[1:]))),
+            'coeff_strictly_increasing': bool(all(b > a for a, b in zip(coeff, coeff[1:]))),
+            'channels': len(cs)}
+
+    # ---- ⑤ θ 曲线的局部极小（全局 argmin 在端点时，局部极小仍值得知道）
+    local_min = {}
+    for cal in d['per_caliber']:
+        cur = [v for _, v in d['judge_detail'][cal]['P2']['curve']]
+        rungs = [r for r, _ in d['judge_detail'][cal]['P2']['curve']]
+        idx = [i for i in range(1, len(cur) - 1)
+               if cur[i] < cur[i - 1] and cur[i] < cur[i + 1]]
+        local_min[cal] = {'global_argmin_theta': rungs[int(min(range(len(cur)),
+                                                              key=lambda i: cur[i]))][1],
+                          'local_min_theta': [rungs[i][1] for i in idx]}
 
     summary = {
         'version': 'caliber-invariance-v1',
@@ -132,7 +202,13 @@ def main():
         'predictions_recomputed': predictions,
         'predictions_hit_recomputed': predictions_fixed,
         'predictions_hit_as_recorded': sum(1 for v in recorded.values() if v),
-        'C4_table': table, 'C4_counts': counts, 'C4_verdict': verdict,
+        'C4_table': table, 'C4_counts_as_recorded': counts,
+        'C4_counts_corrected': counts_corrected,
+        'C4_verdict_as_recorded': c4['C4_verdict'],
+        'C4_verdict_corrected': verdict_corrected,
+        'C4_decision_readings': decision,
+        'refine_monotonicity_detail': refine,
+        'theta_local_minima': local_min,
         'C1': d['C1'],
         'curves': {c: {k: [[rr, round(vv, 1)] for rr, vv in d['judge_detail'][c][k]['curve']]
                        for k in ('P1', 'P2', 'P1_without_null', 'P2_without_null')}
@@ -155,7 +231,12 @@ def main():
                       'masks_all_identical': g3['masks_all_identical'],
                       'predictions_hit_recomputed': predictions_fixed,
                       'predictions_hit_as_recorded': summary['predictions_hit_as_recorded'],
-                      'C4_verdict': verdict, 'counts': counts}, ensure_ascii=False, indent=1))
+                      'C4_verdict_corrected': verdict_corrected,
+                      'counts_as_recorded': counts,
+                      'counts_corrected': counts_corrected}, ensure_ascii=False, indent=1))
+    print('决策读数：', json.dumps(decision, ensure_ascii=False))
+    print('精化单调性：', json.dumps(refine, ensure_ascii=False))
+    print('θ 局部极小：', json.dumps(local_min, ensure_ascii=False))
     print(f'写出 {out_path}')
 
 
