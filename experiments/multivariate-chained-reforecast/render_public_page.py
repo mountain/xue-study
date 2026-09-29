@@ -541,7 +541,7 @@ def main():
               if p.is_file() and p.name not in ('sha256.json', 'index.html')}
     (staging / 'index.html').write_text(html(data, hashes))
     hashes['index.html'] = sha256(staging / 'index.html')
-    (PUBLIC / 'sha256.json').write_text(json.dumps(hashes, indent=2) + '\n')
+    (staging / 'sha256.json').write_text(json.dumps(hashes, indent=2) + '\n')
     record = {'page': ROUND, 'question_id': report['question_id'],
               'published_utc': data['generated_utc'],
               'source': {'chain': {'path': str(CHAIN / 'chain.npz'),
