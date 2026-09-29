@@ -183,11 +183,34 @@ def figure_anomaly(lat, lon, anomaly, land, path, limits):
         draw_boxes(ax)
         fig.colorbar(im, ax=ax, shrink=0.85, pad=0.01).ax.tick_params(labelsize=7)
     fig.suptitle('How far the 2026-12 forecast sits from the observed December mean · '
-                 'the chain has contracted, so the difference is small almost everywhere',
+                 'the large-scale difference is small, the small-scale difference is not: '
+                 'the forecast is L12 (~15 deg), the climatology is 2.5 deg',
                  fontsize=10)
     fig.savefig(path.with_suffix('.png'), dpi=150)
     fig.savefig(path.with_suffix('.svg'))
     plt.close(fig)
+
+
+def anomaly_stats(field, weights, lat):
+    """Split the difference into its zonal-mean part and its eddy (small-scale) part.
+
+    The first draft of this page said "the difference is small almost everywhere" and the
+    figure showed +-8 K bands, so the sentence was wrong.  The honest reading is: the
+    LARGE-SCALE (zonal-mean) difference is small, while the eddy part is large -- and the
+    forecast lives on L12 harmonics (~15 deg wavelength), so it cannot carry the 2.5 deg
+    structure of the observed climatology at all.  Measure both instead of asserting.
+    """
+    w2 = weights.reshape(field.shape)
+    good = np.isfinite(field)
+    rms = float(np.sqrt(np.nansum(field ** 2 * w2 * good) / np.nansum(w2 * good)))
+    zonal = np.nansum(field * w2 * good, axis=1, keepdims=True) / np.nansum(w2 * good, axis=1,
+                                                                            keepdims=True)
+    eddy = np.where(good, field - zonal, np.nan)
+    rms_zonal = float(np.sqrt(np.nansum(zonal ** 2 * w2 * good) / np.nansum(w2 * good)))
+    rms_eddy = float(np.sqrt(np.nansum(eddy ** 2 * w2 * good) / np.nansum(w2 * good)))
+    max_abs = float(np.nanmax(np.abs(field)))
+    return {'rms': rms, 'rms_zonal_mean_part': rms_zonal, 'rms_eddy_part': rms_eddy,
+            'max_abs': max_abs}
 
 
 def figure_ledger(ledger, calibration, sigma, path):
@@ -316,6 +339,8 @@ footer{{border-top:1px solid #ccd9df;margin-top:30px;padding-top:20px;font-size:
 <h1>{PAGE_TITLE}</h1>
 <div class="notice"><strong>这是本项目目前最新的可看预报产物：从 2026-02 的分析场出发，
 用冻结模型的「提前 1 个月」算子连续套用十步，得到 2026-03 到 2026-12 的十个月场均场。</strong>
+<p>「链落到气候态附近」这句话的**正当口径是取框平均**（三个区域离观测 12 月气候态 +0.9%／+0.9%／−3.1%）；
+**逐点差并不小**，因为预报场只有 L12 的分辨率，见下文第二节。</p>
 <p>站点首页仍在展示 2026-09-24 发布的另一次运行（起报月 2025-12、目标月 2026-01…2026-06），
 本页是**新增**的一页，不改动首页所展示的产品。两次运行不是同一起报，不可以直接比较。</p></div>
 <div class="stop"><strong>先说清楚它是什么、不是什么</strong><ul>{not_claimed}</ul></div>
@@ -328,8 +353,17 @@ footer{{border-top:1px solid #ccd9df;margin-top:30px;padding-top:20px;font-size:
 <a href="fig2-anomaly-vs-december-climatology.png"><img src="fig2-anomaly-vs-december-climatology.png"
  alt="2026-12 预报减去观测 12 月气候态：2 米气温与 500 hPa 风速的差值全球图"></a>
 <p>气候态的定义：<strong>R1 的 47 个 12 月（1979-12…2025-12）平均</strong>，保守重网格到 1.25°，
-取框与平均算法与链式读数完全一致。链已经收缩到气候态附近，所以差值在大部分地方很小；
-高原框内的 2 米气温差是<strong>已知表示误差</strong>，不是信号。</p>
+取框与平均算法与链式读数完全一致。</p>
+<p><strong>这张图要看两件事，不能只看一件。</strong>逐点差<strong>并不小</strong>：2 米气温的
+面积加权均方根 <strong>{data["anomaly_stats"]["t2m"]["rms"]:.2f} K</strong>（局地最大 {data["anomaly_stats"]["t2m"]["max_abs"]:.1f} K），500 hPa 风速
+<strong>{data["anomaly_stats"]["wind500"]["rms"]:.2f} m/s</strong>，图上那些带状结构就是它们。把差拆开看：纬向平均（大尺度）部分只有
+<strong>{data["anomaly_stats"]["t2m"]["rms_zonal_mean_part"]:.2f} K</strong> ／ <strong>{data["anomaly_stats"]["wind500"]["rms_zonal_mean_part"]:.2f} m/s</strong>，剩下的
+<strong>{data["anomaly_stats"]["t2m"]["rms_eddy_part"]:.2f} K</strong> ／ <strong>{data["anomaly_stats"]["wind500"]["rms_eddy_part"]:.2f} m/s</strong> 是偏离纬向平均的涡动部分。</p>
+<p>原因是表示的粗细：预报场由 <strong>L12 球谐系数</strong>解码（能表示的波长约 15° 以上），
+而气候态是 2.5° 的观测场；气候态里那些<strong>模型表示不了的小尺度</strong>会整块落进差值里。
+所以「离气候态近不近」这个问题，只有<strong>取框平均</strong>之后才有意义（见最后一节），
+逐点差里混着「模型的分辨率」这一项。高原框内的 2 米气温差另有<strong>已知表示误差</strong>
+（1 月 +10.43 K，其中谱截断 +9.59 K），也不是信号。</p>
 <h2>图：十步的账</h2>
 <a href="fig3-chain-ledger.png"><img src="fig3-chain-ledger.png"
  alt="十步的每步增益、状态幅度 max|z|，以及回测期上链式与 AR(1)、持续性、直接映射的技巧对照"></a>
@@ -465,6 +499,9 @@ def main():
                'wind500': fields['wind500'] - clim_fields['wind500']}
     limits = {'t2m': float(np.nanpercentile(np.abs(anomaly['t2m']), 99)),
               'wind500': float(np.nanpercentile(np.abs(anomaly['wind500']), 99))}
+    weights_flat = area_weights(lat, lon)
+    anomaly_stats_out = {key: anomaly_stats(anomaly[key], weights_flat, lat)
+                         for key in ('t2m', 'wind500')}
     land = land_mask(d['sst'][last].astype(float))
 
     staging.mkdir(parents=True)
@@ -524,6 +561,10 @@ def main():
         'cfs_months': cfs['region_500hPa_vector_mean_speed_ms'],
         'not_claimed': NOT_CLAIMED,
         'anomaly_color_limits': limits,
+        'anomaly_stats': anomaly_stats_out,
+        'anomaly_stats_definition': ('area-weighted RMS of (forecast - observed December '
+                                     'climatology), then split into the zonal-mean part and '
+                                     'the deviation from it (the eddy part)'),
         'gates': {'G2_readouts_reproduced': g2, 'G3_climatology_two_paths': g3},
         'wall_seconds': None,
     }
