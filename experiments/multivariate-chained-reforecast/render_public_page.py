@@ -100,17 +100,22 @@ def grid_metrics(lat, lon):
     return area_weights(lat, lon).reshape(len(lat), len(lon))
 
 
-def region_readings(speed, t2m, lat, lon):
+def region_speed(speed, lat, lon):
+    """Area-weighted box mean of the grid-point vector speed, one value per region.
+
+    The boxes are CR.REGIONS (the same ones the frozen readouts use) and the averaging is
+    CR.box_mean, so this cannot drift from the chain's definition.
+    """
     w2 = grid_metrics(lat, lon)
-    out = {'u500_v500_vector_speed_m_s': {}, 'plateau_t2m_K': None}
-    for name, box in CR.REGIONS.items():
-        ilat, ilon = CR.block_indices(lat, lon, box)
-        out['u500_v500_vector_speed_m_s'][name] = CR.box_mean(speed, w2, ilat, ilon)
+    return {name: CR.box_mean(speed, w2, *CR.block_indices(lat, lon, box))
+            for name, box in CR.REGIONS.items()}
+
+
+def plateau_t2m(t2m, lat, lon):
     box = CR.PLATEAU
-    ilat, ilon = CR.block_indices(lat, lon, (box['lat'][0], box['lat'][1],
-                                             box['lon'][0], box['lon'][1]))
-    out['plateau_t2m_K'] = CR.box_mean(t2m, w2, ilat, ilon)
-    return out
+    w2 = grid_metrics(lat, lon)
+    return CR.box_mean(t2m, w2, *CR.block_indices(lat, lon, (box['lat'][0], box['lat'][1],
+                                                            box['lon'][0], box['lon'][1])))
 
 
 def draw_boxes(ax, color='#123', lw=1.0):
@@ -410,27 +415,32 @@ def main():
         raise SystemExit(f'G2 failed: {json.dumps(g2, ensure_ascii=False)}')
 
     # ---- observed December climatology, two paths
-    clim_native, clim_lat, clim_lon, n_dec = dec_climatology('t2m')
-    climate = {}
+
+    climate, native_grids = {}, {}
     for code in ('t2m', 'msl', 'u500', 'v500', 'z500'):
         native, nlat, nlon, n_dec = dec_climatology(code)
-        regridded = regrid_conservative(native, nlat, nlon, lat, lon)
-        climate[code] = regridded
+        native_grids[code] = (nlat, nlon)
+        climate[code] = regrid_conservative(native, nlat, nlon, lat, lon)
         climate[code + '_native'] = native
         climate[code + '_native_grid'] = [float(nlat.size), float(nlon.size)]
     clim_speed = np.sqrt(climate['u500'] ** 2 + climate['v500'] ** 2)
-    clim_metrics = region_readings(clim_speed, climate['t2m'], lat, lon)
+    clim_regions = region_speed(clim_speed, lat, lon)
+    clim_plateau = plateau_t2m(climate['t2m'], lat, lon)
+    # the native path keeps each channel on ITS OWN grid: t2m is T62 Gaussian 94x192 while
+    # u500/v500 are 2.5 deg 71x144, so the two readings come from two different grids.
+    nlat_u, nlon_u = native_grids['u500']
+    nlat_t, nlon_t = native_grids['t2m']
     native_speed = np.sqrt(climate['u500_native'] ** 2 + climate['v500_native'] ** 2)
-    native_metrics = region_readings(native_speed, climate['t2m_native'], clim_lat, clim_lon)
-    paths = {region: {'regridded_1p25': clim_metrics['u500_v500_vector_speed_m_s'][region],
-                      'native_2p5': native_metrics['u500_v500_vector_speed_m_s'][region],
-                      'relative': abs(clim_metrics['u500_v500_vector_speed_m_s'][region]
-                                      / native_metrics['u500_v500_vector_speed_m_s'][region] - 1)}
+    native_regions = region_speed(native_speed, nlat_u, nlon_u)
+    native_plateau = plateau_t2m(climate['t2m_native'], nlat_t, nlon_t)
+    paths = {region: {'regridded_1p25': clim_regions[region],
+                      'native_grid': native_regions[region],
+                      'native_grid_shape': [int(nlat_u.size), int(nlon_u.size)],
+                      'relative': abs(clim_regions[region] / native_regions[region] - 1)}
              for region in CR.REGIONS}
-    paths['plateau_t2m_K'] = {'regridded_1p25': clim_metrics['plateau_t2m_K'],
-                              'native_2p5': native_metrics['plateau_t2m_K'],
-                              'relative': abs(clim_metrics['plateau_t2m_K']
-                                              / native_metrics['plateau_t2m_K'] - 1)}
+    paths['plateau_t2m_K'] = {'regridded_1p25': clim_plateau, 'native_grid': native_plateau,
+                              'native_grid_shape': [int(nlat_t.size), int(nlon_t.size)],
+                              'relative': abs(clim_plateau / native_plateau - 1)}
     g3 = {'max_relative_difference': max(v['relative'] for v in paths.values()),
           'detail': paths, 'holds_under_2pct': bool(max(v['relative']
                                                         for v in paths.values()) < 0.02)}
@@ -453,7 +463,7 @@ def main():
     figure_ledger(report['gluing_ledger'], report['calibration'],
                   report['spectral']['largest_singular_value_estimate'],
                   PUBLIC / 'fig3-chain-ledger')
-    figure_regions(months, wind_series, clim_metrics['u500_v500_vector_speed_m_s'],
+    figure_regions(months, wind_series, clim_regions,
                    cfs['region_500hPa_vector_mean_speed_ms'],
                    PUBLIC / 'fig4-region-comparison')
 
@@ -469,8 +479,7 @@ def main():
         anomaly_wind500_speed_ms=anomaly['wind500'].astype('float32'),
         region_names=np.array(list(CR.REGIONS)),
         region_wind_series_ms=np.array([wind_series[r] for r in CR.REGIONS]),
-        region_december_climatology_ms=np.array(
-            [clim_metrics['u500_v500_vector_speed_m_s'][r] for r in CR.REGIONS]))
+        region_december_climatology_ms=np.array([clim_regions[r] for r in CR.REGIONS]))
 
     data = {
         'page': ROUND, 'generated_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
@@ -492,8 +501,8 @@ def main():
                                for k, v in report['calibration'].items()},
         'chain_series': wind_series,
         'plateau_t2m_K_series': report['readouts']['plateau_t2m_K'],
-        'climatology': clim_metrics['u500_v500_vector_speed_m_s'],
-        'climatology_plateau_t2m_K': clim_metrics['plateau_t2m_K'],
+        'climatology': clim_regions,
+        'climatology_plateau_t2m_K': clim_plateau,
         'climatology_paths': paths,
         'climatology_definition': ('R1 1979-12..2025-12, 47 Decembers, equal weight per '
                                    'December, area-weighted box mean of the grid-point '
