@@ -404,9 +404,9 @@ def readings(per_channel, caliber, rows):
     d12 = {r['channel']: r for r in rows
            if r['caliber'] == caliber and r['ladder'] == 'P1'
            and r['degree'] == SHIPPED_D and r['theta_hpa'] == 0}
-    resid_curve = [rung_total(per_channel, (caliber, 'P1', d, 0), ch1, 'sel', 'resid')
+    resid_curve = [rung_total(per_channel, (caliber, 'P1', d, 0), ch1, 'resid', 'sel')
                    for d in D_LADDER if (caliber, 'P1', d, 0) in per_channel]
-    coeff_curve = [rung_total(per_channel, (caliber, 'P1', d, 0), ch1, 'sel', 'coeff')
+    coeff_curve = [rung_total(per_channel, (caliber, 'P1', d, 0), ch1, 'coeff', 'sel')
                    for d in D_LADDER if (caliber, 'P1', d, 0) in per_channel]
     l12 = judge(c1)['value_at_argmin'] if False else None
     l12 = [v for r, v in c1 if r[0] == SHIPPED_D]
