@@ -24,6 +24,19 @@ D_LADDER = [4, 6, 8, 10, 12, 16]
 THETA = [0, 5, 10, 20, 50, 100, 200]
 
 
+def judge_curve(curve):
+    """与 run_caliber.judge 同一判定：全局 argmin 是否落在阶梯内部。"""
+    vals = [v for _, v in curve]
+    if not vals:
+        return {'argmin_rung': None, 'interior': None, 'endpoint_optimum': None}
+    idx = min(range(len(vals)), key=lambda i: vals[i])
+    return {'argmin_rung': list(curve[idx][0]), 'argmin_index': idx,
+            'interior': bool(0 < idx < len(vals) - 1),
+            'endpoint_optimum': bool(idx in (0, len(vals) - 1)),
+            'value_at_argmin': float(vals[idx]),
+            'margin_to_best_endpoint': float(min(vals[0], vals[-1]) - vals[idx])}
+
+
 def main():
     out_path = ROUND / 'summary.json'
     if out_path.exists():
@@ -181,6 +194,54 @@ def main():
             'coeff_strictly_increasing': bool(all(b > a for a, b in zip(coeff, coeff[1:]))),
             'channels': len(cs)}
 
+    # ---- ⑥ 四种账目下的同一批阶梯（C-1 的判定是否随「账怎么记」而变）
+    #   账A（本轮主账）＝ 每月系数高斯码长 ＋ 归一残差 ＋ 无免费格点 ＋ 域描述位
+    #   账B（副账）    ＝ 同 A，但不含「被排除格点的气候态计费」
+    #   账C（E1 结构、单位归一）＝ 共享词汇表 p×64（只付一次）＋ 归一残差 ＋ 无免费格点
+    #   账D（全账）    ＝ 共享词汇表 ＋ 每月系数高斯码长 ＋ 归一残差 ＋ 无免费格点
+    # 契约只写死「改掉 E1 的每系数 64 位」这一处；C／D 是跑完后补的两本对照账——
+    # 「共享词汇表要不要再计一次」是一个**未声明的自由选择**，必须让它可见。
+    accounts = {}
+    for cal in d['per_caliber']:
+        chans = d['per_caliber'][cal]['curve_scope']['P1_channels']
+        curves = {k: [] for k in ('A', 'B', 'C', 'D')}
+        p1_rungs, p2_rungs = [], []
+        for ladder, rungs in (('P1', [(deg, 0) for deg in D_LADDER]),
+                              ('P2', [(12, t) for t in THETA])):
+            for rung in rungs:
+                rr = [r for r in rows if r['caliber'] == cal and r['ladder'] == ladder
+                      and r['degree'] == rung[0] and r['theta_hpa'] == rung[1]
+                      and r['channel'] in chans]
+                if len(rr) != len(chans):
+                    continue
+                coeff = sum(r['bits']['train']['coeff_bits'] + r['bits']['valid']['coeff_bits']
+                            for r in rr)
+                resid = sum(r['bits']['train']['resid_bits'] + r['bits']['valid']['resid_bits']
+                            for r in rr)
+                null = sum(r['null_bits']['train'] + r['null_bits']['valid'] for r in rr)
+                dom = sum(r['domain_bits'] for r in rr)
+                shared = sum(r['coefficients'] for r in rr) * 64.0
+                vals = {'A': coeff + resid + null + dom,
+                        'B': coeff + resid + dom,
+                        'C': shared + resid + null + dom,
+                        'D': shared + coeff + resid + null + dom}
+                for k, v in vals.items():
+                    curves[k].append((rung, v))
+                (p1_rungs if ladder == 'P1' else p2_rungs).append(rung)
+        entry = {}
+        for k in ('A', 'B', 'C', 'D'):
+            cut = len(p1_rungs)
+            entry[k] = {'P1': judge_curve(curves[k][:cut]),
+                        'P2': judge_curve(curves[k][cut:]),
+                        'P1_curve': [[r0, round(v, 1)] for r0, v in curves[k][:cut]],
+                        'P2_curve': [[r0, round(v, 1)] for r0, v in curves[k][cut:]]}
+        entry['coefficients_total_by_degree'] = {
+            str(deg): sum(r['coefficients'] for r in rows
+                          if r['caliber'] == cal and r['ladder'] == 'P1' and r['degree'] == deg
+                          and r['theta_hpa'] == 0 and r['channel'] in chans)
+            for deg in D_LADDER}
+        accounts[cal] = entry
+
     # ---- ⑤ θ 曲线的局部极小（全局 argmin 在端点时，局部极小仍值得知道）
     local_min = {}
     for cal in d['per_caliber']:
@@ -211,6 +272,7 @@ def main():
         'C4_decision_readings': decision,
         'refine_monotonicity_detail': refine,
         'theta_local_minima': local_min,
+        'accounts': accounts,
         'C1': d['C1'],
         'curves': {c: {k: [[rr, round(vv, 1)] for rr, vv in d['judge_detail'][c][k]['curve']]
                        for k in ('P1', 'P2', 'P1_without_null', 'P2_without_null')}
@@ -239,6 +301,11 @@ def main():
     print('决策读数：', json.dumps(decision, ensure_ascii=False))
     print('精化单调性：', json.dumps(refine, ensure_ascii=False))
     print('θ 局部极小：', json.dumps(local_min, ensure_ascii=False))
+    print('=== 四种账目下的 argmin（P1 阶 / P2 θ）===')
+    for cal, e in accounts.items():
+        row = {k: (e[k]['P1']['argmin_rung'], e[k]['P1']['interior'],
+                   e[k]['P2']['argmin_rung'], e[k]['P2']['interior']) for k in ('A', 'B', 'C', 'D')}
+        print(' ', cal, json.dumps(row, ensure_ascii=False))
     print(f'写出 {out_path}')
 
 
