@@ -320,37 +320,63 @@ def run_caliber(cal_name, cal, cache, failures):
 
 
 def aggregate(rows, splits):
-    """按档汇总：主账 L_null（含被排除格点计费）与副账 L_none。"""
-    out = {}
+    """按档汇总，**同时保留逐通道**：某条通道在某一档失败时，曲线必须只在
+    「所有档都成功」的共同通道集上求和，否则不同档的合计不可比（首轮 dry-run 抓到：
+    最粗口径 D 在最高阶失败 ⇒ 那一档少一条通道，残差账凭空变好）。"""
+    per_channel = {}
     for r in rows:
         key = (r['caliber'], r['ladder'], r['degree'], r['theta_hpa'])
-        acc = out.setdefault(key, {'L_null': {}, 'L_none': {}, 'coeff_bits': {},
-                                   'resid_bits': {}, 'null_bits': {}, 'channels': 0,
-                                   'n_distinct_domains': 0, 'excluded_cells': 0,
-                                   'domain_cells': 0.0})
-        acc['channels'] += 1
-        acc['n_distinct_domains'] += r['n_distinct_domains']
-        acc['excluded_cells'] += r['excluded_cells']
-        acc['domain_cells'] += r['domain_cells']
+        pc = {'L_null': {}, 'L_none': {}, 'coeff': {}, 'resid': {}, 'null': {}}
         for split in splits:
             cb = r['bits'][split]['coeff_bits']
             rb = r['bits'][split]['resid_bits']
             nb = r['null_bits'][split]
-            acc['L_none'][split] = acc['L_none'].get(split, 0.0) + cb + rb + r['domain_bits']
-            acc['L_null'][split] = acc['L_null'].get(split, 0.0) + cb + rb + nb + r['domain_bits']
-            acc['coeff_bits'][split] = acc['coeff_bits'].get(split, 0.0) + cb
-            acc['resid_bits'][split] = acc['resid_bits'].get(split, 0.0) + rb
-            acc['null_bits'][split] = acc['null_bits'].get(split, 0.0) + nb
-    for acc in out.values():
+            pc['L_none'][split] = cb + rb + r['domain_bits']
+            pc['L_null'][split] = cb + rb + nb + r['domain_bits']
+            pc['coeff'][split] = cb
+            pc['resid'][split] = rb
+            pc['null'][split] = nb
         for ledger in ('L_null', 'L_none'):
-            acc[ledger]['sel'] = acc[ledger]['train'] + acc[ledger]['valid']
-            acc[ledger]['all'] = acc[ledger]['sel'] + acc[ledger]['tail']
-    return out
+            pc[ledger]['sel'] = pc[ledger]['train'] + pc[ledger]['valid']
+            pc[ledger]['all'] = pc[ledger]['sel'] + pc[ledger]['tail']
+        pc['n_distinct_domains'] = r['n_distinct_domains']
+        pc['excluded_cells'] = r['excluded_cells']
+        pc['min_area_fraction'] = r['min_area_fraction']
+        per_channel.setdefault(key, {})[r['channel']] = pc
+    return per_channel
 
 
-def curve_for(agg, caliber, ladder, ledger='L_null'):
-    rungs = sorted({(k[2], k[3]) for k in agg if k[0] == caliber and k[1] == ladder})
-    return [(r, agg[(caliber, ladder, r[0], r[1])][ledger]['sel']) for r in rungs]
+def ladder_keys(per_channel, caliber, ladder):
+    return sorted(k for k in per_channel if k[0] == caliber and k[1] == ladder)
+
+
+def common_channels(per_channel, caliber, ladder):
+    """阶梯上逐档都成功的通道（曲线只在共同集上求和）。"""
+    keys = ladder_keys(per_channel, caliber, ladder)
+    if not keys:
+        return set()
+    return set.intersection(*(set(per_channel[k]) for k in keys))
+
+
+def rung_total(per_channel, key, channels, field, ledger=None):
+    tot = 0.0
+    for ch in channels:
+        pc = per_channel[key][ch]
+        tot += pc[ledger][field] if ledger else pc[field]
+    return float(tot)
+
+
+def curve_for(per_channel, caliber, ladder, ledger='L_null'):
+    """曲线 ＝ 逐档合计，只在共同通道集上求和；返回 (曲线, 逐档缺失通道)。"""
+    keys = ladder_keys(per_channel, caliber, ladder)
+    common = common_channels(per_channel, caliber, ladder)
+    curve, missing = [], []
+    for k in keys:
+        present = set(per_channel[k])
+        if present != common:
+            missing.append({'rung': [k[2], k[3]], 'missing': sorted(common - present)})
+        curve.append(((k[2], k[3]), rung_total(per_channel, k, common, 'sel', ledger)))
+    return curve, missing, sorted(common)
 
 
 def judge(curve):
@@ -367,20 +393,27 @@ def judge(curve):
             'value_at_argmin': float(vals[idx]), 'curve': [[r[0], r[1]] for r in curve]}
 
 
-def readings(agg, caliber):
+def readings(per_channel, caliber, rows):
     """一个口径上的读数：对象共有组、矩阵专属组、原生专属组。"""
-    j = {'P1': judge(curve_for(agg, caliber, 'P1')),
-         'P2': judge(curve_for(agg, caliber, 'P2')),
-         'P1_without_null': judge(curve_for(agg, caliber, 'P1', 'L_none')),
-         'P2_without_null': judge(curve_for(agg, caliber, 'P2', 'L_none'))}
-    d12 = {r['channel']: r for r in agg['_rows']
+    c1, m1, ch1 = curve_for(per_channel, caliber, 'P1')
+    c2, m2, ch2 = curve_for(per_channel, caliber, 'P2')
+    c1n, _, _ = curve_for(per_channel, caliber, 'P1', 'L_none')
+    c2n, _, _ = curve_for(per_channel, caliber, 'P2', 'L_none')
+    j = {'P1': judge(c1), 'P2': judge(c2),
+         'P1_without_null': judge(c1n), 'P2_without_null': judge(c2n)}
+    d12 = {r['channel']: r for r in rows
            if r['caliber'] == caliber and r['ladder'] == 'P1'
            and r['degree'] == SHIPPED_D and r['theta_hpa'] == 0}
-    resid_curve = [agg.get((caliber, 'P1', d, 0), {}).get('resid_bits', {}).get('sel', np.nan)
-                   for d in D_LADDER]
-    coeff_curve = [agg.get((caliber, 'P1', d, 0), {}).get('coeff_bits', {}).get('sel', np.nan)
-                   for d in D_LADDER]
-    l12 = agg.get((caliber, 'P1', SHIPPED_D, 0), {}).get('L_null', {}).get('sel', float('nan'))
+    resid_curve = [rung_total(per_channel, (caliber, 'P1', d, 0), ch1, 'sel', 'resid')
+                   for d in D_LADDER if (caliber, 'P1', d, 0) in per_channel]
+    coeff_curve = [rung_total(per_channel, (caliber, 'P1', d, 0), ch1, 'sel', 'coeff')
+                   for d in D_LADDER if (caliber, 'P1', d, 0) in per_channel]
+    l12 = judge(c1)['value_at_argmin'] if False else None
+    l12 = [v for r, v in c1 if r[0] == SHIPPED_D]
+    l12 = l12[0] if l12 else float('nan')
+    nq_curve = [int(rung_total(per_channel, (caliber, 'P2', SHIPPED_D, t), ch2,
+                               'n_distinct_domains'))
+                for t in THETA_LADDER if (caliber, 'P2', SHIPPED_D, t) in per_channel]
     return {
         'object': {
             'nq_at_d12': {k: v['n_distinct_domains'] for k, v in d12.items()},
@@ -393,7 +426,8 @@ def readings(agg, caliber):
             'endpoint_optimum': j['P1']['endpoint_optimum'],
             'monotone_decreasing': j['P1']['monotone_decreasing'],
             'L_sel_at_d12': l12,
-            'refine_monotone': bool(np.all(np.diff(resid_curve) < 0)
+            'refine_monotone': bool(len(resid_curve) == len(D_LADDER)
+                                    and np.all(np.diff(resid_curve) < 0)
                                     and np.all(np.diff(coeff_curve) > 0)),
             'argmin_degree_without_null': j['P1_without_null']['argmin_rung'],
         },
@@ -402,17 +436,20 @@ def readings(agg, caliber):
             'endpoint_optimum': j['P2']['endpoint_optimum'],
             'theta_curve_direction': ('decreasing' if j['P2']['monotone_decreasing'] else
                                       'increasing' if j['P2']['monotone_increasing'] else 'mixed'),
-            'nq_theta_curve': [agg.get((caliber, 'P2', SHIPPED_D, t), {})
-                               .get('n_distinct_domains', -1) for t in THETA_LADDER],
+            'nq_theta_curve': nq_curve if len(nq_curve) == len(THETA_LADDER) else None,
             'L_sel_at_theta0': l12,
             'argmin_theta_without_null': j['P2_without_null']['argmin_rung'],
             'interior_without_null': j['P2_without_null']['interior'],
         },
         'judge': j,
+        'curve_scope': {'P1_channels': ch1, 'P2_channels': ch2,
+                        'P1_missing': m1, 'P2_missing': m2},
     }
 
 
 def invariant(values, kind):
+    if any(v is None for v in values):      # 曲线不完整（某档缺通道）⇒ 不记作「不变」
+        return False
     if kind == 'exact':
         first = values[0]
         return all(v == first for v in values[1:])
@@ -464,8 +501,8 @@ def compare_readings(per_caliber):
                or (nm == 'endpoint_optimum' and all(v is True for v in vals)))
         rep['native'][nm] = {'invariant': bool(invariant(vals, kind)), 'kind': kind,
                              'degenerate': bool(deg),
-                             'values': {c: (v if not isinstance(v, (dict, list)) else v)
-                                        for c, v in zip(GRID_CALIBERS, vals)}}
+                             'incomplete': bool(any(v is None for v in vals)),
+                             'values': {c: v for c, v in zip(GRID_CALIBERS, vals)}}
     counts = {}
     for group in ('object', 'matrix', 'native'):
         items = rep[group]
@@ -568,7 +605,7 @@ def cross_source(cache):
 def _load_era5(var):
     with np.load(ERA5_MONTH / f'{var}.npz', allow_pickle=True) as f:
         return (f['values'].astype(float), f['latitude'].astype(float),
-                f['longitude'].astype(float), float(f['units']))
+                f['longitude'].astype(float), str(f['units']))
 
 
 def _load_ext(code):
@@ -744,9 +781,9 @@ def main():
         cal = None if cal is None else make_grid(*cal)
         log(f'口径 {cal_name}：P1 {D_LADDER} ＋ P2 θ {THETA_LADDER}')
         rows = run_caliber(cal_name, cal, cache, failures)
-        agg = aggregate(rows, {'train': splits[0], 'valid': splits[1], 'tail': splits[2]})
-        agg['_rows'] = rows
-        per_caliber[cal_name] = readings(agg, cal_name)
+        per_channel = aggregate(rows, {'train': splits[0], 'valid': splits[1],
+                                       'tail': splits[2]})
+        per_caliber[cal_name] = readings(per_channel, cal_name, rows)
         all_rows.extend(rows)
         log(f'  {len(rows)} 行；失败累计 {len(failures)}')
 
