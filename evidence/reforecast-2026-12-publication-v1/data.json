@@ -1,0 +1,591 @@
+{
+ "page": "reforecast-2026-12",
+ "generated_utc": "2026-09-29T11:39:30Z",
+ "title": "从 2026-02 分析场出发的十步月均外推 · 目标月 2026-03…2026-12",
+ "status": "structural chained extrapolation with a measured iteration cost; NOT a skilled seasonal forecast",
+ "initial_month": "2026-02",
+ "months": [
+  "2026-03",
+  "2026-04",
+  "2026-05",
+  "2026-06",
+  "2026-07",
+  "2026-08",
+  "2026-09",
+  "2026-10",
+  "2026-11",
+  "2026-12"
+ ],
+ "chain_sha256": "92e2e8512eb9662159f305e7cda4c5f8b9f18ff9e791b0553ee3002082477531",
+ "chain_bytes": 21223310,
+ "chain_report_sha256": "14d26084537a7266c80fa2e402d27cf59c4bf60ad9a4e36f8c57a4d45fa8fe49",
+ "frozen_model_sha256": "807c46c89691f34dea108384dbc13433aba8316f5e146cb7285068494656d7ca",
+ "frozen_generation": "matrix-l12-v1",
+ "frozen_state": "reference",
+ "ledger": [
+  {
+   "step": 1,
+   "input_month": "2026-02",
+   "output_month": "2026-03",
+   "input_fingerprint": "41f4bef9243ebefae3528e2210d8075162fe49f94cefada6ad11d22ea5495382",
+   "output_fingerprint": "43b4c53a4aad897de18914e436b26fe30be5a9da79055f26b9a5dd26a6360d93",
+   "amplitude": 0.026578290900138336,
+   "step_gain": 0.3188086014930661,
+   "max_abs_z": 1.4341260885331228,
+   "per_channel_max_abs_z": {
+    "t850": 0.9590691270731577,
+    "t2m": 0.9962621573453294,
+    "sst": 1.187188322700637,
+    "sp": 0.7050826120305863,
+    "msl": 0.776236825167844,
+    "z500": 0.9443222387280945,
+    "q850": 0.9983725853823281,
+    "q700": 0.8243517052997718,
+    "w500": 1.0647284071820775,
+    "w700": 0.8549123986925358,
+    "wind850": 1.1043868215258066,
+    "wind500": 1.4341260885331228,
+    "wind250": 0.8868692631796501
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 2,
+   "input_month": "2026-03",
+   "output_month": "2026-04",
+   "input_fingerprint": "43b4c53a4aad897de18914e436b26fe30be5a9da79055f26b9a5dd26a6360d93",
+   "output_fingerprint": "b1f7693f2059458a96fc4ce1788b3d6fc0c032c0329150c2a6b92da996c2bcc1",
+   "amplitude": 0.016602695852777877,
+   "step_gain": 0.6246713122058372,
+   "max_abs_z": 0.8103868109771615,
+   "per_channel_max_abs_z": {
+    "t850": 0.7614087706169115,
+    "t2m": 0.6313049493827259,
+    "sst": 0.8103868109771615,
+    "sp": 0.5310625229322523,
+    "msl": 0.46788573405302436,
+    "z500": 0.7148250174650104,
+    "q850": 0.6168117215531006,
+    "q700": 0.5743599419917055,
+    "w500": 0.5921127335609676,
+    "w700": 0.6584228667355891,
+    "wind850": 0.7196542623003833,
+    "wind500": 0.6703939700112148,
+    "wind250": 0.6276532810025985
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 3,
+   "input_month": "2026-04",
+   "output_month": "2026-05",
+   "input_fingerprint": "b1f7693f2059458a96fc4ce1788b3d6fc0c032c0329150c2a6b92da996c2bcc1",
+   "output_fingerprint": "e3d5bb4c62e3d0d978ed527224643b52fd026a474396bb235dec743d02b5fe1e",
+   "amplitude": 0.012918139305035096,
+   "step_gain": 0.7780748030069888,
+   "max_abs_z": 0.6109548056019367,
+   "per_channel_max_abs_z": {
+    "t850": 0.6109548056019367,
+    "t2m": 0.5168045137505667,
+    "sst": 0.5946070123953507,
+    "sp": 0.45265100905879013,
+    "msl": 0.39926978740707986,
+    "z500": 0.5490219029180691,
+    "q850": 0.4515115946277671,
+    "q700": 0.4660000122208485,
+    "w500": 0.505758845708916,
+    "w700": 0.5542955434594369,
+    "wind850": 0.5805190790017711,
+    "wind500": 0.5377580632455423,
+    "wind250": 0.4927207310552372
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 4,
+   "input_month": "2026-05",
+   "output_month": "2026-06",
+   "input_fingerprint": "e3d5bb4c62e3d0d978ed527224643b52fd026a474396bb235dec743d02b5fe1e",
+   "output_fingerprint": "6663870e5ebeefdeaba2527470e6c8280c5178ebf06fbd5fddcd3e5629c912bd",
+   "amplitude": 0.010499904320080095,
+   "step_gain": 0.8128031500626064,
+   "max_abs_z": 0.4928693851241139,
+   "per_channel_max_abs_z": {
+    "t850": 0.4928693851241139,
+    "t2m": 0.4149021351936125,
+    "sst": 0.4668762983311195,
+    "sp": 0.37800007927840024,
+    "msl": 0.3338647493879951,
+    "z500": 0.4292896866819544,
+    "q850": 0.37881813793775093,
+    "q700": 0.3778456016575655,
+    "w500": 0.41945962412516197,
+    "w700": 0.4743403850459304,
+    "wind850": 0.4899576744865017,
+    "wind500": 0.42734188142264773,
+    "wind250": 0.40398843174293547
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 5,
+   "input_month": "2026-06",
+   "output_month": "2026-07",
+   "input_fingerprint": "6663870e5ebeefdeaba2527470e6c8280c5178ebf06fbd5fddcd3e5629c912bd",
+   "output_fingerprint": "404bede8126354142f398a0d5c6c3c3f60ca799ff4f8fed8180903830fe6e606",
+   "amplitude": 0.00863646366378217,
+   "step_gain": 0.8225278441124204,
+   "max_abs_z": 0.4088858780611415,
+   "per_channel_max_abs_z": {
+    "t850": 0.398080626987726,
+    "t2m": 0.3338551733192707,
+    "sst": 0.3725709213119968,
+    "sp": 0.3153833470242117,
+    "msl": 0.2795237824092819,
+    "z500": 0.3383136267058369,
+    "q850": 0.31838673398602235,
+    "q700": 0.31338126422828994,
+    "w500": 0.34831488363701685,
+    "w700": 0.39930958234543296,
+    "wind850": 0.4088858780611415,
+    "wind500": 0.3483681978384372,
+    "wind250": 0.33395129328420764
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 6,
+   "input_month": "2026-07",
+   "output_month": "2026-08",
+   "input_fingerprint": "404bede8126354142f398a0d5c6c3c3f60ca799ff4f8fed8180903830fe6e606",
+   "output_fingerprint": "262af51ae60a540c2917fb8bd6bfb68f5a31de8cb9852c8139feea060d4a690c",
+   "amplitude": 0.007130376320443527,
+   "step_gain": 0.8256129589643776,
+   "max_abs_z": 0.33968451484677525,
+   "per_channel_max_abs_z": {
+    "t850": 0.3233356912527264,
+    "t2m": 0.2701599586571678,
+    "sst": 0.304509956011076,
+    "sp": 0.2626096638252013,
+    "msl": 0.2329036889792001,
+    "z500": 0.2706806088477936,
+    "q850": 0.26439937407308883,
+    "q700": 0.2606224518295206,
+    "w500": 0.2885056739838664,
+    "w700": 0.3330682784575618,
+    "wind850": 0.33968451484677525,
+    "wind500": 0.2848274847840807,
+    "wind250": 0.2765917375090399
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 7,
+   "input_month": "2026-08",
+   "output_month": "2026-09",
+   "input_fingerprint": "262af51ae60a540c2917fb8bd6bfb68f5a31de8cb9852c8139feea060d4a690c",
+   "output_fingerprint": "dfa5c7d2c0cebed38800faf1eb00724ad7c9a851d8376940652ee69d2049becf",
+   "amplitude": 0.005893507009078987,
+   "step_gain": 0.8265351987358216,
+   "max_abs_z": 0.2814386013258888,
+   "per_channel_max_abs_z": {
+    "t850": 0.2637423043407871,
+    "t2m": 0.2226647709171996,
+    "sst": 0.2520113468840182,
+    "sp": 0.21822909308885194,
+    "msl": 0.19363772979818367,
+    "z500": 0.21872417140555586,
+    "q850": 0.21863564547772682,
+    "q700": 0.21646109929815188,
+    "w500": 0.238354100065735,
+    "w700": 0.27653807797249047,
+    "wind850": 0.2814386013258888,
+    "wind500": 0.2341060974868513,
+    "wind250": 0.22882387401356735
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 8,
+   "input_month": "2026-09",
+   "output_month": "2026-10",
+   "input_fingerprint": "dfa5c7d2c0cebed38800faf1eb00724ad7c9a851d8376940652ee69d2049becf",
+   "output_fingerprint": "337e42054b3ed1df5411c18ae478cfbf055cd2db1832db17c9134e002ea43ecb",
+   "amplitude": 0.004871934684170117,
+   "step_gain": 0.8266613879757619,
+   "max_abs_z": 0.23267642932688806,
+   "per_channel_max_abs_z": {
+    "t850": 0.21581366017843906,
+    "t2m": 0.1841040520995376,
+    "sst": 0.20879880380648025,
+    "sp": 0.1811093839069036,
+    "msl": 0.16082079241932662,
+    "z500": 0.1778954532889149,
+    "q850": 0.18050751247197425,
+    "q700": 0.17940486549896295,
+    "w500": 0.19662184544347186,
+    "w700": 0.22889287568726996,
+    "wind850": 0.23267642932688806,
+    "wind500": 0.1929429873271931,
+    "wind250": 0.18906652216523945
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 9,
+   "input_month": "2026-10",
+   "output_month": "2026-11",
+   "input_fingerprint": "337e42054b3ed1df5411c18ae478cfbf055cd2db1832db17c9134e002ea43ecb",
+   "output_fingerprint": "6cda4aca507bcb6a875fa5362afb3151e708ed2c4dc9262db84d4c01ade703a4",
+   "amplitude": 0.004026716284616187,
+   "step_gain": 0.8265127809902271,
+   "max_abs_z": 0.19215377245577334,
+   "per_channel_max_abs_z": {
+    "t850": 0.17694415954846826,
+    "t2m": 0.15203725997238415,
+    "sst": 0.17302241780413286,
+    "sp": 0.15015955332453024,
+    "msl": 0.13345047460183834,
+    "z500": 0.1452480020580345,
+    "q850": 0.14894249700608597,
+    "q700": 0.14848836295653364,
+    "w500": 0.1620917702027644,
+    "w700": 0.18916265361414988,
+    "wind850": 0.19215377245577334,
+    "wind500": 0.1591813292585456,
+    "wind250": 0.1561127767116196
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  },
+  {
+   "step": 10,
+   "input_month": "2026-11",
+   "output_month": "2026-12",
+   "input_fingerprint": "6cda4aca507bcb6a875fa5362afb3151e708ed2c4dc9262db84d4c01ade703a4",
+   "output_fingerprint": "b6c8c461552f96eb37249a24c699a17b2edcf23cbca43f37d34e42ee304c9466",
+   "amplitude": 0.00332723922777632,
+   "step_gain": 0.8262909508891464,
+   "max_abs_z": 0.1586033171363012,
+   "per_channel_max_abs_z": {
+    "t850": 0.14526302511356212,
+    "t2m": 0.1255143124338862,
+    "sst": 0.14334477701768553,
+    "sp": 0.12440215232456509,
+    "msl": 0.11064875199286252,
+    "z500": 0.11887389234099208,
+    "q850": 0.12286958381593177,
+    "q700": 0.12278935618390946,
+    "w500": 0.13361067638583807,
+    "w700": 0.15620665258553668,
+    "wind850": 0.1586033171363012,
+    "wind500": 0.1313636603852384,
+    "wind250": 0.12885887473612562
+   },
+   "out_of_scope_channels": [],
+   "out_of_scope": false
+  }
+ ],
+ "sigma_max_estimate": 0.8244003606624672,
+ "scope_threshold_abs_z": 6.0,
+ "calibration_skills": {
+  "1": {
+   "chain_skill_vs_climatology": 0.0670895886530834,
+   "direct_skill_vs_climatology": 0.0670895886530834,
+   "ar1_skill_vs_climatology": 0.10131122496605266,
+   "persistence_frozen_skill_vs_climatology": -0.14558813230595533
+  },
+  "2": {
+   "chain_skill_vs_climatology": 0.052371829835767665,
+   "direct_skill_vs_climatology": 0.05023181600810278,
+   "ar1_skill_vs_climatology": 0.06673196750897574,
+   "persistence_frozen_skill_vs_climatology": -0.2326611167332283
+  },
+  "3": {
+   "chain_skill_vs_climatology": 0.04219901857461948,
+   "direct_skill_vs_climatology": 0.04491895272115763,
+   "ar1_skill_vs_climatology": 0.05093684498068775,
+   "persistence_frozen_skill_vs_climatology": -0.2660386452253423
+  },
+  "4": {
+   "chain_skill_vs_climatology": 0.03447369118990029,
+   "direct_skill_vs_climatology": 0.03784837246954038,
+   "ar1_skill_vs_climatology": 0.042310836344430794,
+   "persistence_frozen_skill_vs_climatology": -0.29563547937086027
+  },
+  "5": {
+   "chain_skill_vs_climatology": 0.028216616517661667,
+   "direct_skill_vs_climatology": 0.03383346934319946,
+   "ar1_skill_vs_climatology": 0.03639093382997687,
+   "persistence_frozen_skill_vs_climatology": -0.3065823929337842
+  },
+  "6": {
+   "chain_skill_vs_climatology": 0.02337609702861202,
+   "direct_skill_vs_climatology": 0.031166291627010654,
+   "ar1_skill_vs_climatology": 0.031922647684836575,
+   "persistence_frozen_skill_vs_climatology": -0.32276636000147274
+  },
+  "7": {
+   "chain_skill_vs_climatology": 0.01920573612697216,
+   "direct_skill_vs_climatology": null,
+   "ar1_skill_vs_climatology": 0.028362986829086785,
+   "persistence_frozen_skill_vs_climatology": -0.3314346440031128
+  },
+  "8": {
+   "chain_skill_vs_climatology": 0.015831171903223275,
+   "direct_skill_vs_climatology": null,
+   "ar1_skill_vs_climatology": 0.025362831958326996,
+   "persistence_frozen_skill_vs_climatology": -0.3208544659163138
+  },
+  "9": {
+   "chain_skill_vs_climatology": 0.013195511465524591,
+   "direct_skill_vs_climatology": null,
+   "ar1_skill_vs_climatology": 0.02280124767796238,
+   "persistence_frozen_skill_vs_climatology": -0.3041696251764632
+  },
+  "10": {
+   "chain_skill_vs_climatology": 0.010881284547027423,
+   "direct_skill_vs_climatology": null,
+   "ar1_skill_vs_climatology": 0.020496477014760643,
+   "persistence_frozen_skill_vs_climatology": -0.30443507134927994
+  }
+ },
+ "chain_series": {
+  "east_asia": [
+   26.839104017714675,
+   19.512373526476637,
+   14.295157569840606,
+   10.519991710778815,
+   5.466138692833919,
+   3.968617023106895,
+   7.188222213686203,
+   12.779172751967243,
+   20.67264032195688,
+   29.124340455511224
+  ],
+  "north_america": [
+   17.94050020163924,
+   15.123092947576998,
+   11.916862568287346,
+   11.213687176542548,
+   10.051876087107251,
+   9.633321130407568,
+   11.055933429758513,
+   14.964827872263552,
+   18.574468150094425,
+   23.120118145597004
+  ],
+  "middle_east": [
+   15.847472055455839,
+   11.69927475776426,
+   8.191796139396809,
+   5.4820960631794655,
+   4.675159773444944,
+   4.6412543140435885,
+   4.757141494671633,
+   6.895469472440158,
+   11.278745088045548,
+   15.397823806719318
+  ]
+ },
+ "plateau_t2m_K_series": [
+  272.80334385860124,
+  278.342509438967,
+  282.62122673710104,
+  285.9610594879085,
+  287.3339637914433,
+  286.68950976309725,
+  282.83253876863074,
+  275.49580765439003,
+  269.2887223090867,
+  265.70253640110775
+ ],
+ "climatology": {
+  "east_asia": 29.20673351876316,
+  "north_america": 23.000622125789317,
+  "middle_east": 15.986032459584175
+ },
+ "climatology_plateau_t2m_K": 257.04880010166755,
+ "climatology_paths": {
+  "east_asia": {
+   "regridded_1p25": 29.20673351876316,
+   "native_grid": 28.74712587828895,
+   "native_grid_shape": [
+    71,
+    144
+   ],
+   "relative": 0.015987951018829438
+  },
+  "north_america": {
+   "regridded_1p25": 23.000622125789317,
+   "native_grid": 22.702801994724453,
+   "native_grid_shape": [
+    71,
+    144
+   ],
+   "relative": 0.01311821030435234
+  },
+  "middle_east": {
+   "regridded_1p25": 15.986032459584175,
+   "native_grid": 15.693881198119639,
+   "native_grid_shape": [
+    71,
+    144
+   ],
+   "relative": 0.018615615715221523
+  },
+  "plateau_t2m_K": {
+   "regridded_1p25": 257.04880010166755,
+   "native_grid": 255.25378889552152,
+   "native_grid_shape": [
+    94,
+    192
+   ],
+   "relative": 0.0070322607704003115
+  }
+ },
+ "climatology_definition": "R1 1979-12..2025-12, 47 Decembers, equal weight per December, area-weighted box mean of the grid-point vector speed sqrt(u^2+v^2)",
+ "n_decembers": 47,
+ "cfs_run": "cfs.2026092512",
+ "cfs_caveats": [
+  "single member, raw absolute values",
+  "not anomalised against hindcast climatology; no skill mask",
+  "therefore not the official CPC seasonal product",
+  "this project's own model cannot reach these months (its inputs end 2026-02, so 2026-12 would be lead 10)"
+ ],
+ "cfs_2026_12": {
+  "east_asia": 27.115756136832434,
+  "north_america": 21.705888137888532,
+  "middle_east": 14.942697246571262
+ },
+ "cfs_months": {
+  "2026-10": {
+   "east_asia": 9.370035222670037,
+   "north_america": 13.697255385533184,
+   "middle_east": 4.864509111538293
+  },
+  "2026-11": {
+   "east_asia": 15.808635108315366,
+   "north_america": 19.813272096426022,
+   "middle_east": 11.066203240849264
+  },
+  "2026-12": {
+   "east_asia": 27.115756136832434,
+   "north_america": 21.705888137888532,
+   "middle_east": 14.942697246571262
+  },
+  "2027-01": {
+   "east_asia": 25.48242624687258,
+   "north_america": 18.692561532554272,
+   "middle_east": 15.920570735481002
+  }
+ },
+ "not_claimed": [
+  "**不是业务预报，也不是有技巧的季节预报。** 这是把冻结模型的「提前 1 个月」算子（`x @ vectors @ maps[0]`）连续套用十次得到的**结构性外推**；模型**从未为迭代应用训练过**（输入由观测状态变成预测状态，属分布外输入）。",
+  "**与 CFSv2「接近」是平凡的。** 两者都落在季节气候态附近：链式离观测 12 月气候态只有+0.9%／+0.9%／−3.1%（东亚近海／北美东岸／中东），外部参考离气候态 −6.0%／−5.3%／−6.0%。「接近」不构成一致，也不构成评分。",
+  "**高原 2 m 气温带已知表示误差**（1 月偏差 +10.43 K，其中谱截断贡献 +9.59 K）。高原面板的**绝对值不得当作信号**读。",
+  "**本页展示的是矩阵代次（`matrix-l12-v1`）的产物。** 该代次已于 2026-09-28 由提问方从主要方法**降为参考方法**（`reference`）；原生方法的预报尚未产出。本页是「目前最新的可看产物」，不是项目的现行主张。",
+  "**链在收缩**：十步后没有任何分量还带一个训练标准差量级的异常（末步 `max|z| = 0.159`，阈值 6）。所以它给出的是**季节气候态本身**，不是异常信号。",
+  "**数据真实性保留意见不因本页消解**；回测期 2020–2025 此前已被看过（冻结契约的 prior_exposure），不是全新验证样本。"
+ ],
+ "anomaly_color_limits": {
+  "t2m": 9.968938086139152,
+  "wind500": 3.299255184203908
+ },
+ "anomaly_stats": {
+  "t2m": {
+   "rms": 2.401343419590952,
+   "rms_zonal_mean_part": 0.5386433454653671,
+   "rms_eddy_part": 2.3401524662292084,
+   "max_abs": 22.597674755339938
+  },
+  "wind500": {
+   "rms": 1.182184915334501,
+   "rms_zonal_mean_part": 0.6759171033937266,
+   "rms_eddy_part": 0.9698954806494747,
+   "max_abs": 7.186460431202015
+  }
+ },
+ "anomaly_stats_definition": "area-weighted RMS of (forecast - observed December climatology), then split into the zonal-mean part and the deviation from it (the eddy part)",
+ "gates": {
+  "G2_readouts_reproduced": {
+   "max_relative_difference": 2.200539075147379e-09,
+   "detail": {
+    "east_asia_2026_12": {
+     "recomputed": 29.124340455511224,
+     "frozen": 29.124340407627294,
+     "relative": 1.6441206578427386e-09
+    },
+    "north_america_2026_12": {
+     "recomputed": 23.120118145597004,
+     "frozen": 23.120118137866832,
+     "relative": 3.3434829406677467e-10
+    },
+    "middle_east_2026_12": {
+     "recomputed": 15.397823806719318,
+     "frozen": 15.397823772835805,
+     "relative": 2.200539075147379e-09
+    },
+    "plateau_t2m_2026_12": {
+     "recomputed": 265.70253640110775,
+     "frozen": 265.70253640110775,
+     "relative": 0.0
+    }
+   },
+   "tolerance": 1e-06,
+   "holds": true,
+   "note": "float32 storage floor: chain.npz fields are float32, the frozen readouts are float64; measured differences are ~1e-9, far below the 1e-6 gate but far above the 1e-12 the first contract draft asked for"
+  },
+  "G3_climatology_two_paths": {
+   "max_relative_difference": 0.018615615715221523,
+   "detail": {
+    "east_asia": {
+     "regridded_1p25": 29.20673351876316,
+     "native_grid": 28.74712587828895,
+     "native_grid_shape": [
+      71,
+      144
+     ],
+     "relative": 0.015987951018829438
+    },
+    "north_america": {
+     "regridded_1p25": 23.000622125789317,
+     "native_grid": 22.702801994724453,
+     "native_grid_shape": [
+      71,
+      144
+     ],
+     "relative": 0.01311821030435234
+    },
+    "middle_east": {
+     "regridded_1p25": 15.986032459584175,
+     "native_grid": 15.693881198119639,
+     "native_grid_shape": [
+      71,
+      144
+     ],
+     "relative": 0.018615615715221523
+    },
+    "plateau_t2m_K": {
+     "regridded_1p25": 257.04880010166755,
+     "native_grid": 255.25378889552152,
+     "native_grid_shape": [
+      94,
+      192
+     ],
+     "relative": 0.0070322607704003115
+    }
+   },
+   "holds_under_2pct": true
+  }
+ },
+ "wall_seconds": null
+}
