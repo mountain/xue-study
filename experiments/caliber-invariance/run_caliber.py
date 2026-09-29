@@ -195,6 +195,12 @@ def split_indices(dates):
             np.where(dates > VALID_END)[0])
 
 
+def split_map(dates):
+    """三段切分，带名字（账目按段分列）。"""
+    train, valid, tail = split_indices(dates)
+    return {'train': train, 'valid': valid, 'tail': tail}
+
+
 def code_bits(coeff, n_obs, residual, splits):
     """三段码长：系数（高斯码长，场已归一）＋残差（高斯码长，已归一）。"""
     coeff_bits = 0.5 * np.log2(2 * math.pi * math.e * np.maximum(coeff ** 2, 1e-300))
@@ -273,8 +279,8 @@ def run_caliber(cal_name, cal, cache, failures):
         name = ch['name']
         y, lat, lon = channel_stack(ch, cal, cache)
         dates = cache[ch['fields'][0]][3]
-        splits = split_indices(dates)
-        train = splits[0]
+        splits = split_map(dates)
+        train = splits['train']
         if name.startswith('q'):
             y = np.log(np.maximum(y, 1e-7))
         if ch['level'] is None:
@@ -487,9 +493,9 @@ def check_permuted_domain(cal_name, cal, cache, failures):
     pressure = (interpolate_surface_pressure(lat, lon) if cal is None
                 else caliber_pressure(cal, cache))
     dates = cache['t850'][3]
-    splits = split_indices(dates)
-    fixed0, masks0, domain0 = masks_for(y, pressure, ch['level'], 0, splits[0])
-    sigma = channel_scale(y, area_weights(lat, lon), domain0, splits[0], masks0)
+    splits = split_map(dates)
+    fixed0, masks0, domain0 = masks_for(y, pressure, ch['level'], 0, splits['train'])
+    sigma = channel_scale(y, area_weights(lat, lon), domain0, splits['train'], masks0)
     yn = y / sigma
     perm = rng.permutation(len(dates))
     detail = []
