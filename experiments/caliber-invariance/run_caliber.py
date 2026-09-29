@@ -358,7 +358,9 @@ def common_channels(per_channel, caliber, ladder):
     return set.intersection(*(set(per_channel[k]) for k in keys))
 
 
-def rung_total(per_channel, key, channels, field, ledger=None):
+def rung_total(per_channel, key, channels, ledger, field):
+    """一档上逐通道求和。ledger ∈ {'L_null','L_none','coeff','resid','null'}，
+    field ∈ {'train','valid','tail','sel','all'}；逐通道标量读数用 ledger=None。"""
     tot = 0.0
     for ch in channels:
         pc = per_channel[key][ch]
@@ -367,7 +369,7 @@ def rung_total(per_channel, key, channels, field, ledger=None):
 
 
 def curve_for(per_channel, caliber, ladder, ledger='L_null'):
-    """曲线 ＝ 逐档合计，只在共同通道集上求和；返回 (曲线, 逐档缺失通道)。"""
+    """曲线 ＝ 逐档合计，只在共同通道集上求和；返回 (曲线, 逐档缺失通道, 共同集)。"""
     keys = ladder_keys(per_channel, caliber, ladder)
     common = common_channels(per_channel, caliber, ladder)
     curve, missing = [], []
@@ -375,7 +377,7 @@ def curve_for(per_channel, caliber, ladder, ledger='L_null'):
         present = set(per_channel[k])
         if present != common:
             missing.append({'rung': [k[2], k[3]], 'missing': sorted(common - present)})
-        curve.append(((k[2], k[3]), rung_total(per_channel, k, common, 'sel', ledger)))
+        curve.append(((k[2], k[3]), rung_total(per_channel, k, common, ledger, 'sel')))
     return curve, missing, sorted(common)
 
 
@@ -408,12 +410,11 @@ def readings(per_channel, caliber, rows):
                    for d in D_LADDER if (caliber, 'P1', d, 0) in per_channel]
     coeff_curve = [rung_total(per_channel, (caliber, 'P1', d, 0), ch1, 'coeff', 'sel')
                    for d in D_LADDER if (caliber, 'P1', d, 0) in per_channel]
-    l12 = judge(c1)['value_at_argmin'] if False else None
+    nq_curve = [int(rung_total(per_channel, (caliber, 'P2', SHIPPED_D, t), ch2,
+                               None, 'n_distinct_domains'))
+                for t in THETA_LADDER if (caliber, 'P2', SHIPPED_D, t) in per_channel]
     l12 = [v for r, v in c1 if r[0] == SHIPPED_D]
     l12 = l12[0] if l12 else float('nan')
-    nq_curve = [int(rung_total(per_channel, (caliber, 'P2', SHIPPED_D, t), ch2,
-                               'n_distinct_domains'))
-                for t in THETA_LADDER if (caliber, 'P2', SHIPPED_D, t) in per_channel]
     return {
         'object': {
             'nq_at_d12': {k: v['n_distinct_domains'] for k, v in d12.items()},
