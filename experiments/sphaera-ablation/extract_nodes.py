@@ -27,9 +27,21 @@ from pathlib import Path
 import numpy as np
 
 # 与 check.py geometry() 同序：+3/5, −3/5, +4/5, −4/5；每环四个方位 (+x,−x,+y,−y)
-def nodes():
+def nodes(preset="declared"):
+    """节点表。`declared` 是 sphaera-frame 声明的；`tropical` 是本实验的热带变体。
+
+    两者【不是同一个几何】，引用时必须分开说。热带变体受【有理算术】限制：
+    节点必须是单位向量且坐标有理，故 z 只能取勾股数，能到的最小 |z| 是 5/13
+    （纬度 22.62°）—— **无法更靠近赤道**。
+    """
+    if preset == "declared":
+        rings = ((3/5, 4/5), (-3/5, 4/5), (4/5, 3/5), (-4/5, 3/5))
+    elif preset == "tropical":
+        rings = ((5/13, 12/13), (-5/13, 12/13), (3/5, 4/5), (-3/5, 4/5))
+    else:
+        raise SystemExit(f"unknown preset {preset}")
     out = []
-    for z, rad in ((3/5, 4/5), (-3/5, 4/5), (4/5, 3/5), (-4/5, 3/5)):
+    for z, rad in rings:
         for x, y in ((rad, 0.0), (-rad, 0.0), (0.0, rad), (0.0, -rad)):
             out.append((x, y, z))
     return out
@@ -40,6 +52,7 @@ def main() -> int:
     ap.add_argument("--inputs", default=str(Path.home() / "climatetensor-inputs/ncep-multivariate"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", type=int, default=850)
+    ap.add_argument("--nodes", default="declared", choices=("declared","tropical"))
     args = ap.parse_args()
     src = Path(args.inputs)
     tag = f"u{args.level}"
@@ -56,7 +69,7 @@ def main() -> int:
     assert ua.shape[1:] == (lat.size, lon.size), (ua.shape, lat.size, lon.size)
     assert np.allclose(u["lat"], v["lat"]) and np.allclose(u["lon"], v["lon"]), "u/v 网格不一致"
 
-    N = nodes()
+    N = nodes(args.nodes)
     phi = np.array([np.arcsin(z) for _, _, z in N])          # 声明纬度（弧度）
     lam = np.array([np.arctan2(y, x) for x, y, _ in N])
     print(f"  声明纬度 {np.degrees(phi).round(2)}")
