@@ -475,7 +475,7 @@ Origin: http://localhost:8899       →  （无 CORS 头）
 **从本节开始，这份报告不再被重写。** 后续发现以带日期的条目追加到本节，
 正文中已被推翻的段落**保留原样**，由本节指出它被什么取代。
 
-> 为什么改：Adva 的 `docs/research/README.md` 写着——
+> 为什么改：Adva 的 `mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:docs/research/README.md` 写着——
 > *"编号笔记是追加记录。后续笔记可以取代它，但**不重写**它。"*
 > 本报告此前**被整篇重写过两次**（第一版头条件为线上体积回归，第二版改为合计更小），
 > 两版原文都已被就地覆盖、**从文件里不可恢复**。
@@ -632,7 +632,7 @@ so soundings are another, smaller product … plain JSON"*），复用同一套
 
 ### 2026-09-17 · 与 Adva 工具链的合规核查：**字段兼容，但工具读不了**（已修）
 
-Adva 主线在 2026-09-16 落地了工具工作流的前三个助手，其中 `scripts/navigate.py`
+Adva 主线在 2026-09-16 落地了工具工作流的前三个助手，其中 `mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/navigate.py`
 会按 `code_symbol` / `proof_or_certificate` / `scope` 里的**路径 token** 去观察文件是否存在，
 并把每条 claim 归为 `historical` / `runnable-here` / `not-yet-executed`。
 
@@ -765,8 +765,8 @@ Adva 主线在 2026-09-16 落地了工具工作流的前三个助手，其中 `s
    本地 `d5b5d0c tooling: implement the first three problem-workflow helpers`
    与远端 `42f0263` **提交信息相同、哈希不同**。因此 reset 不会丢工作，只会丢掉那 145 个被撤回的第三方副本。
 2. **我引用过的东西无一被撤回**：`README.md` / `AGENTS.md` / `docs/claims.toml` /
-   `docs/SEMANTIC_SCOPE.md` / `docs/research/README.md` 在差异集里都只是**被修改**（`M`），不是 `D`。
-   而且——`scripts/navigate.py` 在新主线里**逐字节相同**（198 行），
+   `docs/SEMANTIC_SCOPE.md` / `mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:docs/research/README.md` 在差异集里都只是**被修改**（`M`），不是 `D`。
+   而且——`mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/navigate.py` 在新主线里**逐字节相同**（198 行），
    `docs/claims.toml` 的字段集**恰好就是**我采用的 11 个字段。
    **本笔记的合规结论与注册表 schema 在新主线上仍然成立。**
 
@@ -845,7 +845,7 @@ xr.open_zarr(run.assets["tmp2m"].get_absolute_href())
 ### 2026-09-17 · 重新学习 adva #190：它让我在**自己的工具里**找到并修掉了一个塌陷
 
 **#190 已合并**：`03c9c12 → f8341c8`（`Merge PR #190: finite continuation ledger and commit/reply boundary`）。
-先查我依赖的两样：**`scripts/navigate.py` 未变**（我的合规继续成立）、`docs/claims.toml` **字段集未变**
+先查我依赖的两样：**`mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/navigate.py` 未变**（我的合规继续成立）、`docs/claims.toml` **字段集未变**
 （仍是那 11 个字段，182 条 claim）。新增的是 `experiments/decision_ledger/` 与一条 claim：
 
 > `adva.bounded-experiment.decision-ledger.v0`

@@ -8,7 +8,7 @@
     "The native encoder in the xuepy wheel, which links its own GDAL",
     "zarr 3.3.0 + xarray 2026.7.0 + fsspec + aiohttp for the ecosystem-reader checks",
     "The system Chrome driven by Playwright headless for the rendering outcome",
-    "Adva scripts/navigate.py for claim navigation (read-only)",
+    "Adva mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/navigate.py for claim navigation (read-only)",
     "WMO WIS2 TEMP bulletins as aggregated by the sounding product, and the NOAA Aviation Weather Center caches behind the airport product (both read from the published bucket, no credentials)",
     "ECMWF ERA5, read in place from the portable drive at /Volumes/Newsmy (12 variables, 372 files, 304.3 GB, January 2024, 0.25 degree hourly). Copernicus product: free to use, NOT public domain, so no bytes enter the tree; docs/era5-catalogue.json carries the paths, sizes, partial digests and the licence position.",
     "ARCO-ERA5 on the public Google Cloud bucket (Zarr, anonymous, 1940 to 2026-09-11 with the ERA5T extension, 37 pressure levels, chunked hourly) as the second reanalysis; no credentials required."
@@ -46,7 +46,7 @@
     "note": "The commit the measurements were taken against, and the one they were re-verified at. Without this a claim cannot say what it was measured on.",
     "xue_measured_at": "8af4376 (2026-09-16)",
     "xue_reverified_at": "a20c774 (2026-09-17)",
-    "adva_tooling": "scripts/navigate.py unchanged between the two pulls; docs/claims.toml field set unchanged",
+    "adva_tooling": "mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/navigate.py unchanged between the two pulls; docs/claims.toml field set unchanged",
     "radar_measured_at": "2026-09-17, against the live dataset bucket (no commit pin: the radar carriers are data, not source); claims.toml sha256 advanced from fbf220b4 (6 cases) to aebe4bbf (8 cases)",
     "point_products_measured_at": "2026-09-17, against the live bucket (no commit pin): the point products are data whose retention is itself one of the claims; claims.toml 027771f6 (8 cases) -> 52bad07d (11 cases)",
     "anchor_measured_at": "2026-09-17, against the live GFS run and the live point products; claims.toml f823ad13 (11 cases) -> c78f42e4 (12 cases)"

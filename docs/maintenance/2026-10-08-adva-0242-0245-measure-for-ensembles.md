@@ -3,8 +3,8 @@
 **这是研读记录，不是本仓库自己的测量。** 所引内容全部出自
 `~/Adva/adva` 的两份研究条目（已拉到 `3a6ba55`，2026-10-07）：
 
-- `docs/research/0242-a-spatiotemporal-ratchet-net-transport-needs-both-asymmetries.md`
-- `docs/research/0245-proposal-three-an-exactly-stationary-measure-carrying-successor.md`
+- `mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:docs/research/0242-a-spatiotemporal-ratchet-net-transport-needs-both-asymmetries.md`
+- `mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:docs/research/0245-proposal-three-an-exactly-stationary-measure-carrying-successor.md`
 
 **它们的来源须一并记住**：0242 的作者署名为 `deepseek-v4-flash-vision-exp`，
 0245 署名为 ChatGPT；两者都经同一 GitHub 账号代理提交，**且都写明「没有独立评审」**——

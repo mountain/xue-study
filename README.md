@@ -299,8 +299,8 @@ Zarr store 的一个 shard 内层 chunk 在瓦片顺序上连续，所以瓦片�
 ### 首轮：字段兼容，但工具不可读
 
 Adva 主线在 2026-09-16 落地了工具工作流的三个助手（`docs/maintenance/tooling-first-helpers-20260916.md`）：
-`scripts/navigate.py`（只读检索 claims）、`scripts/problem_card.py`（问题卡校验）、
-`scripts/run_bounded.py`（有界执行，五条轴分开打印）。
+`mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/navigate.py`（只读检索 claims）、`mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/problem_card.py`（问题卡校验）、
+`mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/run_bounded.py`（有界执行，五条轴分开打印）。
 
 **我此前手写的注册表是照 `docs/claims.toml` 的字段模仿的，没有对过工具。核对的结论是：字段兼容，但工具不可读。**
 

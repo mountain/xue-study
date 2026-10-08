@@ -23,7 +23,7 @@ Their identities, ordered holes, call history, explicit copy occurrences and
 compilation/graft/import certificates are retained in
 [native.json](runs/run-001/native.json).
 
-The machine's `spec/framework/iota-frame-v1.md` explicitly does not introduce a
+The machine's `mountain/adva-machine@a0b710a2517f06f2fe03cc463e855548adf418ac:spec/framework/iota-frame-v1.md` explicitly does not introduce a
 general native complex `Frame` type. This experiment therefore uses native
 `Real` output ports and native `GraftFrame` provenance, with a separately bound
 [interpretation frame](runs/run-001/frame.json). It does not relabel a Python

@@ -402,3 +402,59 @@ https://storage.googleapis.com/gcp-public-data-arco-era5/ar/
 
 > 与 GRIB（GDAL 返回已是 °C，又减 273.15）、Zarr（xarray 已解码，又套量化）同类。
 > **判据：数值荒谬（−273、1e8、−71）时，先查单位与解码，不要查物理。**
+
+---
+
+## 八、外部引用的坐标约定（2026-10-08 起）
+
+**规矩**：指向 adva 系仓库的文件时，**用坐标，不用裸路径**。
+
+```
+<owner>/<repo>@<40 位提交>:<路径>[#<符号>]
+
+例：mountain/adva@3a6ba5571491342d0e211a56590a29b2407e284c:scripts/navigate.py
+    mountain/adva-machine@a0b710a2517f06f2fe03cc463e855548adf418ac:spec/framework/iota-frame-v1.md
+```
+
+### 为什么
+
+本仓库的 `scripts/methodology_check.py` 会把文档里的路径**当成本仓库的引用**去解析。
+裸的 `docs/research/0242-….md` 因此被判为「解析失败」而 SKIP ——
+**而它其实不是失败，是「按定义不在此解析」**。两种情形不该长得一样。
+
+坐标形式**即使持有仓库不在本机，也仍是一条完整的陈述**：它只是**未解析**，不是**未知**。
+
+### 依据
+
+这不是我发明的格式。`adva-machine` 的
+`mountain/adva-machine@a0b710a…:spec/framework/repository-exchange-registration-v0.1.md`
+（三仓库协作、交换与登记架构契约）与
+`mountain/adva-machine@a0b710a…:docs/kpb/dependency-bindings-2026-09-29.json`
+（schema `adva.kpb-documentary-dependency-bindings.v0.1`）已用同一形式登记 39 条文件依赖、
+348 条依赖记录，并有两笔提交把它落成工具：
+
+```
+a0702dc  Bind documentary dependencies to exact owning-repository sources
+         「Resolve 39 explicit local path dependencies; retain two absent
+           claim IDs WITHOUT ALIAS SUBSTITUTION.」
+07117cc  Add KPB-14 read-only documentary inventory and package pilot
+```
+
+**两条要一并沿用的规矩**：
+
+1. **持有仓库是坐标的一部分。** `spec/framework/*` 属 `adva-machine`，不属 `adva` ——
+   本轮我先把它们全贴成了 `adva`，事后改正了一处。
+2. **缺席的依赖保留为未解析项，不换名、不省略**（`unresolved_claim_dependencies` 的做法）。
+
+### 边界
+
+KPB 那套自我声明是 **documentary tooling**：`authority = metadata consistency only;
+no native admission`。**本仓库借的是它的坐标形式与缺席处置两条工程约定，不是它的权威。**
+
+### 已改与未改
+
+- **改了**：散文文档、`docs/conformance.contract.json` 的叙述字段、problem card。
+  契约校验仍过（digest match，cases 17/17）。
+- **没改，且已回退**：`experiments/sphaera-frame/contract.json`（跑前冻结的契约）、
+  `evidence/adva-period-three-review-20260924/review-plan.json`（证据件）。
+  **两者都被我还原到库中哈希**——冻结件与证据件不因引用格式而改动。
