@@ -1,0 +1,11 @@
+[package]
+name = "sphaera-frame-probe"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+adva-lisp = { path = "../../../adva-machine/crates/adva-lisp" }
+serde_json = "1"
+
+[workspace]
