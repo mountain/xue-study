@@ -1,0 +1,4 @@
+source: https://psl.noaa.gov/thredds/fileServer/Datasets/ncep.reanalysis/surface_gauss/land.sfc.gauss.nc
+dataset: NCEP-NCAR Reanalysis 1, variable `land` (0=sea, 1=land)
+grid: T62 gaussian, lat 94 x lon 192
+sha256: 7da97a6d508a499302002891bb11e7c284d99019698cb89de1b5f5da37df3ca3

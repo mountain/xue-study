@@ -134,6 +134,7 @@ def main() -> int:
     ap.add_argument("--level", type=int, default=850)
     ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","north32","south","paired8","northhi","cross"))
     ap.add_argument("--pair2", help="两环配对几何，如 5/13,3/5")
+    ap.add_argument("--nodes-json", help="从 JSON 读节点表；与 .adva 同源，杜绝顺序漂移")
     ap.add_argument("--rotate", type=int, default=0,
                     help="绕 z 轴旋转 K × 53.13°（勾股角，保持坐标有理）")
     args = ap.parse_args()
@@ -154,7 +155,11 @@ def main() -> int:
     assert ua.shape[1:] == (lat.size, lon.size), (ua.shape, lat.size, lon.size)
     assert np.allclose(u["lat"], v["lat"]) and np.allclose(u["lon"], v["lon"]), "u/v 网格不一致"
 
-    N = nodes(args.nodes)
+    if args.nodes_json:
+        N = [(float(a), float(b), float(c))
+             for a, b, c in json.loads(Path(args.nodes_json).read_text())]
+    else:
+        N = nodes(args.nodes)
     if args.rotate:
         # 经度去混：只动子午线，|z|/纬度/环结构全不动。
         import rotation as _rot
@@ -200,10 +205,9 @@ def main() -> int:
     # 曾经这里写死「48 个输入」—— paired8 有 32 节点、需 96 个输入，也照样印 48。
     # 那个标签【永远不可能】发现 arity 不匹配。改为按真实结构数，并且断言不缺键。
     n_in = len(cases[0]["inputs"]) if cases else 0
-    assert n_in == 3 * len(nodes(args.nodes)), (
-        f"输入数 {n_in} != 3 × 节点数 {len(nodes(args.nodes))}")
+    assert n_in == 3 * len(N), f"输入数 {n_in} != 3 × 节点数 {len(N)}"
     print(f"  已写 {out}   {len(cases)} 个 case × {n_in} 个输入"
-          f"（{len(nodes(args.nodes))} 节点 × 3 分量）")
+          f"（{len(N)} 节点 × 3 分量）")
     return 0
 
 
