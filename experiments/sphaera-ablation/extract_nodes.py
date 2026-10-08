@@ -53,6 +53,27 @@ def nodes(preset="declared"):
                          (3*rad/5, 4*rad/5), (-3*rad/5, -4*rad/5)):
                 out.append((x, y, z))
         return out
+    elif preset.startswith("pair2:"):
+        # 参数化的两环配对几何：pair2:<zlo>,<zhi>（|z| 用分数写法，如 pair2:5/13,3/5）。
+        # 与 declared/tropical/cross 结构全同：8 环（±）× 4 个基本方位 = 16 节点。
+        # 这样就能把「两环配对」这个族扫完，看是不是所有 O(3) 合法配置都一样好（它们不是）。
+        from fractions import Fraction as _F
+        lo, hi = preset.split(":", 1)[1].split(",")
+        rings = []
+        for zs in (lo, hi):
+            z = _F(zs)
+            rad2 = 1 - z * z
+            rad = _F(round(rad2 ** 0.5, 12)).limit_denominator(60)
+            assert rad * rad + z * z == 1, f"{zs} 不是勾股 |z|（rad={rad}）"
+            rings.append((z, rad))
+            rings.append((-z, rad))
+        # 必须全部转成 float：其余预设都返回 float，返回 Fraction 会让下游的
+        # np.arctan2 在混合类型上炸掉（而且报的是 'int' object has no attribute，
+        # 把原因指向了完全无关的地方）。Fraction 只在生成 .adva 时才需要，
+        # 那一步由 sweep_pair2.frac_nodes_checked 重建并逐节点断言。
+        return [(float(rx), float(ry), float(zz)) for rx, ry, zz in
+                [(rx, ry, zz) for z, rad in rings
+                 for (rx, ry, zz) in [(rad, 0, z), (-rad, 0, z), (0, rad, z), (0, -rad, z)]]]
     elif preset == "cross":
         # 交叉对照：|z| = {5/13, 4/5}，把「下探到 5/13」与「上环升高」劈开。
         #   vs declared {3/5, 4/5}：**上环相同**，只有下环 3/5 → 5/13 —— 单独检验「下探」
@@ -112,7 +133,10 @@ def main() -> int:
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", type=int, default=850)
     ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","north32","south","paired8","northhi","cross"))
+    ap.add_argument("--pair2", help="两环配对几何，如 5/13,3/5")
     args = ap.parse_args()
+    if args.pair2:
+        args.nodes = "pair2:" + args.pair2
     src = Path(args.inputs)
     tag = f"u{args.level}"
     u = np.load(src / f"u{args.level}.npz")
