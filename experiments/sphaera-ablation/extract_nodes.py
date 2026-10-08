@@ -53,6 +53,12 @@ def nodes(preset="declared"):
                          (3*rad/5, 4*rad/5), (-3*rad/5, -4*rad/5)):
                 out.append((x, y, z))
         return out
+    elif preset == "cross":
+        # 交叉对照：|z| = {5/13, 4/5}，把「下探到 5/13」与「上环升高」劈开。
+        #   vs declared {3/5, 4/5}：**上环相同**，只有下环 3/5 → 5/13 —— 单独检验「下探」
+        #   vs tropical {5/13, 3/5}：**下环相同**，只有上环 3/5 → 4/5 —— 单独检验「升高」
+        # 都是 16 节点、8 环（±）、4 个基本方位，与 declared/tropical 结构全同。
+        rings = ((5/13, 12/13), (-5/13, 12/13), (4/5, 3/5), (-4/5, 3/5))
     elif preset == "northhi":
         # 2×2 的补格：高纬北半球（不下探到 |z|=5/13），**无配对**。
         # 与 declared（|z|={3/5,4/5}，**有配对**，同样不下探到 5/13）节点数同为 16，
@@ -105,7 +111,7 @@ def main() -> int:
     ap.add_argument("--inputs", default=str(Path.home() / "climatetensor-inputs/ncep-multivariate"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", type=int, default=850)
-    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","north32","south","paired8","northhi"))
+    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","north32","south","paired8","northhi","cross"))
     args = ap.parse_args()
     src = Path(args.inputs)
     tag = f"u{args.level}"

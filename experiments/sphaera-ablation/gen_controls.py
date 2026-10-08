@@ -28,6 +28,8 @@ RINGS_NORTH = ((F(5, 13), F(12, 13)), (F(12, 13), F(5, 13)),
                (F(3, 5), F(4, 5)), (F(4, 5), F(3, 5)))
 # 高纬环：与 declared 同一批 |z|（3/5, 4/5），即【不下探到 5/13】
 RINGS_HI = ((F(3, 5), F(4, 5)), (F(4, 5), F(3, 5)))
+# 交叉环：与 declared 共用 4/5、与 tropical 共用 5/13
+RINGS_CROSS = ((F(5, 13), F(12, 13)), (F(4, 5), F(3, 5)))
 
 E_RE = re.compile(r"\(scale (-?\d+/\d+) \(use e\)\)")
 O_RE = re.compile(r"\(scale (\d+/\d+) \(use o\)\)")
@@ -78,6 +80,8 @@ def main() -> int:
     pair8 = paired(RINGS_NORTH)
     north32 = ring_nodes(RINGS_NORTH, azimuths=AZ8)
     northhi = ring_nodes(RINGS_HI, azimuths=AZ8)
+    DECLARED = paired(RINGS_HI)
+    cross = paired(RINGS_CROSS)
 
     for name, n in (("north", north), ("south", south), ("paired8", pair8),
                     ("north32", north32), ("northhi", northhi)):
@@ -91,6 +95,8 @@ def main() -> int:
     t_south = adva_source(south)
     t_pair8 = adva_source(pair8)
     t_n32 = adva_source(north32)
+    t_dec = adva_source(DECLARED)
+    t_cross = adva_source(cross)
     t_hi = adva_source(northhi)
 
     eN, oN = coeffs(t_north)
@@ -132,7 +138,7 @@ def main() -> int:
 
     # 2×2 的补格断言：northhi 与 declared 的 |z| 多重集相同、节点数相同，只差配对，
     # 且两者【都不下探到 |z| = 5/13】。
-    DECLARED = paired(RINGS_HI)              # declared 预设：z = ±3/5, ±4/5，8 环 × 4 方位 = 16 节点
+    # declared 预设：z = ±3/5, ±4/5，8 环 × 4 方位 = 16 节点
     assert len(northhi) == len(DECLARED) == 16
     assert zmult(northhi) == zmult(DECLARED), f"{zmult(northhi)} vs {zmult(DECLARED)}"
     assert min(abs(z) for _, _, z in northhi) > F(5, 13), "northhi 竟然下探到了 5/13"
@@ -146,8 +152,8 @@ def main() -> int:
     # 交叉断言（本该一开始就有）：生成器的节点表必须与 extract_nodes.nodes() 逐节点一致。
     # request 按索引 u{i}x/u{i}y/u{i}z 供数，顺序漂移 = 把风值喂给错的节点，而且不会报错。
     import extract_nodes
-    for tag, mine in (("north", north), ("south", south), ("paired8", pair8),
-                      ("north32", north32), ("northhi", northhi)):
+    for tag, mine in (("declared", DECLARED), ("north", north), ("south", south),
+                      ("paired8", pair8), ("north32", north32), ("northhi", northhi), ("cross", cross)):
         theirs = [(float(x), float(y), float(z)) for x, y, z in extract_nodes.nodes(tag)]
         minef = [(float(x), float(y), float(z)) for x, y, z in mine]
         assert len(minef) == len(theirs), f"{tag}: 节点数 {len(minef)} vs {len(theirs)}"
@@ -160,8 +166,10 @@ def main() -> int:
     print("  ✓ 五个几何的节点表与 extract_nodes.nodes() 逐节点一致（顺序也一致）")
 
     out = Path("runs")
-    for tag, text, n in (("south", t_south, south), ("paired8", t_pair8, pair8),
-                         ("north32", t_n32, north32), ("northhi", t_hi, northhi)):
+    for tag, text, n in (("declared", t_dec, DECLARED), ("south", t_south, south),
+                         ("paired8", t_pair8, pair8),
+                         ("north32", t_n32, north32), ("northhi", t_hi, northhi),
+                         ("cross", t_cross, cross)):
         d = out / tag
         d.mkdir(parents=True, exist_ok=True)
         (d / f"spectrum-{tag}.adva").write_text(text)

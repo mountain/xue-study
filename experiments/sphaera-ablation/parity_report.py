@@ -25,10 +25,12 @@ GEOMS = {
     # declared 是 sphaera-frame 声明的几何（z = ±3/5, ±4/5）。它的 .adva 未随 run 留存，
     # 故节点数与配对只能从 extract_nodes.py 的 declared 预设读 —— 这一点在输出里标明。
     "northhi": ("runs/northhi/eo.npz", "northhi"),
-    "declared": ("runs/l500/eo.npz", "declared"),
+    # cross 与 declared 共用 |z|=4/5、与 tropical 共用 |z|=5/13，用来把两个环分开
+    "cross": ("runs/cross/eo.npz", "cross"),
+    "declared": ("runs/declared/eo.npz", "declared"),
 }
 # 没有 .adva 留存的 run：节点数/配对从 extract_nodes 的预设表取，并标记出来
-NO_ADVA = {"declared"}
+NO_ADVA = set()
 LEADS = (1, 2, 4, 6)
 PY = sys.executable
 
