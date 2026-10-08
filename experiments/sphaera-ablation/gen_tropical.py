@@ -25,11 +25,13 @@ from pathlib import Path
 # 这里选 z=±1/5 配半径 sqrt(24)/5 —— 非有理，会破坏原程序的有理算术。
 # ⇒ 改用 z=±3/5 的同族但【沿经度重排】：热带化只能通过 z 的有理勾股对实现，
 #   而在 |z|<3/5 的有理勾股对里最小的是 (5,12,13): z=5/13, r=12/13。
-NODES = []
-for z, rad in ((F(5,13), F(12,13)), (F(-5,13), F(12,13)),
-               (F(3,5), F(4,5)), (F(-3,5), F(4,5))):
-    for x, y in ((rad, F(0)), (-rad, F(0)), (F(0), rad), (F(0), -rad)):
-        NODES.append((x, y, z))
+def _default_nodes():
+    out = []
+    for z, rad in ((F(5,13), F(12,13)), (F(-5,13), F(12,13)),
+                   (F(3,5), F(4,5)), (F(-3,5), F(4,5))):
+        for x, y in ((rad, F(0)), (-rad, F(0)), (F(0), rad), (F(0), -rad)):
+            out.append((x, y, z))
+    return out
 
 
 def frac(fr: F) -> str:
@@ -84,8 +86,8 @@ def adva_source(nodes):
 if __name__ == "__main__":
     out = Path(sys.argv[1] if len(sys.argv) > 1 else "runs/tropical/spectrum-tropical.adva")
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(adva_source(NODES))
+    out.write_text(adva_source(_default_nodes()))
     import math
     print(f"  已写 {out}")
-    for j, (x, y, z) in enumerate(NODES):
+    for j, (x, y, z) in enumerate(_default_nodes()):
         print(f"    {j:>3}  z={z}  纬度 {math.degrees(math.asin(float(z))):+.2f}°")

@@ -38,6 +38,17 @@ def nodes(preset="declared"):
         rings = ((3/5, 4/5), (-3/5, 4/5), (4/5, 3/5), (-4/5, 3/5))
     elif preset == "tropical":
         rings = ((5/13, 12/13), (-5/13, 12/13), (3/5, 4/5), (-3/5, 4/5))
+    elif preset == "dense":
+        # 8 个方位（4 基本 + 4 勾股对角）× 4 环 = 32 节点。
+        # 与 gen_dense.py 的 NODES **必须同序**。
+        rings = ((5/13, 12/13), (-5/13, 12/13), (3/5, 4/5), (-3/5, 4/5))
+        out = []
+        for z, rad in rings:
+            for x, y in ((rad, 0.0), (-rad, 0.0), (0.0, rad), (0.0, -rad),
+                         (4*rad/5, 3*rad/5), (-4*rad/5, -3*rad/5),
+                         (3*rad/5, 4*rad/5), (-3*rad/5, -4*rad/5)):
+                out.append((x, y, z))
+        return out
     else:
         raise SystemExit(f"unknown preset {preset}")
     out = []
@@ -52,7 +63,7 @@ def main() -> int:
     ap.add_argument("--inputs", default=str(Path.home() / "climatetensor-inputs/ncep-multivariate"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", type=int, default=850)
-    ap.add_argument("--nodes", default="declared", choices=("declared","tropical"))
+    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense"))
     args = ap.parse_args()
     src = Path(args.inputs)
     tag = f"u{args.level}"
