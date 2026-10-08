@@ -1,7 +1,12 @@
 # 2026-10-08 · 诊断可视化：五张图，每张对着一个具体不足
 
 **件**：`experiments/sphaera-ablation/viz_diagnostics.py`（可重跑）。
-**产物**：`figures/fig{1..5}_*.png`。
+**读数件**：`experiments/sphaera-ablation/runs/ls_oo/nodes.json`、`experiments/sphaera-ablation/runs/ls_lo/nodes.json`（fig1 的节点表）。
+（检查器的目标正则只认 `.md`/`.toml`/`.json`，且只扫前 14 行 —— 故上面两个必须在这里。）
+**产物**（五张，逐个列出 —— 花括号展开不是真实文件，检查器会拒）：
+`figures/fig1_sampling_geometry.png`、`figures/fig2_parity_timeseries.png`、
+`figures/fig3_parity_diagnostic.png`、`figures/fig4_ablation_leads.png`、
+`figures/fig5_redundancy_residual.png`。
 
 **用途**：不是展示成果，是**看不足**。每张图都对着一条已知的弱点，让它在图上可见。
 
