@@ -38,6 +38,10 @@ def nodes(preset="declared"):
         rings = ((3/5, 4/5), (-3/5, 4/5), (4/5, 3/5), (-4/5, 3/5))
     elif preset == "tropical":
         rings = ((5/13, 12/13), (-5/13, 12/13), (3/5, 4/5), (-3/5, 4/5))
+    elif preset == "north":
+        # 证伪几何：四个环全取北半球 ⇒ sign(z) 恒为 +1 ⇒ E 退化为纯水平项。
+        # 这是上一件写下的证伪点：若宇称分解是 E/O 区分的来源，撤掉对径配对应当让它退化。
+        rings = ((5/13, 12/13), (12/13, 5/13), (3/5, 4/5), (4/5, 3/5))
     elif preset == "dense":
         # 8 个方位（4 基本 + 4 勾股对角）× 4 环 = 32 节点。
         # 与 gen_dense.py 的 NODES **必须同序**。
@@ -63,7 +67,7 @@ def main() -> int:
     ap.add_argument("--inputs", default=str(Path.home() / "climatetensor-inputs/ncep-multivariate"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", type=int, default=850)
-    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense"))
+    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north"))
     args = ap.parse_args()
     src = Path(args.inputs)
     tag = f"u{args.level}"
