@@ -53,6 +53,18 @@ def nodes(preset="declared"):
                          (3*rad/5, 4*rad/5), (-3*rad/5, -4*rad/5)):
                 out.append((x, y, z))
         return out
+    elif preset == "south":
+        # 半球对照：|z| 集合与 north **完全相同**（5/13, 12/13, 3/5, 4/5），节点数与方位也相同，
+        # 只有【符号】相反 —— 而配对在 north 与 south 里【都不存在】。
+        # 故 north vs south 是单变量对照：只动半球。
+        rings = ((-5/13, 12/13), (-12/13, 5/13), (-3/5, 4/5), (-4/5, 3/5))
+    elif preset == "paired8":
+        # 决定性对照：把 north 每个环的【对径副本】加回来 ⇒ 配对恢复，
+        # 而 |z| 集合保持与 north 相同（5/13, 12/13, 3/5, 4/5）。
+        # 故 north vs paired8 之间只差「有没有对径配对」。
+        # 唯一附带变化是节点数 16→32 —— 而方位加密造成的 16→32 已被 dense 实验证明无效。
+        rings = ((5/13, 12/13), (-5/13, 12/13), (12/13, 5/13), (-12/13, 5/13),
+                 (3/5, 4/5), (-3/5, 4/5), (4/5, 3/5), (-4/5, 3/5))
     else:
         raise SystemExit(f"unknown preset {preset}")
     out = []
@@ -67,7 +79,7 @@ def main() -> int:
     ap.add_argument("--inputs", default=str(Path.home() / "climatetensor-inputs/ncep-multivariate"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", type=int, default=850)
-    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north"))
+    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","south","paired8"))
     args = ap.parse_args()
     src = Path(args.inputs)
     tag = f"u{args.level}"
@@ -123,7 +135,13 @@ def main() -> int:
                "i-after-p", "shear", "unshear", "chart-i", "norm",
                "chart-norm", "old-then-i"]
     json.dump({"functions": exports, "cases": cases}, out.open("w"))
-    print(f"  已写 {out}   {len(cases)} 个 case × 48 个输入")
+    # 曾经这里写死「48 个输入」—— paired8 有 32 节点、需 96 个输入，也照样印 48。
+    # 那个标签【永远不可能】发现 arity 不匹配。改为按真实结构数，并且断言不缺键。
+    n_in = len(cases[0]["inputs"]) if cases else 0
+    assert n_in == 3 * len(nodes(args.nodes)), (
+        f"输入数 {n_in} != 3 × 节点数 {len(nodes(args.nodes))}")
+    print(f"  已写 {out}   {len(cases)} 个 case × {n_in} 个输入"
+          f"（{len(nodes(args.nodes))} 节点 × 3 分量）")
     return 0
 
 
