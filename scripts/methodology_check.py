@@ -137,8 +137,22 @@ def check_corrections(report: Report) -> None:
                        r"\.(?:md|toml|json))`")
     BARE = re.compile(r"`([A-Za-z0-9._/-]+\.(?:md|toml|json))`")
     for note in notes:
-        head = "\n".join(note.read_text(encoding="utf-8").splitlines()[:14])
-        coords = COORD.findall(head)
+        full = note.read_text(encoding="utf-8")
+        head = "\n".join(full.splitlines()[:14])
+        # COORDINATES ARE SCANNED OVER THE WHOLE NOTE; BARE PATHS ONLY OVER THE HEAD.
+        #
+        # The 14-line limit is an EDITORIAL requirement, not a technical one: a note
+        # should declare what it is about near the top.  It stays for bare paths,
+        # because a whole-note scan would sweep in every path merely mentioned in
+        # prose and manufacture failures out of sentences.
+        #
+        # A coordinate is different in kind.  `owner/repo@<40 hex>:path` carries its
+        # own repository and revision, cannot be confused with prose, and is complete
+        # whether or not that repository is checked out here.  Restricting it to the
+        # head only made the category appear or vanish according to where a sentence
+        # happened to fall -- which is the same "fails for the wrong reason" the
+        # docstring above warns about, arriving from the other side.
+        coords = sorted(set(COORD.findall(full)))
         stripped = COORD.sub("`<coord>`", head)
         targets = BARE.findall(stripped)
         for c in coords:
@@ -170,15 +184,20 @@ def check_corrections(report: Report) -> None:
                 broken.append(f"{note.name} -> {target} is absent from both trees")
             else:
                 skipped.append(f"{note.name} -> {target} (upstream clone absent)")
+    # THE EXTERNAL COUNT GOES IN `establishes`, NOT IN `details`.
+    # `Report.add` prints details only on failure, and labels them
+    # "failed because".  A reference that declares its owning repository is not a
+    # failure, so filing it under details made it either invisible (check passes)
+    # or mislabelled (check fails) -- and the mislabelling is what the first run of
+    # this showed.  What the check can honestly claim is a count, so it claims that.
     report.add("corrections", not broken,
                f"{len(notes)} correction notes present; every file they name is "
                f"either owned here, present in the upstream clone, or carries a "
-               f"declared owning repository",
+               f"declared owning repository "
+               f"({len(external)} reference(s) declared external, not resolved here)",
                "that the corrections are complete, or that the corrected wording is "
                "gone from the tree -- the append-only rule keeps the note, not the old text",
-               details=broken
-               + [f"EXTERNAL (by declaration): {s}" for s in external]
-               + [f"SKIPPED (upstream clone absent): {s}" for s in skipped])
+               details=broken + [f"SKIPPED (upstream clone absent): {s}" for s in skipped])
 
 
 def check_cards(report: Report) -> None:
