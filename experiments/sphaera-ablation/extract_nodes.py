@@ -134,6 +134,8 @@ def main() -> int:
     ap.add_argument("--level", type=int, default=850)
     ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","north32","south","paired8","northhi","cross"))
     ap.add_argument("--pair2", help="两环配对几何，如 5/13,3/5")
+    ap.add_argument("--rotate", type=int, default=0,
+                    help="绕 z 轴旋转 K × 53.13°（勾股角，保持坐标有理）")
     args = ap.parse_args()
     if args.pair2:
         args.nodes = "pair2:" + args.pair2
@@ -153,6 +155,10 @@ def main() -> int:
     assert np.allclose(u["lat"], v["lat"]) and np.allclose(u["lon"], v["lon"]), "u/v 网格不一致"
 
     N = nodes(args.nodes)
+    if args.rotate:
+        # 经度去混：只动子午线，|z|/纬度/环结构全不动。
+        import rotation as _rot
+        N = [(float(a), float(b), float(c)) for a, b, c in _rot.rotate_nodes(N, args.rotate)]
     phi = np.array([np.arcsin(z) for _, _, z in N])          # 声明纬度（弧度）
     lam = np.array([np.arctan2(y, x) for x, y, _ in N])
     print(f"  声明纬度 {np.degrees(phi).round(2)}")
