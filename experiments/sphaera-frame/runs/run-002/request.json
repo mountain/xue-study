@@ -1,0 +1,2558 @@
+{
+  "functions": [
+    "spectrum",
+    "turn-i",
+    "twice-i",
+    "conjugate",
+    "p-after-i",
+    "i-after-p",
+    "shear",
+    "unshear",
+    "chart-i",
+    "norm",
+    "chart-norm",
+    "old-then-i"
+  ],
+  "cases": [
+    {
+      "id": "zero",
+      "function": "spectrum",
+      "inputs": {
+        "u0x": 0.0,
+        "u0y": 0.0,
+        "u0z": 0.0,
+        "u1x": 0.0,
+        "u1y": 0.0,
+        "u1z": 0.0,
+        "u2x": 0.0,
+        "u2y": 0.0,
+        "u2z": 0.0,
+        "u3x": 0.0,
+        "u3y": 0.0,
+        "u3z": 0.0,
+        "u4x": 0.0,
+        "u4y": 0.0,
+        "u4z": 0.0,
+        "u5x": 0.0,
+        "u5y": 0.0,
+        "u5z": 0.0,
+        "u6x": 0.0,
+        "u6y": 0.0,
+        "u6z": 0.0,
+        "u7x": 0.0,
+        "u7y": 0.0,
+        "u7z": 0.0,
+        "u8x": 0.0,
+        "u8y": 0.0,
+        "u8z": 0.0,
+        "u9x": 0.0,
+        "u9y": 0.0,
+        "u9z": 0.0,
+        "u10x": 0.0,
+        "u10y": 0.0,
+        "u10z": 0.0,
+        "u11x": 0.0,
+        "u11y": 0.0,
+        "u11z": 0.0,
+        "u12x": 0.0,
+        "u12y": 0.0,
+        "u12z": 0.0,
+        "u13x": 0.0,
+        "u13y": 0.0,
+        "u13z": 0.0,
+        "u14x": 0.0,
+        "u14y": 0.0,
+        "u14z": 0.0,
+        "u15x": 0.0,
+        "u15y": 0.0,
+        "u15z": 0.0
+      }
+    },
+    {
+      "id": "rigid_z",
+      "function": "spectrum",
+      "inputs": {
+        "u0x": 0.0,
+        "u0y": 0.8,
+        "u0z": 0.0,
+        "u1x": 0.0,
+        "u1y": -0.8,
+        "u1z": 0.0,
+        "u2x": -0.8,
+        "u2y": 0.0,
+        "u2z": 0.0,
+        "u3x": 0.8,
+        "u3y": 0.0,
+        "u3z": 0.0,
+        "u4x": 0.0,
+        "u4y": 0.8,
+        "u4z": 0.0,
+        "u5x": 0.0,
+        "u5y": -0.8,
+        "u5z": 0.0,
+        "u6x": -0.8,
+        "u6y": 0.0,
+        "u6z": 0.0,
+        "u7x": 0.8,
+        "u7y": 0.0,
+        "u7z": 0.0,
+        "u8x": 0.0,
+        "u8y": 0.6,
+        "u8z": 0.0,
+        "u9x": 0.0,
+        "u9y": -0.6,
+        "u9z": 0.0,
+        "u10x": -0.6,
+        "u10y": 0.0,
+        "u10z": 0.0,
+        "u11x": 0.6,
+        "u11y": 0.0,
+        "u11z": 0.0,
+        "u12x": 0.0,
+        "u12y": 0.6,
+        "u12z": 0.0,
+        "u13x": 0.0,
+        "u13y": -0.6,
+        "u13z": 0.0,
+        "u14x": -0.6,
+        "u14y": 0.0,
+        "u14z": 0.0,
+        "u15x": 0.6,
+        "u15y": 0.0,
+        "u15z": 0.0
+      }
+    },
+    {
+      "id": "gradient_z",
+      "function": "spectrum",
+      "inputs": {
+        "u0x": -0.48,
+        "u0y": 0.0,
+        "u0z": 0.64,
+        "u1x": 0.48,
+        "u1y": 0.0,
+        "u1z": 0.64,
+        "u2x": 0.0,
+        "u2y": -0.48,
+        "u2z": 0.64,
+        "u3x": 0.0,
+        "u3y": 0.48,
+        "u3z": 0.64,
+        "u4x": 0.48,
+        "u4y": 0.0,
+        "u4z": 0.64,
+        "u5x": -0.48,
+        "u5y": 0.0,
+        "u5z": 0.64,
+        "u6x": 0.0,
+        "u6y": 0.48,
+        "u6z": 0.64,
+        "u7x": 0.0,
+        "u7y": -0.48,
+        "u7z": 0.64,
+        "u8x": -0.48,
+        "u8y": 0.0,
+        "u8z": 0.36,
+        "u9x": 0.48,
+        "u9y": 0.0,
+        "u9z": 0.36,
+        "u10x": 0.0,
+        "u10y": -0.48,
+        "u10z": 0.36,
+        "u11x": 0.0,
+        "u11y": 0.48,
+        "u11z": 0.36,
+        "u12x": 0.48,
+        "u12y": 0.0,
+        "u12z": 0.36,
+        "u13x": -0.48,
+        "u13y": 0.0,
+        "u13z": 0.36,
+        "u14x": 0.0,
+        "u14y": 0.48,
+        "u14z": 0.36,
+        "u15x": 0.0,
+        "u15y": -0.48,
+        "u15z": 0.36
+      }
+    },
+    {
+      "id": "toroidal_l2",
+      "function": "spectrum",
+      "inputs": {
+        "u0x": 0.0,
+        "u0y": -1.44,
+        "u0z": 0.0,
+        "u1x": 0.0,
+        "u1y": 1.44,
+        "u1z": 0.0,
+        "u2x": 1.44,
+        "u2y": 0.0,
+        "u2z": 0.0,
+        "u3x": -1.44,
+        "u3y": 0.0,
+        "u3z": 0.0,
+        "u4x": 0.0,
+        "u4y": 1.44,
+        "u4z": 0.0,
+        "u5x": 0.0,
+        "u5y": -1.44,
+        "u5z": 0.0,
+        "u6x": -1.44,
+        "u6y": 0.0,
+        "u6z": 0.0,
+        "u7x": 1.44,
+        "u7y": 0.0,
+        "u7z": 0.0,
+        "u8x": 0.0,
+        "u8y": -1.44,
+        "u8z": 0.0,
+        "u9x": 0.0,
+        "u9y": 1.44,
+        "u9z": 0.0,
+        "u10x": 1.44,
+        "u10y": 0.0,
+        "u10z": 0.0,
+        "u11x": -1.44,
+        "u11y": 0.0,
+        "u11z": 0.0,
+        "u12x": 0.0,
+        "u12y": 1.44,
+        "u12z": 0.0,
+        "u13x": 0.0,
+        "u13y": -1.44,
+        "u13z": 0.0,
+        "u14x": -1.44,
+        "u14y": 0.0,
+        "u14z": 0.0,
+        "u15x": 1.44,
+        "u15y": 0.0,
+        "u15z": 0.0
+      }
+    },
+    {
+      "id": "toroidal_l3",
+      "function": "spectrum",
+      "inputs": {
+        "u0x": 0.0,
+        "u0y": -0.96,
+        "u0z": 0.0,
+        "u1x": 0.0,
+        "u1y": 0.96,
+        "u1z": 0.0,
+        "u2x": 0.96,
+        "u2y": 0.0,
+        "u2z": 0.0,
+        "u3x": -0.96,
+        "u3y": 0.0,
+        "u3z": 0.0,
+        "u4x": 0.0,
+        "u4y": -0.96,
+        "u4z": 0.0,
+        "u5x": 0.0,
+        "u5y": 0.96,
+        "u5z": 0.0,
+        "u6x": 0.96,
+        "u6y": 0.0,
+        "u6z": 0.0,
+        "u7x": -0.96,
+        "u7y": 0.0,
+        "u7z": 0.0,
+        "u8x": 0.0,
+        "u8y": -1.98,
+        "u8z": 0.0,
+        "u9x": 0.0,
+        "u9y": 1.98,
+        "u9z": 0.0,
+        "u10x": 1.98,
+        "u10y": 0.0,
+        "u10z": 0.0,
+        "u11x": -1.98,
+        "u11y": 0.0,
+        "u11z": 0.0,
+        "u12x": 0.0,
+        "u12y": -1.98,
+        "u12z": 0.0,
+        "u13x": 0.0,
+        "u13y": 1.98,
+        "u13z": 0.0,
+        "u14x": 1.98,
+        "u14y": 0.0,
+        "u14z": 0.0,
+        "u15x": -1.98,
+        "u15y": 0.0,
+        "u15z": 0.0
+      }
+    },
+    {
+      "id": "rigid_plus_l2",
+      "function": "spectrum",
+      "inputs": {
+        "u0x": 0.0,
+        "u0y": -0.64,
+        "u0z": 0.0,
+        "u1x": 0.0,
+        "u1y": 0.64,
+        "u1z": 0.0,
+        "u2x": 0.64,
+        "u2y": 0.0,
+        "u2z": 0.0,
+        "u3x": -0.64,
+        "u3y": 0.0,
+        "u3z": 0.0,
+        "u4x": 0.0,
+        "u4y": 2.24,
+        "u4z": 0.0,
+        "u5x": 0.0,
+        "u5y": -2.24,
+        "u5z": 0.0,
+        "u6x": -2.24,
+        "u6y": 0.0,
+        "u6z": 0.0,
+        "u7x": 2.24,
+        "u7y": 0.0,
+        "u7z": 0.0,
+        "u8x": 0.0,
+        "u8y": -0.84,
+        "u8z": 0.0,
+        "u9x": 0.0,
+        "u9y": 0.84,
+        "u9z": 0.0,
+        "u10x": 0.84,
+        "u10y": 0.0,
+        "u10z": 0.0,
+        "u11x": -0.84,
+        "u11y": 0.0,
+        "u11z": 0.0,
+        "u12x": 0.0,
+        "u12y": 2.04,
+        "u12z": 0.0,
+        "u13x": 0.0,
+        "u13y": -2.04,
+        "u13z": 0.0,
+        "u14x": -2.04,
+        "u14y": 0.0,
+        "u14z": 0.0,
+        "u15x": 2.04,
+        "u15y": 0.0,
+        "u15z": 0.0
+      }
+    },
+    {
+      "id": "turn-i:-2:-2",
+      "function": "turn-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "twice-i:-2:-2",
+      "function": "twice-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "conjugate:-2:-2",
+      "function": "conjugate",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "p-after-i:-2:-2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "i-after-p:-2:-2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "shear:-2:-2",
+      "function": "shear",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "unshear:-2:-2",
+      "function": "unshear",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-i:-2:-2",
+      "function": "chart-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "norm:-2:-2",
+      "function": "norm",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-norm:-2:-2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "old-then-i:-2:-2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "turn-i:-2:-1",
+      "function": "turn-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "twice-i:-2:-1",
+      "function": "twice-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "conjugate:-2:-1",
+      "function": "conjugate",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "p-after-i:-2:-1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "i-after-p:-2:-1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "shear:-2:-1",
+      "function": "shear",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "unshear:-2:-1",
+      "function": "unshear",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-i:-2:-1",
+      "function": "chart-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "norm:-2:-1",
+      "function": "norm",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-norm:-2:-1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "old-then-i:-2:-1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "turn-i:-2:0",
+      "function": "turn-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "twice-i:-2:0",
+      "function": "twice-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "conjugate:-2:0",
+      "function": "conjugate",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "p-after-i:-2:0",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "i-after-p:-2:0",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "shear:-2:0",
+      "function": "shear",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "unshear:-2:0",
+      "function": "unshear",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-i:-2:0",
+      "function": "chart-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "norm:-2:0",
+      "function": "norm",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-norm:-2:0",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "old-then-i:-2:0",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "turn-i:-2:1",
+      "function": "turn-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "twice-i:-2:1",
+      "function": "twice-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "conjugate:-2:1",
+      "function": "conjugate",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "p-after-i:-2:1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "i-after-p:-2:1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "shear:-2:1",
+      "function": "shear",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "unshear:-2:1",
+      "function": "unshear",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-i:-2:1",
+      "function": "chart-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "norm:-2:1",
+      "function": "norm",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-norm:-2:1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "old-then-i:-2:1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "turn-i:-2:2",
+      "function": "turn-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "twice-i:-2:2",
+      "function": "twice-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "conjugate:-2:2",
+      "function": "conjugate",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "p-after-i:-2:2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "i-after-p:-2:2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "shear:-2:2",
+      "function": "shear",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "unshear:-2:2",
+      "function": "unshear",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-i:-2:2",
+      "function": "chart-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "norm:-2:2",
+      "function": "norm",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-norm:-2:2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "old-then-i:-2:2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "turn-i:-1:-2",
+      "function": "turn-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "twice-i:-1:-2",
+      "function": "twice-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "conjugate:-1:-2",
+      "function": "conjugate",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "p-after-i:-1:-2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "i-after-p:-1:-2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "shear:-1:-2",
+      "function": "shear",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "unshear:-1:-2",
+      "function": "unshear",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-i:-1:-2",
+      "function": "chart-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "norm:-1:-2",
+      "function": "norm",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-norm:-1:-2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "old-then-i:-1:-2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "turn-i:-1:-1",
+      "function": "turn-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "twice-i:-1:-1",
+      "function": "twice-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "conjugate:-1:-1",
+      "function": "conjugate",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "p-after-i:-1:-1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "i-after-p:-1:-1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "shear:-1:-1",
+      "function": "shear",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "unshear:-1:-1",
+      "function": "unshear",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-i:-1:-1",
+      "function": "chart-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "norm:-1:-1",
+      "function": "norm",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-norm:-1:-1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "old-then-i:-1:-1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "turn-i:-1:0",
+      "function": "turn-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "twice-i:-1:0",
+      "function": "twice-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "conjugate:-1:0",
+      "function": "conjugate",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "p-after-i:-1:0",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "i-after-p:-1:0",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "shear:-1:0",
+      "function": "shear",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "unshear:-1:0",
+      "function": "unshear",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-i:-1:0",
+      "function": "chart-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "norm:-1:0",
+      "function": "norm",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-norm:-1:0",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "old-then-i:-1:0",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "turn-i:-1:1",
+      "function": "turn-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "twice-i:-1:1",
+      "function": "twice-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "conjugate:-1:1",
+      "function": "conjugate",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "p-after-i:-1:1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "i-after-p:-1:1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "shear:-1:1",
+      "function": "shear",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "unshear:-1:1",
+      "function": "unshear",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-i:-1:1",
+      "function": "chart-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "norm:-1:1",
+      "function": "norm",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-norm:-1:1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "old-then-i:-1:1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "turn-i:-1:2",
+      "function": "turn-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "twice-i:-1:2",
+      "function": "twice-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "conjugate:-1:2",
+      "function": "conjugate",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "p-after-i:-1:2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "i-after-p:-1:2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "shear:-1:2",
+      "function": "shear",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "unshear:-1:2",
+      "function": "unshear",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-i:-1:2",
+      "function": "chart-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "norm:-1:2",
+      "function": "norm",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-norm:-1:2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "old-then-i:-1:2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": -1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "turn-i:0:-2",
+      "function": "turn-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "twice-i:0:-2",
+      "function": "twice-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "conjugate:0:-2",
+      "function": "conjugate",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "p-after-i:0:-2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "i-after-p:0:-2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "shear:0:-2",
+      "function": "shear",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "unshear:0:-2",
+      "function": "unshear",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-i:0:-2",
+      "function": "chart-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "norm:0:-2",
+      "function": "norm",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-norm:0:-2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "old-then-i:0:-2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "turn-i:0:-1",
+      "function": "turn-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "twice-i:0:-1",
+      "function": "twice-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "conjugate:0:-1",
+      "function": "conjugate",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "p-after-i:0:-1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "i-after-p:0:-1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "shear:0:-1",
+      "function": "shear",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "unshear:0:-1",
+      "function": "unshear",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-i:0:-1",
+      "function": "chart-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "norm:0:-1",
+      "function": "norm",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-norm:0:-1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "old-then-i:0:-1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 0.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "turn-i:0:0",
+      "function": "turn-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "twice-i:0:0",
+      "function": "twice-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "conjugate:0:0",
+      "function": "conjugate",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "p-after-i:0:0",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "i-after-p:0:0",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "shear:0:0",
+      "function": "shear",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "unshear:0:0",
+      "function": "unshear",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-i:0:0",
+      "function": "chart-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "norm:0:0",
+      "function": "norm",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-norm:0:0",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "old-then-i:0:0",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "turn-i:0:1",
+      "function": "turn-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "twice-i:0:1",
+      "function": "twice-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "conjugate:0:1",
+      "function": "conjugate",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "p-after-i:0:1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "i-after-p:0:1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "shear:0:1",
+      "function": "shear",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "unshear:0:1",
+      "function": "unshear",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-i:0:1",
+      "function": "chart-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "norm:0:1",
+      "function": "norm",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-norm:0:1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "old-then-i:0:1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "turn-i:0:2",
+      "function": "turn-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "twice-i:0:2",
+      "function": "twice-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "conjugate:0:2",
+      "function": "conjugate",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "p-after-i:0:2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "i-after-p:0:2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "shear:0:2",
+      "function": "shear",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "unshear:0:2",
+      "function": "unshear",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-i:0:2",
+      "function": "chart-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "norm:0:2",
+      "function": "norm",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-norm:0:2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "old-then-i:0:2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "turn-i:1:-2",
+      "function": "turn-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "twice-i:1:-2",
+      "function": "twice-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "conjugate:1:-2",
+      "function": "conjugate",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "p-after-i:1:-2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "i-after-p:1:-2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "shear:1:-2",
+      "function": "shear",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "unshear:1:-2",
+      "function": "unshear",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-i:1:-2",
+      "function": "chart-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "norm:1:-2",
+      "function": "norm",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-norm:1:-2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "old-then-i:1:-2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "turn-i:1:-1",
+      "function": "turn-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "twice-i:1:-1",
+      "function": "twice-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "conjugate:1:-1",
+      "function": "conjugate",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "p-after-i:1:-1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "i-after-p:1:-1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "shear:1:-1",
+      "function": "shear",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "unshear:1:-1",
+      "function": "unshear",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-i:1:-1",
+      "function": "chart-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "norm:1:-1",
+      "function": "norm",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-norm:1:-1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "old-then-i:1:-1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 1.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "turn-i:1:0",
+      "function": "turn-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "twice-i:1:0",
+      "function": "twice-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "conjugate:1:0",
+      "function": "conjugate",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "p-after-i:1:0",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "i-after-p:1:0",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "shear:1:0",
+      "function": "shear",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "unshear:1:0",
+      "function": "unshear",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-i:1:0",
+      "function": "chart-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "norm:1:0",
+      "function": "norm",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-norm:1:0",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "old-then-i:1:0",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "turn-i:1:1",
+      "function": "turn-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "twice-i:1:1",
+      "function": "twice-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "conjugate:1:1",
+      "function": "conjugate",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "p-after-i:1:1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "i-after-p:1:1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "shear:1:1",
+      "function": "shear",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "unshear:1:1",
+      "function": "unshear",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-i:1:1",
+      "function": "chart-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "norm:1:1",
+      "function": "norm",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-norm:1:1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "old-then-i:1:1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "turn-i:1:2",
+      "function": "turn-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "twice-i:1:2",
+      "function": "twice-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "conjugate:1:2",
+      "function": "conjugate",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "p-after-i:1:2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "i-after-p:1:2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "shear:1:2",
+      "function": "shear",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "unshear:1:2",
+      "function": "unshear",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-i:1:2",
+      "function": "chart-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "norm:1:2",
+      "function": "norm",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-norm:1:2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "old-then-i:1:2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 1.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "turn-i:2:-2",
+      "function": "turn-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "twice-i:2:-2",
+      "function": "twice-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "conjugate:2:-2",
+      "function": "conjugate",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "p-after-i:2:-2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "i-after-p:2:-2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "shear:2:-2",
+      "function": "shear",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "unshear:2:-2",
+      "function": "unshear",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-i:2:-2",
+      "function": "chart-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "norm:2:-2",
+      "function": "norm",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "chart-norm:2:-2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "old-then-i:2:-2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -2.0
+      }
+    },
+    {
+      "id": "turn-i:2:-1",
+      "function": "turn-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "twice-i:2:-1",
+      "function": "twice-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "conjugate:2:-1",
+      "function": "conjugate",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "p-after-i:2:-1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "i-after-p:2:-1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "shear:2:-1",
+      "function": "shear",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "unshear:2:-1",
+      "function": "unshear",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-i:2:-1",
+      "function": "chart-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "norm:2:-1",
+      "function": "norm",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "chart-norm:2:-1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "old-then-i:2:-1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 2.0,
+        "o": -1.0
+      }
+    },
+    {
+      "id": "turn-i:2:0",
+      "function": "turn-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "twice-i:2:0",
+      "function": "twice-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "conjugate:2:0",
+      "function": "conjugate",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "p-after-i:2:0",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "i-after-p:2:0",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "shear:2:0",
+      "function": "shear",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "unshear:2:0",
+      "function": "unshear",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-i:2:0",
+      "function": "chart-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "norm:2:0",
+      "function": "norm",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "chart-norm:2:0",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "old-then-i:2:0",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "turn-i:2:1",
+      "function": "turn-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "twice-i:2:1",
+      "function": "twice-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "conjugate:2:1",
+      "function": "conjugate",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "p-after-i:2:1",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "i-after-p:2:1",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "shear:2:1",
+      "function": "shear",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "unshear:2:1",
+      "function": "unshear",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-i:2:1",
+      "function": "chart-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "norm:2:1",
+      "function": "norm",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "chart-norm:2:1",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "old-then-i:2:1",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 1.0
+      }
+    },
+    {
+      "id": "turn-i:2:2",
+      "function": "turn-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "twice-i:2:2",
+      "function": "twice-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "conjugate:2:2",
+      "function": "conjugate",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "p-after-i:2:2",
+      "function": "p-after-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "i-after-p:2:2",
+      "function": "i-after-p",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "shear:2:2",
+      "function": "shear",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "unshear:2:2",
+      "function": "unshear",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-i:2:2",
+      "function": "chart-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "norm:2:2",
+      "function": "norm",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "chart-norm:2:2",
+      "function": "chart-norm",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "old-then-i:2:2",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 2.0,
+        "o": 2.0
+      }
+    },
+    {
+      "id": "project-first:zero",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.0
+      }
+    },
+    {
+      "id": "project-first:rigid_z",
+      "function": "old-then-i",
+      "inputs": {
+        "e": 0.0,
+        "o": 0.336
+      }
+    }
+  ]
+}
