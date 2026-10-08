@@ -47,54 +47,53 @@ def main() -> int:
     assert (emonths == dates).all(), "月份轴不一致"
     print("  月份轴逐月一致 ✓")
 
-    S = coef @ vec                                   # (564, 64) 模型状态
     mon = np.array([s[5:7] for s in dates])
     mint = np.array([int(s[5:7]) for s in dates]) - 1
     tr = dates <= TRAIN_END
     bt = dates >= BT_START
     print(f"  训练 {tr.sum()}（≤{TRAIN_END}）  开发回测 {bt.sum()}（≥{BT_START}）")
 
-    # ---- 第 0 步：复现他们的预报（试多种重建） ----
-    # 上一版的错：我用 max|Δ| 与 stored.std() 做「相对误差」，但 2698 个格点里
-    # 地表气压通道是 Pa 量级（~1e5），其余是 K 或 m/s ⇒ 该指标被量纲主导，不可读。
-    # 这一版按通道分别归一化后再比，并试几种重建式。
+    # ---- 第 0 步：按 model.py 里的真实公式复现 ----
+    # 前几版全错在这一点上：predict() 吃的是【编码后】的状态
+    #     encode(c, months) = (c - climatology[months]) / scale
+    #     predict(x, targets, vectors, maps)[k-1] = (x[targets-k] @ vectors) @ maps[k-1]
+    #     decode(x, months) = x * scale + climatology[months]
+    # 我一直用原始场 coef @ vec，既没 encode 也没 decode。
     print()
-    print("  === 第 0 步：哪种重建能复现 backtest.npz 的 joint ===")
+    print("  === 第 0 步：按 model.py 的公式复现 backtest.npz ===")
     project = np.load(ARCH / "backtest.npz", allow_pickle=True)
     stored = project["joint"].astype(float)
     bt_idx = np.where(bt)[0]
-    scale = m["scale"].astype(float) if "scale" in m.files else np.ones(coef.shape[1])
-    print(f"    scale: {scale.shape}  范围 [{scale.min():.4g}, {scale.max():.4g}]")
-    print(f"    climatology: {clim.shape}  coefficients sd 中位数 {np.median(coef.std(axis=0)):.4g}")
+    scale = m["scale"].astype(float)
+    assert scale.shape == (coef.shape[1],), scale.shape
+    print(f"    scale: 范围 [{scale.min():.4g}, {scale.max():.4g}]"
+          f"  coefficients sd 中位数 {np.median(coef.std(axis=0)):.4g}")
+    x_enc = (coef - clim[mint]) / scale                     # 编码态
+    print(f"    编码态 x: {x_enc.shape}  通道 sd 中位数 {np.median(x_enc.std(axis=0)):.4g}")
+    print(f"    stored 通道 sd 中位数 {np.median(stored.std(axis=0)):.4g}")
 
-    def relerr(a, b):
-        """按通道归一化：先把两侧都除以 b 的通道标准差，再取最大绝对差。"""
-        sd = np.maximum(b.std(axis=0), 1e-30)
-        return float(np.abs((a - b) / sd).max())
-
-    cands = {}
-    for k in (1,):
-        base = np.stack([S[i - k] @ maps[k - 1] for i in bt_idx])
-        cands["S@maps"] = base
-        cands["scale*(S@maps)"] = base * scale
-        cands["clim+scale*(S@maps)"] = base * scale + clim[mint[bt_idx]]
-        cands["scale*(S@maps)+clim(t+k)"] = base * scale + clim[mint[bt_idx]]
-        for name, v in cands.items():
-            print(f"    k={k}  {name:26s} 通道归一化后最大相对差 {relerr(v, stored[k-1]):.4g}")
-    print("    （stored 本身的通道 sd 量级："
-          f"{np.percentile(stored[0].std(axis=0), [0, 50, 100]).round(3)}）")
-    ok_all = False
+    ok_all = True
+    for k in LEADS:
+        enc = np.stack([(x_enc[i - k] @ vec) @ maps[k - 1] for i in bt_idx])
+        # backtest.npz 存的是【解码后】的预报（train.py: physical = state.decode(p, months[test])），
+        # 而 maps 是编码 -> 编码。所以还差一步 decode，用【目标月】的气候态。
+        mine = enc * scale + clim[mint[bt_idx]]
+        d = np.abs(mine - stored[k - 1]).max()
+        ref = max(np.abs(stored[k - 1]).max(), 1e-30)
+        rel = d / ref
+        flag = "一致" if rel < 1e-9 else ("接近" if rel < 1e-3 else "**不一致**")
+        ok_all &= rel < 1e-6
+        print(f"    k={k}: 最大绝对差 {d:.4g}  相对 stored 峰值 {rel:.3g}  {flag}")
 
     # 硬门：前置检查没过就【不许】输出技巧表。
-    # 上一版在没有基线的情况下照样打了表，那些 Δ 全部是垃圾（基线技巧 -72160，
-    # 比气候态差七万倍），但因为它们长得像数字，很容易被读成结论。
-    # 前置检查必须闸住输出，不能只写在标题里。
     if not ok_all:
         print()
         print("  【停止】第 0 步未通过：无法从 model.npz/backtest.npz 复现 L12 的预报。")
         print("  残差检验的基线不可信 ⇒ 不输出技巧表。")
-        print("  正确做法是去读拟合 matrix-l12-v1 的那段代码，而不是反推归档。")
         return 2
+    print("    ⇒ 结构理解验证通过（预测公式与归档逐点一致）")
+
+    S = x_enc @ vec                                  # (564, 64) 编码态的投影
 
     # ---- 第 1 步：E/O 的残差 ----
     Ea, Oa = deseas(E, mon), deseas(O, mon)
@@ -114,18 +113,21 @@ def main() -> int:
           f"{'Δ(E+O)':>9s}")
     # 基线技巧：用他们存的 joint 预报（若没验证通过则用 state@maps）
     for k in LEADS:
-        base = stored[k - 1] if (stored is not None and ok_all) else \
-            np.stack([S[i - k] @ maps[k - 1] for i in bt_idx])
-        y = coef[bt_idx]                                            # (72, 2698)
-        clim_bt = clim[mint[bt_idx]]                                # (72, 2698)
+        # 全程在【编码空间】里比：train.py 的 aggregate 用的就是 x[test]，
+        # 而 backtest.npz 存的是解码后的 physical。上一版混了两个空间，
+        # 于是基线技巧成了 -1.3e9 —— 又一个「看起来像数字」的垃圾值。
+        base = np.stack([(x_enc[i - k] @ vec) @ maps[k - 1] for i in bt_idx])
+        y = x_enc[bt_idx]
         def skill(pred):
-            return 1 - ((y - pred) ** 2).sum() / ((y - clim_bt) ** 2).sum()
+            # 编码空间的气候态恒为 0（encode 已减掉了 climatology）
+            return 1 - ((y - pred) ** 2).sum() / (y ** 2).sum()
         s0 = skill(base)
 
         # 训练期拟合修正系数：用模型在训练期的误差
         tr_idx = np.where(tr)[0]
         tr_idx = tr_idx[tr_idx + k < n]
-        err_tr = coef[tr_idx + k] - np.stack([S[i] @ maps[k - 1] for i in tr_idx])
+        err_tr = x_enc[tr_idx + k] - np.stack([(x_enc[i] @ vec) @ maps[k - 1]
+                                               for i in tr_idx])
         corr = {}
         for name, cols in (("E", ["E"]), ("O", ["O"]), ("E+O", ["E", "O"])):
             Xtr = np.column_stack([res[c][tr_idx] for c in cols] + [np.ones(len(tr_idx))])
