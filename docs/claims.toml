@@ -511,7 +511,7 @@ forbidden_conflations = "不得写「250 hPa 涡度更强所以更好」 —— 
 [[claim]]
 claim_id = "xue.native.rational-arithmetic-sampling-boundaries.v0"
 canonical_name = "native 有理算术构造的两条硬边界：节点须为单位向量且坐标有理 ⇒ 纬度 |z|≥5/13（22.62°）不可更靠近赤道，经度只能取勾股角、均匀加密不合法"
-code_symbol = "experiments/sphaera-ablation/gen_{tropical,dense}.py; runs/dense/"
+code_symbol = "experiments/sphaera-ablation/gen_tropical.py; experiments/sphaera-ablation/gen_dense.py; experiments/sphaera-ablation/runs/dense/"
 dimension = "native 构造的可迁移性 / 有限算术 / 球面采样的几何约束"
 status = "bounded-measurement"
 scope = "`sphaera-frame` 的程序用**精确有理算术**，节点是**单位向量且坐标有理**。这给出两条实测边界：\n**① 纬度**：单位向量要求 `x²+y²+z²=1` 且三者有理 ⇒ `(1-z²)` 须为有理平方。能取到的最小 |z| 出自勾股三元组 (5,12,13)：**z=5/13 ⇒ 纬度 22.62°**。**无法构造 |z|<5/13 的有理单位向量**，故这套构造**不能把节点放到比 22.62° 更靠近赤道处**。\n**② 经度**：方位角由单位圆上的有理点 `((1-t²)/(1+t²), 2t/(1+t²))` 给出，t 有理 ⇒ 角度为 `2·atan(t)`。可取 0°、36.87°、53.13°、90°、…；**均匀加密需要 √2，不合法**。\n**加密实测**：把方位由 4 个加密到 8 个（4 基本 + 4 勾股对角），4 环 ⇒ 32 节点。结果**没有可辨改善**：M2−M1 由 +0.1190 略增到 +0.1422，但 **M4−M3 由 +0.0050 降到 +0.0023，且 RMSE 反向（+0.0066 而非 −0.0047）**。\n原因：勾股角本身不均匀（0°、36.87°、53.13°、90° 挤在一起），**8 个方位并不比 4 个覆盖得更均匀**。"

@@ -1,5 +1,8 @@
 # 2026-10-08 · 我们的矩阵工作是否在「native 不是矩阵」这条禁止线内
 
+**件**：`experiments/sphaera-ablation/README.md`（本仓库）；依据件为
+`mountain/adva-machine@a0b710a2517f06f2fe03cc463e855548adf418ac:spec/framework/repository-exchange-registration-v0.1.md`。
+
 **提问**：我们是否已经在 adva 与 process-geometry 反复强调的
 「native 构造不是矩阵」这个禁止线内工作？同时 native 构造上也有链式法则。
 

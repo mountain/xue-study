@@ -124,11 +124,27 @@ def check_corrections(report: Report) -> None:
     """
     notes = sorted((ROOT / "docs/maintenance").glob("*.md"))
     upstream = Path("/tmp/xue-upstream")
-    broken, skipped = [], []
+    broken, skipped, external = [], [], []
+    # A REFERENCE THAT NAMES ITS OWNER IS NOT A MISSING FILE.
+    # The pattern below matches an `owner/repo@<40 hex>:path` coordinate, whose
+    # owner and exact commit are part of the reference.  Such a reference is
+    # complete even when the owning repository is not checked out here: it is
+    # UNRESOLVED, which is a different thing from UNKNOWN.  This must be matched
+    # BEFORE the bare-path pattern, because the bare pattern's character class
+    # has no `@` or `:`, so it would otherwise pull the tail of a coordinate out
+    # and report the same reference twice, once as a local path it cannot find.
+    COORD = re.compile(r"`([A-Za-z0-9._-]+/[A-Za-z0-9._-]+@[0-9a-f]{40}:[A-Za-z0-9._/-]+"
+                       r"\.(?:md|toml|json))`")
+    BARE = re.compile(r"`([A-Za-z0-9._/-]+\.(?:md|toml|json))`")
     for note in notes:
         head = "\n".join(note.read_text(encoding="utf-8").splitlines()[:14])
-        targets = re.findall(r"`([A-Za-z0-9._/-]+\.(?:md|toml|json))`", head)
-        if not targets:
+        coords = COORD.findall(head)
+        stripped = COORD.sub("`<coord>`", head)
+        targets = BARE.findall(stripped)
+        for c in coords:
+            external.append(f"{note.name} -> {c.split(':', 1)[0]} "
+                            f"(declared owning repository; not resolved in this tree)")
+        if not targets and not coords:
             broken.append(f"{note.name} names no target in its first 14 lines")
             continue
         for target in targets:
@@ -156,11 +172,13 @@ def check_corrections(report: Report) -> None:
                 skipped.append(f"{note.name} -> {target} (upstream clone absent)")
     report.add("corrections", not broken,
                f"{len(notes)} correction notes present; every file they name is "
-               f"either owned here or present in the upstream clone",
+               f"either owned here, present in the upstream clone, or carries a "
+               f"declared owning repository",
                "that the corrections are complete, or that the corrected wording is "
                "gone from the tree -- the append-only rule keeps the note, not the old text",
-               details=broken + ([f"SKIPPED (upstream clone absent): {s}" for s in skipped]
-                                 if skipped else []))
+               details=broken
+               + [f"EXTERNAL (by declaration): {s}" for s in external]
+               + [f"SKIPPED (upstream clone absent): {s}" for s in skipped])
 
 
 def check_cards(report: Report) -> None:

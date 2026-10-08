@@ -1,5 +1,7 @@
 # 2026-10-08 · 走 native 路线：从 `sphaera-frame` 起步，已可复现
 
+**件**：`experiments/sphaera-frame/README.md`（被复现的实验）。
+
 **起自**：上一件判定「我们的矩阵工作不在禁止线内，但两处不合规」，
 并指出本仓库**已经有一个真正的 native 层实验**（`experiments/sphaera-frame`）。
 本件是**从那里开始走**的第一步：把那条路打通并验证可复现。

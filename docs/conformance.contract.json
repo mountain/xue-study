@@ -15,7 +15,7 @@
   ],
   "corpus": {
     "path": "docs/claims.toml",
-    "sha256": "dee2abe6abbe05c8ec2fbe00f48573ce0ef4a884cb9a7899f27325f19833c9ca",
+    "sha256": "2c1585e24b61f4d39c2adc15f71abffd9d164baf4fa32904864123aad6841259",
     "cases": 17
   },
   "protected": [
