@@ -18,7 +18,7 @@ NODE_IN = re.compile(r"\(use (u\d+[xyz])\)")
 
 def main() -> int:
     bad = 0
-    for tag in ("tropical", "dense", "north", "south", "paired8"):
+    for tag in ("tropical", "dense", "north", "south", "north32", "paired8", "northhi"):
         prog = Path(f"runs/{tag}/spectrum-{tag}.adva")
         req = Path(f"runs/{tag}/req.json")
         if not (prog.exists() and req.exists()):

@@ -26,28 +26,44 @@ from gen_tropical import adva_source
 
 RINGS_NORTH = ((F(5, 13), F(12, 13)), (F(12, 13), F(5, 13)),
                (F(3, 5), F(4, 5)), (F(4, 5), F(3, 5)))
+# 高纬环：与 declared 同一批 |z|（3/5, 4/5），即【不下探到 5/13】
+RINGS_HI = ((F(3, 5), F(4, 5)), (F(4, 5), F(3, 5)))
 
 E_RE = re.compile(r"\(scale (-?\d+/\d+) \(use e\)\)")
 O_RE = re.compile(r"\(scale (\d+/\d+) \(use o\)\)")
 
 
-def cardinal(rings, negate=False):
+# 四个基本方位 + 四个勾股对角方位（与 dense / north32 的方位集合一致）
+AZ4 = ((F(1), F(0)), (F(-1), F(0)), (F(0), F(1)), (F(0), F(-1)))
+AZ8 = AZ4 + ((F(4, 5), F(3, 5)), (F(-4, 5), F(-3, 5)),
+             (F(3, 5), F(4, 5)), (F(-3, 5), F(-4, 5)))
+
+
+def ring_nodes(rings, negate=False, azimuths=AZ4):
+    """把 rings 展开成节点；azimuths 里的 (a, b) 是相对半径的比例。"""
     out = []
     for z, rad in rings:
         if negate:
             z = -z
-        for x, y in ((rad, F(0)), (-rad, F(0)), (F(0), rad), (F(0), -rad)):
-            out.append((x, y, z))
+        for a, b in azimuths:
+            out.append((a * rad, b * rad, z))
     return out
 
 
-def paired(rings):
-    """把每个环与它的对径副本都放进去 ⇒ 配对恢复。"""
+def paired(rings, azimuths=AZ4):
+    """把每个环与它的对径副本都放进去 ⇒ 配对恢复。
+
+    **顺序必须与 extract_nodes.nodes("paired8") 逐节点一致**：request 是按索引
+    u{i}x/u{i}y/u{i}z 供数的，顺序错了就会把风值喂给错的节点。
+    曾把这里重构成 `ring_nodes(...) + ring_nodes(negate=True, ...)`，顺序由
+    环内交织（+,−,+,−, …）变成先全正后全负 —— 与 extract_nodes 不再一致。
+    下面 main() 里的交叉断言就是为这类漂移准备的。
+    """
     out = []
     for z, rad in rings:
         for zz in (z, -z):
-            for x, y in ((rad, F(0)), (-rad, F(0)), (F(0), rad), (F(0), -rad)):
-                out.append((x, y, zz))
+            for a, b in azimuths:
+                out.append((a * rad, b * rad, zz))
     return out
 
 
@@ -57,19 +73,25 @@ def coeffs(text):
 
 
 def main() -> int:
-    north = cardinal(RINGS_NORTH)
-    south = cardinal(RINGS_NORTH, negate=True)
+    north = ring_nodes(RINGS_NORTH)
+    south = ring_nodes(RINGS_NORTH, negate=True)
     pair8 = paired(RINGS_NORTH)
+    north32 = ring_nodes(RINGS_NORTH, azimuths=AZ8)
+    northhi = ring_nodes(RINGS_HI, azimuths=AZ8)
 
-    for name, n in (("north", north), ("south", south), ("paired8", pair8)):
+    for name, n in (("north", north), ("south", south), ("paired8", pair8),
+                    ("north32", north32), ("northhi", northhi)):
         assert all(x * x + y * y + z * z == 1 for x, y, z in n), f"{name} 有非单位向量"
     assert all(z > 0 for _, _, z in north), "north 不全是北半球"
     assert all(z < 0 for _, _, z in south), "south 不全是南半球"
     assert len(north) == 16 and len(south) == 16 and len(pair8) == 32
+    assert len(north32) == 32 and len(northhi) == 16
 
     t_north = adva_source(north)
     t_south = adva_source(south)
     t_pair8 = adva_source(pair8)
+    t_n32 = adva_source(north32)
+    t_hi = adva_source(northhi)
 
     eN, oN = coeffs(t_north)
     eS, oS = coeffs(t_south)
@@ -90,8 +112,56 @@ def main() -> int:
     assert set(oP) == {v / 2 for v in set(oN)}, f"paired8 的 O 系数 {set(oP)} 不是 north 的一半"
     print(f"  ✓ paired8 的 E 系数同时有正负（配对已恢复），O 系数 = north 的 1/2（N 由 16 → 32）")
 
+    # 环数对照的核心断言：north32 与 paired8 的 |z| 多重集【逐值逐重数相同】，
+    # 节点数也相同（32）⇒ 两者只差配对。
+    def zmult(n):
+        c = {}
+        for _, _, z in n:
+            c[abs(z)] = c.get(abs(z), 0) + 1
+        return c
+
+    assert zmult(north32) == zmult(pair8), f"|z| 多重集不同：{zmult(north32)} vs {zmult(pair8)}"
+    assert len(north32) == len(pair8) == 32
+    assert all(z > 0 for _, _, z in north32), "north32 里有非北半球节点"
+    e32, o32 = coeffs(t_n32)
+    assert all(v > 0 for v in e32), "north32 的 sign(z) 不全是 +1（配对没被撤干净）"
+    assert set(o32) == {v / 2 for v in set(oN)}, f"north32 的 O 系数 {set(o32)} 不是 north 的一半"
+    print(f"  ✓ north32 vs paired8：节点数同为 32，|z| 多重集逐值逐重数相同 "
+          f"{ {str(k): v for k, v in sorted(zmult(north32).items())} }")
+    print(f"      north32 E 系数全正 {set(e32)}（无配对）；paired8 E 系数有正有负 {set(eP)}（有配对）")
+
+    # 2×2 的补格断言：northhi 与 declared 的 |z| 多重集相同、节点数相同，只差配对，
+    # 且两者【都不下探到 |z| = 5/13】。
+    DECLARED = paired(RINGS_HI)              # declared 预设：z = ±3/5, ±4/5，8 环 × 4 方位 = 16 节点
+    assert len(northhi) == len(DECLARED) == 16
+    assert zmult(northhi) == zmult(DECLARED), f"{zmult(northhi)} vs {zmult(DECLARED)}"
+    assert min(abs(z) for _, _, z in northhi) > F(5, 13), "northhi 竟然下探到了 5/13"
+    assert min(abs(z) for _, _, z in DECLARED) > F(5, 13)
+    ehi, ohi = coeffs(t_hi)
+    assert all(v > 0 for v in ehi), "northhi 的 sign(z) 不全是 +1"
+    print(f"  ✓ northhi vs declared：节点数同为 16，|z| 多重集相同 "
+          f"{ {str(k): v for k, v in sorted(zmult(northhi).items())} }，都不下探到 5/13")
+    print(f"      唯一差别：northhi 无配对（E 系数 {set(ehi)}）；declared 有配对")
+
+    # 交叉断言（本该一开始就有）：生成器的节点表必须与 extract_nodes.nodes() 逐节点一致。
+    # request 按索引 u{i}x/u{i}y/u{i}z 供数，顺序漂移 = 把风值喂给错的节点，而且不会报错。
+    import extract_nodes
+    for tag, mine in (("north", north), ("south", south), ("paired8", pair8),
+                      ("north32", north32), ("northhi", northhi)):
+        theirs = [(float(x), float(y), float(z)) for x, y, z in extract_nodes.nodes(tag)]
+        minef = [(float(x), float(y), float(z)) for x, y, z in mine]
+        assert len(minef) == len(theirs), f"{tag}: 节点数 {len(minef)} vs {len(theirs)}"
+        for i, (a, b) in enumerate(zip(minef, theirs)):
+            # 容差只放浮点表示差（Fraction→float vs 直接浮点，差 1 ULP，如
+            # 0.48 vs 0.4800000000000001）。换序造成的差是 0.1~1 量级，仍会被抓到。
+            d = max(abs(u - v) for u, v in zip(a, b))
+            assert d < 1e-12, (f"{tag}: 第 {i} 个节点差 {d:.3g}：{a} vs {b} —— "
+                               f"生成器与 extract_nodes 漂移了，request 会把风值喂给错的节点")
+    print("  ✓ 五个几何的节点表与 extract_nodes.nodes() 逐节点一致（顺序也一致）")
+
     out = Path("runs")
-    for tag, text, n in (("south", t_south, south), ("paired8", t_pair8, pair8)):
+    for tag, text, n in (("south", t_south, south), ("paired8", t_pair8, pair8),
+                         ("north32", t_n32, north32), ("northhi", t_hi, northhi)):
         d = out / tag
         d.mkdir(parents=True, exist_ok=True)
         (d / f"spectrum-{tag}.adva").write_text(text)

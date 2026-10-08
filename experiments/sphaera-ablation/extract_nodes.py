@@ -53,6 +53,32 @@ def nodes(preset="declared"):
                          (3*rad/5, 4*rad/5), (-3*rad/5, -4*rad/5)):
                 out.append((x, y, z))
         return out
+    elif preset == "northhi":
+        # 2×2 的补格：高纬北半球（不下探到 |z|=5/13），**无配对**。
+        # 与 declared（|z|={3/5,4/5}，**有配对**，同样不下探到 5/13）节点数同为 16，
+        # 且 |z| 多重集【逐值逐重数相同】（每个值 8 次）⇒ 两者只差配对。
+        # 用途：检验「配对必要但不充分」—— 若配对本已足够，这里应出现 O 增量。
+        rings = ((3/5, 4/5), (4/5, 3/5))
+        out = []
+        for z, rad in rings:
+            for x, y in ((rad, 0.0), (-rad, 0.0), (0.0, rad), (0.0, -rad),
+                         (4*rad/5, 3*rad/5), (-4*rad/5, -3*rad/5),
+                         (3*rad/5, 4*rad/5), (-3*rad/5, -4*rad/5)):
+                out.append((x, y, z))
+        return out
+    elif preset == "north32":
+        # 环数对照：4 个北半球环 × 8 方位 = 32 节点，**无配对**。
+        # 与 paired8（8 环 × 4 方位 = 32 节点，有配对）配合：
+        # 两者节点数相同，且每个 |z| 值都恰好出现 8 次 ⇒ 只差配对。
+        # 方位数不同（8 vs 4），但「方位加密无效」已由 dense vs tropical 独立证明。
+        rings = ((5/13, 12/13), (12/13, 5/13), (3/5, 4/5), (4/5, 3/5))
+        out = []
+        for z, rad in rings:
+            for x, y in ((rad, 0.0), (-rad, 0.0), (0.0, rad), (0.0, -rad),
+                         (4*rad/5, 3*rad/5), (-4*rad/5, -3*rad/5),
+                         (3*rad/5, 4*rad/5), (-3*rad/5, -4*rad/5)):
+                out.append((x, y, z))
+        return out
     elif preset == "south":
         # 半球对照：|z| 集合与 north **完全相同**（5/13, 12/13, 3/5, 4/5），节点数与方位也相同，
         # 只有【符号】相反 —— 而配对在 north 与 south 里【都不存在】。
@@ -79,7 +105,7 @@ def main() -> int:
     ap.add_argument("--inputs", default=str(Path.home() / "climatetensor-inputs/ncep-multivariate"))
     ap.add_argument("--out", required=True)
     ap.add_argument("--level", type=int, default=850)
-    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","south","paired8"))
+    ap.add_argument("--nodes", default="declared", choices=("declared","tropical","dense","north","north32","south","paired8","northhi"))
     args = ap.parse_args()
     src = Path(args.inputs)
     tag = f"u{args.level}"

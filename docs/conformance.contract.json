@@ -15,8 +15,8 @@
   ],
   "corpus": {
     "path": "docs/claims.toml",
-    "sha256": "5992b818bf953c49682df828343b3e991bdcf1eed7c5a210279ea707b1be2859",
-    "cases": 19
+    "sha256": "f93e7b67e9548a4627386e5398232c46e49a7564d6ef22258e736b169a6c1a79",
+    "cases": 20
   },
   "protected": [
     "A checker's exit code is not its result; the recorded outcome is",
